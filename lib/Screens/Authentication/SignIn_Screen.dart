@@ -48,9 +48,10 @@ class LoginScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           borderSide: const BorderSide(color: Colors.black),
                         ),
-                        filled: true,
-                        fillColor: Colors.grey[200],
                         hintText: "Enter your Email or Phone",
+                        hintStyle: TextStyle(
+                            fontSize: 16,
+                            color: const Color.fromARGB(255, 208, 205, 205)),
                         prefixIcon: Icon(Icons.email),
                       ),
                     ),
@@ -60,7 +61,13 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity, // Set the width to match the TextField
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PasswordScreen()),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.purple,
                       padding: EdgeInsets.symmetric(vertical: 15),
@@ -76,31 +83,31 @@ class LoginScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 Row(
-  children: <Widget>[
-    Expanded(
-      child: Container(
-        margin: const EdgeInsets.only(left: 10.0, right: 15.0),
-        child: const Divider(
-          color: Colors.grey,
-          height: 30,
-        ),
-      ),
-    ),
-    const Text(
-      "Or Joined With",
-      style: TextStyle(fontSize: 14, color: Colors.grey),
-    ),
-    Expanded(
-      child: Container(
-        margin: const EdgeInsets.only(left: 15.0, right: 10.0),
-        child: const Divider(
-          color: Colors.grey,
-          height: 30,
-        ),
-      ),
-    ),
-  ],
-),
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.only(left: 10.0, right: 15.0),
+                        child: const Divider(
+                          color: Colors.grey,
+                          height: 30,
+                        ),
+                      ),
+                    ),
+                    const Text(
+                      "Or Joined With",
+                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.only(left: 15.0, right: 10.0),
+                        child: const Divider(
+                          color: Colors.grey,
+                          height: 30,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(height: 20),
                 SocialButton(
                   text: "Continue as Apple",
@@ -167,6 +174,108 @@ class SocialButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
           side: BorderSide(color: Colors.black),
+        ),
+      ),
+    );
+  }
+}
+
+class PasswordScreen extends StatefulWidget {
+  @override
+  _PasswordScreenState createState() => _PasswordScreenState();
+}
+
+class _PasswordScreenState extends State<PasswordScreen> {
+  bool _obscureText = true;
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Enter Password',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Please enter your password.',
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+              SizedBox(height: 30),
+              TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  hintText: 'example@company.com',
+                  prefixIcon: Icon(Icons.email),
+                ),
+              ),
+              SizedBox(height: 20),
+              TextField(
+                obscureText: _obscureText,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  hintText: 'Password',
+                  prefixIcon: Icon(Icons.lock),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: _togglePasswordVisibility,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {},
+                  child: Text('Forgot Password?'),
+                ),
+              ),
+              SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.purple,
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  child: Text(
+                    'Sign in',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'Sign in Without Password',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
