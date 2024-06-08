@@ -3,7 +3,6 @@ import 'package:app/Screens/Onboarding/Onboarding_Screen1.dart';
 import 'package:app/Screens/Onboarding/Onboarding_Screen2.dart';
 import 'package:app/Screens/Onboarding/Onboarding_Screen3.dart';
 import 'package:flutter/material.dart';
-
 import 'Screens/Authentication/SignIn_Screen.dart';
 
 void main() {
@@ -18,10 +17,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: LoginScreen(),
+      home: LoadingScreen(),
     );
   }
 }

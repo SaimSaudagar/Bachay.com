@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'SignUp_Screen.dart';
+import 'Verify_OTP_Screen.dart';
+
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -252,7 +255,13 @@ class _PasswordScreenState extends State<PasswordScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SetupAccountScreen()),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.purple,
                     padding: EdgeInsets.symmetric(vertical: 15),
@@ -268,7 +277,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
               ),
               SizedBox(height: 20),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => OtpVerificationScreen()),
+  );
+},
                 child: Text(
                   'Sign in Without Password',
                   style: TextStyle(color: Colors.black),
@@ -281,3 +295,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
     );
   }
 }
+
+
+
+
+

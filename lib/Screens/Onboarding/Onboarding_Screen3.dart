@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:app/Utils/app_constants.dart';
 
+import '../Authentication/SignIn_Screen.dart';
+
 class OnboardingScreen3 extends StatelessWidget {
   const OnboardingScreen3({super.key});
 
@@ -39,7 +41,11 @@ class OnboardingScreen3 extends StatelessWidget {
                 SizedBox(height: getSpacing(context) * 2),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () { Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LoginScreen()),
+                      );},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: buttonColorPurple,
                       shape: RoundedRectangleBorder(
