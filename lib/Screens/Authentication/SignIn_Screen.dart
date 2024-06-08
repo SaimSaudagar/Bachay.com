@@ -11,7 +11,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors. ,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -59,7 +59,8 @@ class LoginScreen extends StatelessWidget {
                 ),
                 SizedBox(height: getSpacing(context)*2),
                 SizedBox(
-                  width: double.infinity, // Set the width to match the TextField
+                  width:
+                      double.infinity, // Set the width to match the TextField
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
