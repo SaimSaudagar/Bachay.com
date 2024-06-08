@@ -243,7 +243,7 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: List.generate(5, (index) {
                     return Container(
-                      height: 5,
+                      height: 3,
                       width: 60,
                       color: index < _passwordStrength
                           ? _getStrengthColor(_passwordStrength)
