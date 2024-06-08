@@ -67,9 +67,12 @@ const double buttonHeight = 0.08;
 
 const EdgeInsetsGeometry buttonPadding =
     EdgeInsets.symmetric(vertical: buttonPaddingValue);
-const TextStyle buttonTextStyle = TextStyle(
-  color: Colors.white,
-  fontFamily: 'Outfit',
-  fontWeight: FontWeight.w600,
-  fontSize: 16,
-);
+
+TextStyle buttonTextStyle(BuildContext context) {
+  return TextStyle(
+    color: Colors.white,
+    fontFamily: 'Outfit',
+    fontWeight: FontWeight.w600,
+    fontSize: getFontSize(context),
+  );
+}

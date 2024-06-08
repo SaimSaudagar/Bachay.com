@@ -60,7 +60,7 @@ class OnboardingScreen1 extends StatelessWidget {
                         child: Center(
                           child: Text(
                             'Let’s Start',
-                            style: buttonTextStyle,
+                            style: buttonTextStyle(context),
                           ),
                         ),
                       ),

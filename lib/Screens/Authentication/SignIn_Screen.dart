@@ -1,3 +1,4 @@
+import 'package:app/Widgets/Socail_Button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,7 +10,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors. ,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -62,7 +63,8 @@ class LoginScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 SizedBox(
-                  width: double.infinity, // Set the width to match the TextField
+                  width:
+                      double.infinity, // Set the width to match the TextField
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -144,39 +146,6 @@ class LoginScreen extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class SocialButton extends StatelessWidget {
-  final String text;
-  final IconData icon;
-  final Color color;
-  final Color textColor;
-  final VoidCallback onPressed;
-
-  const SocialButton({
-    required this.text,
-    required this.icon,
-    required this.color,
-    required this.textColor,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      onPressed: onPressed,
-      icon: Icon(icon, color: textColor),
-      label: Text(text, style: TextStyle(color: textColor)),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
-        minimumSize: Size(double.infinity, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-          side: BorderSide(color: Colors.black),
         ),
       ),
     );
@@ -278,11 +247,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
               SizedBox(height: 20),
               TextButton(
                 onPressed: () {
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => OtpVerificationScreen()),
-  );
-},
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => OtpVerificationScreen()),
+                  );
+                },
                 child: Text(
                   'Sign in Without Password',
                   style: TextStyle(color: Colors.black),
@@ -295,8 +265,3 @@ class _PasswordScreenState extends State<PasswordScreen> {
     );
   }
 }
-
-
-
-
-

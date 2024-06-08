@@ -55,12 +55,12 @@ class OnboardingScreen2 extends StatelessWidget {
                     child: SizedBox(
                       height: MediaQuery.of(context).size.height * buttonHeight,
                       width: MediaQuery.of(context).size.width * buttonWidth,
-                      child: const Padding(
+                      child: Padding(
                         padding: buttonPadding,
                         child: Center(
                           child: Text(
                             'Next',
-                            style: buttonTextStyle,
+                            style: buttonTextStyle(context),
                           ),
                         ),
                       ),

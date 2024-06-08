@@ -41,11 +41,12 @@ class OnboardingScreen3 extends StatelessWidget {
                 SizedBox(height: getSpacing(context) * 2),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () { Navigator.push(
+                    onPressed: () {
+                      Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => LoginScreen()),
-                      );},
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: buttonColorPurple,
                       shape: RoundedRectangleBorder(
@@ -55,12 +56,12 @@ class OnboardingScreen3 extends StatelessWidget {
                     child: SizedBox(
                       height: MediaQuery.of(context).size.height * buttonHeight,
                       width: MediaQuery.of(context).size.width * buttonWidth,
-                      child: const Padding(
+                      child: Padding(
                         padding: buttonPadding,
                         child: Center(
                           child: Text(
                             'Next',
-                            style: buttonTextStyle,
+                            style: buttonTextStyle(context),
                           ),
                         ),
                       ),
