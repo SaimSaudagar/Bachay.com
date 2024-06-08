@@ -11,9 +11,9 @@ const LinearGradient appGradient = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
 );
-
 const Color buttonColorPurple = Color.fromRGBO(132, 93, 194, 1);
 const Color buttonColorPink = Color.fromRGBO(209, 94, 170, 1);
+const Color fontcolor= Color.fromRGBO(212, 212, 216, 1);
 
 //Fonts
 const TextStyle interRegular = TextStyle(
@@ -21,6 +21,11 @@ const TextStyle interRegular = TextStyle(
   fontWeight: FontWeight.w400,
 );
 
+const TextStyle contentC5 = TextStyle(
+  fontFamily: 'Content',
+  fontWeight: FontWeight.w300,
+
+);
 const TextStyle interBold = TextStyle(
   fontFamily: 'Inter',
   fontWeight: FontWeight.w700,

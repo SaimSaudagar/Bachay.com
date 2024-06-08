@@ -1,3 +1,4 @@
+import 'package:app/Utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -141,19 +142,19 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                 SizedBox(height: 40),
                 Text(
                   'Setup Your Account',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: outfitBold.copyWith(fontSize: getBoldFontSize(context)*2),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 10),
                 Text(
                   'Please setup your account.',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                  style: contentC5.copyWith(fontSize: getFontSize(context)*1.5), 
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 40),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Full Name'),
+                  child: Text('Full Name',style: outfitBold),
                 ),
                 SizedBox(height: 5),
                 TextField(
@@ -162,7 +163,8 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.person_outline),
                     suffixIcon: _fullNameError ? Icon(Icons.error, color: Colors.red) : null,
-                    hintText: 'Enter your Full Name',
+                    hintText: 'Enter your Full Name', 
+                   hintStyle:contentC5.copyWith(fontSize:getFontSize(context)*1.5,color:fontcolor),    
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide(color: _fullNameError ? Colors.red : Colors.grey),
@@ -176,7 +178,7 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                 SizedBox(height: 20),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Email'),
+                  child: Text('Email',style: outfitBold),
                 ),
                 SizedBox(height: 5),
                 TextField(
@@ -186,6 +188,8 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                     prefixIcon: Icon(Icons.email_outlined),
                     suffixIcon: _emailError ? Icon(Icons.error, color: Colors.red) : null,
                     hintText: 'example@company.com',
+                     hintStyle:contentC5.copyWith(fontSize:getFontSize(context)*1.5,color:fontcolor),      
+  
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide(color: _emailError ? Colors.red : Colors.grey),
@@ -199,7 +203,7 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                 SizedBox(height: 20),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Phone'),
+                  child: Text('Phone',style: outfitBold),
                 ),
                 SizedBox(height: 5),
                 TextField(
@@ -209,6 +213,8 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.phone_outlined),
                     hintText: '+92 312-3456789',
+                         hintStyle:contentC5.copyWith(fontSize:getFontSize(context)*1.5,color:fontcolor),      
+                   
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide(color: Colors.grey),
@@ -222,7 +228,7 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                 SizedBox(height: 20),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Password'),
+                  child: Text('Password',style: outfitBold),
                 ),
                 SizedBox(height: 5),
                 TextField(
@@ -245,6 +251,8 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                       },
                     ),
                     hintText: 'Enter New Password',
+                        hintStyle:contentC5.copyWith(fontSize:getFontSize(context)*1.5,color:fontcolor),      
+                    
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide(color: Colors.grey),
@@ -280,7 +288,7 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                 SizedBox(height: 20),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Re-enter Password'),
+                  child: Text('Re-enter Password',style: outfitBold),
                 ),
                 SizedBox(height: 5),
                 TextField(
@@ -304,6 +312,8 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                             },
                           ),
                     hintText: 'Re-enter Password',
+                        hintStyle:contentC5.copyWith(fontSize:getFontSize(context)*1.5,color:fontcolor),      
+
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide(color: _passwordMatchError ? Colors.red : Colors.grey),
@@ -317,19 +327,27 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                 SizedBox(height: 40),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Handle sign in
-                    },
+                 child:  ElevatedButton(
+                    onPressed: () {},
+         
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 15), backgroundColor: Colors.purple,
+                      backgroundColor: buttonColorPurple,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(roundBorderRadius),
                       ),
                     ),
-                    child: Text(
-                      'Sign in',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.08,
+                      width: MediaQuery.of(context).size.width * buttonWidth,
+                      child: Padding(
+                        padding: buttonPadding,
+                        child: Center(
+                          child: Text(
+                            'Sign in',
+                            style: buttonTextStyle,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
