@@ -67,7 +67,7 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
       bool hasDigit = password.contains(RegExp(r'[0-9]'));
       bool hasSpecial = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
 
-      if ((hasUpper && hasLower) || 
+      if ((hasUpper && hasLower) ||
           (hasUpper && hasDigit) ||
           (hasUpper && hasSpecial) ||
           (hasLower && hasDigit) ||
@@ -108,6 +108,23 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
         return Colors.green.shade900;
       default:
         return Colors.grey;
+    }
+  }
+
+  String _getStrengthText(int strength) {
+    switch (strength) {
+      case 1:
+        return "Extremely Weak";
+      case 2:
+        return "Weak";
+      case 3:
+        return "Normal";
+      case 4:
+        return "Strong";
+      case 5:
+        return "Very Strong";
+      default:
+        return "";
     }
   }
 
@@ -242,12 +259,21 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: List.generate(5, (index) {
-                    return Container(
-                      height: 3,
-                      width: 60,
-                      color: index < _passwordStrength
-                          ? _getStrengthColor(_passwordStrength)
-                          : Colors.grey.shade300,
+                    return Column(
+                      children: [
+                        Container(
+                          height: 3,
+                          width: 60,
+                          color: index < _passwordStrength
+                              ? _getStrengthColor(_passwordStrength)
+                              : Colors.grey.shade300,
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          index == _passwordStrength - 1 ? _getStrengthText(index + 1) : "",
+                          style: TextStyle(fontSize: 12, color: Colors.black),
+                        ),
+                      ],
                     );
                   }),
                 ),
@@ -303,7 +329,7 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                     ),
                     child: Text(
                       'Sign in',
-                      style: TextStyle(fontSize: 18, color:Colors.white),
+                      style: TextStyle(fontSize: 18),
                     ),
                   ),
                 ),
