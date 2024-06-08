@@ -36,6 +36,8 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
   bool _reEnterPasswordVisible = false;
   bool _passwordMatchError = false;
 
+  int _passwordStrength = 0;
+
   void _validateFullName(String value) {
     setState(() {
       _fullNameError = value.trim().split(' ').length < 2;
@@ -52,6 +54,61 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
     setState(() {
       _passwordMatchError = _passwordController.text != _reEnterPasswordController.text;
     });
+  }
+
+  void _checkPasswordStrength(String password) {
+    int strength = 0;
+
+    if (password.length < 8) {
+      strength = 1; // Extremely Weak
+    } else {
+      bool hasUpper = password.contains(RegExp(r'[A-Z]'));
+      bool hasLower = password.contains(RegExp(r'[a-z]'));
+      bool hasDigit = password.contains(RegExp(r'[0-9]'));
+      bool hasSpecial = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+
+      if ((hasUpper && hasLower) || 
+          (hasUpper && hasDigit) ||
+          (hasUpper && hasSpecial) ||
+          (hasLower && hasDigit) ||
+          (hasLower && hasSpecial) ||
+          (hasDigit && hasSpecial)) {
+        strength = 3; // Normal
+      }
+      if ((hasUpper && hasLower && hasDigit) ||
+          (hasUpper && hasLower && hasSpecial) ||
+          (hasUpper && hasDigit && hasSpecial) ||
+          (hasLower && hasDigit && hasSpecial)) {
+        strength = 4; // Strong
+      }
+      if (hasUpper && hasLower && hasDigit && hasSpecial) {
+        strength = 5; // Very Strong
+      }
+      if (strength == 0) {
+        strength = 2; // Weak
+      }
+    }
+
+    setState(() {
+      _passwordStrength = strength;
+    });
+  }
+
+  Color _getStrengthColor(int strength) {
+    switch (strength) {
+      case 1:
+        return Colors.red.shade900;
+      case 2:
+        return Colors.red;
+      case 3:
+        return Colors.yellow;
+      case 4:
+        return Colors.green;
+      case 5:
+        return Colors.green.shade900;
+      default:
+        return Colors.grey;
+    }
   }
 
   @override
@@ -154,6 +211,10 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                 TextField(
                   controller: _passwordController,
                   obscureText: !_passwordVisible,
+                  onChanged: (value) {
+                    _checkPasswordStrength(value);
+                    _validatePasswords();
+                  },
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.lock_outline),
                     suffixIcon: IconButton(
@@ -177,6 +238,19 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                     ),
                   ),
                 ),
+                SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(5, (index) {
+                    return Container(
+                      height: 5,
+                      width: 60,
+                      color: index < _passwordStrength
+                          ? _getStrengthColor(_passwordStrength)
+                          : Colors.grey.shade300,
+                    );
+                  }),
+                ),
                 SizedBox(height: 20),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -189,16 +263,20 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                   onChanged: (value) => _validatePasswords(),
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.lock_outline),
-                    suffixIcon: _passwordMatchError ? Icon(Icons.error, color: Colors.red) : IconButton(
-                      icon: Icon(
-                        _reEnterPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _reEnterPasswordVisible = !_reEnterPasswordVisible;
-                        });
-                      },
-                    ),
+                    suffixIcon: _passwordMatchError
+                        ? Icon(Icons.error, color: Colors.red)
+                        : IconButton(
+                            icon: Icon(
+                              _reEnterPasswordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _reEnterPasswordVisible = !_reEnterPasswordVisible;
+                              });
+                            },
+                          ),
                     hintText: 'Re-enter Password',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -220,12 +298,12 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 15), backgroundColor: Colors.purple,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     child: Text(
                       'Sign in',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color:Colors.white),
+                      style: TextStyle(fontSize: 18, color:Colors.white),
                     ),
                   ),
                 ),
