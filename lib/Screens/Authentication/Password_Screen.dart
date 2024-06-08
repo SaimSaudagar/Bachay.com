@@ -102,9 +102,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
                       child: Padding(
                         padding: buttonPadding,
                         child: Center(
-                          child: Text(
+                          child:  Text(
                             'Sign in',
-                            style: buttonTextStyle,
                           ),
                         ),
                       ),

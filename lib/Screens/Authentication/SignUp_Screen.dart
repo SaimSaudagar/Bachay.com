@@ -344,7 +344,6 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                         child: Center(
                           child: Text(
                             'Sign in',
-                            style: buttonTextStyle,
                           ),
                         ),
                       ),
