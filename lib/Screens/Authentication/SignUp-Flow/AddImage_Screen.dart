@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../Utils/app_constants.dart';
+import 'AddChild_Screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -52,19 +53,19 @@ class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
               children: [
                 Container(
                   height: getBarHeight(context),
-                  width: getBarWidth(context) / 3 - 20,
+                  width: getBarWidth(context) / 3 ,
                   color: _currentStep >= 1 ? buttonColorPurple : Colors.grey[300],
                 ),
                 SizedBox(width: getSpacing(context) * 10), // Space between the steps
                 Container(
                   height: getBarHeight(context),
-                  width: getBarWidth(context) / 3 - 20,
+                  width: getBarWidth(context) / 3 ,
                   color: _currentStep >= 2 ? buttonColorPurple : Colors.grey[300],
                 ),
                 SizedBox(width: getSpacing(context) * 10), // Space between the steps
                 Container(
                   height: getBarHeight(context),
-                  width: getBarWidth(context) / 3 - 20,
+                  width: getBarWidth(context) / 3 ,
                   color: _currentStep >= 3 ? buttonColorPurple : Colors.grey[300],
                 ),
               ],
@@ -73,7 +74,7 @@ class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
             Row(
               children: [
                 SvgPicture.asset('assets/images/profile-icon.svg'),
-                SizedBox(width: getSpacing(context) * 8),
+                SizedBox(width: getSpacing(context) * 2),
                 Text(
                   "Profile Photo",
                   textAlign: TextAlign.left,
@@ -152,11 +153,11 @@ class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.edit, color: buttonColorPurple),
+                  SvgPicture.asset('assets/images/edit-icon.svg',),
                   SizedBox(width: 5),
                   Text(
                     'Change Photo',
-                    style: outfitBold.copyWith(color: buttonColorPurple),
+                    style: outfitBold.copyWith(color: Colors.black),
                   ),
                 ],
               ),
@@ -177,7 +178,15 @@ class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
                   child: Text("Skip", style: outfitBold.copyWith(fontSize: getFontSize(context) * 1.5)),
                 ),
                 ElevatedButton(
-                  onPressed: _imageFile != null ? () {} : null,
+                  onPressed: _imageFile != null
+                      ? () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddChildScreen()),
+                          );
+                        }
+                      : null,
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: _imageFile != null ? buttonColorPurple : Colors.grey[300], // Text color
