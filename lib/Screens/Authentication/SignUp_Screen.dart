@@ -2,6 +2,8 @@ import 'package:app/Utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'SignUp-Flow/AddImage_Screen.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -328,8 +330,13 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                 SizedBox(
                   width: double.infinity,
                  child:  ElevatedButton(
-                    onPressed: () {},
-         
+                    onPressed: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => ProfilePhotoScreen()),
+  );
+},
+
                     style: ElevatedButton.styleFrom(
                       backgroundColor: buttonColorPurple,
                       shape: RoundedRectangleBorder(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../Utils/app_constants.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -133,7 +135,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   onPressed: () {
                     // Resend OTP code logic here
                   },
-                  child: Text('Resend'),
+                  child: Text('Resend', style:TextStyle(color:buttonColorPurple) ), 
                 ),
               ],
             ),
@@ -149,9 +151,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     });
                   },
                 ),
-                Text(
+                 Text(
                   'Remember Me',
-                  style: TextStyle(fontSize: 16),
+                  style: outfitBold.copyWith(fontSize: getFontSize(context)*2),
                 ),
               ],
             ),

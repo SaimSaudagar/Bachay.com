@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.app"
-    compileSdkVersion 33 // Replace with your desired compileSdkVersion
+    compileSdkVersion 34 // Replace with your desired compileSdkVersion
     ndkVersion "23.1.7779620" // Replace with your desired ndkVersion
 
     compileOptions {
@@ -20,7 +20,7 @@ android {
         applicationId = "com.example.app"
         // Manually setting the values to avoid the error
         minSdkVersion 21 // Replace with your desired minSdkVersion
-        targetSdkVersion 33 // Replace with your desired targetSdkVersion
+        targetSdkVersion 34 // Replace with your desired targetSdkVersion
         versionCode 1 // Replace with your desired versionCode
         versionName "1.0.0" // Replace with your desired versionName
     }

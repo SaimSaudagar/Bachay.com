@@ -4,8 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../Widgets/Social_Button.dart';
 import 'Password_Screen.dart';
-import 'SignUp_Screen.dart';
-import 'Verify_OTP_Screen.dart';
+// import 'SignUp_Screen.dart';
+// import 'Verify_OTP_Screen.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
