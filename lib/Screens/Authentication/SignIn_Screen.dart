@@ -28,22 +28,23 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: getSpacing(context)*2),
-                 Text(
-                  "Welcome to Bachay",
-                    style: outfitBold.copyWith(fontSize: getBoldFontSize(context)*2)
-                ),
-                SizedBox(height: getSpacing(context)*2),
+                SizedBox(height: getSpacing(context) * 2),
+                Text("Welcome to Bachay",
+                    style: outfitBold.copyWith(
+                        fontSize: getBoldFontSize(context) * 2)),
+                SizedBox(height: getSpacing(context) * 2),
                 const Text(
-                  "Please enter your email address or connect to your social accounts to continue.",
-                  textAlign: TextAlign.center,
-                  style: contentC5
-                ),
-                SizedBox(height: getSpacing(context)*2*2),
+                    "Please enter your email address or connect to your social accounts to continue.",
+                    textAlign: TextAlign.center,
+                    style: contentC5),
+                SizedBox(height: getSpacing(context) * 2 * 2),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Email/Phone", style: outfitBold,),
+                    const Text(
+                      "Email/Phone",
+                      style: outfitBold,
+                    ),
                     TextField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -51,13 +52,15 @@ class LoginScreen extends StatelessWidget {
                           borderSide: const BorderSide(color: Colors.black),
                         ),
                         hintText: "Enter your Email or Phone",
-                        hintStyle:contentC5.copyWith(fontSize:getFontSize(context)*1.5,color:fontcolor),      
+                        hintStyle: contentC5.copyWith(
+                            fontSize: getFontSize(context) * 1.5,
+                            color: fontcolor),
                         prefixIcon: const Icon(Icons.email),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: getSpacing(context)*2),
+                SizedBox(height: getSpacing(context) * 2),
                 SizedBox(
                   width:
                       double.infinity, // Set the width to match the TextField
@@ -76,13 +79,11 @@ class LoginScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    child:  Text(
-                      "Continue",
-                      style: outfitBold.copyWith(color: Colors.white) 
-                    ),
+                    child: Text("Continue",
+                        style: outfitBold.copyWith(color: Colors.white)),
                   ),
                 ),
-                SizedBox(height: getSpacing(context)*2),
+                SizedBox(height: getSpacing(context) * 2),
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -96,7 +97,9 @@ class LoginScreen extends StatelessWidget {
                     ),
                     const Text(
                       "Or Joined With",
-                      style: TextStyle(fontSize: 14, color: Color.fromRGBO(212, 212, 216, 1)),
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Color.fromRGBO(212, 212, 216, 1)),
                     ),
                     Expanded(
                       child: Container(
@@ -109,28 +112,28 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: getSpacing(context)*2),
+                SizedBox(height: getSpacing(context) * 2),
                 SocialButton(
                   text: "Continue as Apple",
                   icon: FontAwesomeIcons.apple,
                   color: Colors.white,
                   onPressed: () {},
                 ),
-                SizedBox(height: getSpacing(context)*2),
+                SizedBox(height: getSpacing(context) * 2),
                 SocialButton(
                   text: "Continue as Google",
                   icon: FontAwesomeIcons.google,
                   color: Colors.white,
                   onPressed: () {},
                 ),
-                SizedBox(height: getSpacing(context)*2),
+                SizedBox(height: getSpacing(context) * 2),
                 SocialButton(
                   text: "Continue as Facebook",
                   icon: FontAwesomeIcons.facebook,
                   color: Colors.white,
                   onPressed: () {},
                 ),
-                SizedBox(height: getSpacing(context)*2),
+                SizedBox(height: getSpacing(context) * 2),
                 const Text(
                   "By clicking Continue, you agree to WHM Terms of Use and Privacy Policy.",
                   textAlign: TextAlign.center,
@@ -144,6 +147,3 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
-
-
-

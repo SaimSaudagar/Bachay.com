@@ -148,9 +148,11 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                   ),
                   SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: _addressFound ? () {
-                      // Handle location confirmation
-                    } : null,
+                    onPressed: _addressFound
+                        ? () {
+                            // Handle location confirmation
+                          }
+                        : null,
                     child: Center(
                       child: Text("Confirm Location"),
                     ),

@@ -6,19 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import '../../../Utils/app_constants.dart';
 import 'AddAddress_Screen.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: AddChildScreen(),
-    );
-  }
-}
-
 class AddChildScreen extends StatefulWidget {
   @override
   _AddChildScreenState createState() => _AddChildScreenState();

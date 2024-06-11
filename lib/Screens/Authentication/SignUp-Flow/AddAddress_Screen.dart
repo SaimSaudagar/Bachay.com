@@ -6,19 +6,6 @@ import 'package:location/location.dart';
 import '../../../Utils/app_constants.dart';
 import 'AddLocation_Screen.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: AddAddressScreen(),
-    );
-  }
-}
-
 class AddAddressScreen extends StatefulWidget {
   @override
   _AddAddressScreenState createState() => _AddAddressScreenState();
