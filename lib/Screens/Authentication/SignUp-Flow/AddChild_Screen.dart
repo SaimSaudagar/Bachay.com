@@ -65,7 +65,8 @@ class _AddChildScreenState extends State<AddChildScreen> {
                   SizedBox(width: getSpacing(context) * 2),
                   Text(
                     "Add Child",
-                    style: outfitBold.copyWith(fontSize: getBoldFontSize(context) * 2),
+                    style: outfitBold.copyWith(
+                        fontSize: getBigFontSize(context) * 2),
                   ),
                 ],
               ),
@@ -143,38 +144,47 @@ class _AddChildScreenState extends State<AddChildScreen> {
                   ],
                 ),
               SizedBox(height: getSpacing(context) * 5),
-              Text('Child Name',style: outfitBold,),
+              Text(
+                'Child Name',
+                style: outfitBold,
+              ),
               TextField(
                 controller: _nameController,
                 decoration: InputDecoration(
-                  hintText: 'Enter child\'s name',hintStyle: contentC5.copyWith(fontSize: getFontSize(context)*1.5,color: fontcolor),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),               
-                     prefixIcon: Padding(
-    padding: const EdgeInsets.all(12.0),
-    child: SvgPicture.asset('assets/images/name-icon.svg'),
-  ),),
+                  hintText: 'Enter child\'s name',
+                  hintStyle: contentC5.copyWith(
+                      fontSize: getFontSize(context) * 1.5, color: fontcolor),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: SvgPicture.asset('assets/images/name-icon.svg'),
+                  ),
+                ),
               ),
               SizedBox(height: getSpacing(context) * 5),
-             Text('Date of Birth',style:outfitBold),
+              Text('Date of Birth', style: outfitBold),
               TextField(
                 controller: _dobController,
                 decoration: InputDecoration(
-                  hintText: 'Enter child\'s date of birth',hintStyle: contentC5.copyWith(fontSize: getFontSize(context)*1.5,color: fontcolor),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),               
-                                       prefixIcon: Padding(
-    padding: const EdgeInsets.all(12.0),
-    child: SvgPicture.asset('assets/images/calender-icon.svg'),
-  )),
+                    hintText: 'Enter child\'s date of birth',
+                    hintStyle: contentC5.copyWith(
+                        fontSize: getFontSize(context) * 1.5, color: fontcolor),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child:
+                          SvgPicture.asset('assets/images/calender-icon.svg'),
+                    )),
                 onTap: () async {
                   FocusScope.of(context).requestFocus(FocusNode());
                   DateTime? pickedDate = await showDatePicker(
@@ -204,11 +214,15 @@ class _AddChildScreenState extends State<AddChildScreen> {
                         });
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: getSpacing(context) * 5), backgroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(
+                            vertical: getSpacing(context) * 5),
+                        backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                           side: BorderSide(
-                            color: isBoySelected ? buttonColorPurple : Colors.transparent,
+                            color: isBoySelected
+                                ? buttonColorPurple
+                                : Colors.transparent,
                             width: 2,
                           ),
                         ),
@@ -240,11 +254,15 @@ class _AddChildScreenState extends State<AddChildScreen> {
                         });
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: getSpacing(context) * 5), backgroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(
+                            vertical: getSpacing(context) * 5),
+                        backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                           side: BorderSide(
-                            color: isGirlSelected ? buttonColorPurple : Colors.transparent,
+                            color: isGirlSelected
+                                ? buttonColorPurple
+                                : Colors.transparent,
                             width: 2,
                           ),
                         ),
@@ -273,30 +291,39 @@ class _AddChildScreenState extends State<AddChildScreen> {
                     onPressed: () {},
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.black,
-                      padding: EdgeInsets.symmetric(horizontal: getSpacing(context) * 10, vertical: getSpacing(context) * 5),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: getSpacing(context) * 10,
+                          vertical: getSpacing(context) * 5),
                       shape: RoundedRectangleBorder(
                         side: BorderSide(color: Colors.black),
                         borderRadius: BorderRadius.circular(roundBorderRadius),
                       ),
                     ),
-                    child: Text("Skip", style: outfitBold.copyWith(fontSize: getFontSize(context)*1.5)),
+                    child: Text("Skip",
+                        style: outfitBold.copyWith(
+                            fontSize: getFontSize(context) * 1.5)),
                   ),
                   ElevatedButton(
                     onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AddAddressScreen()),
-                          );
-                        },
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddAddressScreen()),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: buttonColorPurple,
-                      padding: EdgeInsets.symmetric(horizontal: getSpacing(context) * 15, vertical: getSpacing(context) * 5),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: getSpacing(context) * 15,
+                          vertical: getSpacing(context) * 5),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(roundBorderRadius),
                       ),
                     ),
-                    child: Text("Save & Continue", style: outfitBold.copyWith(color: Colors.white,fontSize: getFontSize(context)*1.5)),
+                    child: Text("Save & Continue",
+                        style: outfitBold.copyWith(
+                            color: Colors.white,
+                            fontSize: getFontSize(context) * 1.5)),
                   ),
                 ],
               ),

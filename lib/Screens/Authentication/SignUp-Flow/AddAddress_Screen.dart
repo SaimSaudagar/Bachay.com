@@ -16,7 +16,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   LatLng? _currentPosition;
   Location _location = Location();
   final TextEditingController _addressController = TextEditingController();
-  
+
   @override
   void initState() {
     super.initState();
@@ -26,7 +26,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   void _getCurrentLocation() async {
     var locationData = await _location.getLocation();
     setState(() {
-      _currentPosition = LatLng(locationData.latitude!, locationData.longitude!);
+      _currentPosition =
+          LatLng(locationData.latitude!, locationData.longitude!);
     });
   }
 
@@ -69,7 +70,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 Text(
                   "Add Address",
                   textAlign: TextAlign.left,
-                  style: outfitBold.copyWith(fontSize: getBoldFontSize(context) * 2),
+                  style: outfitBold.copyWith(
+                      fontSize: getBigFontSize(context) * 2),
                 ),
               ],
             ),
@@ -81,12 +83,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             ),
             SizedBox(height: getSpacing(context) * 32),
             Center(
-            child:TextButton(
-              onPressed: () { Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AddLocationScreen()),
-                          );},
+                child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddLocationScreen()),
+                );
+              },
               style: TextButton.styleFrom(
                 foregroundColor: buttonColorPurple,
                 textStyle: TextStyle(
@@ -101,28 +104,36 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: () { },
+                  onPressed: () {},
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.black,
-                    padding: EdgeInsets.symmetric(horizontal: getSpacing(context) * 10, vertical: getSpacing(context) * 5),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getSpacing(context) * 10,
+                        vertical: getSpacing(context) * 5),
                     shape: RoundedRectangleBorder(
                       side: BorderSide(color: Colors.black),
                       borderRadius: BorderRadius.circular(roundBorderRadius),
                     ),
                   ),
-                  child: Text("Skip", style: outfitBold.copyWith(fontSize: getFontSize(context) * 1.5)),
+                  child: Text("Skip",
+                      style: outfitBold.copyWith(
+                          fontSize: getFontSize(context) * 1.5)),
                 ),
                 ElevatedButton(
                   onPressed: null,
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.grey[300], // Disabled color
-                    padding: EdgeInsets.symmetric(horizontal: getSpacing(context) * 15, vertical: getSpacing(context) * 5),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getSpacing(context) * 15,
+                        vertical: getSpacing(context) * 5),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(roundBorderRadius),
                     ),
                   ),
-                  child: Text("Save & Continue", style: outfitBold.copyWith(fontSize: getFontSize(context) * 1.5)),
+                  child: Text("Save & Continue",
+                      style: outfitBold.copyWith(
+                          fontSize: getFontSize(context) * 1.5)),
                 ),
               ],
             ),

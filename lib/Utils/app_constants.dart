@@ -13,7 +13,7 @@ const LinearGradient appGradient = LinearGradient(
 );
 const Color buttonColorPurple = Color.fromRGBO(132, 93, 194, 1);
 const Color buttonColorPink = Color.fromRGBO(209, 94, 170, 1);
-const Color fontcolor= Color.fromRGBO(212, 212, 216, 1);
+const Color fontcolor = Color.fromRGBO(212, 212, 216, 1);
 
 //Fonts
 const TextStyle interRegular = TextStyle(
@@ -24,7 +24,6 @@ const TextStyle interRegular = TextStyle(
 const TextStyle contentC5 = TextStyle(
   fontFamily: 'Content',
   fontWeight: FontWeight.w300,
-
 );
 const TextStyle interBold = TextStyle(
   fontFamily: 'Inter',
@@ -46,8 +45,8 @@ double getFontSize(BuildContext context) {
   return MediaQuery.of(context).size.width * 0.025;
 }
 
-double getBoldFontSize(BuildContext context) {
-  return MediaQuery.of(context).size.width * 0.03;
+double getBigFontSize(BuildContext context) {
+  return MediaQuery.of(context).size.width * 0.04;
 }
 
 double getSpacing(BuildContext context) {
@@ -60,6 +59,10 @@ double getBarWidth(BuildContext context) {
 
 double getBarHeight(BuildContext context) {
   return MediaQuery.of(context).size.height * 0.005;
+}
+
+double getPadding(BuildContext context) {
+  return MediaQuery.of(context).size.width * 0.05;
 }
 
 //Other

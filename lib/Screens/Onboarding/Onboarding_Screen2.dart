@@ -28,7 +28,7 @@ class OnboardingScreen2 extends StatelessWidget {
                 Text(
                   'Monitor Your Childs \nVaccine and Growth.',
                   style: outfitBold.copyWith(
-                      fontSize: getBoldFontSize(context) * 1.5),
+                      fontSize: getBigFontSize(context) * 1.5),
                   // textAlign: TextAlign.center,
                 ),
                 SizedBox(height: getSpacing(context)),

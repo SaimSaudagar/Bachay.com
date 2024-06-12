@@ -1,3 +1,4 @@
+import 'package:app/Screens/Authentication/Login_Screen.dart';
 import 'package:app/Screens/Onboarding/Loading_Screen.dart';
 // import 'package:app/Screens/Onboarding/Onboarding_Screen1.dart';
 // import 'package:app/Screens/Onboarding/Onboarding_Screen2.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: LoadingScreen(),
+      home: LoginScreen(),
     );
   }
 }

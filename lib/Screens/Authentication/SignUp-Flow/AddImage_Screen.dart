@@ -40,20 +40,25 @@ class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
               children: [
                 Container(
                   height: getBarHeight(context),
-                  width: getBarWidth(context) / 3 ,
-                  color: _currentStep >= 1 ? buttonColorPurple : Colors.grey[300],
+                  width: getBarWidth(context) / 3,
+                  color:
+                      _currentStep >= 1 ? buttonColorPurple : Colors.grey[300],
                 ),
-                SizedBox(width: getSpacing(context) * 10), // Space between the steps
+                SizedBox(
+                    width: getSpacing(context) * 10), // Space between the steps
                 Container(
                   height: getBarHeight(context),
-                  width: getBarWidth(context) / 3 ,
-                  color: _currentStep >= 2 ? buttonColorPurple : Colors.grey[300],
+                  width: getBarWidth(context) / 3,
+                  color:
+                      _currentStep >= 2 ? buttonColorPurple : Colors.grey[300],
                 ),
-                SizedBox(width: getSpacing(context) * 10), // Space between the steps
+                SizedBox(
+                    width: getSpacing(context) * 10), // Space between the steps
                 Container(
                   height: getBarHeight(context),
-                  width: getBarWidth(context) / 3 ,
-                  color: _currentStep >= 3 ? buttonColorPurple : Colors.grey[300],
+                  width: getBarWidth(context) / 3,
+                  color:
+                      _currentStep >= 3 ? buttonColorPurple : Colors.grey[300],
                 ),
               ],
             ),
@@ -65,7 +70,8 @@ class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
                 Text(
                   "Profile Photo",
                   textAlign: TextAlign.left,
-                  style: outfitBold.copyWith(fontSize: getBoldFontSize(context) * 2),
+                  style: outfitBold.copyWith(
+                      fontSize: getBigFontSize(context) * 2),
                 ),
               ],
             ),
@@ -134,13 +140,14 @@ class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
               ),
             ),
             SizedBox(height: getSpacing(context) * 5),
-            if (_imageFile == null)
-              Text('+ Upload Photo', style: outfitBold),
+            if (_imageFile == null) Text('+ Upload Photo', style: outfitBold),
             if (_imageFile != null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset('assets/images/edit-icon.svg',),
+                  SvgPicture.asset(
+                    'assets/images/edit-icon.svg',
+                  ),
                   SizedBox(width: 5),
                   Text(
                     'Change Photo',
@@ -156,13 +163,17 @@ class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
                   onPressed: () {},
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.black,
-                    padding: EdgeInsets.symmetric(horizontal: getSpacing(context) * 10, vertical: getSpacing(context) * 5),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getSpacing(context) * 10,
+                        vertical: getSpacing(context) * 5),
                     shape: RoundedRectangleBorder(
                       side: BorderSide(color: Colors.black),
                       borderRadius: BorderRadius.circular(roundBorderRadius),
                     ),
                   ),
-                  child: Text("Skip", style: outfitBold.copyWith(fontSize: getFontSize(context) * 1.5)),
+                  child: Text("Skip",
+                      style: outfitBold.copyWith(
+                          fontSize: getFontSize(context) * 1.5)),
                 ),
                 ElevatedButton(
                   onPressed: _imageFile != null
@@ -176,13 +187,19 @@ class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
                       : null,
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
-                    backgroundColor: _imageFile != null ? buttonColorPurple : Colors.grey[300], // Text color
-                    padding: EdgeInsets.symmetric(horizontal: getSpacing(context) * 15, vertical: getSpacing(context) * 5),
+                    backgroundColor: _imageFile != null
+                        ? buttonColorPurple
+                        : Colors.grey[300], // Text color
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getSpacing(context) * 15,
+                        vertical: getSpacing(context) * 5),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(roundBorderRadius),
                     ),
                   ),
-                  child: Text("Save & Continue", style: outfitBold.copyWith(fontSize: getFontSize(context) * 1.5)),
+                  child: Text("Save & Continue",
+                      style: outfitBold.copyWith(
+                          fontSize: getFontSize(context) * 1.5)),
                 ),
               ],
             ),

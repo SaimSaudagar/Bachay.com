@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app/Utils/app_constants.dart';
 
-import '../Authentication/SignIn_Screen.dart';
+import '../Authentication/Login_Screen.dart';
 
 class OnboardingScreen3 extends StatelessWidget {
   const OnboardingScreen3({super.key});
@@ -29,7 +29,7 @@ class OnboardingScreen3 extends StatelessWidget {
                 Text(
                   'Shop all Kind of\nProducts on Bachay.',
                   style: outfitBold.copyWith(
-                      fontSize: getBoldFontSize(context) * 1.5),
+                      fontSize: getBigFontSize(context) * 1.5),
                   // textAlign: TextAlign.center,
                 ),
                 SizedBox(height: getSpacing(context)),

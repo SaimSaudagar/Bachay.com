@@ -28,7 +28,7 @@ class OnboardingScreen1 extends StatelessWidget {
                 Text(
                   'Enjoy Shopping,\nParenting, Education.',
                   style: outfitBold.copyWith(
-                      fontSize: getBoldFontSize(context) * 1.5),
+                      fontSize: getBigFontSize(context) * 1.5),
                   // textAlign: TextAlign.center,
                 ),
                 SizedBox(height: getSpacing(context)),

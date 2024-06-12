@@ -4,47 +4,53 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../Widgets/Social_Button.dart';
 import 'Password_Screen.dart';
-// import 'SignUp_Screen.dart';
-// import 'Verify_OTP_Screen.dart';
 
 class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
+    double containerSize = MediaQuery.of(context).size.width * 0.2;
+    double spacingMultiplier = 2;
     return Scaffold(
-      // backgroundColor: Colors. ,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(getPadding(context)),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 180,
-                  width: 180,
+                  height: containerSize,
+                  width: containerSize,
                   child: Center(
                     child: SvgPicture.asset(
                       'assets/logo/Logo.svg',
                     ),
                   ),
                 ),
-                SizedBox(height: getSpacing(context) * 2),
+                SizedBox(height: getSpacing(context)),
                 Text("Welcome to Bachay",
-                    style: outfitBold.copyWith(
-                        fontSize: getBoldFontSize(context) * 2)),
-                SizedBox(height: getSpacing(context) * 2),
-                const Text(
+                    style:
+                        outfitBold.copyWith(fontSize: getBigFontSize(context))),
+                SizedBox(height: getSpacing(context) * spacingMultiplier),
+                Text(
                     "Please enter your email address or connect to your social accounts to continue.",
                     textAlign: TextAlign.center,
-                    style: contentC5),
-                SizedBox(height: getSpacing(context) * 2 * 2),
+                    style: contentC5.copyWith(fontSize: getFontSize(context))),
+                SizedBox(
+                    height: getSpacing(context) *
+                        spacingMultiplier *
+                        spacingMultiplier),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       "Email/Phone",
-                      style: outfitBold,
+                      style:
+                          outfitBold.copyWith(fontSize: getFontSize(context)),
                     ),
+                    SizedBox(height: getSpacing(context) * spacingMultiplier),
                     TextField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -55,15 +61,14 @@ class LoginScreen extends StatelessWidget {
                         hintStyle: contentC5.copyWith(
                             fontSize: getFontSize(context) * 1.5,
                             color: fontcolor),
-                        prefixIcon: const Icon(Icons.email),
+                        prefixIcon: SvgPicture.asset('assets/images/sms.svg'),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: getSpacing(context) * 2),
+                SizedBox(height: getSpacing(context) * spacingMultiplier),
                 SizedBox(
-                  width:
-                      double.infinity, // Set the width to match the TextField
+                  width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -83,7 +88,7 @@ class LoginScreen extends StatelessWidget {
                         style: outfitBold.copyWith(color: Colors.white)),
                   ),
                 ),
-                SizedBox(height: getSpacing(context) * 2),
+                SizedBox(height: getSpacing(context) * spacingMultiplier),
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -112,28 +117,28 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: getSpacing(context) * 2),
+                SizedBox(height: getSpacing(context) * spacingMultiplier),
                 SocialButton(
                   text: "Continue as Apple",
                   icon: FontAwesomeIcons.apple,
                   color: Colors.white,
                   onPressed: () {},
                 ),
-                SizedBox(height: getSpacing(context) * 2),
+                SizedBox(height: getSpacing(context) * spacingMultiplier),
                 SocialButton(
                   text: "Continue as Google",
                   icon: FontAwesomeIcons.google,
                   color: Colors.white,
                   onPressed: () {},
                 ),
-                SizedBox(height: getSpacing(context) * 2),
+                SizedBox(height: getSpacing(context) * spacingMultiplier),
                 SocialButton(
                   text: "Continue as Facebook",
                   icon: FontAwesomeIcons.facebook,
                   color: Colors.white,
                   onPressed: () {},
                 ),
-                SizedBox(height: getSpacing(context) * 2),
+                SizedBox(height: getSpacing(context) * spacingMultiplier),
                 const Text(
                   "By clicking Continue, you agree to WHM Terms of Use and Privacy Policy.",
                   textAlign: TextAlign.center,
