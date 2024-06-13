@@ -21,24 +21,11 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  height: containerSize,
-                  width: containerSize,
-                  child: Center(
-                    child: SvgPicture.asset(
-                      'assets/logo/Logo.svg',
-                    ),
-                  ),
-                ),
+                _logoSection(containerSize),
                 SizedBox(height: getSpacing(context)),
-                Text("Welcome to Bachay",
-                    style:
-                        outfitBold.copyWith(fontSize: getBigFontSize(context))),
+                _welcomeTextSection(context),
                 SizedBox(height: getSpacing(context) * spacingMultiplier),
-                Text(
-                    "Please enter your email address or connect to your social accounts to continue.",
-                    textAlign: TextAlign.center,
-                    style: contentC5.copyWith(fontSize: getFontSize(context))),
+                _authTextSection(context),
                 SizedBox(
                     height: getSpacing(context) *
                         spacingMultiplier *
@@ -62,18 +49,12 @@ class LoginScreen extends StatelessWidget {
                         hintStyle: contentC5.copyWith(
                             fontSize: getFontSize(context) * 1.5,
                             color: fontcolor),
-                          prefixIcon: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: SvgPicture.asset(
-                            'assets/images/sms.svg',
-                            width: buttonWidth*1.5,
-                            height: buttonHeight*1.5,
-                          ),
-                        ),                      ),
+                        prefixIcon: SvgPicture.asset('assets/images/sms.svg'),
+                      ),
                     ),
                   ],
                 ),
-                SizedBox(height: getSpacing(context) * 5),
+                SizedBox(height: getSpacing(context) * spacingMultiplier),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -95,7 +76,7 @@ class LoginScreen extends StatelessWidget {
                         style: outfitBold.copyWith(color: Colors.white)),
                   ),
                 ),
-                SizedBox(height: getSpacing(context) * 5),
+                SizedBox(height: getSpacing(context) * spacingMultiplier),
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -107,9 +88,11 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                     Text(
+                    const Text(
                       "Or Joined With",
-                      style: outfitRegular.copyWith(color: fontcolor,fontSize: getFontSize(context)*1.5)
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Color.fromRGBO(212, 212, 216, 1)),
                     ),
                     Expanded(
                       child: Container(
