@@ -1,4 +1,5 @@
 import 'package:app/Utils/app_constants.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -61,12 +62,18 @@ class LoginScreen extends StatelessWidget {
                         hintStyle: contentC5.copyWith(
                             fontSize: getFontSize(context) * 1.5,
                             color: fontcolor),
-                        prefixIcon: SvgPicture.asset('assets/images/sms.svg'),
-                      ),
+                          prefixIcon: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: SvgPicture.asset(
+                            'assets/images/sms.svg',
+                            width: buttonWidth*1.5,
+                            height: buttonHeight*1.5,
+                          ),
+                        ),                      ),
                     ),
                   ],
                 ),
-                SizedBox(height: getSpacing(context) * spacingMultiplier),
+                SizedBox(height: getSpacing(context) * 5),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -88,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                         style: outfitBold.copyWith(color: Colors.white)),
                   ),
                 ),
-                SizedBox(height: getSpacing(context) * spacingMultiplier),
+                SizedBox(height: getSpacing(context) * 5),
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -100,11 +107,9 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const Text(
+                     Text(
                       "Or Joined With",
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Color.fromRGBO(212, 212, 216, 1)),
+                      style: outfitRegular.copyWith(color: fontcolor,fontSize: getFontSize(context)*1.5)
                     ),
                     Expanded(
                       child: Container(

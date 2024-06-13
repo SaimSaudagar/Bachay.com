@@ -17,36 +17,79 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
   bool _addressFound = false;
 
   void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
+    setState(() {
+      mapController = controller;
+    });
   }
 
-  void _getCurrentLocation() async {
-    var locationData = await _location.getLocation();
-    _currentPosition = LatLng(locationData.latitude!, locationData.longitude!);
+  Future<void> _getCurrentLocation() async {
+    bool _serviceEnabled;
+    loc.PermissionStatus _permissionGranted;
 
-    // Animate the camera to the new location
-    mapController?.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(target: _currentPosition!, zoom: 15),
-      ),
-    );
+    try {
+      // Check if location service is enabled
+      _serviceEnabled = await _location.serviceEnabled();
+      if (!_serviceEnabled) {
+        _serviceEnabled = await _location.requestService();
+        if (!_serviceEnabled) {
+          print("Location service is not enabled.");
+          return;
+        }
+      }
 
-    // Get the address from the coordinates
-    List<Placemark> placemarks = await placemarkFromCoordinates(
-      _currentPosition!.latitude,
-      _currentPosition!.longitude,
-    );
+      // Check location permission
+      _permissionGranted = await _location.hasPermission();
+      if (_permissionGranted == loc.PermissionStatus.denied) {
+        _permissionGranted = await _location.requestPermission();
+        if (_permissionGranted != loc.PermissionStatus.granted) {
+          print("Location permission not granted.");
+          return;
+        }
+      }
 
-    setState(() {
-      _currentAddress = placemarks.first.street ?? "Address not found";
-      _addressFound = true;
-    });
+      var locationData = await _location.getLocation();
+      if (locationData.latitude == null || locationData.longitude == null) {
+        throw Exception("Failed to get location");
+      }
+
+      _currentPosition = LatLng(locationData.latitude!, locationData.longitude!);
+
+      // Animate the camera to the new location
+      if (mapController != null) {
+        mapController!.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(target: _currentPosition!, zoom: 15),
+          ),
+        );
+      } else {
+        print("Map controller is null");
+      }
+
+      // Get the address from the coordinates
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        _currentPosition!.latitude,
+        _currentPosition!.longitude,
+      );
+
+      setState(() {
+        _currentAddress = placemarks.isNotEmpty ? placemarks.first.street ?? "Address not found" : "Address not found";
+        _addressFound = true;
+      });
+    } catch (e) {
+      print("Error getting location: $e");
+      setState(() {
+        _currentAddress = "Error finding address";
+        _addressFound = false;
+      });
+    }
   }
 
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getCurrentLocation();
+    });
   }
 
   @override
