@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:app/Models/Home/Category.dart';
 import 'package:app/Models/Home/Main_Banner.dart';
 import 'package:http/http.dart' as http;
 
@@ -93,5 +94,21 @@ class HomeRepository {
           buttonText: "Shop Now",
           backgroundColor: "#f9f5fd")
     ]);
+  }
+
+  final String _baseUrl = 'https://bachay.com/api/v1/categories-list/';
+
+  Future<CategoryList> fetchCategories() async {
+    try {
+      final response = await http.get(Uri.parse(_baseUrl));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return CategoryList.fromJson(data);
+      } else {
+        throw Exception('Failed to load categories');
+      }
+    } catch (e) {
+      throw Exception('Failed to fetch categories: ${e.toString()}');
+    }
   }
 }

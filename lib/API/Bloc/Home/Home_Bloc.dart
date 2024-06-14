@@ -16,5 +16,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(BannersError(e.toString()));
       }
     });
+
+    on<LoadCategory>((event, emit) async {
+      emit(CategoryLoading());
+      try {
+        final categories = await homeRepository.fetchCategories();
+        emit(CategoryLoaded(categories));
+      } catch (e) {
+        emit(CategoryError(e.toString()));
+      }
+    });
   }
 }
