@@ -6,8 +6,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
 
-  const CustomAppBar({super.key})
-      : preferredSize = const Size.fromHeight(60.0);
+  const CustomAppBar({super.key}) : preferredSize = const Size.fromHeight(60.0);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +14,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white,
       elevation: 1,
       leading: IconButton(
-        icon: Icon(Icons.menu, color: Colors.black, size: getFontSize(context) * 1.5),
+        icon: Icon(Icons.menu,
+            color: Colors.black, size: getFontSize(context) * 1.5),
         onPressed: () {},
       ),
       title: Row(
@@ -44,7 +44,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       "All",
                       style: interBold.copyWith(
                         color: Colors.black,
-                        fontSize: getFontSize(context) ,
+                        fontSize: getFontSize(context),
                       ),
                     ),
                   ],
@@ -68,28 +68,35 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               IconButton(
-                icon: SvgPicture.asset('assets/images/search-normal.svg', height: getFontSize(context) * 1.5),
+                icon: SvgPicture.asset('assets/images/search-normal.svg',
+                    height: getFontSize(context) * 1.5),
                 onPressed: () {},
                 padding: EdgeInsets.all(0), // Remove default padding
                 constraints: BoxConstraints(), // Remove default constraints
               ),
-              SizedBox(width: getSpacing(context) / 2), // Adjust spacing as needed
+              SizedBox(
+                  width: getSpacing(context) / 2), // Adjust spacing as needed
               IconButton(
-                icon: SvgPicture.asset('assets/images/favorites.svg', height: getFontSize(context) * 1.5),
+                icon: SvgPicture.asset('assets/images/favorites.svg',
+                    height: getFontSize(context) * 1.5),
                 onPressed: () {},
                 padding: EdgeInsets.all(0), // Remove default padding
                 constraints: BoxConstraints(), // Remove default constraints
               ),
-              SizedBox(width: getSpacing(context) / 2), // Adjust spacing as needed
+              SizedBox(
+                  width: getSpacing(context) / 2), // Adjust spacing as needed
               IconButton(
-                icon: SvgPicture.asset('assets/images/notification.svg', height: getFontSize(context) * 1.5),
+                icon: SvgPicture.asset('assets/images/notification.svg',
+                    height: getFontSize(context) * 1.5),
                 onPressed: () {},
                 padding: EdgeInsets.all(0), // Remove default padding
                 constraints: BoxConstraints(), // Remove default constraints
               ),
-              SizedBox(width: getSpacing(context) / 2), // Adjust spacing as needed
+              SizedBox(
+                  width: getSpacing(context) / 2), // Adjust spacing as needed
               IconButton(
-                icon: SvgPicture.asset('assets/images/shopping-cart.svg',height: getFontSize(context) * 1.5),
+                icon: SvgPicture.asset('assets/images/shopping-cart.svg',
+                    height: getFontSize(context) * 1.5),
                 onPressed: () {},
                 padding: EdgeInsets.all(0), // Remove default padding
                 constraints: BoxConstraints(), // Remove default constraints
@@ -106,51 +113,70 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       context: context,
       isScrollControlled: true,
       builder: (context) {
-        return Padding(
+        return Container(
+          width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom,
+            left: 10,
+            right: 10,
           ),
-          child: Wrap(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: EdgeInsets.all(getPadding(context)),
+                padding: EdgeInsets.all(8.0),
                 child: Column(
                   children: [
                     Text(
                       "Who are you Shopping for today?",
-                      style: interBold.copyWith(
-                        fontSize: getBigFontSize(context),
-                      ),
+                      style: TextStyle(
+                          fontSize: getBigFontSize(context),
+                          fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: getSpacing(context) * 4),
+                    SizedBox(height: 20),
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
                           _buildAvatar(context, 'Add Child', Icons.add),
-                          _buildAvatar(context, 'All', 'assets/images/shop_for_all.svg'),  
-                          _buildAvatar(context, 'Boy', 'assets/images/boy-icon.png'),
-                          _buildAvatar(context, 'Girl', 'assets/images/girl-icon.png'),
+                          _buildAvatar(
+                              context, 'All', 'assets/images/shop_for_all.svg'),
+                          _buildAvatar(
+                              context, 'Boy', 'assets/images/boy-icon.png'),
+                          _buildAvatar(
+                              context, 'Girl', 'assets/images/girl-icon.png'),
+                          _buildAvatar(
+                              context, 'Girl', 'assets/images/girl-icon.png'),
+                          _buildAvatar(
+                              context, 'Girl', 'assets/images/girl-icon.png'),
+                          _buildAvatar(
+                              context, 'Girl', 'assets/images/girl-icon.png'),
+                          _buildAvatar(
+                              context, 'Girl', 'assets/images/girl-icon.png'),
                         ],
                       ),
                     ),
-                    SizedBox(height: getSpacing(context) * 4),
+                    SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                        // Handle child settings action
+                        // Handle the button press
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: buttonPadding,
+                        backgroundColor: buttonColorPurple,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(borderRadius),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Text(
+                          "Go to Child Settings",
+                          textAlign: TextAlign.center,
+                          style: buttonTextStyle(context),
                         ),
                       ),
-                      child: Text(
-                        "Go to Child Settings",
-                        style: buttonTextStyle(context),
-                      ),
-                    ),
-                    SizedBox(height: getSpacing(context) * 4),
+                    )
                   ],
                 ),
               ),
@@ -163,39 +189,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _buildAvatar(BuildContext context, String label, dynamic image) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: getSpacing(context)),
+      padding: EdgeInsets.all(8.0),
       child: Column(
         children: [
           CircleAvatar(
-            radius: getFontSize(context) * 1.2,
+            radius: 24,
             backgroundColor: Colors.grey[200],
             backgroundImage: image is String ? AssetImage(image) : null,
-            child: image is IconData ? Icon(image, size: getFontSize(context) * 1.2) : null,
+            child: image is IconData ? Icon(image, size: 24) : null,
           ),
-          SizedBox(height: getSpacing(context)),
-          Text(
-            label,
-            style: interRegular.copyWith(fontSize: getFontSize(context)),
-          ),
+          SizedBox(height: 8),
+          Text(label),
         ],
-      ),
-    );
-  }
-}
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: CustomAppBar(),
-        body: Center(
-          child: Text('Content goes here'),
-        ),
       ),
     );
   }
