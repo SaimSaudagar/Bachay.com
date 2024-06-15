@@ -23,6 +23,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         final categories = await homeRepository.fetchCategories();
         emit(CategoryLoaded(categories));
       } catch (e) {
+        print(e.toString());
         emit(CategoryError(e.toString()));
       }
     });

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as loc;
 import 'package:geocoding/geocoding.dart';
 
@@ -9,18 +9,18 @@ class AddLocationScreen extends StatefulWidget {
 }
 
 class _AddLocationScreenState extends State<AddLocationScreen> {
-  GoogleMapController? mapController;
-  LatLng _center = LatLng(24.8607, 67.0011);
-  LatLng? _currentPosition;
+  // GoogleMapController? mapController;
+  // LatLng _center = LatLng(24.8607, 67.0011);
+  // LatLng? _currentPosition;
   loc.Location _location = loc.Location();
   String _currentAddress = "Searching Address...";
   bool _addressFound = false;
 
-  void _onMapCreated(GoogleMapController controller) {
-    setState(() {
-      mapController = controller;
-    });
-  }
+  // void _onMapCreated(GoogleMapController controller) {
+  //   setState(() {
+  //     mapController = controller;
+  //   });
+  // }
 
   Future<void> _getCurrentLocation() async {
     bool _serviceEnabled;
@@ -52,27 +52,27 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
         throw Exception("Failed to get location");
       }
 
-      _currentPosition = LatLng(locationData.latitude!, locationData.longitude!);
+      // _currentPosition = LatLng(locationData.latitude!, locationData.longitude!);
 
-      // Animate the camera to the new location
-      if (mapController != null) {
-        mapController!.animateCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(target: _currentPosition!, zoom: 15),
-          ),
-        );
-      } else {
-        print("Map controller is null");
-      }
+      // // Animate the camera to the new location
+      // if (mapController != null) {
+      //   mapController!.animateCamera(
+      //     CameraUpdate.newCameraPosition(
+      //       CameraPosition(target: _currentPosition!, zoom: 15),
+      //     ),
+      //   );
+      // } else {
+      //   print("Map controller is null");
+      // }
 
       // Get the address from the coordinates
-      List<Placemark> placemarks = await placemarkFromCoordinates(
-        _currentPosition!.latitude,
-        _currentPosition!.longitude,
-      );
+      // List<Placemark> placemarks = await placemarkFromCoordinates(
+      //   // _currentPosition!.latitude,
+      //   // _currentPosition!.longitude,
+      // );
 
       setState(() {
-        _currentAddress = placemarks.isNotEmpty ? placemarks.first.street ?? "Address not found" : "Address not found";
+        // _currentAddress = placemarks.isNotEmpty ? placemarks.first.street ?? "Address not found" : "Address not found";
         _addressFound = true;
       });
     } catch (e) {
@@ -97,15 +97,15 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          GoogleMap(
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(
-              target: _center,
-              zoom: 11.0,
-            ),
-            myLocationEnabled: true,
-            myLocationButtonEnabled: false,
-          ),
+          // GoogleMap(
+          //   onMapCreated: _onMapCreated,
+          //   initialCameraPosition: CameraPosition(
+          //     target: _center,
+          //     zoom: 11.0,
+          //   ),
+          //   myLocationEnabled: true,
+          //   myLocationButtonEnabled: false,
+          // ),
           Positioned(
             top: 40,
             left: 15,

@@ -1,11 +1,10 @@
 import 'package:app/Screens/Authentication/Login_Screen.dart';
 import 'package:app/Screens/Home/Homepage.dart';
 import 'package:app/Screens/Onboarding/Loading_Screen.dart';
-import 'package:app/Screens/Product/Single_Products_Screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyApp());  
 }
 
 class MyApp extends StatelessWidget {

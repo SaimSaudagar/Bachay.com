@@ -9,6 +9,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app/Models/Home/Main_Banner.dart';
+import 'dart:developer';
 
 class HomePage extends StatefulWidget {
   @override
@@ -48,7 +49,7 @@ class _HomePageState extends State<HomePage> {
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           if (state is BannersLoading) {
-            return Center(child: CircularProgressIndicator());
+            return SizedBox();
           } else if (state is BannersLoaded) {
             return _buildCarousel(state.banners);
           } else if (state is BannersError) {
@@ -98,9 +99,9 @@ class _HomePageState extends State<HomePage> {
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           if (state is CategoryLoading) {
-            return Center(child: CircularProgressIndicator());
+            return SizedBox();
           } else if (state is CategoryLoaded) {
-            return buildCategoryCarousel(state.category.categories);
+            return buildCategory(state.category.categories);
           } else if (state is CategoryError) {
             return SizedBox();
           }
@@ -110,16 +111,15 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buildCategoryCarousel(List<Category> categories) {
+  Widget buildCategory(List<Category> categories) {
     return Container(
-      height: 250, // Adjust height accordingly
+      height: 500,
       child: GridView.count(
         crossAxisCount: 3,
-        childAspectRatio: 1 / 1.2, // Adjust aspect ratio for better sizing
+        childAspectRatio: 1 / 1.2,
         children:
             categories.map((category) => buildCategoryTile(category)).toList(),
-        physics:
-            NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+        physics: NeverScrollableScrollPhysics(),
       ),
     );
   }
@@ -129,14 +129,14 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         children: <Widget>[
           Expanded(
-            child: Image.network(category.icon, fit: BoxFit.cover,
+            child: Image.network(category.icon!, fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
               return Center(child: Text('Image not available'));
             }),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(category.name,
+            child: Text(category.name!,
                 style: TextStyle(fontWeight: FontWeight.bold)),
           ),
         ],
