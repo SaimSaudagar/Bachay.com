@@ -23,8 +23,27 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         final categories = await homeRepository.fetchCategories();
         emit(CategoryLoaded(categories));
       } catch (e) {
-        print(e.toString());
         emit(CategoryError(e.toString()));
+      }
+    });
+
+    on<LoadFeaturedProducts>((event, emit) async {
+      emit(FeaturedProductLoading());
+      try {
+        final featuredProducts = await homeRepository.fetchFeaturedProducts();
+        emit(FeaturedProductLoaded(featuredProducts));
+      } catch (e) {
+        emit(FeaturedProductError(e.toString()));
+      }
+    });
+
+    on<LoadTrendsBanner>((event, emit) async {
+      emit(TrendsBannerLoading());
+      try {
+        final trendsBanner = await homeRepository.fetchTrendsBanner();
+        emit(TrendsBannerLoaded(trendsBanner));
+      } catch (e) {
+        emit(TrendsBannerError(e.toString()));
       }
     });
   }

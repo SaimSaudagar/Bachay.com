@@ -1,3 +1,4 @@
+import 'package:app/Screens/Product/All_Producst_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../Utils/app_constants.dart';
@@ -70,7 +71,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               IconButton(
                 icon: SvgPicture.asset('assets/images/search-normal.svg',
                     height: getFontSize(context) * 1.5),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AllProducstScreen()));
+                },
                 padding: EdgeInsets.all(0), // Remove default padding
                 constraints: BoxConstraints(), // Remove default constraints
               ),

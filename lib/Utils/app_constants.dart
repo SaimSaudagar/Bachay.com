@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+//API
+const String baseUrl = 'https://bachay.com/api/v1/';
+
 //Colors
 const LinearGradient appGradient = LinearGradient(
   colors: [
@@ -62,7 +65,7 @@ double getBarHeight(BuildContext context) {
 }
 
 double getPadding(BuildContext context) {
-  return MediaQuery.of(context).size.width * 0.05;
+  return MediaQuery.of(context).size.width * 0.025;
 }
 
 //Other

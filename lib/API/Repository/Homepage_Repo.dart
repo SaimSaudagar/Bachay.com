@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:app/Models/Home/Category.dart';
+import 'package:app/Models/Home/Featured_Product.dart';
 import 'package:app/Models/Home/Main_Banner.dart';
+import 'package:app/Models/Home/Trends.dart';
 import 'package:http/http.dart' as http;
+import 'package:app/Utils/app_constants.dart';
 
 class HomeRepository {
   Future<BannerList> fetchBanners() async {
@@ -96,11 +99,9 @@ class HomeRepository {
   //   ]);
   // }
 
-  final String _baseUrl = 'https://bachay.com/api/v1/categories-list/';
-
   Future<CategoryList> fetchCategories() async {
     try {
-      final response = await http.get(Uri.parse(_baseUrl));
+      final response = await http.get(Uri.parse('${baseUrl}categories-list/'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
@@ -110,6 +111,38 @@ class HomeRepository {
       }
     } catch (e) {
       throw Exception('Failed to fetch categories: ${e.toString()}');
+    }
+  }
+
+  Future<FeaturedProductList> fetchFeaturedProducts() async {
+    try {
+      final response =
+          await http.get(Uri.parse('${baseUrl}featured_products/'));
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return FeaturedProductList.fromJson(data);
+      } else {
+        throw Exception('Failed to featured products');
+      }
+    } catch (e) {
+      throw Exception('Failed to featured products: ${e.toString()}');
+    }
+  }
+
+  Future<TrendsBannerList> fetchTrendsBanner() async {
+    try {
+      final response = await http.get(Uri.parse('${baseUrl}trends-banner'));
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return TrendsBannerList.fromJson(data);
+      } else {
+        throw Exception('Failed to trends banner');
+      }
+    } catch (e) {
+      print(e.toString());
+      throw Exception('Failed to trends banner: ${e.toString()}');
     }
   }
 }

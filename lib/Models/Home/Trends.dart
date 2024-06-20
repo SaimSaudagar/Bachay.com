@@ -1,40 +1,40 @@
-class BannerList {
-  List<MainBanner> mainBanner;
+class TrendsBannerList {
+  List<TrendsBanner> banners;
 
-  BannerList({required this.mainBanner});
+  TrendsBannerList({required this.banners});
 
-  factory BannerList.fromJson(Map<String, dynamic> json) {
-    return BannerList(
-      mainBanner: List<MainBanner>.from(
-          json['main_banner'].map((x) => MainBanner.fromJson(x))),
+  factory TrendsBannerList.fromJson(Map<String, dynamic> json) {
+    return TrendsBannerList(
+      banners: List<TrendsBanner>.from(
+          json['trends_banner'].map((x) => TrendsBanner.fromJson(x))),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'main_banner': List<dynamic>.from(mainBanner.map((x) => x.toJson())),
+      'trends_banner': List<dynamic>.from(banners.map((x) => x.toJson())),
     };
   }
 }
 
-class MainBanner {
+class TrendsBanner {
   int id;
   String photo;
   String mobilePhoto;
   String bannerType;
   String theme;
-  int published;
+  bool published;
   DateTime createdAt;
   DateTime updatedAt;
   String url;
   String resourceType;
   int resourceId;
-  String title;
+  String? title;
   String? subTitle;
   String? buttonText;
   String backgroundColor;
 
-  MainBanner({
+  TrendsBanner({
     required this.id,
     required this.photo,
     required this.mobilePhoto,
@@ -46,20 +46,20 @@ class MainBanner {
     required this.url,
     required this.resourceType,
     required this.resourceId,
-    required this.title,
+    this.title,
     this.subTitle,
     this.buttonText,
     required this.backgroundColor,
   });
 
-  factory MainBanner.fromJson(Map<String, dynamic> json) {
-    return MainBanner(
+  factory TrendsBanner.fromJson(Map<String, dynamic> json) {
+    return TrendsBanner(
       id: json['id'],
       photo: json['photo'],
       mobilePhoto: json['mobile_photo'],
       bannerType: json['banner_type'],
       theme: json['theme'],
-      published: json['published'],
+      published: json['published'] == 1,
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
       url: json['url'],
@@ -79,7 +79,7 @@ class MainBanner {
       'mobile_photo': mobilePhoto,
       'banner_type': bannerType,
       'theme': theme,
-      'published': published,
+      'published': published ? 1 : 0,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
       'url': url,

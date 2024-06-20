@@ -45,6 +45,7 @@ dependencies:
   equatable: ^2.0.5
   carousel_slider: ^4.2.1
   http: ^1.2.1
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +72,7 @@ flutter:
   assets:
     - assets/logo/
     - assets/images/
+    - assets/images/home/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -3,20 +3,7 @@ import 'package:flutter/material.dart';
 import '../../Widgets/App_Bar.dart';
 import '../../Widgets/Location_Bar.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
+class AllProducstScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -173,11 +160,11 @@ class DeliveryButton extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(icon, color: textColor, size: 16),
+          Icon(icon, color: textColor, size: 10),
           SizedBox(width: 4),
           Text(
             text,
-            style: TextStyle(color: textColor),
+            style: TextStyle(color: textColor, fontSize: 12),
           ),
         ],
       ),
