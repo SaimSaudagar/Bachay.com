@@ -60,7 +60,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 alignment: Alignment.center,
                 child: SvgPicture.asset(
                   'assets/logo/Logo.svg',
-                  height: getFontSize(context) * 2.5,
+                  height: getFontSize(context) * 5,
                 ),
               ),
             ),

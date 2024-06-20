@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
+// import 'package:location/location.dart';
 
 import '../../../Utils/app_constants.dart';
 import 'AddLocation_Screen.dart';
@@ -14,7 +14,7 @@ class AddAddressScreen extends StatefulWidget {
 class _AddAddressScreenState extends State<AddAddressScreen> {
   // GoogleMapController? mapController;
   // LatLng? _currentPosition;
-  Location _location = Location();
+  // Location _location = Location();
   final TextEditingController _addressController = TextEditingController();
 
   @override
@@ -24,7 +24,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   }
 
   void _getCurrentLocation() async {
-    var locationData = await _location.getLocation();
+    // var locationData = await _location.getLocation();
     setState(() {
       // _currentPosition =
           // LatLng(locationData.latitude!, locationData.longitude!);
@@ -85,10 +85,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             Center(
                 child: TextButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddLocationScreen()),
-                );
+                // Navigator.push(
+                //   context,
+                //   // MaterialPageRoute(builder: (context) => AddLocationScreen()),
+                // );
               },
               style: TextButton.styleFrom(
                 foregroundColor: buttonColorPurple,
