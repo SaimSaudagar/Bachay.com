@@ -46,6 +46,8 @@ class FeaturedProductError extends HomeState {
   FeaturedProductError(this.message);
 }
 
+
+
 //Trends Banner
 class TrendsBannerLoading extends HomeState {}
 

@@ -60,7 +60,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 alignment: Alignment.center,
                 child: SvgPicture.asset(
                   'assets/logo/Logo.svg',
-                  height: getFontSize(context) * 5,
+                  height: getBigFontSize(context) * 10, width: getBigFontSize(context)*10,
                 ),
               ),
             ),
@@ -75,7 +75,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AllProducstScreen()));
+                          builder: (context) => AllProductsScreen()));
                 },
                 padding: EdgeInsets.all(0), // Remove default padding
                 constraints: BoxConstraints(), // Remove default constraints
