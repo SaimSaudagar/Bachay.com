@@ -372,11 +372,6 @@
 //   }
 // }
 
-
-
-
-
-
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import '../../API/Bloc/Product/Product_Bloc.dart';
@@ -387,7 +382,6 @@
 // import '../../Utils/app_constants.dart';
 // import '../../Widgets/App_Bar.dart';
 // import '../../Widgets/Location_Bar.dart';
-
 
 // class AllProductsScreen extends StatelessWidget {
 //   @override
@@ -783,16 +777,6 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
-
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import '../../API/Bloc/Product/Product_Bloc.dart';
@@ -804,7 +788,6 @@
 // import 'package:app/API/Repository/Homepage_Repo.dart';
 // import 'package:app/Models/Home/Featured_Product.dart';
 // import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
 
 // class AllProductsScreen extends StatelessWidget {
 //   @override
@@ -1261,32 +1244,6 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../API/Bloc/Product/Product_Bloc.dart';
@@ -1299,7 +1256,6 @@ import '../../Widgets/Location_Bar.dart';
 import 'package:app/API/Repository/Homepage_Repo.dart';
 import 'package:app/Models/Home/Featured_Product.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
 
 class AllProductsScreen extends StatelessWidget {
   @override
@@ -1328,7 +1284,8 @@ class AllProductsScreen extends StatelessWidget {
 
   Widget featuredProducts(BuildContext context) {
     return BlocProvider(
-      create: (_) => AllProductsBloc(homeRepository: HomeRepository())..add(LoadAllProducts()),
+      create: (_) => AllProductsBloc(homeRepository: HomeRepository())
+        ..add(LoadAllProducts()),
       child: BlocBuilder<AllProductsBloc, AllProductsState>(
         builder: (context, state) {
           if (state is AllProductsLoading) {
@@ -1344,7 +1301,8 @@ class AllProductsScreen extends StatelessWidget {
     );
   }
 
-  Widget buildFeaturedProducts(BuildContext context, List<FeaturedProduct> products) {
+  Widget buildFeaturedProducts(
+      BuildContext context, List<FeaturedProduct> products) {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -1359,7 +1317,8 @@ class AllProductsScreen extends StatelessWidget {
     );
   }
 
-  Widget buildFeaturedProductTile(BuildContext context, FeaturedProduct product) {
+  Widget buildFeaturedProductTile(
+      BuildContext context, FeaturedProduct product) {
     Color textColor = Color.fromRGBO(191, 143, 57, 1);
     Color color = Color.fromRGBO(255, 244, 223, 1);
     Color borderColor = Color.fromRGBO(255, 198, 95, 1);
@@ -1381,15 +1340,18 @@ class AllProductsScreen extends StatelessWidget {
           children: [
             Expanded(
               child: Padding(
-                padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
+                padding:
+                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(10)),
                     image: DecorationImage(
                       image: NetworkImage(product.thumbnail),
                       fit: BoxFit.cover,
-                      onError: (error, stackTrace) => Center(child: Text('Image not available')),
+                      onError: (error, stackTrace) =>
+                          Center(child: Text('Image not available')),
                     ),
                   ),
                 ),
@@ -1408,14 +1370,16 @@ class AllProductsScreen extends StatelessWidget {
               child: Row(children: [
                 RatingBarIndicator(
                   rating: 4.5,
-                  itemBuilder: (context, index) => const Icon(Icons.star, color: Colors.amber),
+                  itemBuilder: (context, index) =>
+                      const Icon(Icons.star, color: Colors.amber),
                   itemCount: 1,
                   itemSize: 20.0,
                   direction: Axis.horizontal,
                 ),
                 Text(
                   '4.5',
-                  style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: fontSize, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   ' (100)',
@@ -1466,7 +1430,8 @@ class FilterButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: getPadding(context), vertical: getSpacing(context)),
+      padding: EdgeInsets.symmetric(
+          horizontal: getPadding(context), vertical: getSpacing(context)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -1474,26 +1439,36 @@ class FilterButtons extends StatelessWidget {
             onPressed: () {},
             child: Row(
               children: [
-                Text('Recommended', style: TextStyle(color: Colors.purple, fontSize: getFontSize(context))),
+                Text('Recommended',
+                    style: TextStyle(
+                        color: Colors.purple, fontSize: getFontSize(context))),
                 const Icon(Icons.arrow_drop_down, color: Colors.purple),
               ],
             ),
           ),
           TextButton(
             onPressed: () {},
-            child: Text('Most Popular', style: TextStyle(color: Colors.black, fontSize: getFontSize(context))),
+            child: Text('Most Popular',
+                style: TextStyle(
+                    color: Colors.black, fontSize: getFontSize(context))),
           ),
           TextButton(
             onPressed: () {},
-            child: Text('Top Rated', style: TextStyle(color: Colors.black, fontSize: getFontSize(context))),
+            child: Text('Top Rated',
+                style: TextStyle(
+                    color: Colors.black, fontSize: getFontSize(context))),
           ),
           TextButton(
             onPressed: () {},
             child: Row(
               children: [
-                Text('Price', style: TextStyle(color: Colors.black, fontSize: getFontSize(context))),
-                Icon(Icons.arrow_upward, color: Colors.black, size: getFontSize(context)),
-                Icon(Icons.arrow_downward, color: Colors.black, size: getFontSize(context)),
+                Text('Price',
+                    style: TextStyle(
+                        color: Colors.black, fontSize: getFontSize(context))),
+                Icon(Icons.arrow_upward,
+                    color: Colors.black, size: getFontSize(context)),
+                Icon(Icons.arrow_downward,
+                    color: Colors.black, size: getFontSize(context)),
               ],
             ),
           ),
@@ -1504,49 +1479,62 @@ class FilterButtons extends StatelessWidget {
 }
 
 class DeliveryButtons extends StatelessWidget {
+  Widget horizontalSpacing(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.height * 0.01,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: getPadding(context), vertical: getSpacing(context)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          DeliveryButton(
-            text: 'Fast Delivery',
-            color: Colors.orange.shade100,
-            textColor: Colors.orange.shade700,
-            icon: Icons.local_shipping,
-            onTap: () {
-              print('Fast Delivery clicked');
-            },
-          ),
-          DeliveryButton(
-            text: 'Free Delivery',
-            color: Colors.green.shade100,
-            textColor: Colors.green.shade700,
-            icon: Icons.local_shipping,
-            onTap: () {
-              print('Free Delivery clicked');
-            },
-          ),
-          DeliveryButton(
-            text: 'Best Selling',
-            color: Colors.grey.shade200,
-            textColor: Colors.black,
-            borderColor: Colors.black,
-            onTap: () {
-              print('Best Selling clicked');
-            },
-          ),
-          DeliveryButton(
-            text: 'Trending',
-            color: Colors.grey.shade200,
-            textColor: Colors.grey.shade500,
-            onTap: () {
-              print('Trending clicked');
-            },
-          ),
-        ],
+      padding: EdgeInsets.symmetric(
+          horizontal: getPadding(context), vertical: getSpacing(context)),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            DeliveryButton(
+              text: 'Fast Delivery',
+              color: Colors.orange.shade100,
+              textColor: Colors.orange.shade700,
+              icon: Icons.local_shipping,
+              onTap: () {
+                print('Fast Delivery clicked');
+              },
+            ),
+            horizontalSpacing(context),
+            DeliveryButton(
+              text: 'Free Delivery',
+              color: Colors.green.shade100,
+              textColor: Colors.green.shade700,
+              icon: Icons.local_shipping,
+              onTap: () {
+                print('Free Delivery clicked');
+              },
+            ),
+            horizontalSpacing(context),
+            DeliveryButton(
+              text: 'Best Selling',
+              color: Colors.grey.shade200,
+              textColor: Colors.black,
+              borderColor: Colors.black,
+              onTap: () {
+                print('Best Selling clicked');
+              },
+            ),
+            horizontalSpacing(context),
+            DeliveryButton(
+              text: 'Trending',
+              color: Colors.grey.shade200,
+              textColor: Colors.grey.shade500,
+              onTap: () {
+                print('Trending clicked');
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -1572,24 +1560,28 @@ class DeliveryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onTap,
-      style: TextButton.styleFrom(
-        backgroundColor: color,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          side: BorderSide(color: borderColor),
-        ),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, color: textColor, size: getFontSize(context)),
-          const SizedBox(width: 4),
-          Text(
-            text,
-            style: TextStyle(color: textColor, fontSize: getFontSize(context)),
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.04,
+      child: TextButton(
+        onPressed: onTap,
+        style: TextButton.styleFrom(
+          backgroundColor: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            side: BorderSide(color: borderColor),
           ),
-        ],
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: textColor, size: getFontSize(context)),
+            const SizedBox(width: 4),
+            Text(
+              text,
+              style:
+                  TextStyle(color: textColor, fontSize: getFontSize(context)),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -1599,7 +1591,7 @@ class FilterOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(getPadding(context)),
+      padding: EdgeInsets.all(getPadding(context) * 2),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -1639,7 +1631,7 @@ class FilterOptionButton extends StatelessWidget {
   const FilterOptionButton({
     required this.text,
     required this.onTap,
-    this.color = Colors.grey,
+    this.color = const Color.fromRGBO(161, 161, 170, 0.1),
     this.textColor = Colors.black,
     this.icon = Icons.adjust,
     Key? key,

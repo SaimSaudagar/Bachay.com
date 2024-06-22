@@ -3,19 +3,6 @@ import '../../Utils/app_constants.dart';
 
 import '../../Widgets/App_Bar.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: SingleProductScreen(),
-    );
-  }
-}
-
 class SingleProductScreen extends StatefulWidget {
   const SingleProductScreen({Key? key}) : super(key: key);
 
@@ -34,9 +21,12 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double circleRadius = MediaQuery.of(context).size.width * 0.03; // Responsive radius for color options
-    double chipFontSize = MediaQuery.of(context).size.width * 0.04; // Responsive font size for size options
-    double chipHeight = MediaQuery.of(context).size.width * 0.1; // Responsive height for size options
+    double circleRadius = MediaQuery.of(context).size.width *
+        0.03; // Responsive radius for color options
+    double chipFontSize = MediaQuery.of(context).size.width *
+        0.03; // Responsive font size for size options
+    double chipHeight = MediaQuery.of(context).size.width *
+        0.01; // Responsive height for size options
 
     return Scaffold(
       appBar: CustomAppBar(),
@@ -51,7 +41,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                 height: MediaQuery.of(context).size.height * 0.4,
                 fit: BoxFit.cover,
               ),
-              SizedBox(height: getSpacing(context)),
+              SizedBox(height: getSpacing(context) * 3),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -64,7 +54,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                           color: buttonColorPurple,
                         ),
                       ),
-                      SizedBox(width: getSpacing(context)),
+                      SizedBox(width: getSpacing(context) * 3),
                       Text(
                         'Rs. 3,999',
                         style: interRegular.copyWith(
@@ -73,7 +63,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                           decoration: TextDecoration.lineThrough,
                         ),
                       ),
-                      SizedBox(width: getSpacing(context)),
+                      SizedBox(width: getSpacing(context) * 3),
                       Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: getPadding(context) / 2,
@@ -107,12 +97,12 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: getSpacing(context)),
+              SizedBox(height: getSpacing(context) * 3),
               Text(
                 'Tween Boy Loose Fit Athletic Solid Color Stand Collar Short Sleeve Shirt',
                 style: interBold.copyWith(fontSize: getBigFontSize(context)),
               ),
-              SizedBox(height: getSpacing(context)),
+              SizedBox(height: getSpacing(context) * 3),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -141,40 +131,51 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
               ),
               Row(
                 children: [
-                  CircleAvatar(backgroundColor: Colors.black, radius: circleRadius),
+                  CircleAvatar(
+                      backgroundColor: Colors.black, radius: circleRadius),
                   SizedBox(width: 8),
-                  CircleAvatar(backgroundColor: Colors.grey, radius: circleRadius),
+                  CircleAvatar(
+                      backgroundColor: Colors.grey, radius: circleRadius),
                   SizedBox(width: 8),
-                  CircleAvatar(backgroundColor: Colors.brown, radius: circleRadius),
+                  CircleAvatar(
+                      backgroundColor: Colors.brown, radius: circleRadius),
                   SizedBox(width: 8),
-                  CircleAvatar(backgroundColor: Colors.pink, radius: circleRadius),
+                  CircleAvatar(
+                      backgroundColor: Colors.pink, radius: circleRadius),
                   SizedBox(width: 8),
-                  CircleAvatar(backgroundColor: Colors.red, radius: circleRadius),
+                  CircleAvatar(
+                      backgroundColor: Colors.red, radius: circleRadius),
                   SizedBox(width: 8),
-                  CircleAvatar(backgroundColor: Colors.green, radius: circleRadius),
+                  CircleAvatar(
+                      backgroundColor: Colors.green, radius: circleRadius),
                   SizedBox(width: 8),
-                  CircleAvatar(backgroundColor: Colors.blue, radius: circleRadius),
+                  CircleAvatar(
+                      backgroundColor: Colors.blue, radius: circleRadius),
                   SizedBox(width: 8),
-                  CircleAvatar(backgroundColor: Colors.orange, radius: circleRadius),
+                  CircleAvatar(
+                      backgroundColor: Colors.orange, radius: circleRadius),
                 ],
               ),
-              SizedBox(height: getSpacing(context)),
+              SizedBox(height: getSpacing(context) * 3),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'Size:',
-                    style: interRegular.copyWith(fontSize: getFontSize(context)),
+                    style:
+                        interRegular.copyWith(fontSize: getFontSize(context)),
                   ),
                   TextButton(
                     onPressed: () {},
                     child: Row(
                       children: [
-                        Icon(Icons.straighten, size: 18, color: buttonColorPurple),
+                        Icon(Icons.straighten,
+                            size: 18, color: buttonColorPurple),
                         SizedBox(width: 4),
                         Text(
                           'Size Guide',
-                          style: interRegular.copyWith(color: buttonColorPurple),
+                          style:
+                              interRegular.copyWith(color: buttonColorPurple),
                         ),
                       ],
                     ),
@@ -183,6 +184,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
               ),
               Wrap(
                 spacing: 8.0,
+                runSpacing: 8.0,
                 children: [
                   _sizeOption('12 - 24 Months', chipFontSize, chipHeight),
                   _sizeOption('2 - 4 Years', chipFontSize, chipHeight),
@@ -192,7 +194,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                   _sizeOption('12+ Years', chipFontSize, chipHeight),
                 ],
               ),
-              SizedBox(height: getSpacing(context)),
+              SizedBox(height: getSpacing(context) * 3),
               Container(
                 padding: EdgeInsets.all(getPadding(context)),
                 decoration: BoxDecoration(
@@ -202,11 +204,12 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                 child: Row(
                   children: [
                     Icon(Icons.monetization_on, color: Colors.orange, size: 30),
-                    SizedBox(width: getSpacing(context)),
+                    SizedBox(width: getSpacing(context) * 3),
                     Expanded(
                       child: Text(
                         'Earn 50 Points Worth Rs. 8 on this Product.',
-                        style: interRegular.copyWith(fontSize: getFontSize(context)),
+                        style: interRegular.copyWith(
+                            fontSize: getFontSize(context)),
                       ),
                     ),
                     Row(
@@ -260,7 +263,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: getSpacing(context)),
+              SizedBox(height: getSpacing(context) * 3),
               Container(
                 padding: EdgeInsets.all(getPadding(context)),
                 decoration: BoxDecoration(
@@ -270,18 +273,20 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                 child: Row(
                   children: [
                     Icon(Icons.local_shipping, color: Colors.black, size: 30),
-                    SizedBox(width: getSpacing(context)),
+                    SizedBox(width: getSpacing(context) * 3),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Standard Delivery',
-                            style: interBold.copyWith(fontSize: getFontSize(context)),
+                            style: interBold.copyWith(
+                                fontSize: getFontSize(context)),
                           ),
                           Text(
                             '19 Jun - 24 Jun',
-                            style: interRegular.copyWith(fontSize: getFontSize(context)),
+                            style: interRegular.copyWith(
+                                fontSize: getFontSize(context)),
                           ),
                         ],
                       ),
@@ -294,7 +299,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                         decoration: TextDecoration.lineThrough,
                       ),
                     ),
-                    SizedBox(width: getSpacing(context)),
+                    SizedBox(width: getSpacing(context) * 3),
                     Text(
                       'FREE',
                       style: interBold.copyWith(
@@ -305,12 +310,12 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: getSpacing(context)),
+              SizedBox(height: getSpacing(context) * 3),
               Text(
                 'Offers & Discount',
                 style: interBold.copyWith(fontSize: getBigFontSize(context)),
               ),
-              SizedBox(height: getSpacing(context)),
+              SizedBox(height: getSpacing(context) * 3),
               Container(
                 padding: EdgeInsets.all(getPadding(context)),
                 decoration: BoxDecoration(
@@ -325,7 +330,9 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                       children: [
                         Text(
                           '15% OFF',
-                          style: interBold.copyWith(fontSize: getBigFontSize(context), color: Colors.purple),
+                          style: interBold.copyWith(
+                              fontSize: getBigFontSize(context),
+                              color: Colors.purple),
                         ),
                         ElevatedButton(
                           onPressed: () {},
@@ -339,10 +346,11 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: getSpacing(context)),
+                    SizedBox(height: getSpacing(context) * 3),
                     Text(
                       'Over Rs. 1000',
-                      style: interRegular.copyWith(fontSize: getFontSize(context), color: Colors.black),
+                      style: interRegular.copyWith(
+                          fontSize: getFontSize(context), color: Colors.black),
                     ),
                     Divider(color: Colors.grey),
                     Row(
@@ -351,49 +359,69 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Code: NEW111', style: interRegular.copyWith(fontSize: getFontSize(context))),
-                            Text('06-08-2024 to 07-08-2024', style: interRegular.copyWith(fontSize: getFontSize(context))),
-                            Text('Applies to Selected Products', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                            Text('Code: NEW111',
+                                style: interRegular.copyWith(
+                                    fontSize: getFontSize(context))),
+                            Text('06-08-2024 to 07-08-2024',
+                                style: interRegular.copyWith(
+                                    fontSize: getFontSize(context))),
+                            Text('Applies to Selected Products',
+                                style: interRegular.copyWith(
+                                    fontSize: getFontSize(context))),
                           ],
                         ),
                         Column(
                           children: [
-                            Text('Expire in', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                            Text('Expire in',
+                                style: interRegular.copyWith(
+                                    fontSize: getFontSize(context))),
                             Row(
                               children: [
                                 Container(
-                                  padding: EdgeInsets.all(getPadding(context) / 4),
+                                  padding:
+                                      EdgeInsets.all(getPadding(context) / 4),
                                   decoration: BoxDecoration(
                                     color: buttonColorPurple,
-                                    borderRadius: BorderRadius.circular(borderRadius),
+                                    borderRadius:
+                                        BorderRadius.circular(borderRadius),
                                   ),
                                   child: Text(
                                     '06',
-                                    style: interRegular.copyWith(fontSize: getFontSize(context), color: Colors.white),
+                                    style: interRegular.copyWith(
+                                        fontSize: getFontSize(context),
+                                        color: Colors.white),
                                   ),
                                 ),
                                 SizedBox(width: 4),
                                 Container(
-                                  padding: EdgeInsets.all(getPadding(context) / 4),
+                                  padding:
+                                      EdgeInsets.all(getPadding(context) / 4),
                                   decoration: BoxDecoration(
                                     color: buttonColorPurple,
-                                    borderRadius: BorderRadius.circular(borderRadius),
+                                    borderRadius:
+                                        BorderRadius.circular(borderRadius),
                                   ),
                                   child: Text(
                                     '39',
-                                    style: interRegular.copyWith(fontSize: getFontSize(context), color: Colors.white),
+                                    style: interRegular.copyWith(
+                                        fontSize: getFontSize(context),
+                                        color: Colors.white),
                                   ),
                                 ),
                                 SizedBox(width: 4),
                                 Container(
-                                  padding: EdgeInsets.all(getPadding(context) / 4),
+                                  padding:
+                                      EdgeInsets.all(getPadding(context) / 4),
                                   decoration: BoxDecoration(
                                     color: buttonColorPurple,
-                                    borderRadius: BorderRadius.circular(borderRadius),
+                                    borderRadius:
+                                        BorderRadius.circular(borderRadius),
                                   ),
                                   child: Text(
                                     '42',
-                                    style: interRegular.copyWith(fontSize: getFontSize(context), color: Colors.white),
+                                    style: interRegular.copyWith(
+                                        fontSize: getFontSize(context),
+                                        color: Colors.white),
                                   ),
                                 ),
                               ],
@@ -405,7 +433,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: getSpacing(context)),
+              SizedBox(height: getSpacing(context) * 3),
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -425,7 +453,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.shopping_cart),
-                      SizedBox(width: getSpacing(context)),
+                      SizedBox(width: getSpacing(context) * 3),
                       Text('Add to Cart', style: buttonTextStyle(context)),
                     ],
                   ),
@@ -442,7 +470,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
     return ChoiceChip(
       label: Text(
         size,
-        style: TextStyle(fontSize: fontSize),
+        style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
       ),
       selected: _selectedSize == size,
       selectedColor: buttonColorPurple.withOpacity(0.1),

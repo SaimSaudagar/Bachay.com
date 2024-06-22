@@ -1,4 +1,5 @@
 import 'package:app/Screens/Home/Homepage.dart';
+import 'package:app/Screens/Product/Single_Products_Screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: HomePage(),
+      home: SingleProductScreen(),
     );
   }
 }
