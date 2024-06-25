@@ -1,30 +1,15 @@
+import 'package:app/Screens/Checkout/Order_Confirmation.dart';
+import 'package:app/Screens/Checkout/Order_Placed.dart';
 import 'package:flutter/material.dart';
 import '../../Utils/app_constants.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Shopping Cart UI',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-        useMaterial3: true,
-      ),
-      home: ShoppingCartScreen(),
-    );
-  }
-}
 
 class ShoppingCartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cart(01)', style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
+        title: Text('Cart(01)',
+            style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
         actions: [
           IconButton(
             icon: Icon(Icons.favorite_border),
@@ -50,8 +35,10 @@ class ShoppingCartScreen extends StatelessWidget {
                     SizedBox(height: getSpacing(context)),
                     CartSection(title: 'Bachay.com', items: [
                       CartItem(
-                        imageUrl: 'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
-                        name: 'Tween Boy Loose Fit Athletic Solid Color Stand Collar Short Sleeve Shirt',
+                        imageUrl:
+                            'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
+                        name:
+                            'Tween Boy Loose Fit Athletic Solid Color Stand Collar Short Sleeve Shirt',
                         color: 'Black',
                         price: '850',
                         originalPrice: '3990',
@@ -78,7 +65,8 @@ class SignInSection extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(getPadding(context)),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.purple[100]!), // Light purple border color
+        border:
+            Border.all(color: Colors.purple[100]!), // Light purple border color
         borderRadius: BorderRadius.circular(borderRadius),
       ),
       child: Row(
@@ -87,11 +75,14 @@ class SignInSection extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Sign in/Signup', style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
+                Text('Sign in/Signup',
+                    style:
+                        outfitBold.copyWith(fontSize: getBigFontSize(context))),
                 SizedBox(height: getSpacing(context)),
                 Text(
                   'Please Sign in or Sign up to place order and also apply coupons and discounts.',
-                  style: interRegular.copyWith(fontSize: getFontSize(context), color: fontcolor),
+                  style: interRegular.copyWith(
+                      fontSize: getFontSize(context), color: fontcolor),
                 ),
               ],
             ),
@@ -103,7 +94,8 @@ class SignInSection extends StatelessWidget {
               backgroundColor: buttonColorPurple,
               padding: buttonPadding,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(roundBorderRadius), // More rounded border radius
+                borderRadius: BorderRadius.circular(
+                    roundBorderRadius), // More rounded border radius
               ),
             ),
             child: Text('Sign in', style: buttonTextStyle(context)),
@@ -120,7 +112,8 @@ class VoucherInputSection extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: getPadding(context)),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.purple[100]!), // Light purple border color
+        border:
+            Border.all(color: Colors.purple[100]!), // Light purple border color
         borderRadius: BorderRadius.circular(borderRadius),
       ),
       child: Row(
@@ -131,7 +124,8 @@ class VoucherInputSection extends StatelessWidget {
                 hintText: 'Enter Voucher',
                 border: InputBorder.none,
               ),
-              style: interRegular.copyWith(fontSize: getFontSize(context), color: fontcolor),
+              style: interRegular.copyWith(
+                  fontSize: getFontSize(context), color: fontcolor),
             ),
           ),
           ElevatedButton(
@@ -140,7 +134,8 @@ class VoucherInputSection extends StatelessWidget {
               backgroundColor: buttonColorPurple,
               padding: buttonPadding,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(roundBorderRadius), // More rounded border radius
+                borderRadius: BorderRadius.circular(
+                    roundBorderRadius), // More rounded border radius
               ),
             ),
             child: Text('Apply', style: buttonTextStyle(context)),
@@ -162,11 +157,14 @@ class AllProductsSection extends StatelessWidget {
           onChanged: (value) {},
           activeColor: buttonColorPurple,
         ),
-        Text('All Products', style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
+        Text('All Products',
+            style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
         Spacer(),
         TextButton(
           onPressed: () {},
-          child: Text('Delete', style: TextStyle(color: Colors.red, fontSize: getFontSize(context))),
+          child: Text('Delete',
+              style:
+                  TextStyle(color: Colors.red, fontSize: getFontSize(context))),
         ),
       ],
     );
@@ -184,7 +182,8 @@ class CartSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
+        Text(title,
+            style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
         SizedBox(height: getSpacing(context)),
         Column(
           children: items.map((item) => CartItemWidget(item: item)).toList(),
@@ -238,28 +237,42 @@ class CartItemWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(item.name, style: interRegular.copyWith(fontSize: getFontSize(context))),
+                  Text(item.name,
+                      style: interRegular.copyWith(
+                          fontSize: getFontSize(context))),
                   SizedBox(height: getSpacing(context)),
                   Row(
                     children: [
-                      Text('Color: ${item.color}', style: contentC5.copyWith(fontSize: getFontSize(context))),
+                      Text('Color: ${item.color}',
+                          style: contentC5.copyWith(
+                              fontSize: getFontSize(context))),
                       SizedBox(width: getSpacing(context)),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: getPadding(context), vertical: getSpacing(context)),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: getPadding(context),
+                            vertical: getSpacing(context)),
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey),
                           borderRadius: BorderRadius.circular(borderRadius),
                         ),
-                        child: Text(item.color, style: interRegular.copyWith(fontSize: getFontSize(context))),
+                        child: Text(item.color,
+                            style: interRegular.copyWith(
+                                fontSize: getFontSize(context))),
                       ),
                     ],
                   ),
                   SizedBox(height: getSpacing(context)),
                   Row(
                     children: [
-                      Text('Rs.${item.price}', style: TextStyle(color: Colors.red, fontSize: getFontSize(context))),
+                      Text('Rs.${item.price}',
+                          style: TextStyle(
+                              color: Colors.red,
+                              fontSize: getFontSize(context))),
                       SizedBox(width: getSpacing(context)),
-                      Text('Rs.${item.originalPrice}', style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: getFontSize(context))),
+                      Text('Rs.${item.originalPrice}',
+                          style: TextStyle(
+                              decoration: TextDecoration.lineThrough,
+                              fontSize: getFontSize(context))),
                     ],
                   ),
                 ],
@@ -283,7 +296,9 @@ class CartItemWidget extends StatelessWidget {
                       icon: Icon(Icons.remove),
                       onPressed: () {},
                     ),
-                    Text('${item.quantity}', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                    Text('${item.quantity}',
+                        style: interRegular.copyWith(
+                            fontSize: getFontSize(context))),
                     IconButton(
                       icon: Icon(Icons.add),
                       onPressed: () {},
@@ -305,15 +320,28 @@ class FeaturesSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Features', style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
+        Text('Features',
+            style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
         SizedBox(height: getSpacing(context)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            FeatureIcon(icon: Icons.security, label: 'Quick & Secure\nPayments', context: context),
-            FeatureIcon(icon: Icons.refresh, label: 'Easy Returns &\nRefunds', context: context),
-            FeatureIcon(icon: Icons.lock, label: 'Encrypted User\nData', context: context),
-            FeatureIcon(icon: Icons.verified, label: 'PCI\nCertified', context: context),
+            FeatureIcon(
+                icon: Icons.security,
+                label: 'Quick & Secure\nPayments',
+                context: context),
+            FeatureIcon(
+                icon: Icons.refresh,
+                label: 'Easy Returns &\nRefunds',
+                context: context),
+            FeatureIcon(
+                icon: Icons.lock,
+                label: 'Encrypted User\nData',
+                context: context),
+            FeatureIcon(
+                icon: Icons.verified,
+                label: 'PCI\nCertified',
+                context: context),
           ],
         ),
       ],
@@ -341,7 +369,9 @@ class FeatureIcon extends StatelessWidget {
           child: Icon(icon, size: 30, color: buttonColorPurple),
         ),
         SizedBox(height: getSpacing(context)),
-        Text(label, textAlign: TextAlign.center, style: interRegular.copyWith(fontSize: getFontSize(context))),
+        Text(label,
+            textAlign: TextAlign.center,
+            style: interRegular.copyWith(fontSize: getFontSize(context))),
       ],
     );
   }
@@ -360,19 +390,32 @@ class CheckoutSection extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text('Delivery', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                  Text('Delivery',
+                      style: interRegular.copyWith(
+                          fontSize: getFontSize(context))),
                   SizedBox(width: 5),
-                  Text('Rs. 125', style: interRegular.copyWith(fontSize: getFontSize(context), decoration: TextDecoration.lineThrough)),
+                  Text('Rs. 125',
+                      style: interRegular.copyWith(
+                          fontSize: getFontSize(context),
+                          decoration: TextDecoration.lineThrough)),
                   SizedBox(width: 5),
-                  Text('FREE', style: interRegular.copyWith(fontSize: getFontSize(context), color: Colors.purple)),
+                  Text('FREE',
+                      style: interRegular.copyWith(
+                          fontSize: getFontSize(context),
+                          color: Colors.purple)),
                 ],
               ),
               SizedBox(height: getSpacing(context)),
               Row(
                 children: [
-                  Text('Total', style: interBold.copyWith(fontSize: getFontSize(context))),
+                  Text('Total',
+                      style:
+                          interBold.copyWith(fontSize: getFontSize(context))),
                   SizedBox(width: 10),
-                  Text('Rs. 5,288', style: interBold.copyWith(fontSize: getFontSize(context), color: Colors.purple)),
+                  Text('Rs. 5,288',
+                      style: interBold.copyWith(
+                          fontSize: getFontSize(context),
+                          color: Colors.purple)),
                 ],
               ),
             ],
@@ -383,9 +426,17 @@ class CheckoutSection extends StatelessWidget {
               borderRadius: BorderRadius.circular(roundBorderRadius),
             ),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => OrderConfirmationScreen()),
+                );
+              },
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: buttonPaddingValue, horizontal: 30), backgroundColor: Colors.transparent,
+                padding: EdgeInsets.symmetric(
+                    vertical: buttonPaddingValue, horizontal: 30),
+                backgroundColor: Colors.transparent,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(roundBorderRadius),
                 ), // Important for gradient

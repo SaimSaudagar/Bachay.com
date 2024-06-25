@@ -5,6 +5,7 @@ import 'package:app/API/Repository/Homepage_Repo.dart';
 import 'package:app/Models/Home/Category.dart';
 import 'package:app/Models/Home/Featured_Product.dart';
 import 'package:app/Models/Home/Trends.dart';
+import 'package:app/Screens/Product/Single_Products_Screen.dart';
 import 'package:app/Utils/app_constants.dart';
 import 'package:app/Widgets/App_Bar.dart';
 import 'package:app/Widgets/Botton_Nav_Bar.dart';
@@ -323,7 +324,15 @@ class _HomePageState extends State<HomePage> {
             childAspectRatio: 0.75,
           ),
           itemBuilder: (context, index) {
-            return buildFeaturedProductTile(context, products[index]);
+            return GestureDetector(
+                onTap: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SingleProductScreen()),
+                      ),
+                    },
+                child: buildFeaturedProductTile(context, products[index]));
           },
         ),
       ],

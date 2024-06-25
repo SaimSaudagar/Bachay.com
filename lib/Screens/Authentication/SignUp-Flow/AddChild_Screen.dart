@@ -288,7 +288,13 @@ class _AddChildScreenState extends State<AddChildScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddAddressScreen()),
+                      );
+                    },
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.black,
                       padding: EdgeInsets.symmetric(

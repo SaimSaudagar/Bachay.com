@@ -1244,6 +1244,7 @@
 //   }
 // }
 
+import 'package:app/Screens/Product/Single_Products_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../API/Bloc/Product/Product_Bloc.dart';
@@ -1312,7 +1313,15 @@ class AllProductsScreen extends StatelessWidget {
       ),
       itemCount: products.length,
       itemBuilder: (context, index) {
-        return buildFeaturedProductTile(context, products[index]);
+        return GestureDetector(
+            onTap: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SingleProductScreen()),
+                  )
+                },
+            child: buildFeaturedProductTile(context, products[index]));
       },
     );
   }

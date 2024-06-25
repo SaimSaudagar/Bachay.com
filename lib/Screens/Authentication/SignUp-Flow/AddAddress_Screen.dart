@@ -1,3 +1,4 @@
+import 'package:app/Screens/Home/Homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -27,7 +28,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     // var locationData = await _location.getLocation();
     setState(() {
       // _currentPosition =
-          // LatLng(locationData.latitude!, locationData.longitude!);
+      // LatLng(locationData.latitude!, locationData.longitude!);
     });
   }
 
@@ -104,7 +105,12 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  },
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.black,
                     padding: EdgeInsets.symmetric(
