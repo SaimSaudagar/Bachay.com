@@ -29,7 +29,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
         0.01; // Responsive height for size options
 
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(state: 3),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(getPadding(context)),

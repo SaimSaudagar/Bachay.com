@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(state: 3,),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(getPadding(context)),

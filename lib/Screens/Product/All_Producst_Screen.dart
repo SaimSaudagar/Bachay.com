@@ -1261,7 +1261,7 @@ class AllProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(state: 3,),
       body: Column(
         children: [
           LocationButton(
