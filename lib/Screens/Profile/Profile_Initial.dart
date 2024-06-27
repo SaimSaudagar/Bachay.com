@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../Utils/app_constants.dart';
 import '../../Widgets/App_Bar.dart';
 import '../../Widgets/Botton_Nav_Bar.dart';
+import 'Edit Profile/Edit_Profile.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,17 +12,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MainScreen(),
+      home: ProfileScreen(),
     );
   }
 }
 
-class MainScreen extends StatefulWidget {
+class ProfileScreen extends StatefulWidget {
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _ProfileScreenState extends State<ProfileScreen> {
   int _selectedIndex = 0;
 
   void _onTabSelected(int index) {
@@ -58,8 +59,17 @@ class _MainScreenState extends State<MainScreen> {
             style: interRegular.copyWith(color: Colors.grey, fontSize: getFontSize(context)),
           ),
           TextButton(
-            onPressed: () {},
-            child: Text("Update Profile", style: interRegular.copyWith(color: Colors.green, fontSize: getFontSize(context))),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EditProfileScreen()),
+              );
+            },
+            child: Text("Update Profile",
+                style: interRegular.copyWith(
+                    color: Colors.green,
+                    fontSize: getFontSize(context),
+                    decoration: TextDecoration.underline)),
           ),
           SizedBox(height: getSpacing(context) * 2),
           _buildIconRow(context),
