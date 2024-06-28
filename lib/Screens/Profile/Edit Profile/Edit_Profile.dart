@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../Utils/app_constants.dart';
 import '../Profile_Initial.dart';
+import 'Add_Children.dart';
+import 'Contact_Details.dart';
 import 'Personal_Information.dart';
 
 void main() {
@@ -81,18 +83,22 @@ class EditProfileScreen extends StatelessWidget {
             child: ListView(
               children: [
                 _buildListTile(context, 'Personal Information', Icons.person_outline, () {
- Navigator.push(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => PersonalInformationScreen()),
                   );                  print('Personal Information tapped');
                 }),
                 _buildListTile(context, 'Contact Details', Icons.contact_mail, () {
-                  // Navigate to PersonalInformation screen
-                 
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ContactDetailsScreen()),
+                  );                     
                 }),
                 _buildListTile(context, 'Children Details', Icons.child_care_outlined, () {
-                  // Add your onPressed functionality here
-                  print('Children Details tapped');
+                      Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ChildrenDetailsScreen()),
+                  );                   print('Children Details tapped'); 
                 }),
                 _buildListTile(context, 'Address Book', Icons.home_outlined, () {
                   // Add your onPressed functionality here
