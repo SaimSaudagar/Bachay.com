@@ -4,12 +4,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import '../../../Utils/app_constants.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    home: ChildrenDetailsScreen(),
-  ));
-}
-
 class ChildDetails {
   final String name;
   final String dateOfBirth;
