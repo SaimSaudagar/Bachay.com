@@ -899,7 +899,7 @@ class _HomePageState extends State<HomePage> {
           if (state is AllProductsLoading) {
             return SizedBox();
           } else if (state is AllProductsLoaded) {
-            return buildAllProducts(context, state.allProducts.data);
+            return buildAllProducts(context, state.allProducts.products);
           } else if (state is AllProductsError) {
             return Text('Failed to load all products');
           }
@@ -977,7 +977,7 @@ class _HomePageState extends State<HomePage> {
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(10)),
                     image: DecorationImage(
-                      image: NetworkImage(product.thumbnail),
+                      image: NetworkImage(product.details!),
                       fit: BoxFit.cover,
                       onError: (error, stackTrace) =>
                           Center(child: Text('Image not available')),
@@ -989,7 +989,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
               child: Text(
-                product.name,
+                product.id.toString(),
                 style: TextStyle(fontSize: fontSize),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -1034,20 +1034,20 @@ class _HomePageState extends State<HomePage> {
                 )
               ]),
             ),
-            Padding(
-              padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "\Rs.${product.flashDealProducts[0].price.toStringAsFixed(2)}",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Text(
+            //         "\Rs.${product.variations[0].price.toStringAsFixed(2)}",
+            //         style: TextStyle(
+            //           fontWeight: FontWeight.bold,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),
