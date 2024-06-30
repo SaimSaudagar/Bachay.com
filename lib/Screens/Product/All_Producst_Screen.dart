@@ -74,7 +74,9 @@ class AllProductsScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SingleProductScreen()),
+                        builder: (context) => SingleProductScreen(
+                              productId: products[index].id,
+                            )),
                   )
                 },
             child: buildFeaturedProductTile(context, products[index]));

@@ -5,12 +5,12 @@ import 'dart:convert';
 import '../../Models/Products/Products.dart';
 
 class ProductRepository {
-  Future<ProductList> fetchAllProducts() async {
+  Future<AllProduct> fetchAllProducts() async {
     try {
-      final response = await http.get(Uri.parse('${baseUrl}custom_page/'));
+      final response = await http.get(Uri.parse('${baseUrl}all_products/'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        return ProductList.fromJson(data);
+        return AllProduct.fromJson(data);
       } else {
         throw Exception('Failed to all products');
       }

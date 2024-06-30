@@ -8,7 +8,7 @@ class ProductInitial extends ProductState {}
 class AllProductsLoading extends ProductState {}
 
 class AllProductsLoaded extends ProductState {
-  final ProductList allProducts;
+  final AllProduct allProducts;
   AllProductsLoaded(this.allProducts);
 }
 

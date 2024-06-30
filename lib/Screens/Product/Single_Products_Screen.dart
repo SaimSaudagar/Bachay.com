@@ -662,7 +662,8 @@ import '../../Utils/app_constants.dart';
 import '../../Widgets/App_Bar.dart';
 
 class SingleProductScreen extends StatefulWidget {
-  const SingleProductScreen({Key? key}) : super(key: key);
+  const SingleProductScreen({Key? key, required int productId})
+      : super(key: key);
 
   @override
   State<SingleProductScreen> createState() => _SingleProductScreenState();
