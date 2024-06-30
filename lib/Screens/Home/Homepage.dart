@@ -1,15 +1,25 @@
 import 'package:app/API/Bloc/Home/Home_Bloc.dart';
+import 'package:app/API/Bloc/Home/Home_Event.dart';
 import 'package:app/API/Bloc/Home/Home_State.dart';
-import 'package:app/API/Bloc/Home/home_event.dart';
+import 'package:app/API/Bloc/Product/Product_Bloc.dart';
+import 'package:app/API/Bloc/Product/Product_Event.dart';
+import 'package:app/API/Bloc/Product/Product_State.dart';
 import 'package:app/API/Repository/Homepage_Repo.dart';
+import 'package:app/API/Repository/Product_Repository.dart';
+import 'package:app/Models/Home/Alert_Banner.dart';
 import 'package:app/Models/Home/Category.dart';
+import 'package:app/Models/Home/Deal_Banner.dart';
+import 'package:app/Models/Home/Dsicount_Banner.dart';
 import 'package:app/Models/Home/Featured_Product.dart';
+import 'package:app/Models/Home/Season_Banner.dart';
 import 'package:app/Models/Home/Trends.dart';
+import 'package:app/Models/Products/Products.dart';
 import 'package:app/Screens/Product/Single_Products_Screen.dart';
 import 'package:app/Utils/app_constants.dart';
 import 'package:app/Widgets/App_Bar.dart';
 import 'package:app/Widgets/Botton_Nav_Bar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,24 +43,36 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(state: 3,),
+      appBar: CustomAppBar(
+        state: 3,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(getPadding(context)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              discountBanner(),
+              spacing(context),
               mainBanner(),
+              spacing(context),
+              alertBanner(),
               spacing(context),
               buildCategorySection(),
               spacing(context),
               freeDelivery(),
+              spacing(context),
+              dealBanner(),
+              spacing(context),
+              seasonBanner(),
               spacing(context),
               featuredProducts(),
               spacing(context),
               parentingTools(context),
               spacing(context),
               trendsBanner(),
+              spacing(context),
+              allProducts(),
             ],
           ),
         ),
@@ -70,6 +92,57 @@ class _HomePageState extends State<HomePage> {
   Widget spacingHorizontal(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.height * 0.01,
+    );
+  }
+
+//Discount Banner
+  Widget discountBanner() {
+    return BlocProvider(
+      create: (_) => HomeBloc(homeRepository: HomeRepository())
+        ..add(LoadDiscountBanners()),
+      child: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          if (state is DiscountBannersLoading) {
+            return SizedBox();
+          } else if (state is DiscountBannersLoaded) {
+            return buildDiscountBanner(state.discountBanners);
+          } else if (state is DiscountBannersError) {
+            return SizedBox();
+          }
+          return Center(child: Text('Press a button to load discount banner'));
+        },
+      ),
+    );
+  }
+
+  Widget buildDiscountBanner(DiscountBannerList discountBanners) {
+    return CarouselSlider(
+      options: CarouselOptions(
+        // aspectRatio: 1.0,
+        viewportFraction: 0.2,
+
+        height: MediaQuery.of(context).size.height * 0.1,
+      ),
+      items: discountBanners.discountBanner.map((banner) {
+        return Builder(
+          builder: (BuildContext context) {
+            return ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              child: Image.network(
+                banner.image!,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Center(
+                      child: Text(
+                    'Image not available',
+                    style: TextStyle(fontSize: getFontSize(context)),
+                  ));
+                },
+              ),
+            );
+          },
+        );
+      }).toList(),
     );
   }
 
@@ -97,7 +170,9 @@ class _HomePageState extends State<HomePage> {
     return CarouselSlider(
       options: CarouselOptions(
         autoPlay: true,
-        aspectRatio: 2.0,
+        aspectRatio: 1.0,
+        viewportFraction: 1,
+        height: MediaQuery.of(context).size.height * 0.2,
         // enlargeCenterPage: true,
       ),
       items: banners.mainBanner.map((banner) {
@@ -124,6 +199,193 @@ class _HomePageState extends State<HomePage> {
           },
         );
       }).toList(),
+    );
+  }
+
+//Alert Banner
+  Widget alertBanner() {
+    return BlocProvider(
+      create: (_) =>
+          HomeBloc(homeRepository: HomeRepository())..add(LoadAlterBanners()),
+      child: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          if (state is AlertBannersLoading) {
+            return SizedBox();
+          } else if (state is AlertBannersLoaded) {
+            return buildAlertBanner(state.alertBanners);
+          } else if (state is AlertBannersError) {
+            return SizedBox();
+          }
+          return Center(child: Text('Press a button to load alert banners'));
+        },
+      ),
+    );
+  }
+
+  Widget buildAlertBanner(AlertBannerList alertBanners) {
+    return CarouselSlider(
+      options: CarouselOptions(
+        autoPlay: true,
+        // aspectRatio: 1.0,
+        viewportFraction: 1,
+        height: MediaQuery.of(context).size.height * 0.1,
+        // enlargeCenterPage: true,
+      ),
+      items: alertBanners.alertBanner.map((banner) {
+        return Builder(
+          builder: (BuildContext context) {
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.symmetric(horizontal: 5.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                child: Image.network(
+                  banner.mobilePhoto!,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Center(
+                        child: Text(
+                      'Image not available',
+                      style: TextStyle(fontSize: getFontSize(context)),
+                    ));
+                  },
+                ),
+              ),
+            );
+          },
+        );
+      }).toList(),
+    );
+  }
+
+//Deal Banner
+  Widget dealBanner() {
+    return BlocProvider(
+      create: (_) =>
+          HomeBloc(homeRepository: HomeRepository())..add(LoadDealBanners()),
+      child: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          if (state is DealBannersLoading) {
+            return SizedBox();
+          } else if (state is DealBannersLoaded) {
+            return buildDealBanner(state.dealBanners);
+          } else if (state is DealBannersError) {
+            return SizedBox();
+          }
+          return Center(child: Text('Press a button to load deal banners'));
+        },
+      ),
+    );
+  }
+
+  Widget buildDealBanner(DealBannerList dealBanners) {
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final double itemWidth = MediaQuery.of(context).size.width * 0.45;
+        final double itemHeight = MediaQuery.of(context).size.height * 0.13;
+        List<DealBanner> reverseList = dealBanners.dealBanner.reversed.toList();
+
+        return Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Image 3, spans two rows
+                Container(
+                  width: itemWidth,
+                  height: itemHeight * 2 +
+                      MediaQuery.of(context).size.height * 0.01,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.network(
+                      reverseList[0].mobilePhoto!,
+                      fit: BoxFit.fill,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Center(
+                            child: Text(
+                          'Image not available',
+                          style: TextStyle(fontSize: getFontSize(context)),
+                        ));
+                      },
+                    ),
+                  ),
+                ),
+                spacingHorizontal(context),
+                // Column for images 1 and 2
+                Column(
+                  children: [
+                    Container(
+                      width: itemWidth,
+                      height: itemHeight * 1.4,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          reverseList[1].mobilePhoto!,
+                          fit: BoxFit.fill,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Center(
+                                child: Text(
+                              'Image not available',
+                              style: TextStyle(fontSize: getFontSize(context)),
+                            ));
+                          },
+                        ),
+                      ),
+                    ),
+                    spacing(context),
+                    Container(
+                      width: itemWidth,
+                      height: itemHeight / 1.6,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          reverseList[2].mobilePhoto!,
+                          fit: BoxFit.fill,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Center(
+                                child: Text(
+                              'Image not available',
+                              style: TextStyle(fontSize: getFontSize(context)),
+                            ));
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            spacing(context),
+          ],
+        );
+      },
+    );
+  }
+
+//Season Banner
+  Widget seasonBanner() {
+    return BlocProvider(
+      create: (_) =>
+          HomeBloc(homeRepository: HomeRepository())..add(LoadSeasonBanners()),
+      child: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          if (state is SeasonBannersLoading) {
+            return SizedBox();
+          } else if (state is SeasonBannersLoaded) {
+            return buildSeasonBanner(state.seasonBanners);
+          } else if (state is SeasonBannersError) {
+            return SizedBox();
+          }
+          return Center(child: Text('Press a button to load season banner'));
+        },
+      ),
+    );
+  }
+
+  Widget buildSeasonBanner(SeasonBannerList seasonBanner) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.2,
+      child: Image.network(seasonBanner.seasonBanner[0].photo!),
     );
   }
 
@@ -454,17 +716,37 @@ class _HomePageState extends State<HomePage> {
       children: [
         Image.asset(
           'assets/images/parenting_tool.png',
-          fit: BoxFit.cover,
         ),
         spacing(context),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Image.asset("assets/images/article.png"),
-            Image.asset("assets/images/QnA.png"),
-            Image.asset("assets/images/vaccination.png"),
-          ],
-        )
+        CarouselSlider(
+          options: CarouselOptions(
+            // autoPlay: true,
+            // enlargeCenterPage: true,
+            aspectRatio: 2.0,
+            viewportFraction: 0.38,
+          ),
+          items: [
+            'assets/images/article.png',
+            'assets/images/QnA.png',
+            'assets/images/vaccination.png',
+          ].map((item) {
+            return Builder(
+              builder: (BuildContext context) {
+                return Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    child: Image.asset(
+                      item,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              },
+            );
+          }).toList(),
+        ),
+        spacing(context),
       ],
     );
   }
@@ -605,5 +887,170 @@ class _HomePageState extends State<HomePage> {
         ],
       );
     });
+  }
+
+  //All Products
+  Widget allProducts() {
+    return BlocProvider(
+      create: (_) => ProductBloc(productRepository: ProductRepository())
+        ..add(LoadAllProducts()),
+      child: BlocBuilder<ProductBloc, ProductState>(
+        builder: (context, state) {
+          if (state is AllProductsLoading) {
+            return SizedBox();
+          } else if (state is AllProductsLoaded) {
+            return buildAllProducts(context, state.allProducts.data);
+          } else if (state is AllProductsError) {
+            return Text('Failed to load all products');
+          }
+          return Center(child: Text('Press a button to load categories'));
+        },
+      ),
+    );
+  }
+
+  Widget buildAllProducts(BuildContext context, List<Product> products) {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
+          child: Text(
+            'All Products',
+            style: TextStyle(
+              fontSize: 20, // Example font size, adjust as needed
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        GridView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: products.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 0.75,
+          ),
+          itemBuilder: (context, index) {
+            return GestureDetector(
+                onTap: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SingleProductScreen()),
+                      ),
+                    },
+                child: buildAllProductTile(context, products[index]));
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget buildAllProductTile(BuildContext context, Product product) {
+    Color textColor = Color.fromRGBO(191, 143, 57, 1);
+    Color color = Color.fromRGBO(255, 244, 223, 1);
+    Color borderColor = Color.fromRGBO(255, 198, 95, 1);
+    double fontSize = MediaQuery.of(context).size.width * 0.025;
+    double fontSizeBig = MediaQuery.of(context).size.width * 0.025;
+
+    return Padding(
+      padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.01),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: Color.fromRGBO(228, 228, 231, 1),
+            width: 1,
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Padding(
+                padding:
+                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(10)),
+                    image: DecorationImage(
+                      image: NetworkImage(product.thumbnail),
+                      fit: BoxFit.cover,
+                      onError: (error, stackTrace) =>
+                          Center(child: Text('Image not available')),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
+              child: Text(
+                product.name,
+                style: TextStyle(fontSize: fontSize),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(children: [
+                RatingBarIndicator(
+                  rating: 4.5,
+                  itemBuilder: (context, index) =>
+                      Icon(Icons.star, color: Colors.amber),
+                  itemCount: 1,
+                  itemSize: 20.0,
+                  direction: Axis.horizontal,
+                ),
+                Text(
+                  '4.5',
+                  style: TextStyle(
+                      fontSize: fontSize, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  ' (100)',
+                  style: TextStyle(fontSize: fontSize),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  decoration: BoxDecoration(
+                    color: color,
+                    border: Border.all(
+                      color: borderColor,
+                      width: 1,
+                    ),
+                  ),
+                  child: Text(
+                    'Free Delivery',
+                    style: TextStyle(
+                      color: textColor,
+                      fontSize: fontSize,
+                    ),
+                  ),
+                )
+              ]),
+            ),
+            Padding(
+              padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "\Rs.${product.flashDealProducts[0].price.toStringAsFixed(2)}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

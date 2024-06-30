@@ -4,19 +4,6 @@ import '../../Widgets/App_Bar.dart';
 import '../../Widgets/Botton_Nav_Bar.dart';
 import 'Edit Profile/Edit_Profile.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ProfileScreen(),
-    );
-  }
-}
-
 class ProfileScreen extends StatefulWidget {
   @override
   _ProfileScreenState createState() => _ProfileScreenState();

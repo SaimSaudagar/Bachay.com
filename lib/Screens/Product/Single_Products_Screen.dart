@@ -651,6 +651,7 @@ import 'package:app/API/Bloc/Product/Product_Bloc.dart';
 import 'package:app/API/Bloc/Product/Product_Event.dart';
 import 'package:app/API/Bloc/Product/Product_State.dart';
 import 'package:app/API/Repository/Homepage_Repo.dart';
+import 'package:app/API/Repository/Product_Repository.dart';
 import 'package:app/Models/Home/Featured_Product.dart';
 import 'package:app/Screens/Checkout/Checkout.dart';
 import 'package:flutter/material.dart';
@@ -1043,14 +1044,14 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
 
   Widget featuredProducts(BuildContext context) {
     return BlocProvider(
-      create: (_) => AllProductsBloc(homeRepository: HomeRepository())
+      create: (_) => ProductBloc(productRepository: ProductRepository())
         ..add(LoadAllProducts()),
-      child: BlocBuilder<AllProductsBloc, AllProductsState>(
+      child: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
           if (state is AllProductsLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is AllProductsLoaded) {
-            return buildFeaturedProducts(context, state.products);
+            // return buildFeaturedProducts(context, state.products);
           } else if (state is AllProductsError) {
             return const Center(child: Text('Failed to load products'));
           }
