@@ -14,6 +14,7 @@ import 'package:app/Models/Home/Featured_Product.dart';
 import 'package:app/Models/Home/Season_Banner.dart';
 import 'package:app/Models/Home/Trends.dart';
 import 'package:app/Models/Products/Products.dart';
+import 'package:app/Screens/Product/Category_Screen.dart';
 import 'package:app/Screens/Product/Single_Products_Screen.dart';
 import 'package:app/Utils/app_constants.dart';
 import 'package:app/Widgets/App_Bar.dart';
@@ -410,14 +411,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildCategory(List<Category> categories) {
-    return Container(
-      height: 300,
-      child: GridView.count(
-        crossAxisCount: 5,
-        childAspectRatio: 1 / 1.5,
-        children:
-            categories.map((category) => buildCategoryTile(category)).toList(),
-        physics: NeverScrollableScrollPhysics(),
+    return GestureDetector(
+      onTap: () => {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => CategoryScreen()),
+        ),
+      },
+      child: Container(
+        height: 300,
+        child: GridView.count(
+          crossAxisCount: 5,
+          childAspectRatio: 1 / 1.5,
+          children: categories
+              .map((category) => buildCategoryTile(category))
+              .toList(),
+          physics: NeverScrollableScrollPhysics(),
+        ),
       ),
     );
   }
@@ -557,7 +567,7 @@ class _HomePageState extends State<HomePage> {
           } else if (state is FeaturedProductError) {
             return Text('Failed to load products');
           }
-          return Center(child: Text('Press a button to load categories'));
+          return Center(child: Text('Press a button to load featuted products'));
         },
       ),
     );
@@ -591,7 +601,9 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SingleProductScreen()),
+                            builder: (context) => SingleProductScreen(
+                                  productId: products[index].id,
+                                )),
                       ),
                     },
                 child: buildFeaturedProductTile(context, products[index]));
@@ -899,7 +911,8 @@ class _HomePageState extends State<HomePage> {
           if (state is AllProductsLoading) {
             return SizedBox();
           } else if (state is AllProductsLoaded) {
-            return buildAllProducts(context, state.allProducts.products);
+            return buildAllProducts(
+                context, state.allProducts.allProducts!.data);
           } else if (state is AllProductsError) {
             return Text('Failed to load all products');
           }
@@ -936,7 +949,9 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SingleProductScreen()),
+                            builder: (context) => SingleProductScreen(
+                                  productId: products[index].id,
+                                )),
                       ),
                     },
                 child: buildAllProductTile(context, products[index]));
@@ -977,7 +992,7 @@ class _HomePageState extends State<HomePage> {
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(10)),
                     image: DecorationImage(
-                      image: NetworkImage(product.details!),
+                      image: NetworkImage(product.thumbnail),
                       fit: BoxFit.cover,
                       onError: (error, stackTrace) =>
                           Center(child: Text('Image not available')),
@@ -989,7 +1004,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
               child: Text(
-                product.id.toString(),
+                product.name.toString(),
                 style: TextStyle(fontSize: fontSize),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -998,7 +1013,7 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(children: [
                 RatingBarIndicator(
-                  rating: 4.5,
+                  rating: 1,
                   itemBuilder: (context, index) =>
                       Icon(Icons.star, color: Colors.amber),
                   itemCount: 1,
@@ -1034,20 +1049,20 @@ class _HomePageState extends State<HomePage> {
                 )
               ]),
             ),
-            // Padding(
-            //   padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Text(
-            //         "\Rs.${product.variations[0].price.toStringAsFixed(2)}",
-            //         style: TextStyle(
-            //           fontWeight: FontWeight.bold,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
+            Padding(
+              padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "\Rs.${product.unitPrice.toStringAsFixed(2)}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

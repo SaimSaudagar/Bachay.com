@@ -873,7 +873,8 @@ import '../Utils/app_constants.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final int state;
 
-  CustomAppBar({super.key, required this.state}) : preferredSize = const Size.fromHeight(60.0);
+  CustomAppBar({super.key, required this.state})
+      : preferredSize = const Size.fromHeight(60.0);
 
   @override
   final Size preferredSize;
@@ -1011,9 +1012,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       child: Row(
                         children: [
                           _buildAvatar(context, 'Add Child', Icons.add),
-                          _buildAvatar(context, 'All', 'assets/images/shop_for_all.svg'),
-                          _buildAvatar(context, 'Boy', 'assets/images/boy-icon.png'),
-                          _buildAvatar(context, 'Girl', 'assets/images/girl-icon.png'),
+                          _buildAvatar(
+                              context, 'All', 'assets/images/shop_for_all.svg'),
+                          _buildAvatar(
+                              context, 'Boy', 'assets/images/boy-icon.png'),
+                          _buildAvatar(
+                              context, 'Girl', 'assets/images/girl-icon.png'),
                         ],
                       ),
                     ),
