@@ -14,6 +14,7 @@ import 'package:app/Models/Home/Featured_Product.dart';
 import 'package:app/Models/Home/Season_Banner.dart';
 import 'package:app/Models/Home/Trends.dart';
 import 'package:app/Models/Products/Products.dart';
+import 'package:app/Screens/Product/Category_Screen.dart';
 import 'package:app/Screens/Product/Single_Products_Screen.dart';
 import 'package:app/Utils/app_constants.dart';
 import 'package:app/Widgets/App_Bar.dart';
@@ -410,14 +411,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildCategory(List<Category> categories) {
-    return Container(
-      height: 300,
-      child: GridView.count(
-        crossAxisCount: 5,
-        childAspectRatio: 1 / 1.5,
-        children:
-            categories.map((category) => buildCategoryTile(category)).toList(),
-        physics: NeverScrollableScrollPhysics(),
+    return GestureDetector(
+      onTap: () => {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => CategoryScreen()),
+        ),
+      },
+      child: Container(
+        height: 300,
+        child: GridView.count(
+          crossAxisCount: 5,
+          childAspectRatio: 1 / 1.5,
+          children: categories
+              .map((category) => buildCategoryTile(category))
+              .toList(),
+          physics: NeverScrollableScrollPhysics(),
+        ),
       ),
     );
   }
@@ -557,7 +567,7 @@ class _HomePageState extends State<HomePage> {
           } else if (state is FeaturedProductError) {
             return Text('Failed to load products');
           }
-          return Center(child: Text('Press a button to load categories'));
+          return Center(child: Text('Press a button to load featuted products'));
         },
       ),
     );
