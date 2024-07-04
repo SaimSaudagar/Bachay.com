@@ -27,6 +27,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app/Models/Home/Main_Banner.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../../Widgets/Sidebar.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -47,6 +49,8 @@ class _HomePageState extends State<HomePage> {
       appBar: CustomAppBar(
         state: 3,
       ),
+            drawer: CustomDrawer(),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(getPadding(context)),

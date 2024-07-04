@@ -3,7 +3,6 @@ import 'package:app/Screens/Onboarding/Loading_Screen.dart';
 import 'package:app/Screens/Product/Category_Screen.dart';
 import 'package:app/Screens/Product/Single_Products_Screen.dart';
 import 'package:flutter/material.dart';
-
 import 'Screens/Profile/Profile_Initial.dart';
 
 void main() {
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: HomePage(),
+      home: LoadingScreen(),
     );
   }
 }

@@ -16,6 +16,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../Widgets/Sidebar.dart';
+
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
 
@@ -30,6 +32,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       appBar: CustomAppBar(
         state: 1,
       ),
+      drawer: CustomDrawer(),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(getPadding(context)),

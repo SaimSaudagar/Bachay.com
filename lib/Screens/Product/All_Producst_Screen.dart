@@ -12,6 +12,8 @@ import '../../Widgets/Search_Bar.dart';
 import 'package:app/Models/Home/Featured_Product.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../../Widgets/Sidebar.dart';
+
 class AllProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,7 @@ class AllProductsScreen extends StatelessWidget {
       appBar: CustomAppBar(
         state: 3,
       ),
+      drawer: CustomDrawer(),
       body: Column(
         children: [
           CustomSearchBar(
