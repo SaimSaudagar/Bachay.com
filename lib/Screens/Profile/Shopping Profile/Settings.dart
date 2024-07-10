@@ -19,7 +19,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(state: 1),
+      appBar: CustomAppBar(state: 3),
       body: Padding(
         padding: EdgeInsets.all(getPadding(context)),
         child: ListView(
@@ -102,25 +102,3 @@ class SettingsScreen extends StatelessWidget {
   }
 }
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final int state;
-
-  const CustomAppBar({required this.state});
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      title: Text('Settings'),
-      centerTitle: true,
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back),
-        onPressed: () {
-          // Add navigation logic here
-        },
-      ),
-    );
-  }
-
-  @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
-}
