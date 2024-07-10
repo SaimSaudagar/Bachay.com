@@ -53,22 +53,22 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
             _buildLanguageSelector(context),
-            _buildCategoryItem(context, Icons.chat, 'Parenting', Colors.pink.shade100),
-            _buildCategoryItem(context, Icons.school, 'Education', Colors.yellow.shade100),
-            _buildCategoryItem(context, Icons.explore, 'Explore', Colors.orange.shade100),
+            _buildCategoryItem(context, 'assets/images/home/parenting-active.png', 'Parenting', Colors.pink.shade100),
+            _buildCategoryItem(context, 'assets/images/home/education-active.png', 'Education', Colors.yellow.shade100),
+            _buildCategoryItem(context, 'assets/images/home/explore-active.png', 'Explore', Colors.orange.shade100),
             Divider(),
             _buildMenuSectionTitle('Menu'),
-            _buildMenuItemWithBackground(context, 'assets/icons/shop_by_category.svg', 'Shop by Category', Colors.pink.shade100),
-            _buildMenuItemWithBackground(context, 'assets/icons/offer_zone.svg', 'Offer Zone', Colors.orange.shade100),
-            _buildMenuItemWithBackground(context, 'assets/icons/gifts_cards.svg', 'Gifts & Cards', Colors.purple.shade100),
-            _buildMenuItemWithBackground(context, 'assets/icons/sell_with_us.svg', 'Sell With Us', Colors.blue.shade100),
-            _buildMenuItemWithBackground(context, 'assets/icons/customer_service.svg', 'Customer Service', Colors.lightBlue.shade100),
+            _buildMenuItemWithBackground(context, 'assets/images/shop_by_category.png', 'Shop by Category', Colors.pink.shade100),
+            _buildMenuItemWithBackground(context, 'assets/images/offer_zone.png', 'Offer Zone', Colors.orange.shade100),
+            _buildMenuItemWithBackground(context, 'assets/images/gifts_cards.png', 'Gifts & Cards', Colors.purple.shade100),
+            _buildMenuItemWithBackground(context, 'assets/images/sell_with_us.png', 'Sell With Us', Colors.blue.shade100),
+            _buildMenuItemWithBackground(context, 'assets/images/customer_service.png', 'Customer Service', Colors.lightBlue.shade100),
             Divider(),
             _buildMenuSectionTitle('My Activity'),
-            _buildMenuItem(context, Icons.favorite, 'My Favorites'),
-            _buildMenuItem(context, Icons.account_circle, 'Account'),
-            _buildMenuItem(context, Icons.child_friendly, 'Children\'s'),
-            _buildMenuItem(context, Icons.help, 'Help & Support'),
+            _buildMenuItem(context, 'assets/images/favorites.png', 'My Favorites'),
+            _buildMenuItem(context, 'assets/images/account.png', 'Account'),
+            _buildMenuItem(context, 'assets/images/children.png', 'Children\'s'),
+            _buildMenuItem(context, 'assets/images/24-support.png', 'Help & Support'),
           ],
         ),
       ),
@@ -76,15 +76,30 @@ class CustomDrawer extends StatelessWidget {
   }
 
   Widget _buildLanguageSelector(BuildContext context) {
-    return ListTile(
-      leading: Icon(Icons.language, color: Colors.black),
-      title: Text('Language', style: outfitRegular.copyWith(color: Colors.black)),
-      trailing: Text('English', style: outfitRegular.copyWith(color: Colors.black)),
-      onTap: () {},
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey.shade200,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: ListTile(
+          leading: Image.asset('assets/images/language.png', color: Colors.black),
+          title: Text('Language', style: outfitRegular.copyWith(color: Colors.black)),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('English', style: outfitRegular.copyWith(color: Colors.black)),
+              Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16),
+            ],
+          ),
+          onTap: () {},
+        ),
+      ),
     );
   }
 
-  Widget _buildCategoryItem(BuildContext context, IconData icon, String title, Color color) {
+  Widget _buildCategoryItem(BuildContext context, String iconPath, String title, Color color) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Container(
@@ -95,7 +110,7 @@ class CustomDrawer extends StatelessWidget {
         child: ListTile(
           leading: CircleAvatar(
             backgroundColor: color,
-            child: Icon(icon, color: Colors.black),
+            child: Image.asset(iconPath),
           ),
           title: Text(title, style: outfitRegular.copyWith(color: Colors.black, fontSize: getFontSize(context))),
           trailing: Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16),
@@ -105,9 +120,9 @@ class CustomDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuItem(BuildContext context, IconData icon, String title) {
+  Widget _buildMenuItem(BuildContext context, String iconPath, String title) {
     return ListTile(
-      leading: Icon(icon, color: Colors.black),
+      leading: Image.asset(iconPath, color: Colors.black),
       title: Text(title, style: outfitRegular.copyWith(color: Colors.black, fontSize: getFontSize(context))),
       onTap: () {},
     );
@@ -117,7 +132,7 @@ class CustomDrawer extends StatelessWidget {
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: color,
-        child: SvgPicture.asset(iconPath, width: 24, height: 24),
+        child: Image.asset(iconPath, width: 24, height: 24),
       ),
       title: Text(title, style: outfitRegular.copyWith(color: Colors.black, fontSize: getFontSize(context))),
       trailing: Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16),

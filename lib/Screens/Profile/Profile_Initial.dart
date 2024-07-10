@@ -276,16 +276,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildSignOutButton(BuildContext context) {
-    return ElevatedButton(
+ Widget _buildSignOutButton(BuildContext context) {
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: getSpacing(context) * 2),
+    child: ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.black,
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50),
+        ),
+        padding: EdgeInsets.symmetric(vertical: getSpacing(context) * 2),
       ),
       onPressed: () {
         // Add sign-out logic here
       },
-      child: Text("Sign Out", style: buttonTextStyle(context)),
-    );
-  }
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.logout, color: Colors.white),
+          SizedBox(width: getSpacing(context)),
+          Text('Sign Out', style: buttonTextStyle(context)),
+        ],
+      ),
+    ),
+  );
 }
+
+}
+
