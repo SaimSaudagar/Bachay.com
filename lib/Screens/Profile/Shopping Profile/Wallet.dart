@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
+import 'TopUp_Wallet.dart';
 
 void main() {
   runApp(WalletApp());
@@ -50,7 +51,7 @@ class WalletScreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.account_balance_wallet, size: 40.0),
+                        Image.asset('assets/images/wallet.png', height: 40.0, width: 40.0),
                         SizedBox(width: getPadding(context)),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,24 +61,31 @@ class WalletScreen extends StatelessWidget {
                           ],
                         ),
                         Spacer(),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: Text('Top up'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
-                          ),
+                        Column(
+                          children: [
+                            IconButton(
+                              icon: Image.asset('assets/images/wallet-add.png', height: 24.0, width: 24.0),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => TopUpWalletScreen()),
+                                );
+                              },
+                            ),
+                            Text('Top up', style: interRegular),
+                          ],
                         ),
                       ],
                     ),
                     Divider(height: getSpacing(context) * 6, thickness: 1.0),
                     _buildInfoRow(
                       context,
-                      icon: Icons.info,
+                      iconPath: 'assets/images/message-question.png',
                       title: 'How to Use',
-                      description: '• Earn money o your wallet by completing the offer & challenged\n'
+                      description: '• Earn money on your wallet by completing the offer & challenges\n'
                           '• Convert your loyalty points into wallet money\n'
                           '• Admin also rewards their top customers with wallet money\n'
-                          '• Send your wallet money while order',
+                          '• Send your wallet money while ordering',
                     ),
                     Divider(height: getSpacing(context) * 6, thickness: 1.0),
                     _buildTransactionHistory(context),
@@ -93,13 +101,13 @@ class WalletScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(BuildContext context, {required IconData icon, required String title, required String description}) {
+  Widget _buildInfoRow(BuildContext context, {required String iconPath, required String title, required String description}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Icon(icon, size: 24.0),
+            Image.asset(iconPath, height: 24.0, width: 24.0),
             SizedBox(width: getPadding(context)),
             Text(title, style: outfitBold.copyWith(fontSize: getFontSize(context))),
           ],
@@ -116,7 +124,7 @@ class WalletScreen extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(Icons.history, size: 24.0),
+            Image.asset('assets/images/terms_conditions.png', height: 24.0, width: 24.0),
             SizedBox(width: getPadding(context)),
             Text('Transaction History', style: outfitBold.copyWith(fontSize: getFontSize(context))),
             Spacer(),
@@ -139,7 +147,7 @@ class WalletScreen extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: getSpacing(context) * 2),
       child: Row(
         children: [
-          Icon(success ? Icons.check_circle : Icons.cancel, color: success ? Colors.green : Colors.red),
+          Image.asset(success ? 'assets/images/refund.png' : 'assets/images/gift.png', height: 24.0, width: 24.0),
           SizedBox(width: getPadding(context)),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,7 +169,7 @@ class WalletScreen extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(Icons.lock, size: 24.0),
+            Image.asset('assets/images/payment-security.png', height: 24.0, width: 24.0),
             SizedBox(width: getPadding(context)),
             Text('Payment Security', style: outfitBold.copyWith(fontSize: getFontSize(context))),
           ],

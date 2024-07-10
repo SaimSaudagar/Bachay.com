@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import '../../Utils/app_constants.dart';
 import '../../Widgets/App_Bar.dart';
 import '../../Widgets/Botton_Nav_Bar.dart';
+import 'Edit Profile/Add_Children.dart';
 import 'Edit Profile/Edit_Profile.dart';
+import 'Shopping Profile/Shopping_profile.dart';
+import 'Shopping Profile/Wallet.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -75,29 +78,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildIconCard(context, Icons.child_care, "Add Child", Colors.pink[50]!),
-        _buildIconCard(context, Icons.account_balance_wallet, "Wallet\nRs. 150", Colors.lightGreen[100]!),
-        _buildIconCard(context, Icons.star, "Points\n150", Colors.orange[100]!),
-        _buildIconCard(context, Icons.group, "Bachay\nClub", Colors.yellow[100]!),
+        _buildIconCard(context, 'assets/images/settings-child.png', "Add Child", Colors.pink[50]!, () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ChildrenDetailsScreen()));
+        }),
+        _buildIconCard(context, 'assets/images/wallet.png', "Wallet\nRs. 150", Colors.lightGreen[100]!, () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => WalletScreen()));
+        }),
+        _buildIconCard(context, 'assets/images/points.png', "Points\n150", Colors.orange[100]!, () {
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => PointsScreen()));
+        }),
+        _buildIconCard(context, 'assets/images/bachay_club.png', "Bachay\nClub", Colors.yellow[100]!, () {
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => BachayClubScreen()));
+        }),
       ],
     );
   }
 
-  Widget _buildIconCard(BuildContext context, IconData icon, String text, Color bgColor) {
+  Widget _buildIconCard(BuildContext context, String imagePath, String text, Color bgColor, VoidCallback onTap) {
     return Column(
       children: [
-        Container(
-          width: 60,
-          height: 60,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: bgColor,
-          ),
-          child: Center(
-            child: Icon(
-              icon,
-              size: 40,
-              color: Colors.black,
+        InkWell(
+          onTap: onTap,
+          child: Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: bgColor,
+            ),
+            child: Center(
+              child: Image.asset(
+                imagePath,
+                width: 40,
+                height: 40,
+              ),
             ),
           ),
         ),
@@ -114,27 +128,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildProfileOptions(BuildContext context) {
     return Column(
       children: [
-        _buildProfileOptionRow(context, "Shopping", "Go to your Shopping Profile", Icons.shopping_bag, [
-          _buildSmallIconCard(context, Icons.account_circle, "Account"),
-          _buildSmallIconCard(context, Icons.history, "History"),
-        ], Colors.purple[50]!, Colors.purple[100]!),
-        _buildProfileOptionRow(context, "Explore", "Go to your Explore Profile", Icons.explore, [
-          _buildSmallIconCard(context, Icons.person, "Profile"),
-          _buildSmallIconCard(context, Icons.bookmark, "Saved"),
-        ], Colors.orange[50]!, Colors.orange[100]!),
-        _buildProfileOptionRow(context, "Parenting", "Go to your Parenting Profile", Icons.favorite, [
-          _buildSmallIconCard(context, Icons.local_hospital, "Vacc/Grow"),
-          _buildSmallIconCard(context, Icons.question_answer, "Q/A"),
-        ], Colors.pink[50]!, Colors.pink[100]!),
-        _buildProfileOptionRow(context, "Education", "Go to your Education Profile", Icons.school, [
-          _buildSmallIconCard(context, Icons.quiz, "Quizzes"),
-          _buildSmallIconCard(context, Icons.library_books, "Courses"),
-        ], Colors.yellow[50]!, Colors.yellow[100]!),
+        _buildProfileOptionRow(context, "Shopping", "Go to your Shopping Profile", 'assets/images/home/shopping-active.png', [
+          _buildSmallIconCard(context, 'assets/images/account.png', "Account", () {
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingAccountScreen()));
+          }),
+          _buildSmallIconCard(context, 'assets/images/history.png', "History", () {
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingHistoryScreen()));
+          }),
+        ], Colors.purple[50]!, Colors.purple[100]!, () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Shopping_Profile()));
+        }),
+        _buildProfileOptionRow(context, "Explore", "Go to your Explore Profile", 'assets/images/home/explore-active.png', [
+          _buildSmallIconCard(context, 'assets/images/profileicon.png', "Profile", () {
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => ExploreProfileScreen()));
+          }),
+          _buildSmallIconCard(context, 'assets/images/saved.png', "Saved", () {
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => SavedItemsScreen()));
+          }),
+        ], Colors.orange[50]!, Colors.orange[100]!, () {
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => ExploreProfileScreen()));
+        }),
+        _buildProfileOptionRow(context, "Parenting", "Go to your Parenting Profile", 'assets/images/home/parenting.png', [
+          _buildSmallIconCard(context, 'assets/images/vacc_grow.png', "Vacc/Grow", () {
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => VaccinationGrowthScreen()));
+          }),
+          _buildSmallIconCard(context, 'assets/images/QA.png', "Q/A", () {
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => QAScreen()));
+          }),
+        ], Colors.pink[50]!, Colors.pink[100]!, () {
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => ParentingProfileScreen()));
+        }),
+        _buildProfileOptionRow(context, "Education", "Go to your Education Profile", 'assets/images/home/education-active.png', [
+          _buildSmallIconCard(context, 'assets/images/Quiz.png', "Quizzes", () {
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => QuizzesScreen()));
+          }),
+          _buildSmallIconCard(context, 'assets/images/courses.png', "Courses", () {
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesScreen()));
+          }),
+        ], Colors.yellow[50]!, Colors.yellow[100]!, () {
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => EducationProfileScreen()));
+        }),
       ],
     );
   }
 
-  Widget _buildProfileOptionRow(BuildContext context, String title, String subtitle, IconData icon, List<Widget> smallIcons, Color bgColor, Color borderColor) {
+  Widget _buildProfileOptionRow(BuildContext context, String title, String subtitle, String imagePath, List<Widget> smallIcons, Color bgColor, Color borderColor, VoidCallback onTap) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -148,11 +186,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 border: Border.all(color: borderColor, width: 1),
               ),
               child: ListTile(
-                leading: Icon(icon, color: Colors.black),
+                leading: Image.asset(imagePath, width: 40, height: 40),
                 title: Text(title, style: interBold.copyWith(fontSize: getFontSize(context))),
                 subtitle: Text(subtitle, style: interRegular.copyWith(fontSize: getFontSize(context))),
                 trailing: Icon(Icons.arrow_forward_ios, color: Colors.black),
-                onTap: () {},
+                onTap: onTap,
               ),
             ),
           ),
@@ -165,34 +203,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildSmallIconCard(BuildContext context, IconData icon, String text) {
+  Widget _buildSmallIconCard(BuildContext context, String imagePath, String text, VoidCallback onTap) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
-      child: Column(
-        children: [
-          Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Colors.grey[100],
-              border: Border.all(color: Colors.grey[300]!, width: 1),
-            ),
-            child: Center(
-              child: Icon(
-                icon,
-                size: 30,
-                color: Colors.black,
+      child: InkWell(
+        onTap: onTap,
+        child: Column(
+          children: [
+            Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.grey[100],
+                border: Border.all(color: Colors.grey[300]!, width: 1),
+              ),
+              child: Center(
+                child: Image.asset(imagePath, width: 30, height: 30),
               ),
             ),
-          ),
-          SizedBox(height: getSpacing(context)),
-          Text(
-            text,
-            textAlign: TextAlign.center,
-            style: interRegular.copyWith(fontSize: getFontSize(context)),
-          ),
-        ],
+            SizedBox(height: getSpacing(context)),
+            Text(
+              text,
+              textAlign: TextAlign.center,
+              style: interRegular.copyWith(fontSize: getFontSize(context)),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -200,14 +237,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildCustomerServiceOptions(BuildContext context) {
     return Column(
       children: [
-        _buildCustomerServiceOption(context, "Help & Support", Icons.help_outline),
-        _buildCustomerServiceOption(context, "Notifications", Icons.notifications_outlined),
-        _buildCustomerServiceOption(context, "Our Policies", Icons.policy),
+        _buildCustomerServiceOption(context, "Help & Support", 'assets/images/24-support.png', () {
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => HelpSupportScreen()));
+        }),
+        _buildCustomerServiceOption(context, "Notifications", 'assets/images/notification.png', () {
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationsScreen()));
+        }),
+        _buildCustomerServiceOption(context, "Our Policies", 'assets/images/policy.png', () {
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => PoliciesScreen()));
+        }),
       ],
     );
   }
 
-  Widget _buildCustomerServiceOption(BuildContext context, String title, IconData icon) {
+  Widget _buildCustomerServiceOption(BuildContext context, String title, String imagePath, VoidCallback onTap) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
@@ -224,10 +267,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
         child: ListTile(
-          leading: Icon(icon, color: Colors.black),
+          leading: Image.asset(imagePath, width: 40, height: 40),
           title: Text(title, style: interBold.copyWith(fontSize: getFontSize(context))),
           trailing: Icon(Icons.arrow_forward_ios, color: Colors.black),
-          onTap: () {},
+          onTap: onTap,
         ),
       ),
     );
@@ -239,7 +282,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: Colors.black,
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       ),
-      onPressed: () {},
+      onPressed: () {
+        // Add sign-out logic here
+      },
       child: Text("Sign Out", style: buttonTextStyle(context)),
     );
   }

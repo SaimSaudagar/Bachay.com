@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 import '../../../Widgets/App_Bar.dart';
+import 'Settings.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,17 +11,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen(),
+      home: Shopping_Profile(),
     );
   }
 }
 
-class HomeScreen extends StatefulWidget {
+class Shopping_Profile extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _Shopping_ProfileState createState() => _Shopping_ProfileState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _Shopping_ProfileState extends State<Shopping_Profile> {
   bool isRecentlyViewPressed = false;
   bool isRecentOrderedPressed = false;
 
@@ -49,7 +50,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   Spacer(),
-                  Icon(Icons.settings),
+                  IconButton(
+                    icon: Image.asset(
+                      'assets/images/setting.png', // Replace with the actual path to your settings icon image
+                      width: getFontSize(context) * 2, // Adjust the size as needed
+                      height: getFontSize(context) * 2, // Adjust the size as needed
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SettingsScreen()),
+                      );
+                    },
+                  ),
                 ],
               ),
               SizedBox(height: getSpacing(context) * 2),
@@ -76,10 +89,10 @@ class _HomeScreenState extends State<HomeScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildFeatureItem(context, 'Wallet: Rs. 140', Icons.account_balance_wallet),
-            _buildFeatureItem(context, 'Coupons: 02', Icons.card_giftcard),
-            _buildFeatureItem(context, 'Points: 200', Icons.star),
-            _buildFeatureItem(context, 'Gift Cards', Icons.card_membership),
+            _buildFeatureItem(context, 'Wallet: Rs. 140', 'assets/images/wallet.png'),
+            _buildFeatureItem(context, 'Coupons: 02', 'assets/images/coupons.png'),
+            _buildFeatureItem(context, 'Points: 200', 'assets/images/points.png'),
+            _buildFeatureItem(context, 'Gift Cards', 'assets/images/gift_cards.png'),
           ],
         ),
       ],
@@ -95,11 +108,11 @@ class _HomeScreenState extends State<HomeScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildOrderItem(context, 'History', Icons.history),
-            _buildOrderItem(context, 'Returns', Icons.undo),
-            _buildOrderItem(context, 'Reorder', Icons.repeat),
-            _buildOrderItem(context, 'Tracking', Icons.local_shipping),
-            _buildOrderItem(context, 'Reviews', Icons.rate_review),
+            _buildOrderItem(context, 'History', 'assets/images/history.png'),
+            _buildOrderItem(context, 'Returns', 'assets/images/returns.png'),
+            _buildOrderItem(context, 'Reorder', 'assets/images/reorder.png'),
+            _buildOrderItem(context, 'Tracking', 'assets/images/tracking.png'),
+            _buildOrderItem(context, 'Reviews', 'assets/images/reviews.png'),
           ],
         ),
       ],
@@ -115,20 +128,20 @@ class _HomeScreenState extends State<HomeScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildOtherItem(context, 'Favorites', Icons.favorite),
-            _buildOtherItem(context, 'Payment', Icons.payment),
-            _buildOtherItem(context, 'Account', Icons.account_circle),
-            _buildOtherItem(context, 'Children', Icons.child_care),
-            _buildOtherItem(context, 'Contact', Icons.contact_mail),
+            _buildOtherItem(context, 'Favorites', 'assets/images/favorites.png'),
+            _buildOtherItem(context, 'Payment', 'assets/images/card.png'),
+            _buildOtherItem(context, 'Account', 'assets/images/account.png'),
+            _buildOtherItem(context, 'Children', 'assets/images/children.png'),
+            _buildOtherItem(context, 'Contact', 'assets/images/contact.png'),
           ],
         ),
         SizedBox(height: getSpacing(context)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildOtherItem(context, 'Address', Icons.location_on),
-            _buildOtherItem(context, 'Password', Icons.lock),
-            _buildOtherItem(context, 'Support', Icons.support),
+            _buildOtherItem(context, 'Address', 'assets/images/address.png'),
+            _buildOtherItem(context, 'Password', 'assets/images/password.png'),
+            _buildOtherItem(context, 'Support', 'assets/images/24-support.png'),
           ],
         ),
       ],
@@ -192,34 +205,33 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildFeatureItem(BuildContext context, String text, IconData icon) {
+  Widget _buildFeatureItem(BuildContext context, String text, String imagePath) {
     return Column(
       children: [
-        Icon(icon, size: getFontSize(context) * 4),
+        Image.asset(imagePath, width: getFontSize(context) * 4, height: getFontSize(context) * 4),
         SizedBox(height: getSpacing(context)),
         Text(text, textAlign: TextAlign.center, style: interRegular.copyWith(fontSize: getFontSize(context))),
       ],
     );
   }
 
-  Widget _buildOrderItem(BuildContext context, String text, IconData icon) {
+  Widget _buildOrderItem(BuildContext context, String text, String imagePath) {
     return Column(
       children: [
-        Icon(icon, size: getFontSize(context) * 4),
+        Image.asset(imagePath, width: getFontSize(context) * 4, height: getFontSize(context) * 4),
         SizedBox(height: getSpacing(context)),
         Text(text, textAlign: TextAlign.center, style: interRegular.copyWith(fontSize: getFontSize(context))),
       ],
     );
   }
 
-  Widget _buildOtherItem(BuildContext context, String text, IconData icon) {
+  Widget _buildOtherItem(BuildContext context, String text, String imagePath) {
     return Column(
       children: [
-        Icon(icon, size: getFontSize(context) * 4),
+        Image.asset(imagePath, width: getFontSize(context) * 4, height: getFontSize(context) * 4),
         SizedBox(height: getSpacing(context)),
         Text(text, textAlign: TextAlign.center, style: interRegular.copyWith(fontSize: getFontSize(context))),
       ],
     );
   }
 }
-

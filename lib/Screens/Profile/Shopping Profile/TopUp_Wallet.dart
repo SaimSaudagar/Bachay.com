@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'Wallet.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -40,7 +42,11 @@ class _TopUpWalletScreenState extends State<TopUpWalletScreen> {
         title: Text('Top Up Wallet'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => WalletScreen()),
+            );
+          },
         ),
       ),
       body: FutureBuilder<Map<String, dynamic>>(
@@ -76,75 +82,92 @@ class _TopUpWalletContentState extends State<TopUpWalletContent> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Select or enter deposit amount',
-              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16.0),
-            Row(
-              children: widget.data['amounts'].map<Widget>((amount) {
-                return Expanded(
-                  child: _buildAmountButton(amount),
-                );
-              }).toList(),
-            ),
-            SizedBox(height: 16.0),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'PKR',
-                      border: OutlineInputBorder(),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        _customAmount = value;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 16.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Deposit Amount\nPKR ${_customAmount.isNotEmpty ? _customAmount : _selectedAmount ?? ''}',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.purple,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  'Select or enter deposit amount',
+                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    _showPaymentMethodsSheet(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
+                SizedBox(height: 16.0),
+                Row(
+                  children: widget.data['amounts'].map<Widget>((amount) {
+                    return Expanded(
+                      child: _buildAmountButton(amount),
+                    );
+                  }).toList(),
+                ),
+                SizedBox(height: 16.0),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'PKR',
+                          border: OutlineInputBorder(),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _customAmount = value;
+                          });
+                        },
+                      ),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-                  ),
-                  child: Text(
-                    'Confirm',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
-      ),
+        Container(
+          padding: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Deposit Amount\nPKR ${_customAmount.isNotEmpty ? _customAmount : _selectedAmount ?? ''}',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.purple,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  _showPaymentMethodsSheet(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+                ),
+                child: Text(
+                  'Confirm',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
