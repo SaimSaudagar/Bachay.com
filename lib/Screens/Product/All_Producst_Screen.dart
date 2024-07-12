@@ -1,4 +1,5 @@
 import 'package:app/API/Repository/Product_Repository.dart';
+import 'package:app/Models/Products/Products.dart';
 import 'package:app/Screens/Product/Single_Products_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,78 +22,83 @@ class AllProductsScreen extends StatelessWidget {
       appBar: CustomAppBar(
         state: 3,
       ),
+      bottomNavigationBar: FilterOptions(),
       drawer: CustomDrawer(),
-      body: Column(
-        children: [
-          CustomSearchBar(
-              // text: 'Select Location to see product availability',
-              // onTap: () {},
-              ),
-          FilterButtons(),
-          DeliveryButtons(),
-          Expanded(
-            child: Padding(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            CustomSearchBar(
+                // text: 'Select Location to see product availability',
+                // onTap: () {},
+                ),
+            FilterButtons(),
+            DeliveryButtons(),
+            Padding(
               padding: EdgeInsets.all(getPadding(context)),
-              child: featuredProducts(context),
+              child: allProducts(),
             ),
-          ),
-          FilterOptions(),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  Widget featuredProducts(BuildContext context) {
+  //All Products
+  Widget allProducts() {
     return BlocProvider(
       create: (_) => ProductBloc(productRepository: ProductRepository())
         ..add(LoadAllProducts()),
       child: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
           if (state is AllProductsLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           } else if (state is AllProductsLoaded) {
-            // return buildFeaturedProducts(context, state.allProducts);
+            return buildAllProducts(
+                context, state.allProducts.allProducts!.data);
           } else if (state is AllProductsError) {
-            return const Center(child: Text('Failed to load products'));
+            return Text('Failed to load all products');
           }
-          return const Center(child: Text('Press a button to load products'));
+          return Center(child: Text('Press a button to load categories'));
         },
       ),
     );
   }
 
-  Widget buildFeaturedProducts(
-      BuildContext context, List<FeaturedProduct> products) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: getSpacing(context),
-        mainAxisSpacing: getSpacing(context),
-        childAspectRatio: 0.7,
-      ),
-      itemCount: products.length,
-      itemBuilder: (context, index) {
-        return GestureDetector(
-            onTap: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SingleProductScreen(
-                              productId: products[index].id,
-                            )),
-                  )
-                },
-            child: buildFeaturedProductTile(context, products[index]));
-      },
+  Widget buildAllProducts(BuildContext context, List<Product> products) {
+    return Column(
+      children: [
+        GridView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: products.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 0.75,
+          ),
+          itemBuilder: (context, index) {
+            return GestureDetector(
+                onTap: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SingleProductScreen(
+                                  productId: products[index].id,
+                                )),
+                      ),
+                    },
+                child: buildAllProductTile(context, products[index]));
+          },
+        ),
+      ],
     );
   }
 
-  Widget buildFeaturedProductTile(
-      BuildContext context, FeaturedProduct product) {
+  Widget buildAllProductTile(BuildContext context, Product product) {
     Color textColor = Color.fromRGBO(191, 143, 57, 1);
     Color color = Color.fromRGBO(255, 244, 223, 1);
     Color borderColor = Color.fromRGBO(255, 198, 95, 1);
     double fontSize = MediaQuery.of(context).size.width * 0.025;
+    double fontSizeBig = MediaQuery.of(context).size.width * 0.025;
 
     return Padding(
       padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.01),
@@ -130,7 +136,7 @@ class AllProductsScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
               child: Text(
-                product.name,
+                product.name.toString(),
                 style: TextStyle(fontSize: fontSize),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -139,9 +145,9 @@ class AllProductsScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(children: [
                 RatingBarIndicator(
-                  rating: 4.5,
+                  rating: 1,
                   itemBuilder: (context, index) =>
-                      const Icon(Icons.star, color: Colors.amber),
+                      Icon(Icons.star, color: Colors.amber),
                   itemCount: 1,
                   itemSize: 20.0,
                   direction: Axis.horizontal,
@@ -156,8 +162,8 @@ class AllProductsScreen extends StatelessWidget {
                   style: TextStyle(fontSize: fontSize),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 10),
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  margin: EdgeInsets.only(left: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 5),
                   decoration: BoxDecoration(
                     color: color,
                     border: Border.all(
@@ -181,8 +187,8 @@ class AllProductsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "\Rs.${product.variations[0].price.toStringAsFixed(2)}",
-                    style: const TextStyle(
+                    "\Rs.${product.unitPrice.toStringAsFixed(2)}",
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
