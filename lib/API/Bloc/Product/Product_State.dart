@@ -1,4 +1,5 @@
 import 'package:app/Models/Products/Products.dart';
+import 'package:app/Models/Products/Single_Product.dart';
 
 abstract class ProductState {}
 
@@ -15,4 +16,17 @@ class AllProductsLoaded extends ProductState {
 class AllProductsError extends ProductState {
   final String message;
   AllProductsError(this.message);
+}
+
+//Single Product
+class SingleProductLoading extends ProductState {}
+
+class SingleProductLoaded extends ProductState {
+  final SingleProduct singleProduct;
+  SingleProductLoaded(this.singleProduct);
+}
+
+class SingleProductError extends ProductState {
+  final String message;
+  SingleProductError(this.message);
 }
