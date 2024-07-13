@@ -21,9 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: SingleProductScreen(
-        productId: 8,
-      ),
+      home: LoadingScreen(),
     );
   }
 }
