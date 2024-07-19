@@ -2,25 +2,13 @@ import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 import 'Order_Details.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: OrderHistoryScreen(),
-    );
-  }
-}
-
 class OrderHistoryScreen extends StatefulWidget {
   @override
   _OrderHistoryScreenState createState() => _OrderHistoryScreenState();
 }
 
-class _OrderHistoryScreenState extends State<OrderHistoryScreen> with SingleTickerProviderStateMixin {
+class _OrderHistoryScreenState extends State<OrderHistoryScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -47,7 +35,8 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> with SingleTick
         ),
         title: Text(
           'Order History',
-          style: TextStyle(color: Colors.black, fontSize: getBigFontSize(context)),
+          style:
+              TextStyle(color: Colors.black, fontSize: getBigFontSize(context)),
         ),
         actions: [
           Stack(
@@ -120,8 +109,10 @@ class OrderListView extends StatelessWidget {
           placedDate: '02 Jun 2024, 20:14:56',
           paidDate: '07 Jun 2024, 18:04:56',
           statuses: ['Paid', 'Delivered'],
-          imageUrl: 'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
-          title: 'Tween Boy Loose Fit Athletic Solid Color Stand Collar Short Sleeve Shirt',
+          imageUrl:
+              'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
+          title:
+              'Tween Boy Loose Fit Athletic Solid Color Stand Collar Short Sleeve Shirt',
           price: 850,
           originalPrice: 3999,
           quantity: 1,
@@ -133,8 +124,10 @@ class OrderListView extends StatelessWidget {
           placedDate: '02 Jun 2024, 20:14:56',
           paidDate: '07 Jun 2024, 18:04:56',
           statuses: ['Unpaid', 'Processing'],
-          imageUrl: 'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
-          title: 'BUMZEE Interlock Half Sleeves Star Printed Tee & Shorts Set With Suspender - Beige & Navy Blue',
+          imageUrl:
+              'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
+          title:
+              'BUMZEE Interlock Half Sleeves Star Printed Tee & Shorts Set With Suspender - Beige & Navy Blue',
           price: 257,
           originalPrice: 3999,
           quantity: 4,
@@ -194,7 +187,8 @@ class OrderCard extends StatelessWidget {
       },
       child: Card(
         elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -206,39 +200,63 @@ class OrderCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Order No: $orderNo', style: interBold.copyWith(fontSize: getFontSize(context))),
-                      Text('Placed on $placedDate', style: interRegular.copyWith(fontSize: getFontSize(context))),
-                      Text('Paid on $paidDate', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                      Text('Order No: $orderNo',
+                          style: interBold.copyWith(
+                              fontSize: getFontSize(context))),
+                      Text('Placed on $placedDate',
+                          style: interRegular.copyWith(
+                              fontSize: getFontSize(context))),
+                      Text('Paid on $paidDate',
+                          style: interRegular.copyWith(
+                              fontSize: getFontSize(context))),
                     ],
                   ),
                   Row(
-                    children: statuses.map((status) => _buildStatusChip(status, context)).toList(),
+                    children: statuses
+                        .map((status) => _buildStatusChip(status, context))
+                        .toList(),
                   ),
                 ],
               ),
               Divider(),
               Row(
                 children: [
-                  Image.network(imageUrl, width: 80, height: 80, fit: BoxFit.cover),
+                  Image.network(imageUrl,
+                      width: 80, height: 80, fit: BoxFit.cover),
                   SizedBox(width: 8),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(title, style: interBold.copyWith(fontSize: getFontSize(context))),
+                        Text(title,
+                            style: interBold.copyWith(
+                                fontSize: getFontSize(context))),
                         Row(
                           children: [
-                            Text('Rs. $price', style: TextStyle(color: buttonColorPurple, fontSize: getBigFontSize(context))),
+                            Text('Rs. $price',
+                                style: TextStyle(
+                                    color: buttonColorPurple,
+                                    fontSize: getBigFontSize(context))),
                             SizedBox(width: 4),
-                            Text('Rs. $originalPrice', style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: getFontSize(context))),
+                            Text('Rs. $originalPrice',
+                                style: TextStyle(
+                                    decoration: TextDecoration.lineThrough,
+                                    fontSize: getFontSize(context))),
                           ],
                         ),
-                        Text('Quantity: $quantity', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                        Text('Quantity: $quantity',
+                            style: interRegular.copyWith(
+                                fontSize: getFontSize(context))),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Total Order:', style: interBold.copyWith(fontSize: getFontSize(context))),
-                            Text('Rs. $totalPrice', style: interBold.copyWith(fontSize: getBigFontSize(context), color: buttonColorPurple)),
+                            Text('Total Order:',
+                                style: interBold.copyWith(
+                                    fontSize: getFontSize(context))),
+                            Text('Rs. $totalPrice',
+                                style: interBold.copyWith(
+                                    fontSize: getBigFontSize(context),
+                                    color: buttonColorPurple)),
                           ],
                         ),
                       ],
@@ -254,12 +272,15 @@ class OrderCard extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.black, backgroundColor: Colors.grey.withOpacity(0.5),
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.grey.withOpacity(0.5),
                         side: BorderSide(color: Colors.black),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50.0)),
                         padding: EdgeInsets.symmetric(vertical: 12),
                       ),
-                      child: Text('Return Product', style: buttonTextStyle(context)),
+                      child: Text('Return Product',
+                          style: buttonTextStyle(context)),
                     ),
                   ),
                   SizedBox(width: 8),
@@ -268,7 +289,8 @@ class OrderCard extends StatelessWidget {
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: buttonColorPurple,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50.0)),
                         padding: EdgeInsets.symmetric(vertical: 12),
                       ),
                       child: Text('Buy Again', style: buttonTextStyle(context)),
@@ -309,7 +331,11 @@ class OrderCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(borderRadius),
         border: Border.all(color: color),
       ),
-      child: Text(status, style: TextStyle(color: color, fontSize: getFontSize(context), fontWeight: FontWeight.bold)),
+      child: Text(status,
+          style: TextStyle(
+              color: color,
+              fontSize: getFontSize(context),
+              fontWeight: FontWeight.bold)),
     );
   }
 }

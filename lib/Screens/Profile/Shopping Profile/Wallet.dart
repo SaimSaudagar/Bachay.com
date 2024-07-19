@@ -2,22 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 import 'TopUp_Wallet.dart';
 
-void main() {
-  runApp(WalletApp());
-}
-
-class WalletApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: WalletScreen(),
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-    );
-  }
-}
-
 class WalletScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

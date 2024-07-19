@@ -27,7 +27,7 @@
 //           elevation: 1,
 //           titleSpacing: 0,
 //           leading: IconButton(
-//             icon: Image.asset('assets/images/hamburger.png'),    
+//             icon: Image.asset('assets/images/hamburger.png'),
 //                           onPressed: () {
 //                             Navigator.push(
 //                               context,
@@ -209,14 +209,7 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
+import 'package:app/Screens/Checkout/Checkout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../Screens/Product/All_Producst_Screen.dart';
@@ -322,7 +315,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: IconButton(
                   icon: SvgPicture.asset('assets/images/shopping-cart.svg',
                       height: iconSize),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ShoppingCartScreen(),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

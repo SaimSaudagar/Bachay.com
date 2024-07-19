@@ -186,10 +186,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Widget buildSubCategory(List<SubCategory> categories) {
     return Expanded(
       child: Container(
-        width:
-            MediaQuery.of(context).size.width * 0.2, // Added width constraint
+        width: MediaQuery.of(context).size.width * 0.2,
         child: GridView.count(
-          crossAxisCount: 5,
+          crossAxisCount: 3,
           childAspectRatio: 1 / 1.5,
           children: categories[0]
               .childes!
@@ -205,7 +204,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return Column(
       children: <Widget>[
         Expanded(
-          child: Image.network(category.icon!, fit: BoxFit.cover,
+          child: Image.network(category.icon, fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
             return Center(child: Text('Image not available'));
           }),

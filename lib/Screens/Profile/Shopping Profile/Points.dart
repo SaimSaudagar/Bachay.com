@@ -1,19 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: PointsScreen(),
-    );
-  }
-}
-
 class PointsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

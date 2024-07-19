@@ -2,19 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 import '../../../Widgets/App_Bar.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: SettingsScreen(),
-    );
-  }
-}
-
 class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

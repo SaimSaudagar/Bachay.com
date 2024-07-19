@@ -247,19 +247,6 @@ import 'Review_Product.dart';
 import 'Settings.dart';
 import 'Wallet.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Shopping_Profile(),
-    );
-  }
-}
-
 class Shopping_Profile extends StatefulWidget {
   @override
   _Shopping_ProfileState createState() => _Shopping_ProfileState();
@@ -283,27 +270,36 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
                 children: [
                   CircleAvatar(
                     radius: 30,
-                    backgroundImage: AssetImage('assets/images/Celebrate.png'), // Replace with actual image URL
+                    backgroundImage: AssetImage(
+                        'assets/images/Celebrate.png'), // Replace with actual image URL
                   ),
                   SizedBox(width: getSpacing(context) * 2),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Hello, Samira', style: interBold.copyWith(fontSize: getBigFontSize(context))),
-                      Text('Welcome to Bachay.com', style: interRegular.copyWith(color: Colors.grey, fontSize: getFontSize(context))),
+                      Text('Hello, Samira',
+                          style: interBold.copyWith(
+                              fontSize: getBigFontSize(context))),
+                      Text('Welcome to Bachay.com',
+                          style: interRegular.copyWith(
+                              color: Colors.grey,
+                              fontSize: getFontSize(context))),
                     ],
                   ),
                   Spacer(),
                   IconButton(
                     icon: Image.asset(
                       'assets/images/setting.png', // Replace with the actual path to your settings icon image
-                      width: getFontSize(context) * 2, // Adjust the size as needed
-                      height: getFontSize(context) * 2, // Adjust the size as needed
+                      width:
+                          getFontSize(context) * 2, // Adjust the size as needed
+                      height:
+                          getFontSize(context) * 2, // Adjust the size as needed
                     ),
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SettingsScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => SettingsScreen()),
                       );
                     },
                   ),
@@ -328,21 +324,29 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Features', style: interBold.copyWith(fontSize: getFontSize(context))),
+        Text('Features',
+            style: interBold.copyWith(fontSize: getFontSize(context))),
         SizedBox(height: getSpacing(context)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildFeatureItem(context, 'Wallet: Rs. 140', 'assets/images/wallet.png', () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => WalletScreen()));
+            _buildFeatureItem(
+                context, 'Wallet: Rs. 140', 'assets/images/wallet.png', () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => WalletScreen()));
             }),
-            _buildFeatureItem(context, 'Coupons: 02', 'assets/images/coupons.png', () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => CouponScreen()));
+            _buildFeatureItem(
+                context, 'Coupons: 02', 'assets/images/coupons.png', () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CouponScreen()));
             }),
-            _buildFeatureItem(context, 'Points: 200', 'assets/images/points.png', () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => PointsScreen()));
+            _buildFeatureItem(
+                context, 'Points: 200', 'assets/images/points.png', () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PointsScreen()));
             }),
-            _buildFeatureItem(context, 'Gift Cards', 'assets/images/gift_cards.png', () {
+            _buildFeatureItem(
+                context, 'Gift Cards', 'assets/images/gift_cards.png', () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => GiftCardsScreen()));
             }),
           ],
@@ -355,24 +359,38 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('My Orders', style: interBold.copyWith(fontSize: getFontSize(context))),
+        Text('My Orders',
+            style: interBold.copyWith(fontSize: getFontSize(context))),
         SizedBox(height: getSpacing(context)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildOrderItem(context, 'History', 'assets/images/history.png', () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => OrderHistoryScreen()));
+            _buildOrderItem(context, 'History', 'assets/images/history.png',
+                () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => OrderHistoryScreen()));
             }),
-            _buildOrderItem(context, 'Returns', 'assets/images/returns.png', () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ProductReturnScreen(returnRequests: [],)));
+            _buildOrderItem(context, 'Returns', 'assets/images/returns.png',
+                () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProductReturnScreen(
+                            returnRequests: [],
+                          )));
             }),
-            _buildOrderItem(context, 'Reorder', 'assets/images/reorder.png', () {
+            _buildOrderItem(context, 'Reorder', 'assets/images/reorder.png',
+                () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => ReorderScreen()));
             }),
-            _buildOrderItem(context, 'Tracking', 'assets/images/tracking.png', () {
+            _buildOrderItem(context, 'Tracking', 'assets/images/tracking.png',
+                () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => TrackingScreen()));
             }),
-            _buildOrderItem(context, 'Reviews', 'assets/images/reviews.png', () {
+            _buildOrderItem(context, 'Reviews', 'assets/images/reviews.png',
+                () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewProductScreen()));
             }),
           ],
@@ -385,24 +403,29 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Others', style: interBold.copyWith(fontSize: getFontSize(context))),
+        Text('Others',
+            style: interBold.copyWith(fontSize: getFontSize(context))),
         SizedBox(height: getSpacing(context)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildOtherItem(context, 'Favorites', 'assets/images/favorites.png', () {
+            _buildOtherItem(context, 'Favorites', 'assets/images/favorites.png',
+                () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritesScreen()));
             }),
             _buildOtherItem(context, 'Payment', 'assets/images/card.png', () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentScreen()));
             }),
-            _buildOtherItem(context, 'Account', 'assets/images/account.png', () {
+            _buildOtherItem(context, 'Account', 'assets/images/account.png',
+                () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => AccountScreen()));
             }),
-            _buildOtherItem(context, 'Children', 'assets/images/children.png', () {
+            _buildOtherItem(context, 'Children', 'assets/images/children.png',
+                () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => ChildrenScreen()));
             }),
-            _buildOtherItem(context, 'Contact', 'assets/images/contact.png', () {
+            _buildOtherItem(context, 'Contact', 'assets/images/contact.png',
+                () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => ContactScreen()));
             }),
           ],
@@ -411,13 +434,16 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildOtherItem(context, 'Address', 'assets/images/address.png', () {
+            _buildOtherItem(context, 'Address', 'assets/images/address.png',
+                () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => AddressScreen()));
             }),
-            _buildOtherItem(context, 'Password', 'assets/images/password.png', () {
+            _buildOtherItem(context, 'Password', 'assets/images/password.png',
+                () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => PasswordScreen()));
             }),
-            _buildOtherItem(context, 'Support', 'assets/images/24-support.png', () {
+            _buildOtherItem(context, 'Support', 'assets/images/24-support.png',
+                () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => SupportScreen()));
             }),
           ],
@@ -449,7 +475,9 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
               child: Center(
                 child: Text(
                   'Recently View',
-                  style: buttonTextStyle(context).copyWith(color: isRecentlyViewPressed ? Colors.white : Colors.black),
+                  style: buttonTextStyle(context).copyWith(
+                      color:
+                          isRecentlyViewPressed ? Colors.white : Colors.black),
                 ),
               ),
             ),
@@ -475,7 +503,9 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
               child: Center(
                 child: Text(
                   'Recent Ordered',
-                  style: buttonTextStyle(context).copyWith(color: isRecentOrderedPressed ? Colors.white : Colors.black),
+                  style: buttonTextStyle(context).copyWith(
+                      color:
+                          isRecentOrderedPressed ? Colors.white : Colors.black),
                 ),
               ),
             ),
@@ -485,40 +515,55 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
     );
   }
 
-  Widget _buildFeatureItem(BuildContext context, String text, String imagePath, VoidCallback onPressed) {
+  Widget _buildFeatureItem(BuildContext context, String text, String imagePath,
+      VoidCallback onPressed) {
     return InkWell(
       onTap: onPressed,
       child: Column(
         children: [
-          Image.asset(imagePath, width: getFontSize(context) * 4, height: getFontSize(context) * 4),
+          Image.asset(imagePath,
+              width: getFontSize(context) * 4,
+              height: getFontSize(context) * 4),
           SizedBox(height: getSpacing(context)),
-          Text(text, textAlign: TextAlign.center, style: interRegular.copyWith(fontSize: getFontSize(context))),
+          Text(text,
+              textAlign: TextAlign.center,
+              style: interRegular.copyWith(fontSize: getFontSize(context))),
         ],
       ),
     );
   }
 
-  Widget _buildOrderItem(BuildContext context, String text, String imagePath, VoidCallback onPressed) {
+  Widget _buildOrderItem(BuildContext context, String text, String imagePath,
+      VoidCallback onPressed) {
     return InkWell(
       onTap: onPressed,
       child: Column(
         children: [
-          Image.asset(imagePath, width: getFontSize(context) * 4, height: getFontSize(context) * 4),
+          Image.asset(imagePath,
+              width: getFontSize(context) * 4,
+              height: getFontSize(context) * 4),
           SizedBox(height: getSpacing(context)),
-          Text(text, textAlign: TextAlign.center, style: interRegular.copyWith(fontSize: getFontSize(context))),
+          Text(text,
+              textAlign: TextAlign.center,
+              style: interRegular.copyWith(fontSize: getFontSize(context))),
         ],
       ),
     );
   }
 
-  Widget _buildOtherItem(BuildContext context, String text, String imagePath, VoidCallback onPressed) {
+  Widget _buildOtherItem(BuildContext context, String text, String imagePath,
+      VoidCallback onPressed) {
     return InkWell(
       onTap: onPressed,
       child: Column(
         children: [
-          Image.asset(imagePath, width: getFontSize(context) * 4, height: getFontSize(context) * 4),
+          Image.asset(imagePath,
+              width: getFontSize(context) * 4,
+              height: getFontSize(context) * 4),
           SizedBox(height: getSpacing(context)),
-          Text(text, textAlign: TextAlign.center, style: interRegular.copyWith(fontSize: getFontSize(context))),
+          Text(text,
+              textAlign: TextAlign.center,
+              style: interRegular.copyWith(fontSize: getFontSize(context))),
         ],
       ),
     );

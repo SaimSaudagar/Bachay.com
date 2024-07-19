@@ -18,11 +18,12 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       }
     });
 
-     on<LoadSubCategory>((event, emit) async {
+    on<LoadSubCategory>((event, emit) async {
       emit(SubCategoryLoading());
       try {
-        final banners = await categoryRepository.fetchSubCategory(1);
-        emit(SubCategoryLoaded(banners));
+        final category = await categoryRepository.fetchSubCategory(1);
+        print(category.categories.first.icon);  
+        emit(SubCategoryLoaded(category));
       } catch (e) {
         print(e.toString());
         emit(SubCategoryError(e.toString()));

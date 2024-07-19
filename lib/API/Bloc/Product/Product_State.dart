@@ -30,3 +30,16 @@ class SingleProductError extends ProductState {
   final String message;
   SingleProductError(this.message);
 }
+
+//Add to cart
+class AddToCartLoading extends ProductState {}
+
+class AddToCartLoaded extends ProductState {
+  final int status;
+  AddToCartLoaded(this.status);
+}
+
+class AddToCartError extends ProductState {
+  final String message;
+  AddToCartError(this.message);
+}

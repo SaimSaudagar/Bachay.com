@@ -17,6 +17,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         emit(AllProductsError(e.toString()));
       }
     });
+
     on<LoadSingleProduct>((event, emit) async {
       emit(SingleProductLoading());
       try {
@@ -26,6 +27,19 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       } catch (e) {
         print(e.toString());
         emit(SingleProductError(e.toString()));
+      }
+    });
+
+    on<AddToCart>((event, emit) async {
+      emit(AddToCartLoading());
+      try {
+        print("CHECKKKK");
+        final status =
+            await productRepository.addToCart(event.productId, event.quantity);
+        emit(AddToCartLoaded(status));
+      } catch (e) {
+        print(e.toString());
+        emit(AddToCartError(e.toString()));
       }
     });
   }

@@ -49,8 +49,7 @@ class _HomePageState extends State<HomePage> {
       appBar: CustomAppBar(
         state: 3,
       ),
-            drawer: CustomDrawer(),
-
+      drawer: CustomDrawer(),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(getPadding(context)),
@@ -415,6 +414,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildCategory(List<Category> categories) {
+    final List<Category> doubledCategories = [
+      ...categories,
+      ...categories,
+      ...categories
+    ];
+
     return GestureDetector(
       onTap: () => {
         Navigator.push(
@@ -422,16 +427,20 @@ class _HomePageState extends State<HomePage> {
           MaterialPageRoute(builder: (context) => CategoryScreen()),
         ),
       },
-      child: Container(
-        height: 300,
-        child: GridView.count(
-          crossAxisCount: 5,
-          childAspectRatio: 1 / 1.5,
-          children: categories
-              .map((category) => buildCategoryTile(category))
-              .toList(),
-          physics: NeverScrollableScrollPhysics(),
-        ),
+      child: Column(
+        children: [
+          Container(
+            height: 350,
+            child: GridView.count(
+              crossAxisCount: 5,
+              childAspectRatio: 1 / 1.5,
+              children: doubledCategories
+                  .map((category) => buildCategoryTile(category))
+                  .toList(),
+              physics: NeverScrollableScrollPhysics(),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -454,7 +463,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-//Free Delivery
+  //Free Delivery
   Widget freeDelivery() {
     Color textColor = Color.fromRGBO(111, 65, 11, 1);
     Color color = Color.fromRGBO(254, 233, 209, 1);
@@ -571,7 +580,8 @@ class _HomePageState extends State<HomePage> {
           } else if (state is FeaturedProductError) {
             return Text('Failed to load products');
           }
-          return Center(child: Text('Press a button to load featuted products'));
+          return Center(
+              child: Text('Press a button to load featuted products'));
         },
       ),
     );

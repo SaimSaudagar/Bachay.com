@@ -7,3 +7,10 @@ class LoadSingleProduct extends ProductEvent {
 
   LoadSingleProduct({required this.productId});
 }
+
+class AddToCart extends ProductEvent {
+  final int productId;
+  final int quantity;
+
+  AddToCart({required this.productId, required this.quantity});
+}
