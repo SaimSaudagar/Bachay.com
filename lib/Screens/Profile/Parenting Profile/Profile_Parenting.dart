@@ -1,22 +1,12 @@
-
-
 import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 import '../../../Widgets/App_Bar.dart';
-import 'Coupons.dart';
-import 'Order_History.dart';
-import 'Points.dart';
-import 'Refund/Refund_Status.dart';
-import 'Review_Product.dart';
-import 'Settings.dart';
-import 'Wallet.dart';
-
-class Shopping_Profile extends StatefulWidget {
+class Parenting_Profile extends StatefulWidget {
   @override
-  _Shopping_ProfileState createState() => _Shopping_ProfileState();
+  _Parenting_ProfileState createState() => _Parenting_ProfileState();
 }
 
-class _Shopping_ProfileState extends State<Shopping_Profile> {
+class _Parenting_ProfileState extends State<Parenting_Profile> {
   bool isRecentlyViewPressed = false;
   bool isRecentOrderedPressed = false;
 
@@ -60,11 +50,11 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
                           getFontSize(context) * 2, // Adjust the size as needed
                     ),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SettingsScreen()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) => SettingsScreen()),
+                      // );
                     },
                   ),
                 ],
@@ -95,22 +85,22 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _buildFeatureItem(
-                context, 'Wallet: Rs. 140', 'assets/images/wallet.png', () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => WalletScreen()));
+                context, 'Add Child', 'assets/images/child.png', () {
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => WalletScreen()));
             }),
             _buildFeatureItem(
-                context, 'Coupons: 02', 'assets/images/coupons.png', () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => CouponScreen()));
+                context, 'Expert Follow', 'assets/images/Expert Follow.png', () {
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => CouponScreen()));
             }),
             _buildFeatureItem(
-                context, 'Points: 200', 'assets/images/points.png', () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PointsScreen()));
+                context, 'Expert Panel', 'assets/images/Expert Panel.png', () {
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => PointsScreen()));
             }),
             _buildFeatureItem(
-                context, 'Gift Cards', 'assets/images/gift_cards.png', () {
+                context, 'Bachay Club', 'assets/images/BachayClub.png', () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => GiftCardsScreen()));
             }),
           ],
@@ -123,37 +113,37 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('My Orders',
+        Text('My Profile',
             style: interBold.copyWith(fontSize: getFontSize(context))),
         SizedBox(height: getSpacing(context)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildOrderItem(context, 'History', 'assets/images/history.png',
+            _buildOrderItem(context, 'Posts', 'assets/images/posts.png',
                 () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => OrderHistoryScreen()));
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => OrderHistoryScreen()));
             }),
-            _buildOrderItem(context, 'Returns', 'assets/images/returns.png',
+            _buildOrderItem(context, 'Saved', 'assets/images/saved.png',
                 () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ProductReturnScreen(
-                            returnRequests: [],
-                          )));
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => ProductReturnScreen(
+              //               returnRequests: [],
+              //             )));
             }),
-            _buildOrderItem(context, 'Reorder', 'assets/images/reorder.png',
+            _buildOrderItem(context, 'Questions', 'assets/images/Questions.png',
                 () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => ReorderScreen()));
             }),
-            _buildOrderItem(context, 'Tracking', 'assets/images/tracking.png',
+            _buildOrderItem(context, 'Answers', 'assets/images/Answers.png',
                 () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => TrackingScreen()));
             }),
-            _buildOrderItem(context, 'Reviews', 'assets/images/reviews.png',
+            _buildOrderItem(context, 'Following', 'assets/images/following.png',
                 () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewProductScreen()));
             }),
@@ -173,22 +163,22 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildOtherItem(context, 'Favorites', 'assets/images/favorites.png',
+            _buildOtherItem(context, 'Follow Question', 'assets/images/Follow Question.png',
                 () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritesScreen()));
             }),
-            _buildOtherItem(context, 'Payment', 'assets/images/card.png', () {
+            _buildOtherItem(context, 'My Followers', 'assets/images/My Followers.png', () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentScreen()));
             }),
-            _buildOtherItem(context, 'Account', 'assets/images/account.png',
+            _buildOtherItem(context, 'Vaccine Tracking', 'assets/images/vaccine.png',
                 () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => AccountScreen()));
             }),
-            _buildOtherItem(context, 'Children', 'assets/images/children.png',
+            _buildOtherItem(context, 'Growth Details', 'assets/images/growth.png',
                 () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => ChildrenScreen()));
             }),
-            _buildOtherItem(context, 'Contact', 'assets/images/contact.png',
+            _buildOtherItem(context, 'Baby Names', 'assets/images/baby-name.png',
                 () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => ContactScreen()));
             }),
@@ -198,14 +188,14 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildOtherItem(context, 'Address', 'assets/images/address.png',
+            _buildOtherItem(context, 'Children', 'assets/images/children.png',
                 () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => AddressScreen()));
             }),
-            _buildOtherItem(context, 'Password', 'assets/images/password.png',
-                () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => PasswordScreen()));
-            }),
+            // _buildOtherItem(context, 'Password', 'assets/images/password.png',
+            //     () {
+            //   // Navigator.push(context, MaterialPageRoute(builder: (context) => PasswordScreen()));
+            // }),
             _buildOtherItem(context, 'Support', 'assets/images/24-support.png',
                 () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => SupportScreen()));

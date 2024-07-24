@@ -23,7 +23,8 @@ class CouponScreen extends StatelessWidget {
           icon: Icon(Icons.arrow_back),
           onPressed: () {},
         ),
-        title: Text('Coupons', style: interBold.copyWith(fontSize: getFontSize(context)*2)),
+        title: Text('Coupons',
+            style: interBold.copyWith(fontSize: getFontSize(context) * 2)),
       ),
       body: Column(
         children: [
@@ -61,7 +62,8 @@ class TabBarWidget extends StatefulWidget {
   _TabBarWidgetState createState() => _TabBarWidgetState();
 }
 
-class _TabBarWidgetState extends State<TabBarWidget> with SingleTickerProviderStateMixin {
+class _TabBarWidgetState extends State<TabBarWidget>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override

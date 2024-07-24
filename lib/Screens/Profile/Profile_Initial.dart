@@ -4,6 +4,8 @@ import '../../Widgets/App_Bar.dart';
 import '../../Widgets/Botton_Nav_Bar.dart';
 import 'Edit Profile/Add_Children.dart';
 import 'Edit Profile/Edit_Profile.dart';
+import 'Education Profile/Education_Profile.dart';
+import 'Parenting Profile/Profile_Parenting.dart';
 import 'Shopping Profile/Shopping_profile.dart';
 import 'Shopping Profile/Wallet.dart';
 
@@ -156,7 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // Navigator.push(context, MaterialPageRoute(builder: (context) => QAScreen()));
           }),
         ], Colors.pink[50]!, Colors.pink[100]!, () {
-          // Navigator.push(context, MaterialPageRoute(builder: (context) => ParentingProfileScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Parenting_Profile()));
         }),
         _buildProfileOptionRow(context, "Education", "Go to your Education Profile", 'assets/images/home/education-active.png', [
           _buildSmallIconCard(context, 'assets/images/Quiz.png', "Quizzes", () {
@@ -166,7 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesScreen()));
           }),
         ], Colors.yellow[50]!, Colors.yellow[100]!, () {
-          // Navigator.push(context, MaterialPageRoute(builder: (context) => EducationProfileScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => EducationScreen()));
         }),
       ],
     );
