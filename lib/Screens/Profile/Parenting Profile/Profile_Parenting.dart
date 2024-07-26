@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 import '../../../Widgets/App_Bar.dart';
+import 'Expert_Following.dart';
+import 'My_Posts.dart';
 class Parenting_Profile extends StatefulWidget {
   @override
   _Parenting_ProfileState createState() => _Parenting_ProfileState();
@@ -91,8 +93,8 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
             }),
             _buildFeatureItem(
                 context, 'Expert Follow', 'assets/images/Expert Follow.png', () {
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => CouponScreen()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ExpertFollowingScreen()));
             }),
             _buildFeatureItem(
                 context, 'Expert Panel', 'assets/images/Expert Panel.png', () {
@@ -121,10 +123,10 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
           children: [
             _buildOrderItem(context, 'Posts', 'assets/images/posts.png',
                 () {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => OrderHistoryScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MyPosts()));
             }),
             _buildOrderItem(context, 'Saved', 'assets/images/saved.png',
                 () {
