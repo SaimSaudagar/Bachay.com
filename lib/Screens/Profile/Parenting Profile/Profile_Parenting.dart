@@ -3,6 +3,7 @@ import '../../../Utils/app_constants.dart';
 import '../../../Widgets/App_Bar.dart';
 import 'Expert_Following.dart';
 import 'My_Posts.dart';
+import 'My_Questions.dart';
 class Parenting_Profile extends StatefulWidget {
   @override
   _Parenting_ProfileState createState() => _Parenting_ProfileState();
@@ -139,7 +140,7 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
             }),
             _buildOrderItem(context, 'Questions', 'assets/images/Questions.png',
                 () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => ReorderScreen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => MyQuestions()));
             }),
             _buildOrderItem(context, 'Answers', 'assets/images/Answers.png',
                 () {
