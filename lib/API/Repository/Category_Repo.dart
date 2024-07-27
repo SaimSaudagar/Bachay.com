@@ -8,7 +8,7 @@ class CategoryRepository {
   Future<CategoryBannerList> fetchCategoryBanner(int categoryId) async {
     try {
       final response = await http
-          .get(Uri.parse('${baseUrl}categories/banners/${categoryId}/'));
+          .get(Uri.parse('${baseUrl}categories/banners/$categoryId/'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         return CategoryBannerList.fromJson(data);

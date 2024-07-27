@@ -7,11 +7,12 @@ import 'Coupons.dart';
 import 'Order_History.dart';
 import 'Points.dart';
 import 'Refund/Refund_Status.dart';
-import 'Review_Product.dart';
 import 'Settings.dart';
 import 'Wallet.dart';
 
 class Shopping_Profile extends StatefulWidget {
+  const Shopping_Profile({super.key});
+
   @override
   _Shopping_ProfileState createState() => _Shopping_ProfileState();
 }
@@ -23,7 +24,7 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(state: 1),
+      appBar: const CustomAppBar(state: 1),
       body: Padding(
         padding: EdgeInsets.all(getPadding(context)),
         child: SingleChildScrollView(
@@ -32,7 +33,7 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 30,
                     backgroundImage: AssetImage(
                         'assets/images/Celebrate.png'), // Replace with actual image URL
@@ -50,7 +51,7 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
                               fontSize: getFontSize(context))),
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   IconButton(
                     icon: Image.asset(
                       'assets/images/setting.png', // Replace with the actual path to your settings icon image
@@ -63,7 +64,7 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SettingsScreen()),
+                            builder: (context) => const SettingsScreen()),
                       );
                     },
                   ),
@@ -97,17 +98,17 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
             _buildFeatureItem(
                 context, 'Wallet: Rs. 140', 'assets/images/wallet.png', () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => WalletScreen()));
+                  MaterialPageRoute(builder: (context) => const WalletScreen()));
             }),
             _buildFeatureItem(
                 context, 'Coupons: 02', 'assets/images/coupons.png', () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => CouponScreen()));
+                  MaterialPageRoute(builder: (context) => const CouponScreen()));
             }),
             _buildFeatureItem(
                 context, 'Points: 200', 'assets/images/points.png', () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PointsScreen()));
+                  MaterialPageRoute(builder: (context) => const PointsScreen()));
             }),
             _buildFeatureItem(
                 context, 'Gift Cards', 'assets/images/gift_cards.png', () {
@@ -134,14 +135,14 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => OrderHistoryScreen()));
+                      builder: (context) => const OrderHistoryScreen()));
             }),
             _buildOrderItem(context, 'Returns', 'assets/images/returns.png',
                 () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ProductReturnScreen(
+                      builder: (context) => const ProductReturnScreen(
                             returnRequests: [],
                           )));
             }),

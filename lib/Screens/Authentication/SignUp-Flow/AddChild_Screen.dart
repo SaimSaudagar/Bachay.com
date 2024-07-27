@@ -1,12 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../Utils/app_constants.dart';
 import 'AddAddress_Screen.dart';
 
 class AddChildScreen extends StatefulWidget {
+  const AddChildScreen({super.key});
+
   @override
   _AddChildScreenState createState() => _AddChildScreenState();
 }
@@ -86,24 +87,24 @@ class _AddChildScreenState extends State<AddChildScreen> {
                           child: Wrap(
                             children: <Widget>[
                               ListTile(
-                                leading: Icon(Icons.camera),
-                                title: Text('Take Photo'),
+                                leading: const Icon(Icons.camera),
+                                title: const Text('Take Photo'),
                                 onTap: () {
                                   _pickImage(ImageSource.camera);
                                   Navigator.of(context).pop();
                                 },
                               ),
                               ListTile(
-                                leading: Icon(Icons.photo_library),
-                                title: Text('Add from Gallery'),
+                                leading: const Icon(Icons.photo_library),
+                                title: const Text('Add from Gallery'),
                                 onTap: () {
                                   _pickImage(ImageSource.gallery);
                                   Navigator.of(context).pop();
                                 },
                               ),
                               ListTile(
-                                leading: Icon(Icons.cancel),
-                                title: Text('Cancel'),
+                                leading: const Icon(Icons.cancel),
+                                title: const Text('Cancel'),
                                 onTap: () {
                                   Navigator.of(context).pop();
                                 },
@@ -129,14 +130,14 @@ class _AddChildScreenState extends State<AddChildScreen> {
               SizedBox(height: getSpacing(context) * 5),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 if (_imageFile == null)
-                  Text('+ Upload Photo', style: outfitBold),
+                  const Text('+ Upload Photo', style: outfitBold),
               ]),
               if (_imageFile != null)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SvgPicture.asset('assets/images/edit-icon.svg'),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                     Text(
                       'Change Photo',
                       style: outfitBold.copyWith(color: Colors.black),
@@ -144,7 +145,7 @@ class _AddChildScreenState extends State<AddChildScreen> {
                   ],
                 ),
               SizedBox(height: getSpacing(context) * 5),
-              Text(
+              const Text(
                 'Child Name',
                 style: outfitBold,
               ),
@@ -167,7 +168,7 @@ class _AddChildScreenState extends State<AddChildScreen> {
                 ),
               ),
               SizedBox(height: getSpacing(context) * 5),
-              Text('Date of Birth', style: outfitBold),
+              const Text('Date of Birth', style: outfitBold),
               TextField(
                 controller: _dobController,
                 decoration: InputDecoration(
@@ -292,7 +293,7 @@ class _AddChildScreenState extends State<AddChildScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AddAddressScreen()),
+                            builder: (context) => const AddAddressScreen()),
                       );
                     },
                     style: TextButton.styleFrom(
@@ -301,7 +302,7 @@ class _AddChildScreenState extends State<AddChildScreen> {
                           horizontal: getSpacing(context) * 10,
                           vertical: getSpacing(context) * 5),
                       shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.black),
+                        side: const BorderSide(color: Colors.black),
                         borderRadius: BorderRadius.circular(roundBorderRadius),
                       ),
                     ),
@@ -314,7 +315,7 @@ class _AddChildScreenState extends State<AddChildScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AddAddressScreen()),
+                            builder: (context) => const AddAddressScreen()),
                       );
                     },
                     style: ElevatedButton.styleFrom(

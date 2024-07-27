@@ -4,10 +4,12 @@ import 'package:flutter/services.dart';
 import '../../Utils/app_constants.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,12 +17,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: OtpVerificationScreen(),
+      home: const OtpVerificationScreen(),
     );
   }
 }
 
 class OtpVerificationScreen extends StatefulWidget {
+  const OtpVerificationScreen({super.key});
+
   @override
   _OtpVerificationScreenState createState() => _OtpVerificationScreenState();
 }
@@ -40,7 +44,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   }
 
   void startTimer() {
-    Duration oneSecond = Duration(seconds: 1);
+    Duration oneSecond = const Duration(seconds: 1);
     Future.delayed(oneSecond, () {
       if (_timerSeconds > 0) {
         setState(() {
@@ -84,23 +88,23 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'Verify OTP',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 10),
-              Text(
+              const SizedBox(height: 10),
+              const Text(
                 'We send you OTP to your email please enter 4 digit code to verify.',
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(4, (index) {
                 return Container(
                   width: 40,
                   height: 50,
-                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.orange, width: 2),
                     borderRadius: BorderRadius.circular(8),
@@ -112,34 +116,34 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     textAlign: TextAlign.center,
                     inputFormatters: [LengthLimitingTextInputFormatter(1)],
                     onChanged: (value) => _handleKeyEvent(index, value),
-                    decoration: InputDecoration(border: InputBorder.none),
+                    decoration: const InputDecoration(border: InputBorder.none),
                   ),
                 );
               }),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   "Didn't Receive Code?",
                   style: TextStyle(fontSize: 16),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Text(
                   _timerText,
-                  style: TextStyle(fontSize: 16, color: Colors.red),
+                  style: const TextStyle(fontSize: 16, color: Colors.red),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 TextButton(
                   onPressed: () {
                     // Resend OTP code logic here
                   },
-                  child: Text('Resend', style:TextStyle(color:buttonColorPurple) ), 
+                  child: const Text('Resend', style:TextStyle(color:buttonColorPurple) ), 
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

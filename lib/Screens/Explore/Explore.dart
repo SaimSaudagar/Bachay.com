@@ -3,19 +3,23 @@ import 'package:flutter/material.dart';
 import '../../Utils/app_constants.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: HomePage(),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -42,7 +46,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.close, color: Colors.black),
+          icon: const Icon(Icons.close, color: Colors.black),
           onPressed: () {},
         ),
         title: Row(
@@ -56,15 +60,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.search, color: Colors.black),
+            icon: const Icon(Icons.search, color: Colors.black),
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(Icons.notifications_none, color: Colors.black),
+            icon: const Icon(Icons.notifications_none, color: Colors.black),
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(Icons.bookmark_border, color: Colors.black),
+            icon: const Icon(Icons.bookmark_border, color: Colors.black),
             onPressed: () {},
           ),
         ],
@@ -73,7 +77,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           indicatorColor: Colors.orange,
           labelColor: Colors.black,
           unselectedLabelColor: Colors.grey,
-          tabs: [
+          tabs: const [
             Tab(text: 'Following'),
             Tab(text: 'Trending'),
             Tab(text: 'Discover'),
@@ -88,7 +92,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   backgroundImage: AssetImage('assets/logo/LogoExplore.png'), // Ensure you have the correct path to the avatar image
                   radius: 20,
                 ),
@@ -112,7 +116,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     foregroundColor: Colors.orange, backgroundColor: Colors.orange[100],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      side: BorderSide(color: Colors.orange),
+                      side: const BorderSide(color: Colors.orange),
                     ),
                   ),
                   onPressed: () {},
@@ -124,25 +128,25 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 SizedBox(width: getSpacing(context)),
                 Row(
                   children: [
-                    Icon(Icons.thumb_up_off_alt, color: Colors.black),
+                    const Icon(Icons.thumb_up_off_alt, color: Colors.black),
                     SizedBox(width: getSpacing(context)),
-                    Text('24', style: TextStyle(color: Colors.black)),
+                    const Text('24', style: TextStyle(color: Colors.black)),
                   ],
                 ),
                 SizedBox(width: getSpacing(context)),
                 Row(
                   children: [
-                    Icon(Icons.bookmark_border, color: Colors.black),
+                    const Icon(Icons.bookmark_border, color: Colors.black),
                     SizedBox(width: getSpacing(context)),
-                    Text('Save', style: TextStyle(color: Colors.black)),
+                    const Text('Save', style: TextStyle(color: Colors.black)),
                   ],
                 ),
                 SizedBox(width: getSpacing(context)),
                 Row(
                   children: [
-                    Icon(Icons.share, color: Colors.black),
+                    const Icon(Icons.share, color: Colors.black),
                     SizedBox(width: getSpacing(context)),
-                    Text('Share', style: TextStyle(color: Colors.black)),
+                    const Text('Share', style: TextStyle(color: Colors.black)),
                   ],
                 ),
               ],
@@ -151,7 +155,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-                children: [
+                children: const [
                   CarouselWidget(), // Following tab content
                   CarouselWidget(), // Trending tab content
                   CarouselWidget(), // Discover tab content
@@ -167,6 +171,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
 
 class CarouselWidget extends StatelessWidget {
+  const CarouselWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(
@@ -177,10 +183,10 @@ class CarouselWidget extends StatelessWidget {
         aspectRatio: 16 / 9,
         autoPlayCurve: Curves.fastOutSlowIn,
         enableInfiniteScroll: true,
-        autoPlayAnimationDuration: Duration(milliseconds: 800),
+        autoPlayAnimationDuration: const Duration(milliseconds: 800),
         viewportFraction: 0.8,
       ),
-      items: [
+      items: const [
         ProductCard(
           imageUrl: 'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg', // Replace with your image assets
           title: 'Tween Boy Loose Fit Athletic Solid Color Stand Collar Short Sleeve S...',
@@ -205,7 +211,7 @@ class ProductCard extends StatelessWidget {
   final String price;
   final String oldPrice;
 
-  const ProductCard({
+  const ProductCard({super.key, 
     required this.imageUrl,
     required this.title,
     required this.price,
@@ -268,7 +274,7 @@ class ProductCard extends StatelessWidget {
               ),
             ),
             IconButton(
-              icon: Icon(Icons.favorite_border),
+              icon: const Icon(Icons.favorite_border),
               onPressed: () {},
             ),
           ],

@@ -5,6 +5,8 @@ import 'SignUp_Screen.dart';
 import 'Verify_OTP_Screen.dart';
 
 class PasswordScreen extends StatefulWidget {
+  const PasswordScreen({super.key});
+
   @override
   _PasswordScreenState createState() => _PasswordScreenState();
 }
@@ -38,7 +40,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                   style:
                       contentC5.copyWith(fontSize: getFontSize(context) * 1.5)),
               SizedBox(height: getSpacing(context)),
-              Align(
+              const Align(
                   alignment: Alignment.centerLeft,
                   child: Text('Email', style: outfitBold)),
               TextField(
@@ -52,7 +54,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 ),
               ),
               SizedBox(height: getSpacing(context) * 4),
-              Align(
+              const Align(
                   alignment: Alignment.centerLeft,
                   child: Text('Password', style: outfitBold)),
               TextField(
@@ -88,7 +90,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SetupAccountScreen()),
+                          builder: (context) => const SetupAccountScreen()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -97,10 +99,10 @@ class _PasswordScreenState extends State<PasswordScreen> {
                       borderRadius: BorderRadius.circular(roundBorderRadius),
                     ),
                   ),
-                  child: Container(
+                  child: SizedBox(
                     height: MediaQuery.of(context).size.height * 0.08,
                     width: MediaQuery.of(context).size.width * buttonWidth,
-                    child: Padding(
+                    child: const Padding(
                       padding: buttonPadding,
                       child: Center(
                         child: Text(
@@ -117,7 +119,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => OtpVerificationScreen()),
+                        builder: (context) => const OtpVerificationScreen()),
                   );
                 },
                 child: const Text(

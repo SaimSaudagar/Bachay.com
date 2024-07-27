@@ -3,16 +3,18 @@ import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: PersonalInformationScreen(),
   ));
 }
 
 class PersonalInformationScreen extends StatelessWidget {
+  const PersonalInformationScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: 'Personal Information',
         subtitle: 'Enter your personal details.',
       ),
@@ -20,13 +22,13 @@ class PersonalInformationScreen extends StatelessWidget {
         padding: EdgeInsets.all(getPadding(context)),
         child: ListView(
           children: [
-            UserProfileSection(),
+            const UserProfileSection(),
             SizedBox(height: getSpacing(context) * 4),
-            FullNameInput(),
+            const FullNameInput(),
             SizedBox(height: getSpacing(context) * 2),
-            ParentStatusChips(),
+            const ParentStatusChips(),
             SizedBox(height: getSpacing(context) * 4),
-            ActionButtons(),
+            const ActionButtons(),
           ],
         ),
       ),
@@ -38,7 +40,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final String subtitle;
 
-  CustomAppBar({required this.title, required this.subtitle});
+  const CustomAppBar({super.key, required this.title, required this.subtitle});
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +48,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white,
       elevation: 0,
       leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: Colors.black),
+        icon: const Icon(Icons.arrow_back, color: Colors.black),
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => EditProfileScreen()),
+            MaterialPageRoute(builder: (context) => const EditProfileScreen()),
           );
         },
       ),
@@ -77,17 +79,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class UserProfileSection extends StatelessWidget {
+  const UserProfileSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         CircleAvatar(
           radius: getFontSize(context) * 4,
-          backgroundImage: AssetImage('assets/images/Celebrate.png'), // Adjust the asset path
+          backgroundImage: const AssetImage('assets/images/Celebrate.png'), // Adjust the asset path
         ),
         SizedBox(width: getPadding(context)),
         Column(
@@ -103,7 +107,7 @@ class UserProfileSection extends StatelessWidget {
             ),
           ],
         ),
-        Spacer(),
+        const Spacer(),
         TextButton(
           onPressed: () {},
           child: Text(
@@ -117,6 +121,8 @@ class UserProfileSection extends StatelessWidget {
 }
 
 class FullNameInput extends StatelessWidget {
+  const FullNameInput({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -131,7 +137,7 @@ class FullNameInput extends StatelessWidget {
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30.0),
-              borderSide: BorderSide(color: Colors.grey),
+              borderSide: const BorderSide(color: Colors.grey),
             ),
             hintText: 'Enter Your Name',
             hintStyle: interRegular.copyWith(fontSize: getFontSize(context)),
@@ -143,6 +149,8 @@ class FullNameInput extends StatelessWidget {
 }
 
 class ParentStatusChips extends StatefulWidget {
+  const ParentStatusChips({super.key});
+
   @override
   _ParentStatusChipsState createState() => _ParentStatusChipsState();
 }
@@ -194,6 +202,8 @@ class _ParentStatusChipsState extends State<ParentStatusChips> {
 }
 
 class ActionButtons extends StatelessWidget {
+  const ActionButtons({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -203,7 +213,7 @@ class ActionButtons extends StatelessWidget {
             onPressed: () {},
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.grey.shade300,
-              padding: EdgeInsets.symmetric(vertical: 16.0),
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),
               ),
@@ -223,7 +233,7 @@ class ActionButtons extends StatelessWidget {
             onPressed: () {},
             style: ElevatedButton.styleFrom(
               backgroundColor: buttonColorPurple,
-              padding: EdgeInsets.symmetric(vertical: 16.0),
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),
               ),

@@ -5,6 +5,8 @@ import 'Expert_Following.dart';
 import 'My_Posts.dart';
 import 'My_Questions.dart';
 class Parenting_Profile extends StatefulWidget {
+  const Parenting_Profile({super.key});
+
   @override
   _Parenting_ProfileState createState() => _Parenting_ProfileState();
 }
@@ -16,7 +18,7 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(state: 1),
+      appBar: const CustomAppBar(state: 1),
       body: Padding(
         padding: EdgeInsets.all(getPadding(context)),
         child: SingleChildScrollView(
@@ -25,7 +27,7 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 30,
                     backgroundImage: AssetImage(
                         'assets/images/Celebrate.png'), // Replace with actual image URL
@@ -43,7 +45,7 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
                               fontSize: getFontSize(context))),
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   IconButton(
                     icon: Image.asset(
                       'assets/images/setting.png', // Replace with the actual path to your settings icon image
@@ -95,7 +97,7 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
             _buildFeatureItem(
                 context, 'Expert Follow', 'assets/images/Expert Follow.png', () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ExpertFollowingScreen()));
+                  MaterialPageRoute(builder: (context) => const ExpertFollowingScreen()));
             }),
             _buildFeatureItem(
                 context, 'Expert Panel', 'assets/images/Expert Panel.png', () {
@@ -127,7 +129,7 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => MyPosts()));
+                      builder: (context) => const MyPosts()));
             }),
             _buildOrderItem(context, 'Saved', 'assets/images/saved.png',
                 () {
@@ -140,7 +142,7 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
             }),
             _buildOrderItem(context, 'Questions', 'assets/images/Questions.png',
                 () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MyQuestions()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const MyQuestions()));
             }),
             _buildOrderItem(context, 'Answers', 'assets/images/Answers.png',
                 () {

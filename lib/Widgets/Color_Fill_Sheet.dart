@@ -7,16 +7,20 @@ import '../API/Bloc/Colors/Colors_State.dart';
 import '../API/Repository/Colors_Repo.dart';
 import '../Utils/app_constants.dart';
 class ColorFilterSheet extends StatelessWidget {
+  const ColorFilterSheet({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => ColorBloc(colorsRepository: ColorsRepository())..add(LoadColors()),
-      child: ColorFilterSheetContent(),
+      child: const ColorFilterSheetContent(),
     );
   }
 }
 
 class ColorFilterSheetContent extends StatefulWidget {
+  const ColorFilterSheetContent({super.key});
+
   @override
   _ColorFilterSheetContentState createState() => _ColorFilterSheetContentState();
 }
@@ -46,11 +50,11 @@ class _ColorFilterSheetContentState extends State<ColorFilterSheetContent> {
             child: BlocBuilder<ColorBloc, ColorState>(
               builder: (context, state) {
                 if (state is ColorLoading) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (state is ColorLoaded) {
                   return buildColorGrid(state.colors);
                 } else if (state is ColorError) {
-                  return Center(child: Text('Failed to load colors'));
+                  return const Center(child: Text('Failed to load colors'));
                 }
                 return Container();
               },

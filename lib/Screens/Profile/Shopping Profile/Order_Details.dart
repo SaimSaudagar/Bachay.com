@@ -15,7 +15,7 @@ class OrderDetailScreen extends StatelessWidget {
   final int quantity;
   final double totalPrice;
 
-  OrderDetailScreen({
+  const OrderDetailScreen({super.key, 
     required this.orderNo,
     required this.placedDate,
     required this.paidDate,
@@ -35,7 +35,7 @@ class OrderDetailScreen extends StatelessWidget {
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -49,19 +49,19 @@ class OrderDetailScreen extends StatelessWidget {
             alignment: Alignment.topRight,
             children: [
               IconButton(
-                icon: Icon(Icons.notifications, color: Colors.black),
+                icon: const Icon(Icons.notifications, color: Colors.black),
                 onPressed: () {},
               ),
               Positioned(
                 right: 10,
                 top: 10,
                 child: Container(
-                  padding: EdgeInsets.all(1),
+                  padding: const EdgeInsets.all(1),
                   decoration: BoxDecoration(
                     color: Colors.orange,
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  constraints: BoxConstraints(
+                  constraints: const BoxConstraints(
                     minWidth: 12,
                     minHeight: 12,
                   ),
@@ -99,14 +99,14 @@ class OrderDetailScreen extends StatelessWidget {
                         Text('Cash on Delivery', style: interBold.copyWith(fontSize: getFontSize(context))),
                       ],
                     ),
-                    Divider(),
+                    const Divider(),
                     Text('Talha Ahmed', style: interBold.copyWith(fontSize: getFontSize(context))),
                     SizedBox(width: getSpacing(context)),
                     Text('03048987785', style: interRegular.copyWith(fontSize: getFontSize(context), color: Colors.grey)),
                     SizedBox(height: getSpacing(context)),
                     Text('Street No 05, Sector 19', style: interRegular.copyWith(fontSize: getFontSize(context))),
                     Text('Karachi – Clifton, Sindh, Pakistan', style: interRegular.copyWith(fontSize: getFontSize(context))),
-                    Divider(),
+                    const Divider(),
                     Text('Standard Shipping', style: interBold.copyWith(fontSize: getFontSize(context))),
                     Text('Rs. 150 (Estimated time Jun 19 - Jun 24)', style: interRegular.copyWith(fontSize: getFontSize(context))),
                   ],
@@ -138,7 +138,7 @@ class OrderDetailScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Divider(),
+                    const Divider(),
                     Row(
                       children: [
                         Image.network(imageUrl, width: 80, height: 80, fit: BoxFit.cover),
@@ -151,7 +151,7 @@ class OrderDetailScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   Text('Rs. $price', style: TextStyle(color: buttonColorPurple, fontSize: getBigFontSize(context))),
-                                  SizedBox(width: 4),
+                                  const SizedBox(width: 4),
                                   Text('Rs. $originalPrice', style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: getFontSize(context))),
                                 ],
                               ),
@@ -186,7 +186,7 @@ class OrderDetailScreen extends StatelessWidget {
                             },
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.black, backgroundColor: Colors.white,
-                              side: BorderSide(color: Colors.black),
+                              side: const BorderSide(color: Colors.black),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
                               padding: EdgeInsets.symmetric(vertical: getSpacing(context), horizontal: getPadding(context)),
                             ),
@@ -238,7 +238,7 @@ class OrderDetailScreen extends StatelessWidget {
                     _buildOrderSummaryRow('Subtotal:', 'Rs. $totalPrice', context),
                     _buildOrderSummaryRow('Coupon Code: FIRSTORDER1', '- Rs. 180', context, isCoupon: true),
                     _buildOrderSummaryRow('Delivery Fee:', 'FREE', context, isDelivery: true),
-                    Divider(),
+                    const Divider(),
                     _buildOrderSummaryRow('Total Order:', 'Rs. ${totalPrice - 180}', context, isTotal: true),
                   ],
                 ),
@@ -269,8 +269,8 @@ class OrderDetailScreen extends StatelessWidget {
         color = Colors.grey;
     }
     return Container(
-      margin: EdgeInsets.only(left: 4),
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      margin: const EdgeInsets.only(left: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: color.withOpacity(0.2),
         borderRadius: BorderRadius.circular(borderRadius),

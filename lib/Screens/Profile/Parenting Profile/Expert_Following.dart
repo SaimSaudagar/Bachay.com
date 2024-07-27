@@ -4,19 +4,23 @@ import '../../../Utils/app_constants.dart';
 import 'Profile_Parenting.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: ExpertFollowingScreen(),
     );
   }
 }
 
 class ExpertFollowingScreen extends StatelessWidget {
+  const ExpertFollowingScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,11 +28,11 @@ class ExpertFollowingScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 1.0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Parenting_Profile()),
+              MaterialPageRoute(builder: (context) => const Parenting_Profile()),
             );
           },
         ),
@@ -51,7 +55,7 @@ class ExpertFollowingScreen extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-              leading: CircleAvatar(
+              leading: const CircleAvatar(
                 radius: 30.0,
                 backgroundImage: AssetImage('assets/images/Celebrate.png'),
               ),
@@ -65,23 +69,22 @@ class ExpertFollowingScreen extends StatelessWidget {
               ),
               trailing: ElevatedButton(
                 onPressed: () {},
-                child: Text('Unfollow'),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.black, backgroundColor: Colors.white,
-                  side: BorderSide(color: Colors.grey),
+                  side: const BorderSide(color: Colors.grey),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(borderRadius),
                   ),
                 ),
+                child: const Text('Unfollow'),
               ),
             ),
             SizedBox(height: getSpacing(context)),
             ElevatedButton(
               onPressed: () {},
-              child: Text('See Our Panel of Experts'),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.pink, backgroundColor: Colors.white,
-                side: BorderSide(color: Colors.pink),
+                side: const BorderSide(color: Colors.pink),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(borderRadius),
                 ),
@@ -90,6 +93,7 @@ class ExpertFollowingScreen extends StatelessWidget {
                   vertical: getPadding(context)
                 ),
               ),
+              child: const Text('See Our Panel of Experts'),
             ),
           ],
         ),

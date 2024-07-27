@@ -9,7 +9,7 @@ void main() {
 }
 
 class ContactDetailsScreen extends StatefulWidget {
-  const ContactDetailsScreen({Key? key}) : super(key: key);
+  const ContactDetailsScreen({super.key});
 
   @override
   _ContactDetailsScreenState createState() => _ContactDetailsScreenState();

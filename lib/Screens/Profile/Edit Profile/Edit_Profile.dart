@@ -7,12 +7,14 @@ import 'Contact_Details.dart';
 import 'Personal_Information.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: EditProfileScreen(),
   ));
 }
 
 class EditProfileScreen extends StatelessWidget {
+  const EditProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,11 +22,11 @@ class EditProfileScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.grey),
+          icon: const Icon(Icons.arrow_back, color: Colors.grey),
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ProfileScreen()),
+              MaterialPageRoute(builder: (context) => const ProfileScreen()),
             );
           },
         ),
@@ -35,11 +37,11 @@ class EditProfileScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.search, color: Colors.grey),
+            icon: const Icon(Icons.search, color: Colors.grey),
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(Icons.notifications, color: Colors.grey),
+            icon: const Icon(Icons.notifications, color: Colors.grey),
             onPressed: () {},
           ),
         ],
@@ -52,7 +54,7 @@ class EditProfileScreen extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: getFontSize(context) * 4,
-                  backgroundImage: AssetImage('assets/images/Celebrate.png'), // Adjust the asset path
+                  backgroundImage: const AssetImage('assets/images/Celebrate.png'), // Adjust the asset path
                 ),
                 SizedBox(width: getPadding(context)),
                 Column(
@@ -68,7 +70,7 @@ class EditProfileScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 TextButton(
                   onPressed: () {},
                   child: Text(
@@ -85,19 +87,19 @@ class EditProfileScreen extends StatelessWidget {
                 _buildListTile(context, 'Personal Information', Icons.person_outline, () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => PersonalInformationScreen()),
+                    MaterialPageRoute(builder: (context) => const PersonalInformationScreen()),
                   );                  print('Personal Information tapped');
                 }),
                 _buildListTile(context, 'Contact Details', Icons.contact_mail, () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ContactDetailsScreen()),
+                    MaterialPageRoute(builder: (context) => const ContactDetailsScreen()),
                   );                     
                 }),
                 _buildListTile(context, 'Children Details', Icons.child_care_outlined, () {
                       Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ChildrenDetailsScreen()),
+                    MaterialPageRoute(builder: (context) => const ChildrenDetailsScreen()),
                   );                   print('Children Details tapped'); 
                 }),
                 _buildListTile(context, 'Address Book', Icons.home_outlined, () {

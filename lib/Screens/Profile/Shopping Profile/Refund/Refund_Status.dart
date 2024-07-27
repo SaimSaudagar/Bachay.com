@@ -5,7 +5,7 @@ import 'Return_Detail.dart';
 class ProductReturnScreen extends StatelessWidget {
   final List<ReturnRequest> returnRequests;
 
-  ProductReturnScreen({required this.returnRequests});
+  const ProductReturnScreen({super.key, required this.returnRequests});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class ProductReturnScreen extends StatelessWidget {
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -28,19 +28,19 @@ class ProductReturnScreen extends StatelessWidget {
             alignment: Alignment.topRight,
             children: [
               IconButton(
-                icon: Icon(Icons.notifications, color: Colors.black),
+                icon: const Icon(Icons.notifications, color: Colors.black),
                 onPressed: () {},
               ),
               Positioned(
                 right: 10,
                 top: 10,
                 child: Container(
-                  padding: EdgeInsets.all(1),
+                  padding: const EdgeInsets.all(1),
                   decoration: BoxDecoration(
                     color: Colors.orange,
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  constraints: BoxConstraints(
+                  constraints: const BoxConstraints(
                     minWidth: 12,
                     minHeight: 12,
                   ),
@@ -112,7 +112,7 @@ class ProductReturnScreen extends StatelessWidget {
                             ],
                           ),
                           Container(
-                            padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                             decoration: BoxDecoration(
                               color: returnRequest.status == 'Approved' ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(20),
@@ -146,7 +146,7 @@ class ProductReturnScreen extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text('Rs. ${returnRequest.price}', style: TextStyle(color: buttonColorPurple, fontSize: getBigFontSize(context))),
-                                    SizedBox(width: 4),
+                                    const SizedBox(width: 4),
                                     Text('Rs. ${returnRequest.originalPrice}', style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: getFontSize(context))),
                                   ],
                                 ),
@@ -160,7 +160,7 @@ class ProductReturnScreen extends StatelessWidget {
                       if (returnRequest.reason.isNotEmpty)
                         Container(
                           width: double.infinity,
-                          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(borderRadius),

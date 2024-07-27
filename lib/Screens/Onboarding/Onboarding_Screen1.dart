@@ -43,7 +43,7 @@ class OnboardingScreen1 extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                            builder: (context) => OnboardingScreen2()),
+                            builder: (context) => const OnboardingScreen2()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -52,7 +52,7 @@ class OnboardingScreen1 extends StatelessWidget {
                         borderRadius: BorderRadius.circular(roundBorderRadius),
                       ),
                     ),
-                    child: Container(
+                    child: SizedBox(
                       height: MediaQuery.of(context).size.height * 0.08,
                       width: MediaQuery.of(context).size.width * buttonWidth,
                       child: Padding(

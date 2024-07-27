@@ -3,18 +3,20 @@ import '../../../Utils/app_constants.dart';
 import 'TopUp_Wallet.dart';
 
 class WalletScreen extends StatelessWidget {
+  const WalletScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {},
         ),
         title: Text('Wallet', style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
         actions: [
           IconButton(
-            icon: Icon(Icons.notifications),
+            icon: const Icon(Icons.notifications),
             onPressed: () {},
           ),
         ],
@@ -44,7 +46,7 @@ class WalletScreen extends StatelessWidget {
                             Text('Rs. 1,456', style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Column(
                           children: [
                             IconButton(
@@ -52,11 +54,11 @@ class WalletScreen extends StatelessWidget {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => TopUpWalletScreen()),
+                                  MaterialPageRoute(builder: (context) => const TopUpWalletScreen()),
                                 );
                               },
                             ),
-                            Text('Top up', style: interRegular),
+                            const Text('Top up', style: interRegular),
                           ],
                         ),
                       ],
@@ -111,7 +113,7 @@ class WalletScreen extends StatelessWidget {
             Image.asset('assets/images/terms_conditions.png', height: 24.0, width: 24.0),
             SizedBox(width: getPadding(context)),
             Text('Transaction History', style: outfitBold.copyWith(fontSize: getFontSize(context))),
-            Spacer(),
+            const Spacer(),
             TextButton(
               onPressed: () {},
               child: Text('All Transactions', style: TextStyle(color: Colors.green, fontSize: getFontSize(context))),
@@ -140,7 +142,7 @@ class WalletScreen extends StatelessWidget {
               Text(date, style: interRegular.copyWith(fontSize: getFontSize(context))),
             ],
           ),
-          Spacer(),
+          const Spacer(),
           Text(amount, style: outfitBold.copyWith(fontSize: getFontSize(context))),
         ],
       ),

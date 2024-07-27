@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../../Utils/app_constants.dart';
 
 class ReturnRefundScreen extends StatelessWidget {
+  const ReturnRefundScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,7 +11,7 @@ class ReturnRefundScreen extends StatelessWidget {
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -23,19 +25,19 @@ class ReturnRefundScreen extends StatelessWidget {
             alignment: Alignment.topRight,
             children: [
               IconButton(
-                icon: Icon(Icons.notifications, color: Colors.black),
+                icon: const Icon(Icons.notifications, color: Colors.black),
                 onPressed: () {},
               ),
               Positioned(
                 right: 10,
                 top: 10,
                 child: Container(
-                  padding: EdgeInsets.all(1),
+                  padding: const EdgeInsets.all(1),
                   decoration: BoxDecoration(
                     color: Colors.orange,
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  constraints: BoxConstraints(
+                  constraints: const BoxConstraints(
                     minWidth: 12,
                     minHeight: 12,
                   ),
@@ -69,7 +71,7 @@ class ReturnRefundScreen extends StatelessWidget {
                 // Handle return product option
               },
             ),
-            Divider(),
+            const Divider(),
             _buildOptionTile(
               context,
               imagePath: 'assets/images/cancel.png',
@@ -79,7 +81,7 @@ class ReturnRefundScreen extends StatelessWidget {
                 // Handle didn't receive product option
               },
             ),
-          Divider(),
+          const Divider(),
           ],
         ),
       ),
@@ -114,13 +116,15 @@ class ReturnRefundScreen extends StatelessWidget {
 }
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: ReturnRefundScreen(),
     );
   }

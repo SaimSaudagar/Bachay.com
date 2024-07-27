@@ -10,6 +10,8 @@ import 'Shopping Profile/Shopping_profile.dart';
 import 'Shopping Profile/Wallet.dart';
 
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -26,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(state: 2,),
+      appBar: const CustomAppBar(state: 2,),
       body: _buildProfileScreen(context),
       bottomNavigationBar: CustomBottomNavigationBar(onTabSelected: _onTabSelected),
     );
@@ -37,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: EdgeInsets.all(getPadding(context)),
       child: Column(
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             radius: 40,
             backgroundImage: AssetImage('assets/images/Celebrate.png'),
           ),
@@ -54,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => EditProfileScreen()),
+                MaterialPageRoute(builder: (context) => const EditProfileScreen()),
               );
             },
             child: Text("Update Profile",
@@ -81,10 +83,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _buildIconCard(context, 'assets/images/settings-child.png', "Add Child", Colors.pink[50]!, () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ChildrenDetailsScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const ChildrenDetailsScreen()));
         }),
         _buildIconCard(context, 'assets/images/wallet.png', "Wallet\nRs. 150", Colors.lightGreen[100]!, () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => WalletScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const WalletScreen()));
         }),
         _buildIconCard(context, 'assets/images/points.png', "Points\n150", Colors.orange[100]!, () {
           // Navigator.push(context, MaterialPageRoute(builder: (context) => PointsScreen()));
@@ -138,7 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingHistoryScreen()));
           }),
         ], Colors.purple[50]!, Colors.purple[100]!, () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Shopping_Profile()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const Shopping_Profile()));
         }),
         _buildProfileOptionRow(context, "Explore", "Go to your Explore Profile", 'assets/images/home/explore-active.png', [
           _buildSmallIconCard(context, 'assets/images/profileicon.png', "Profile", () {
@@ -158,7 +160,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // Navigator.push(context, MaterialPageRoute(builder: (context) => QAScreen()));
           }),
         ], Colors.pink[50]!, Colors.pink[100]!, () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Parenting_Profile()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const Parenting_Profile()));
         }),
         _buildProfileOptionRow(context, "Education", "Go to your Education Profile", 'assets/images/home/education-active.png', [
           _buildSmallIconCard(context, 'assets/images/Quiz.png', "Quizzes", () {
@@ -168,7 +170,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesScreen()));
           }),
         ], Colors.yellow[50]!, Colors.yellow[100]!, () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => EducationScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const EducationScreen()));
         }),
       ],
     );
@@ -191,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 leading: Image.asset(imagePath, width: 40, height: 40),
                 title: Text(title, style: interBold.copyWith(fontSize: getFontSize(context))),
                 subtitle: Text(subtitle, style: interRegular.copyWith(fontSize: getFontSize(context))),
-                trailing: Icon(Icons.arrow_forward_ios, color: Colors.black),
+                trailing: const Icon(Icons.arrow_forward_ios, color: Colors.black),
                 onTap: onTap,
               ),
             ),
@@ -264,14 +266,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               color: Colors.grey.withOpacity(0.3),
               spreadRadius: 1,
               blurRadius: 3,
-              offset: Offset(0, 3),
+              offset: const Offset(0, 3),
             ),
           ],
         ),
         child: ListTile(
           leading: Image.asset(imagePath, width: 40, height: 40),
           title: Text(title, style: interBold.copyWith(fontSize: getFontSize(context))),
-          trailing: Icon(Icons.arrow_forward_ios, color: Colors.black),
+          trailing: const Icon(Icons.arrow_forward_ios, color: Colors.black),
           onTap: onTap,
         ),
       ),
@@ -295,7 +297,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.logout, color: Colors.white),
+          const Icon(Icons.logout, color: Colors.white),
           SizedBox(width: getSpacing(context)),
           Text('Sign Out', style: buttonTextStyle(context)),
         ],

@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 class SubCategoryList {
   final List<SubCategory> categories;

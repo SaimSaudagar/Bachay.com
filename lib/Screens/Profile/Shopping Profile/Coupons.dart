@@ -2,25 +2,29 @@ import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: CouponScreen(),
     );
   }
 }
 
 class CouponScreen extends StatelessWidget {
+  const CouponScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {},
         ),
         title: Text('Coupons',
@@ -28,7 +32,7 @@ class CouponScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          TabBarWidget(),
+          const TabBarWidget(),
           Expanded(
             child: Center(
               child: Column(
@@ -58,6 +62,8 @@ class CouponScreen extends StatelessWidget {
 }
 
 class TabBarWidget extends StatefulWidget {
+  const TabBarWidget({super.key});
+
   @override
   _TabBarWidgetState createState() => _TabBarWidgetState();
 }
@@ -85,7 +91,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
       labelColor: Colors.black,
       unselectedLabelColor: Colors.grey,
       indicatorColor: buttonColorPurple,
-      tabs: [
+      tabs: const [
         Tab(text: 'Unused'),
         Tab(text: 'Used'),
         Tab(text: 'Expired'),

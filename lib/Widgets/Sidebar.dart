@@ -3,16 +3,18 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../Utils/app_constants.dart';
 
 class CustomDrawer extends StatelessWidget {
+  const CustomDrawer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.75, // Adjust the width as needed
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
               ),
               child: Column(
@@ -29,9 +31,9 @@ class CustomDrawer extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                         ),
-                        child: Text(
+                        child: const Text(
                           "Login",
                           style: TextStyle(
                             color: Colors.white,
@@ -56,14 +58,14 @@ class CustomDrawer extends StatelessWidget {
             _buildCategoryItem(context, 'assets/images/home/parenting-active.png', 'Parenting', Colors.pink.shade100),
             _buildCategoryItem(context, 'assets/images/home/education-active.png', 'Education', Colors.yellow.shade100),
             _buildCategoryItem(context, 'assets/images/home/explore-active.png', 'Explore', Colors.orange.shade100),
-            Divider(),
+            const Divider(),
             _buildMenuSectionTitle('Menu'),
             _buildMenuItemWithBackground(context, 'assets/images/shop_by_category.png', 'Shop by Category', Colors.pink.shade100),
             _buildMenuItemWithBackground(context, 'assets/images/offer_zone.png', 'Offer Zone', Colors.orange.shade100),
             _buildMenuItemWithBackground(context, 'assets/images/gifts_cards.png', 'Gifts & Cards', Colors.purple.shade100),
             _buildMenuItemWithBackground(context, 'assets/images/sell_with_us.png', 'Sell With Us', Colors.blue.shade100),
             _buildMenuItemWithBackground(context, 'assets/images/customer_service.png', 'Customer Service', Colors.lightBlue.shade100),
-            Divider(),
+            const Divider(),
             _buildMenuSectionTitle('My Activity'),
             _buildMenuItem(context, 'assets/images/favorites.png', 'My Favorites'),
             _buildMenuItem(context, 'assets/images/account.png', 'Account'),
@@ -90,7 +92,7 @@ class CustomDrawer extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('English', style: outfitRegular.copyWith(color: Colors.black)),
-              Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16),
+              const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16),
             ],
           ),
           onTap: () {},
@@ -113,7 +115,7 @@ class CustomDrawer extends StatelessWidget {
             child: Image.asset(iconPath),
           ),
           title: Text(title, style: outfitRegular.copyWith(color: Colors.black, fontSize: getFontSize(context))),
-          trailing: Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16),
+          trailing: const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16),
           onTap: () {},
         ),
       ),
@@ -135,7 +137,7 @@ class CustomDrawer extends StatelessWidget {
         child: Image.asset(iconPath, width: 24, height: 24),
       ),
       title: Text(title, style: outfitRegular.copyWith(color: Colors.black, fontSize: getFontSize(context))),
-      trailing: Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16),
+      trailing: const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16),
       onTap: () {},
     );
   }

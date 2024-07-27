@@ -11,7 +11,7 @@ class ReviewProductScreen extends StatefulWidget {
   final int quantity;
   final double totalPrice;
 
-  ReviewProductScreen({
+  const ReviewProductScreen({super.key, 
     required this.orderNo,
     required this.imageUrl,
     required this.title,
@@ -39,7 +39,7 @@ class _ReviewProductScreenState extends State<ReviewProductScreen> {
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -54,19 +54,19 @@ class _ReviewProductScreenState extends State<ReviewProductScreen> {
             alignment: Alignment.topRight,
             children: [
               IconButton(
-                icon: Icon(Icons.notifications, color: Colors.black),
+                icon: const Icon(Icons.notifications, color: Colors.black),
                 onPressed: () {},
               ),
               Positioned(
                 right: 10,
                 top: 10,
                 child: Container(
-                  padding: EdgeInsets.all(1),
+                  padding: const EdgeInsets.all(1),
                   decoration: BoxDecoration(
                     color: Colors.orange,
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  constraints: BoxConstraints(
+                  constraints: const BoxConstraints(
                     minWidth: 12,
                     minHeight: 12,
                   ),
@@ -101,7 +101,7 @@ class _ReviewProductScreenState extends State<ReviewProductScreen> {
                 style: TextStyle(fontSize: getFontSize(context)),
               ),
             ),
-            Divider(),
+            const Divider(),
             _buildRatingRow(context, 'True to Size', trueToSizeRating,
                 (rating) {
               setState(() {
@@ -158,7 +158,7 @@ class _ReviewProductScreenState extends State<ReviewProductScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.upload_file, size: 40, color: Colors.grey),
+                    const Icon(Icons.upload_file, size: 40, color: Colors.grey),
                     Text('+ Upload Images',
                         style: TextStyle(
                             color: Colors.grey,
@@ -203,7 +203,7 @@ class _ReviewProductScreenState extends State<ReviewProductScreen> {
                 itemCount: 5,
                 itemSize: getBigFontSize(context) * 1.5,
                 itemBuilder: (context, _) =>
-                    Icon(Icons.star, color: Colors.orange),
+                    const Icon(Icons.star, color: Colors.orange),
                 onRatingUpdate: onRatingUpdate,
               ),
               SizedBox(width: getSpacing(context)),

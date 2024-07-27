@@ -2,19 +2,23 @@ import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: ExpertPanelScreen(),
     );
   }
 }
 
 class ExpertPanelScreen extends StatelessWidget {
+  const ExpertPanelScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +26,7 @@ class ExpertPanelScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 1.0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {},
         ),
         title: Column(
@@ -102,7 +106,7 @@ class PanelSection extends StatelessWidget {
   final List<Expert> experts;
   final String iconPath;
 
-  PanelSection({required this.context, required this.title, required this.experts, required this.iconPath});
+  const PanelSection({super.key, required this.context, required this.title, required this.experts, required this.iconPath});
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +128,7 @@ class PanelSection extends StatelessWidget {
           ),
         ),
         SizedBox(height: getSpacing(context)),
-        ...experts.map((expert) => ExpertTile(expert: expert, context: context)).toList(),
+        ...experts.map((expert) => ExpertTile(expert: expert, context: context)),
       ],
     );
   }
@@ -134,7 +138,7 @@ class ExpertTile extends StatelessWidget {
   final Expert expert;
   final BuildContext context;
 
-  ExpertTile({required this.expert, required this.context});
+  const ExpertTile({super.key, required this.expert, required this.context});
 
   @override
   Widget build(BuildContext context) {
@@ -165,15 +169,15 @@ class ExpertTile extends StatelessWidget {
           SizedBox(width: getPadding(context)),
           ElevatedButton(
             onPressed: () {},
-            child: Text('Visit Profile'),
             style: ElevatedButton.styleFrom(
               foregroundColor: Colors.black,
               backgroundColor: Colors.white,
-              side: BorderSide(color: Colors.grey),
+              side: const BorderSide(color: Colors.grey),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
               ),
             ),
+            child: const Text('Visit Profile'),
           ),
         ],
       ),

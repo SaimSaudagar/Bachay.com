@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
-import '../../../Widgets/App_Bar.dart';
 
 class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Align(
+        title: const Align(
           alignment: Alignment.centerLeft,
           child: Text('Settings'),
         ),
@@ -56,7 +57,7 @@ class SettingsScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.logout, color: Colors.white),
+                    const Icon(Icons.logout, color: Colors.white),
                     SizedBox(width: getSpacing(context)),
                     Text('Sign Out', style: buttonTextStyle(context)),
                   ],
@@ -94,7 +95,7 @@ class SettingsScreen extends StatelessWidget {
           title: Text(title, style: interRegular.copyWith(fontSize: getFontSize(context))),
           trailing: trailingText != null
               ? Text(trailingText, style: interRegular.copyWith(fontSize: getFontSize(context), color: Colors.grey))
-              : Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+              : const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
           onTap: onTap,
         ),
       ),

@@ -7,7 +7,7 @@ class SocialButton extends StatelessWidget {
   final Color color;
   final VoidCallback onPressed;
 
-  const SocialButton({
+  const SocialButton({super.key, 
     required this.text,
     required this.icon,
     required this.color,
@@ -22,10 +22,10 @@ class SocialButton extends StatelessWidget {
       label: Text(text, style:outfitBold.copyWith(color: Colors.black)),
       style: ElevatedButton.styleFrom(
         backgroundColor: color,
-        minimumSize: Size(double.infinity, 50),
+        minimumSize: const Size(double.infinity, 50),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
-          side: BorderSide(color: Colors.black),
+          side: const BorderSide(color: Colors.black),
         ),
       ),
     );

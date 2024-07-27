@@ -8,13 +8,9 @@ import 'package:app/API/Repository/Homepage_Repo.dart';
 import 'package:app/API/Repository/Product_Repository.dart';
 import 'package:app/Models/Home/Featured_Product.dart';
 import 'package:app/Models/Products/Single_Product.dart';
-import 'package:app/Screens/Checkout/Checkout.dart';
 import 'package:app/Screens/Home/Homepage.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../Utils/app_constants.dart';
@@ -24,7 +20,7 @@ import '../../Widgets/App_Bar.dart';
 class SingleProductScreen extends StatefulWidget {
   final int productId;
 
-  SingleProductScreen({required this.productId});
+  const SingleProductScreen({super.key, required this.productId});
 
   @override
   State<SingleProductScreen> createState() => _SingleProductScreenState();
@@ -51,7 +47,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
         });
 
         return Scaffold(
-          appBar: CustomAppBar(state: 3),
+          appBar: const CustomAppBar(state: 3),
           body: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.all(getPadding(context)),
@@ -104,7 +100,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                 .read<ProductBloc>()
                 .add(AddToCart(productId: widget.productId, quantity: 1));
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomePage()));
+                context, MaterialPageRoute(builder: (context) => const HomePage()));
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -302,7 +298,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
 
 //Images
   Widget prodcutImages(List<String> imageUrls) {
-    int _currentIndex = 0;
+    int currentIndex = 0;
 
     return Stack(
       children: [
@@ -315,12 +311,12 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
               autoPlay: false,
               onPageChanged: (index, reason) {
                 setState(() {
-                  _currentIndex = index;
+                  currentIndex = index;
                 });
               },
             ),
             items: imageUrls.map((imageUrl) {
-              return Container(
+              return SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Image.network(
                   "https://bachay.com$imageUrl",
@@ -337,7 +333,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             color: Colors.black54,
             child: Text(
-              '${_currentIndex + 1} / ${imageUrls.length}',
+              '${currentIndex + 1} / ${imageUrls.length}',
               style: const TextStyle(color: Colors.white),
             ),
           ),
@@ -426,7 +422,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
       List<SingleProductColorImage> colors, SingleProductChoiceOption sizes) {
     double circleRadius = MediaQuery.of(context).size.width * 0.03;
 
-    void _showColorSelectionSheet(BuildContext context, StateSetter setState) {
+    void showColorSelectionSheet(BuildContext context, StateSetter setState) {
       showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -501,7 +497,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Size:',
                           style: TextStyle(
                             fontSize: 16,
@@ -510,11 +506,11 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                         ),
                         TextButton(
                           onPressed: () {},
-                          child: Row(
+                          child: const Row(
                             children: [
-                              const Icon(Icons.straighten,
+                              Icon(Icons.straighten,
                                   size: 18, color: Colors.purple),
-                              const SizedBox(width: 4),
+                              SizedBox(width: 4),
                               Text(
                                 'Size Guide',
                                 style: TextStyle(
@@ -614,7 +610,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    _showColorSelectionSheet(context, setState);
+                    showColorSelectionSheet(context, setState);
                   },
                   child: const Text(
                     'Change',
@@ -626,7 +622,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                 ),
               ],
             ),
-            Container(
+            SizedBox(
               height: 100,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -809,7 +805,7 @@ Widget productsTab(BuildContext context) {
     length: 4,
     child: Column(
       children: [
-        TabBar(
+        const TabBar(
           labelColor: Colors.black,
           unselectedLabelColor: Colors.grey,
           indicatorColor: Colors.purple,
@@ -822,7 +818,7 @@ Widget productsTab(BuildContext context) {
             Tab(text: 'Top rated'),
           ],
         ),
-        Container(
+        SizedBox(
           height: 500,
           child: TabBarView(
             children: [
@@ -968,7 +964,7 @@ Widget buildFeaturedProductTile(BuildContext context, FeaturedProduct product) {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "\Rs.${product.variations[0].price.toStringAsFixed(2)}",
+                  "Rs.${product.variations[0].price.toStringAsFixed(2)}",
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),

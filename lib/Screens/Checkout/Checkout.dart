@@ -1,9 +1,10 @@
 import 'package:app/Screens/Checkout/Order_Confirmation.dart';
-import 'package:app/Screens/Checkout/Order_Placed.dart';
 import 'package:flutter/material.dart';
 import '../../Utils/app_constants.dart';
 
 class ShoppingCartScreen extends StatelessWidget {
+  const ShoppingCartScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +13,7 @@ class ShoppingCartScreen extends StatelessWidget {
             style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
         actions: [
           IconButton(
-            icon: Icon(Icons.favorite_border),
+            icon: const Icon(Icons.favorite_border),
             onPressed: () {},
           ),
         ],
@@ -27,11 +28,11 @@ class ShoppingCartScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SignInSection(),
+                    const SignInSection(),
                     SizedBox(height: getSpacing(context)),
-                    VoucherInputSection(),
+                    const VoucherInputSection(),
                     SizedBox(height: getSpacing(context)),
-                    AllProductsSection(),
+                    const AllProductsSection(),
                     SizedBox(height: getSpacing(context)),
                     CartSection(title: 'Bachay.com', items: [
                       CartItem(
@@ -46,12 +47,12 @@ class ShoppingCartScreen extends StatelessWidget {
                       ),
                     ]),
                     SizedBox(height: getSpacing(context)),
-                    FeaturesSection(),
+                    const FeaturesSection(),
                   ],
                 ),
               ),
             ),
-            CheckoutSection(),
+            const CheckoutSection(),
           ],
         ),
       ),
@@ -60,6 +61,8 @@ class ShoppingCartScreen extends StatelessWidget {
 }
 
 class SignInSection extends StatelessWidget {
+  const SignInSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -107,6 +110,8 @@ class SignInSection extends StatelessWidget {
 }
 
 class VoucherInputSection extends StatelessWidget {
+  const VoucherInputSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -120,7 +125,7 @@ class VoucherInputSection extends StatelessWidget {
         children: [
           Expanded(
             child: TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Enter Voucher',
                 border: InputBorder.none,
               ),
@@ -147,6 +152,8 @@ class VoucherInputSection extends StatelessWidget {
 }
 
 class AllProductsSection extends StatelessWidget {
+  const AllProductsSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -159,7 +166,7 @@ class AllProductsSection extends StatelessWidget {
         ),
         Text('All Products',
             style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
-        Spacer(),
+        const Spacer(),
         TextButton(
           onPressed: () {},
           child: Text('Delete',
@@ -175,7 +182,7 @@ class CartSection extends StatelessWidget {
   final String title;
   final List<CartItem> items;
 
-  CartSection({required this.title, required this.items});
+  const CartSection({super.key, required this.title, required this.items});
 
   @override
   Widget build(BuildContext context) {
@@ -214,7 +221,7 @@ class CartItem {
 class CartItemWidget extends StatelessWidget {
   final CartItem item;
 
-  CartItemWidget({required this.item});
+  const CartItemWidget({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -281,26 +288,26 @@ class CartItemWidget extends StatelessWidget {
             Column(
               children: [
                 IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: const Icon(Icons.delete),
                   onPressed: () {},
                   color: Colors.red,
                 ),
                 IconButton(
-                  icon: Icon(Icons.favorite_border),
+                  icon: const Icon(Icons.favorite_border),
                   onPressed: () {},
                   color: Colors.purple,
                 ),
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.remove),
+                      icon: const Icon(Icons.remove),
                       onPressed: () {},
                     ),
                     Text('${item.quantity}',
                         style: interRegular.copyWith(
                             fontSize: getFontSize(context))),
                     IconButton(
-                      icon: Icon(Icons.add),
+                      icon: const Icon(Icons.add),
                       onPressed: () {},
                     ),
                   ],
@@ -315,6 +322,8 @@ class CartItemWidget extends StatelessWidget {
 }
 
 class FeaturesSection extends StatelessWidget {
+  const FeaturesSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -354,7 +363,7 @@ class FeatureIcon extends StatelessWidget {
   final String label;
   final BuildContext context;
 
-  FeatureIcon({required this.icon, required this.label, required this.context});
+  const FeatureIcon({super.key, required this.icon, required this.label, required this.context});
 
   @override
   Widget build(BuildContext context) {
@@ -378,6 +387,8 @@ class FeatureIcon extends StatelessWidget {
 }
 
 class CheckoutSection extends StatelessWidget {
+  const CheckoutSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -393,12 +404,12 @@ class CheckoutSection extends StatelessWidget {
                   Text('Delivery',
                       style: interRegular.copyWith(
                           fontSize: getFontSize(context))),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 5),
                   Text('Rs. 125',
                       style: interRegular.copyWith(
                           fontSize: getFontSize(context),
                           decoration: TextDecoration.lineThrough)),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 5),
                   Text('FREE',
                       style: interRegular.copyWith(
                           fontSize: getFontSize(context),
@@ -411,7 +422,7 @@ class CheckoutSection extends StatelessWidget {
                   Text('Total',
                       style:
                           interBold.copyWith(fontSize: getFontSize(context))),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Text('Rs. 5,288',
                       style: interBold.copyWith(
                           fontSize: getFontSize(context),
@@ -430,11 +441,11 @@ class CheckoutSection extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => OrderConfirmationScreen()),
+                      builder: (context) => const OrderConfirmationScreen()),
                 );
               },
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                     vertical: buttonPaddingValue, horizontal: 30),
                 backgroundColor: Colors.transparent,
                 shape: RoundedRectangleBorder(

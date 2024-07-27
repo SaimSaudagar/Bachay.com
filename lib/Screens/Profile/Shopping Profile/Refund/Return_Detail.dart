@@ -17,7 +17,7 @@ class ReturnDetailsScreen extends StatelessWidget {
   final int productQuantity;
   final String reason;
 
-  ReturnDetailsScreen({
+  const ReturnDetailsScreen({super.key, 
     required this.refundStatus,
     required this.refundAmount,
     required this.refundMethod,
@@ -41,7 +41,7 @@ class ReturnDetailsScreen extends StatelessWidget {
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -70,7 +70,7 @@ class ReturnDetailsScreen extends StatelessWidget {
                   ),
                   SizedBox(height: getSpacing(context) * 8),
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
@@ -107,18 +107,18 @@ class ReturnDetailsScreen extends StatelessWidget {
                           SizedBox(height: getSpacing(context) * 8),
                           ElevatedButton(
                             onPressed: () {},
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('Track Progress'),
-                                Icon(Icons.arrow_forward),
-                              ],
-                            ),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.grey.shade200,
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
                               padding: buttonPadding,
                               textStyle: buttonTextStyle(context),
+                            ),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Track Progress'),
+                                Icon(Icons.arrow_forward),
+                              ],
                             ),
                           ),
                         ],
@@ -140,7 +140,7 @@ class ReturnDetailsScreen extends StatelessWidget {
     return Row(
       children: [
         Container(
-          padding: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
           decoration: BoxDecoration(
             color: isActive ? color : Colors.grey,
             borderRadius: BorderRadius.circular(20),

@@ -3,12 +3,14 @@ import '../../Utils/app_constants.dart';
 
 
 class OrderPlacedScreen extends StatelessWidget {
+  const OrderPlacedScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.close),
+          icon: const Icon(Icons.close),
           onPressed: () {},
         ),
         title: Text('Order Placed', style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
@@ -22,7 +24,7 @@ class OrderPlacedScreen extends StatelessWidget {
               Center(
                 child: Column(
                   children: [
-                    Icon(Icons.check_circle, color: Colors.green, size: 100),
+                    const Icon(Icons.check_circle, color: Colors.green, size: 100),
                     SizedBox(height: getSpacing(context)),
                     Text('Your Order has been Placed.', style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
                     Text('Your order has been received.', style: interRegular.copyWith(fontSize: getFontSize(context))),
@@ -30,13 +32,13 @@ class OrderPlacedScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: getSpacing(context) * 2),
-              OrderDetailsSection(),
+              const OrderDetailsSection(),
               SizedBox(height: getSpacing(context)),
-              PaymentSecuritySection(),
+              const PaymentSecuritySection(),
               SizedBox(height: getSpacing(context)),
-              SecurityPrivacySection(),
+              const SecurityPrivacySection(),
               SizedBox(height: getSpacing(context)),
-              TrackOrderButton(),
+              const TrackOrderButton(),
             ],
           ),
         ),
@@ -46,6 +48,8 @@ class OrderPlacedScreen extends StatelessWidget {
 }
 
 class OrderDetailsSection extends StatelessWidget {
+  const OrderDetailsSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -59,7 +63,7 @@ class OrderDetailsSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.local_shipping, color: Colors.green),
+              const Icon(Icons.local_shipping, color: Colors.green),
               SizedBox(width: getSpacing(context)),
               Text('Cash on Delivery', style: interRegular.copyWith(fontSize: getFontSize(context))),
             ],
@@ -72,21 +76,21 @@ class OrderDetailsSection extends StatelessWidget {
           SizedBox(height: getSpacing(context)),
           Row(
             children: [
-              Icon(Icons.local_shipping, color: Colors.purple),
+              const Icon(Icons.local_shipping, color: Colors.purple),
               SizedBox(width: getSpacing(context)),
               Text('Standard Shipping', style: interRegular.copyWith(fontSize: getFontSize(context))),
-              Spacer(),
+              const Spacer(),
               Text('Rs. 150', style: interRegular.copyWith(fontSize: getFontSize(context))),
             ],
           ),
           SizedBox(height: getSpacing(context)),
           Text('Estimated time Jun 19 - Jun 24', style: interRegular.copyWith(fontSize: getFontSize(context))),
           SizedBox(height: getSpacing(context) * 2),
-          PriceItem(label: 'Subtotal:', price: 'Rs. 1,495'),
-          PriceItem(label: 'Coupon Code: FIRSTORDER1', price: '- Rs. 180'),
-          PriceItem(label: 'Delivery Fee:', price: 'FREE'),
-          Divider(),
-          PriceItem(label: 'Total Order:', price: 'Rs. 1,445', isBold: true),
+          const PriceItem(label: 'Subtotal:', price: 'Rs. 1,495'),
+          const PriceItem(label: 'Coupon Code: FIRSTORDER1', price: '- Rs. 180'),
+          const PriceItem(label: 'Delivery Fee:', price: 'FREE'),
+          const Divider(),
+          const PriceItem(label: 'Total Order:', price: 'Rs. 1,445', isBold: true),
           SizedBox(height: getSpacing(context)),
           Row(
             children: [
@@ -112,7 +116,7 @@ class PriceItem extends StatelessWidget {
   final String price;
   final bool isBold;
 
-  PriceItem({required this.label, required this.price, this.isBold = false});
+  const PriceItem({super.key, required this.label, required this.price, this.isBold = false});
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +131,8 @@ class PriceItem extends StatelessWidget {
 }
 
 class PaymentSecuritySection extends StatelessWidget {
+  const PaymentSecuritySection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -144,15 +150,15 @@ class PaymentSecuritySection extends StatelessWidget {
           SizedBox(height: getSpacing(context)),
           Row(
             children: [
-              Icon(Icons.security, color: Colors.purple),
+              const Icon(Icons.security, color: Colors.purple),
               SizedBox(width: getSpacing(context)),
-              Icon(Icons.credit_card, color: Colors.purple),
+              const Icon(Icons.credit_card, color: Colors.purple),
               SizedBox(width: getSpacing(context)),
-              Icon(Icons.check, color: Colors.purple),
+              const Icon(Icons.check, color: Colors.purple),
               SizedBox(width: getSpacing(context)),
-              Icon(Icons.verified_user, color: Colors.purple),
+              const Icon(Icons.verified_user, color: Colors.purple),
               SizedBox(width: getSpacing(context)),
-              Icon(Icons.payment, color: Colors.purple),
+              const Icon(Icons.payment, color: Colors.purple),
             ],
           ),
         ],
@@ -162,6 +168,8 @@ class PaymentSecuritySection extends StatelessWidget {
 }
 
 class SecurityPrivacySection extends StatelessWidget {
+  const SecurityPrivacySection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -183,14 +191,16 @@ class SecurityPrivacySection extends StatelessWidget {
 }
 
 class TrackOrderButton extends StatelessWidget {
+  const TrackOrderButton({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
         onPressed: () {},
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: buttonPaddingValue),
+          padding: const EdgeInsets.symmetric(vertical: buttonPaddingValue),
           backgroundColor: Colors.black,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(roundBorderRadius),

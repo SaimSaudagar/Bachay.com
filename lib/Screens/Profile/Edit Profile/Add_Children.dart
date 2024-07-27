@@ -23,7 +23,7 @@ class ChildDetails {
 }
 
 class ChildrenDetailsScreen extends StatefulWidget {
-  const ChildrenDetailsScreen({Key? key}) : super(key: key);
+  const ChildrenDetailsScreen({super.key});
 
   @override
   _ChildrenDetailsScreenState createState() => _ChildrenDetailsScreenState();
@@ -333,7 +333,7 @@ class AddChildBottomSheet extends StatefulWidget {
   final void Function(ChildDetails) onAddChild;
   final ChildDetails? initialChild;
 
-  const AddChildBottomSheet({Key? key, required this.onAddChild, this.initialChild}) : super(key: key);
+  const AddChildBottomSheet({super.key, required this.onAddChild, this.initialChild});
 
   @override
   _AddChildBottomSheetState createState() => _AddChildBottomSheetState();

@@ -5,10 +5,12 @@ import 'package:flutter/services.dart';
 import 'SignUp-Flow/AddImage_Screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,12 +18,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SetupAccountScreen(),
+      home: const SetupAccountScreen(),
     );
   }
 }
 
 class SetupAccountScreen extends StatefulWidget {
+  const SetupAccountScreen({super.key});
+
   @override
   _SetupAccountScreenState createState() => _SetupAccountScreenState();
 }
@@ -142,33 +146,33 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Text(
                   'Setup Your Account',
                   style: outfitBold.copyWith(
                       fontSize: getBigFontSize(context) * 2),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
                   'Please setup your account.',
                   style:
                       contentC5.copyWith(fontSize: getFontSize(context) * 1.5),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 40),
-                Align(
+                const SizedBox(height: 40),
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text('Full Name', style: outfitBold),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 TextField(
                   controller: _fullNameController,
                   onChanged: _validateFullName,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.person_outline),
+                    prefixIcon: const Icon(Icons.person_outline),
                     suffixIcon: _fullNameError
-                        ? Icon(Icons.error, color: Colors.red)
+                        ? const Icon(Icons.error, color: Colors.red)
                         : null,
                     hintText: 'Enter your Full Name',
                     hintStyle: contentC5.copyWith(
@@ -185,19 +189,19 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
-                Align(
+                const SizedBox(height: 20),
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text('Email', style: outfitBold),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 TextField(
                   controller: _emailController,
                   onChanged: _validateEmail,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.email_outlined),
+                    prefixIcon: const Icon(Icons.email_outlined),
                     suffixIcon: _emailError
-                        ? Icon(Icons.error, color: Colors.red)
+                        ? const Icon(Icons.error, color: Colors.red)
                         : null,
                     hintText: 'example@company.com',
                     hintStyle: contentC5.copyWith(
@@ -214,37 +218,37 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
-                Align(
+                const SizedBox(height: 20),
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text('Phone', style: outfitBold),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 TextField(
                   controller: _phoneController,
                   keyboardType: TextInputType.phone,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.phone_outlined),
+                    prefixIcon: const Icon(Icons.phone_outlined),
                     hintText: '+92 312-3456789',
                     hintStyle: contentC5.copyWith(
                         fontSize: getFontSize(context) * 1.5, color: fontcolor),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.grey),
+                      borderSide: const BorderSide(color: Colors.grey),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.grey),
+                      borderSide: const BorderSide(color: Colors.grey),
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
-                Align(
+                const SizedBox(height: 20),
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text('Password', style: outfitBold),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 TextField(
                   controller: _passwordController,
                   obscureText: !_passwordVisible,
@@ -253,7 +257,7 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                     _validatePasswords();
                   },
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.lock_outline),
+                    prefixIcon: const Icon(Icons.lock_outline),
                     suffixIcon: IconButton(
                       icon: Icon(
                         _passwordVisible
@@ -271,15 +275,15 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                         fontSize: getFontSize(context) * 1.5, color: fontcolor),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.grey),
+                      borderSide: const BorderSide(color: Colors.grey),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.grey),
+                      borderSide: const BorderSide(color: Colors.grey),
                     ),
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: List.generate(5, (index) {
@@ -292,31 +296,31 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                               ? _getStrengthColor(_passwordStrength)
                               : Colors.grey.shade300,
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Text(
                           index == _passwordStrength - 1
                               ? _getStrengthText(index + 1)
                               : "",
-                          style: TextStyle(fontSize: 12, color: Colors.black),
+                          style: const TextStyle(fontSize: 12, color: Colors.black),
                         ),
                       ],
                     );
                   }),
                 ),
-                SizedBox(height: 20),
-                Align(
+                const SizedBox(height: 20),
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text('Re-enter Password', style: outfitBold),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 TextField(
                   controller: _reEnterPasswordController,
                   obscureText: !_reEnterPasswordVisible,
                   onChanged: (value) => _validatePasswords(),
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.lock_outline),
+                    prefixIcon: const Icon(Icons.lock_outline),
                     suffixIcon: _passwordMatchError
-                        ? Icon(Icons.error, color: Colors.red)
+                        ? const Icon(Icons.error, color: Colors.red)
                         : IconButton(
                             icon: Icon(
                               _reEnterPasswordVisible
@@ -347,7 +351,7 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -355,7 +359,7 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ProfilePhotoScreen()),
+                            builder: (context) => const ProfilePhotoScreen()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -364,10 +368,10 @@ class _SetupAccountScreenState extends State<SetupAccountScreen> {
                         borderRadius: BorderRadius.circular(roundBorderRadius),
                       ),
                     ),
-                    child: Container(
+                    child: SizedBox(
                       height: MediaQuery.of(context).size.height * 0.08,
                       width: MediaQuery.of(context).size.width * buttonWidth,
-                      child: Padding(
+                      child: const Padding(
                         padding: buttonPadding,
                         child: Center(
                           child: Text(

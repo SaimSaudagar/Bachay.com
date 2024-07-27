@@ -11,7 +11,6 @@ import 'package:app/Models/Category/Sub_Category.dart';
 import 'package:app/Models/Home/Category.dart';
 import 'package:app/Utils/app_constants.dart';
 import 'package:app/Widgets/App_Bar.dart';
-import 'package:app/Widgets/Botton_Nav_Bar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,10 +28,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         state: 1,
       ),
-      drawer: CustomDrawer(),
+      drawer: const CustomDrawer(),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(getPadding(context)),
@@ -40,7 +39,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               categoryBanner(),
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.5,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,13 +64,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
       child: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {
           if (state is CategoryBannerLoading) {
-            return SizedBox();
+            return const SizedBox();
           } else if (state is CategoryBannerLoaded) {
             return buildCategoryBanner(state.categoryBanner.categoryBanners);
           } else if (state is CategoryBannerError) {
-            return SizedBox();
+            return const SizedBox();
           }
-          return Center(child: Text('Press a button to load categories'));
+          return const Center(child: Text('Press a button to load categories'));
         },
       ),
     );
@@ -91,9 +90,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
           builder: (BuildContext context) {
             return Container(
               width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.symmetric(horizontal: 5.0),
+              margin: const EdgeInsets.symmetric(horizontal: 5.0),
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                 child: Image.network(
                   banner.mobilePhoto!,
                   fit: BoxFit.fill,
@@ -121,13 +120,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           if (state is CategoryLoading) {
-            return SizedBox();
+            return const SizedBox();
           } else if (state is CategoryLoaded) {
             return buildCategory(state.category.categories);
           } else if (state is CategoryError) {
-            return SizedBox();
+            return const SizedBox();
           }
-          return Center(child: Text('Press a button to load categories'));
+          return const Center(child: Text('Press a button to load categories'));
         },
       ),
     );
@@ -171,13 +170,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
       child: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {
           if (state is SubCategoryLoading) {
-            return SizedBox();
+            return const SizedBox();
           } else if (state is SubCategoryLoaded) {
             return buildSubCategory(state.subCategory.categories);
           } else if (state is SubCategoryError) {
-            return SizedBox();
+            return const SizedBox();
           }
-          return Center(child: Text('Press a button to load categories'));
+          return const Center(child: Text('Press a button to load categories'));
         },
       ),
     );
@@ -185,16 +184,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   Widget buildSubCategory(List<SubCategory> categories) {
     return Expanded(
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.2,
         child: GridView.count(
           crossAxisCount: 3,
           childAspectRatio: 1 / 1.5,
+          physics: const NeverScrollableScrollPhysics(),
           children: categories[0]
               .childes!
               .map((category) => buildCategoryTile(category))
               .toList(),
-          physics: NeverScrollableScrollPhysics(),
         ),
       ),
     );
@@ -206,13 +205,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
         Expanded(
           child: Image.network(category.icon, fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
-            return Center(child: Text('Image not available'));
+            return const Center(child: Text('Image not available'));
           }),
         ),
         Padding(
             padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
             child: Text(
-              category.name!,
+              category.name,
               style: TextStyle(fontSize: getFontSize(context)),
             )),
       ],

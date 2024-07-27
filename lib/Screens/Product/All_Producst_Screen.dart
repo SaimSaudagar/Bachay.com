@@ -10,29 +10,30 @@ import '../../Utils/app_constants.dart';
 import '../../Widgets/App_Bar.dart';
 import '../../Widgets/Color_Fill_Sheet.dart';
 import '../../Widgets/Search_Bar.dart';
-import 'package:app/Models/Home/Featured_Product.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../Widgets/Sidebar.dart';
 
 class AllProductsScreen extends StatelessWidget {
+  const AllProductsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         state: 3,
       ),
-      bottomNavigationBar: FilterOptions(),
-      drawer: CustomDrawer(),
+      bottomNavigationBar: const FilterOptions(),
+      drawer: const CustomDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CustomSearchBar(
+            const CustomSearchBar(
                 // text: 'Select Location to see product availability',
                 // onTap: () {},
                 ),
-            FilterButtons(),
-            DeliveryButtons(),
+            const FilterButtons(),
+            const DeliveryButtons(),
             Padding(
               padding: EdgeInsets.all(getPadding(context)),
               child: allProducts(),
@@ -51,14 +52,14 @@ class AllProductsScreen extends StatelessWidget {
       child: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
           if (state is AllProductsLoading) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (state is AllProductsLoaded) {
             return buildAllProducts(
                 context, state.allProducts.allProducts!.data);
           } else if (state is AllProductsError) {
-            return Text('Failed to load all products');
+            return const Text('Failed to load all products');
           }
-          return Center(child: Text('Press a button to load categories'));
+          return const Center(child: Text('Press a button to load categories'));
         },
       ),
     );
@@ -69,9 +70,9 @@ class AllProductsScreen extends StatelessWidget {
       children: [
         GridView.builder(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: products.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 0.75,
           ),
@@ -94,9 +95,9 @@ class AllProductsScreen extends StatelessWidget {
   }
 
   Widget buildAllProductTile(BuildContext context, Product product) {
-    Color textColor = Color.fromRGBO(191, 143, 57, 1);
-    Color color = Color.fromRGBO(255, 244, 223, 1);
-    Color borderColor = Color.fromRGBO(255, 198, 95, 1);
+    Color textColor = const Color.fromRGBO(191, 143, 57, 1);
+    Color color = const Color.fromRGBO(255, 244, 223, 1);
+    Color borderColor = const Color.fromRGBO(255, 198, 95, 1);
     double fontSize = MediaQuery.of(context).size.width * 0.025;
     double fontSizeBig = MediaQuery.of(context).size.width * 0.025;
 
@@ -107,7 +108,7 @@ class AllProductsScreen extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: Color.fromRGBO(228, 228, 231, 1),
+            color: const Color.fromRGBO(228, 228, 231, 1),
             width: 1,
           ),
         ),
@@ -122,12 +123,12 @@ class AllProductsScreen extends StatelessWidget {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(10)),
+                        const BorderRadius.vertical(top: Radius.circular(10)),
                     image: DecorationImage(
                       image: NetworkImage(product.thumbnail),
                       fit: BoxFit.cover,
                       onError: (error, stackTrace) =>
-                          Center(child: Text('Image not available')),
+                          const Center(child: Text('Image not available')),
                     ),
                   ),
                 ),
@@ -147,7 +148,7 @@ class AllProductsScreen extends StatelessWidget {
                 RatingBarIndicator(
                   rating: 1,
                   itemBuilder: (context, index) =>
-                      Icon(Icons.star, color: Colors.amber),
+                      const Icon(Icons.star, color: Colors.amber),
                   itemCount: 1,
                   itemSize: 20.0,
                   direction: Axis.horizontal,
@@ -162,8 +163,8 @@ class AllProductsScreen extends StatelessWidget {
                   style: TextStyle(fontSize: fontSize),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 10),
-                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  margin: const EdgeInsets.only(left: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
                   decoration: BoxDecoration(
                     color: color,
                     border: Border.all(
@@ -187,8 +188,8 @@ class AllProductsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "\Rs.${product.unitPrice.toStringAsFixed(2)}",
-                    style: TextStyle(
+                    "Rs.${product.unitPrice.toStringAsFixed(2)}",
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -203,6 +204,8 @@ class AllProductsScreen extends StatelessWidget {
 }
 
 class FilterButtons extends StatelessWidget {
+  const FilterButtons({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -255,6 +258,8 @@ class FilterButtons extends StatelessWidget {
 }
 
 class DeliveryButtons extends StatelessWidget {
+  const DeliveryButtons({super.key});
+
   Widget horizontalSpacing(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.height * 0.01,
@@ -331,8 +336,8 @@ class DeliveryButton extends StatelessWidget {
     this.borderColor = Colors.transparent,
     this.icon = Icons.check,
     required this.onTap,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -364,6 +369,8 @@ class DeliveryButton extends StatelessWidget {
 }
 
 class FilterOptions extends StatelessWidget {
+  const FilterOptions({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -377,7 +384,7 @@ class FilterOptions extends StatelessWidget {
               showModalBottomSheet(
                 context: context,
                 builder: (context) {
-                  return ColorFilterSheet();
+                  return const ColorFilterSheet();
                 },
               );
             },
@@ -410,8 +417,8 @@ class FilterOptionButton extends StatelessWidget {
     this.color = const Color.fromRGBO(161, 161, 170, 0.1),
     this.textColor = Colors.black,
     this.icon = Icons.adjust,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

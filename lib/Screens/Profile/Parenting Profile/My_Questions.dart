@@ -5,10 +5,12 @@ import 'dart:convert';
 import '../../../Utils/app_constants.dart';
 
 void main() {
-  runApp(SocialMediaApp());
+  runApp(const SocialMediaApp());
 }
 
 class SocialMediaApp extends StatelessWidget {
+  const SocialMediaApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,12 +18,14 @@ class SocialMediaApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyQuestions(),
+      home: const MyQuestions(),
     );
   }
 }
 
 class MyQuestions extends StatefulWidget {
+  const MyQuestions({super.key});
+
   @override
   _MyQuestionsState createState() => _MyQuestionsState();
 }
@@ -45,7 +49,7 @@ class _MyQuestionsState extends State<MyQuestions> {
         future: _fetchQuestions(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
@@ -99,7 +103,7 @@ PreferredSizeWidget MyQuestionsAppBar(BuildContext context) {
     backgroundColor: Colors.white,
     elevation: 1.0,
     leading: IconButton(
-      icon: Icon(Icons.arrow_back, color: Colors.black),
+      icon: const Icon(Icons.arrow_back, color: Colors.black),
       onPressed: () {},
     ),
     title: Column(
@@ -137,7 +141,7 @@ trailing: Row(
         Text(Question.timeAgo),
         SizedBox(width: getSpacing(context)),
         IconButton(
-          icon: Icon(Icons.more_horiz),
+          icon: const Icon(Icons.more_horiz),
           onPressed: () {
             showModalBottomSheet(
               context: context,
@@ -151,17 +155,17 @@ trailing: Row(
           Row(
             children: [
               Image.asset('assets/images/message-question.png'),
-              SizedBox(width: 8.0),
+              const SizedBox(width: 8.0),
               Text(
                 'Question:',
                 style: interBold.copyWith(fontSize: getFontSize(context)),
               ),
             ],
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
           Text(Question.content, style: interBold.copyWith(fontSize: getFontSize(context))),
-          Divider(),
-          SizedBox(height: 16.0),
+          const Divider(),
+          const SizedBox(height: 16.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -170,17 +174,17 @@ trailing: Row(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: Row(
                   children: [
                     Row(
                       children: [
                         Image.asset('assets/images/up-arrow.png', width: 16, height: 16, color: Colors.pink),
-                        SizedBox(width: 4.0),
+                        const SizedBox(width: 4.0),
                         Text('${Question.likes}', style: interRegular.copyWith(fontSize: getFontSize(context))),
                       ],
                     ),
-                    Container(
+                    const SizedBox(
                       height: 24.0,
                       child: VerticalDivider(color: Colors.grey),
                     ),
@@ -195,25 +199,25 @@ trailing: Row(
               Row(
                 children: [
                   Image.asset('assets/images/share.png', width: 16, height: 16, color: Colors.black),
-                  SizedBox(width: 4.0),
+                  const SizedBox(width: 4.0),
                   Text('Share', style: interRegular.copyWith(fontSize: getFontSize(context))),
                 ],
               ),
               Row(
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     backgroundImage: NetworkImage('https://via.placeholder.com/150/92c952'),
                     radius: 12,
                   ),
-                  SizedBox(width: 8.0),
+                  const SizedBox(width: 8.0),
                   Text('Question for Kamran', style: interBold.copyWith(fontSize: getFontSize(context))),
                 ],
               ),
             ],
           ),
-          Divider(height: 32.0),
+          const Divider(height: 32.0),
           ListTile(
-            leading: CircleAvatar(
+            leading: const CircleAvatar(
               backgroundImage: NetworkImage('https://via.placeholder.com/150/92c952'),
             ),
             title: Text('Fatima', style: interBold.copyWith(fontSize: getBigFontSize(context))),
@@ -221,10 +225,10 @@ trailing: Row(
         trailing: Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('Just Now', style: outfitRegular,),
+        const Text('Just Now', style: outfitRegular,),
         SizedBox(width: getSpacing(context)),
         IconButton(
-          icon: Icon(Icons.more_horiz),
+          icon: const Icon(Icons.more_horiz),
           onPressed: () {},
         ),
       ],
@@ -236,7 +240,7 @@ trailing: Row(
               Row(
                 children: [
                   Image.asset('assets/images/message-answer.png'),
-                  SizedBox(width: 4.0), // Adding some space between the icon and the text
+                  const SizedBox(width: 4.0), // Adding some space between the icon and the text
                   Text(
                     'Answer:',
                     style: interBold.copyWith(fontSize: getFontSize(context), color: Colors.pink),
@@ -246,25 +250,25 @@ trailing: Row(
               Row(
                 children: [
                   Image.asset('assets/images/heart.png', width: 16, height: 16, color: Colors.pink),
-                  SizedBox(width: 4.0), // Adding some space between the icon and the text
+                  const SizedBox(width: 4.0), // Adding some space between the icon and the text
                   Text('${Question.comments}', style: interRegular.copyWith(fontSize: getFontSize(context))),
                 ],
               ),
             ],
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
           Text(
             'dear sir, a weight of 6.3 kg is a normal weight for age for your 7 months old baby, considering a birth weight of 2.1 kg. for healthy weight gain, you should give a homemade balanced diet having variety of food groups.',
             style: interRegular.copyWith(fontSize: getFontSize(context)),
           ),
-          Divider(height: 32.0),
+          const Divider(height: 32.0),
           Row(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 backgroundImage: NetworkImage('https://via.placeholder.com/150/92c952'),
                 radius: 16,
               ),
-              SizedBox(width: 8.0),
+              const SizedBox(width: 8.0),
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
@@ -272,10 +276,10 @@ trailing: Row(
                     borderRadius: BorderRadius.circular(30),
                     border: Border.all(color: Colors.grey),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Row(
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: TextField(
                           decoration: InputDecoration(
                             hintText: 'Write what\'s in your mind...',
@@ -301,7 +305,7 @@ trailing: Row(
 
 Widget bottomSheet(BuildContext context) {
   return Container(
-    padding: EdgeInsets.all(16),
+    padding: const EdgeInsets.all(16),
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [

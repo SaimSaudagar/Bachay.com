@@ -70,12 +70,11 @@
 import 'package:app/Screens/Home/Homepage.dart';
 import 'package:app/Screens/Profile/Profile_Initial.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   final ValueChanged<int> onTabSelected;
 
-  CustomBottomNavigationBar({required this.onTabSelected});
+  const CustomBottomNavigationBar({super.key, required this.onTabSelected});
 
   @override
   _CustomBottomNavigationBarState createState() =>
@@ -97,7 +96,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     switch (index) {
       case 0:
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
         break;
       // case 1:
       //   Navigator.pushReplacement(
@@ -113,7 +112,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       //   break;
       case 4:
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+            context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
         break;
     }
   }
@@ -140,7 +139,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
         ),
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Image.asset(
           _selectedIndex == index ? activeIconPath : iconPath,
         ),

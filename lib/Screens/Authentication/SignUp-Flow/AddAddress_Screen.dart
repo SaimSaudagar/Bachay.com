@@ -5,9 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:location/location.dart';
 
 import '../../../Utils/app_constants.dart';
-import 'AddLocation_Screen.dart';
 
 class AddAddressScreen extends StatefulWidget {
+  const AddAddressScreen({super.key});
+
   @override
   _AddAddressScreenState createState() => _AddAddressScreenState();
 }
@@ -98,9 +99,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              child: Text("+ Add Address"),
+              child: const Text("+ Add Address"),
             )),
-            Spacer(),
+            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -108,7 +109,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
+                      MaterialPageRoute(builder: (context) => const HomePage()),
                     );
                   },
                   style: TextButton.styleFrom(
@@ -117,7 +118,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         horizontal: getSpacing(context) * 10,
                         vertical: getSpacing(context) * 5),
                     shape: RoundedRectangleBorder(
-                      side: BorderSide(color: Colors.black),
+                      side: const BorderSide(color: Colors.black),
                       borderRadius: BorderRadius.circular(roundBorderRadius),
                     ),
                   ),

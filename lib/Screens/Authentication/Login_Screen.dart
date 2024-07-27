@@ -54,7 +54,7 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget _logoSection(double containerSize) {
-    return Container(
+    return SizedBox(
       height: containerSize,
       width: containerSize,
       child: Center(
@@ -108,7 +108,7 @@ class LoginScreen extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => PasswordScreen()));
+              MaterialPageRoute(builder: (context) => const PasswordScreen()));
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: buttonColorPurple,

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../../../Utils/app_constants.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: PasswordChangeScreen(),
   ));
 }
 
 class PasswordChangeScreen extends StatefulWidget {
+  const PasswordChangeScreen({super.key});
+
   @override
   _PasswordChangeScreenState createState() => _PasswordChangeScreenState();
 }
@@ -123,7 +124,7 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -142,7 +143,7 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
                 });
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _buildPasswordField(
               context,
               label: 'New Password',
@@ -158,9 +159,9 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
                 });
               },
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             _buildPasswordStrengthIndicator(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _buildPasswordField(
               context,
               label: 'Re-enter Password',
@@ -173,7 +174,7 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
                 });
               },
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Row(
               children: [
                 Expanded(
@@ -197,7 +198,7 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
                     ),
                   ),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
@@ -242,7 +243,7 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
           label,
           style: interRegular.copyWith(fontSize: getFontSize(context)),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         TextField(
           controller: controller,
           obscureText: !visible,
@@ -273,7 +274,7 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
         return Expanded(
           child: Container(
             height: 3,
-            margin: EdgeInsets.symmetric(horizontal: 2),
+            margin: const EdgeInsets.symmetric(horizontal: 2),
             color: index < _passwordStrength
                 ? _getStrengthColor(_passwordStrength)
                 : Colors.grey.shade300,

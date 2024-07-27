@@ -218,7 +218,7 @@ import '../Utils/app_constants.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final int state;
 
-  CustomAppBar({super.key, required this.state})
+  const CustomAppBar({super.key, required this.state})
       : preferredSize = const Size.fromHeight(60.0);
 
   @override
@@ -251,7 +251,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: Row(
                   children: [
                     CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/boy-icon.png'),
+                      backgroundImage: const AssetImage('assets/images/boy-icon.png'),
                       radius: iconSize / 1.5,
                     ),
                     Column(
@@ -281,7 +281,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 height: logoSize,
                 width: logoSize,
               ),
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width * 0.08,
                 child: IconButton(
                   icon: SvgPicture.asset('assets/images/search-normal.svg',
@@ -290,11 +290,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AllProductsScreen()));
+                            builder: (context) => const AllProductsScreen()));
                   },
                 ),
               ),
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width * 0.08,
                 child: IconButton(
                   icon: SvgPicture.asset('assets/images/favorites.svg',
@@ -302,7 +302,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   onPressed: () {},
                 ),
               ),
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width * 0.08,
                 child: IconButton(
                   icon: SvgPicture.asset('assets/images/notification.svg',
@@ -310,7 +310,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   onPressed: () {},
                 ),
               ),
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width * 0.08,
                 child: IconButton(
                   icon: SvgPicture.asset('assets/images/shopping-cart.svg',
@@ -319,7 +319,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ShoppingCartScreen(),
+                        builder: (context) => const ShoppingCartScreen(),
                       ),
                     );
                   },
@@ -348,7 +348,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
                     Text(
@@ -358,7 +358,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
@@ -373,7 +373,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
                         // Handle the button press
@@ -383,7 +383,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        padding: EdgeInsets.symmetric(vertical: 12),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                       child: SizedBox(
                         width: double.infinity,
@@ -406,7 +406,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _buildAvatar(BuildContext context, String label, dynamic image) {
     return Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
           CircleAvatar(
@@ -415,7 +415,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             backgroundImage: image is String ? AssetImage(image) : null,
             child: image is IconData ? Icon(image, size: 24) : null,
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(label),
         ],
       ),

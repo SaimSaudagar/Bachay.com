@@ -26,7 +26,7 @@ class _LoadingScreenState extends State<LoadingScreen>
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => LogoScreen()),
+            MaterialPageRoute(builder: (context) => const LogoScreen()),
           );
         }
       });

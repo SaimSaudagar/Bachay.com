@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../../Utils/app_constants.dart';
 
 class SelectRefundMethodScreen extends StatelessWidget {
+  const SelectRefundMethodScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,7 +11,7 @@ class SelectRefundMethodScreen extends StatelessWidget {
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -23,19 +25,19 @@ class SelectRefundMethodScreen extends StatelessWidget {
             alignment: Alignment.topRight,
             children: [
               IconButton(
-                icon: Icon(Icons.notifications, color: Colors.black),
+                icon: const Icon(Icons.notifications, color: Colors.black),
                 onPressed: () {},
               ),
               Positioned(
                 right: 10,
                 top: 10,
                 child: Container(
-                  padding: EdgeInsets.all(1),
+                  padding: const EdgeInsets.all(1),
                   decoration: BoxDecoration(
                     color: Colors.orange,
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  constraints: BoxConstraints(
+                  constraints: const BoxConstraints(
                     minWidth: 12,
                     minHeight: 12,
                   ),
@@ -69,7 +71,7 @@ class SelectRefundMethodScreen extends StatelessWidget {
                 'BUMZEE Interlock Half Sleeves Star Printed Tee & Shorts Set With Suspender - Beige & Navy Blue',
                 style: TextStyle(fontSize: getFontSize(context)),
               ),
-              subtitle: Column(
+              subtitle: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Rs. 257  Rs. 3999'),
@@ -90,7 +92,7 @@ class SelectRefundMethodScreen extends StatelessWidget {
               title: Text('Refund via Bachay Wallet', style: interRegular.copyWith(fontSize: getFontSize(context))),
               subtitle: Text('Refund timeline: 30 Mins after the return quality check is completed by Bachay.com teams.', style: interRegular.copyWith(fontSize: getFontSize(context))),
             ),
-            Divider(),
+            const Divider(),
             _buildRefundDetails(context),
             SizedBox(height: getSpacing(context) * 8),
             _buildSubmitButton(context),
@@ -121,7 +123,7 @@ class SelectRefundMethodScreen extends StatelessWidget {
             Text('Rs. 149', style: interRegular.copyWith(fontSize: getFontSize(context))),
           ],
         ),
-        Divider(),
+        const Divider(),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

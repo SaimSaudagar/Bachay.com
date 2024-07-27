@@ -3,6 +3,8 @@ import '../../../Utils/app_constants.dart';
 import 'Order_Details.dart';
 
 class OrderHistoryScreen extends StatefulWidget {
+  const OrderHistoryScreen({super.key});
+
   @override
   _OrderHistoryScreenState createState() => _OrderHistoryScreenState();
 }
@@ -30,7 +32,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {},
         ),
         title: Text(
@@ -43,19 +45,19 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
             alignment: Alignment.topRight,
             children: [
               IconButton(
-                icon: Icon(Icons.notifications, color: Colors.black),
+                icon: const Icon(Icons.notifications, color: Colors.black),
                 onPressed: () {},
               ),
               Positioned(
                 right: 10,
                 top: 10,
                 child: Container(
-                  padding: EdgeInsets.all(1),
+                  padding: const EdgeInsets.all(1),
                   decoration: BoxDecoration(
                     color: Colors.orange,
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  constraints: BoxConstraints(
+                  constraints: const BoxConstraints(
                     minWidth: 12,
                     minHeight: 12,
                   ),
@@ -77,7 +79,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
           indicatorColor: buttonColorPurple,
           labelColor: Colors.black,
           unselectedLabelColor: Colors.grey,
-          tabs: [
+          tabs: const [
             Tab(text: 'All'),
             Tab(text: 'To Pay'),
             Tab(text: 'To Ship'),
@@ -87,7 +89,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [
+        children: const [
           OrderListView(),
           Center(child: Text('To Pay Orders')),
           Center(child: Text('To Ship Orders')),
@@ -99,12 +101,14 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
 }
 
 class OrderListView extends StatelessWidget {
+  const OrderListView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.all(getPadding(context)),
       children: [
-        OrderCard(
+        const OrderCard(
           orderNo: '01254547',
           placedDate: '02 Jun 2024, 20:14:56',
           paidDate: '07 Jun 2024, 18:04:56',
@@ -119,7 +123,7 @@ class OrderListView extends StatelessWidget {
           totalPrice: 850,
         ),
         SizedBox(height: getSpacing(context)),
-        OrderCard(
+        const OrderCard(
           orderNo: '0855547',
           placedDate: '02 Jun 2024, 20:14:56',
           paidDate: '07 Jun 2024, 18:04:56',
@@ -150,7 +154,7 @@ class OrderCard extends StatelessWidget {
   final int quantity;
   final double totalPrice;
 
-  OrderCard({
+  const OrderCard({super.key, 
     required this.orderNo,
     required this.placedDate,
     required this.paidDate,
@@ -218,12 +222,12 @@ class OrderCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Divider(),
+              const Divider(),
               Row(
                 children: [
                   Image.network(imageUrl,
                       width: 80, height: 80, fit: BoxFit.cover),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -237,7 +241,7 @@ class OrderCard extends StatelessWidget {
                                 style: TextStyle(
                                     color: buttonColorPurple,
                                     fontSize: getBigFontSize(context))),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Text('Rs. $originalPrice',
                                 style: TextStyle(
                                     decoration: TextDecoration.lineThrough,
@@ -274,16 +278,16 @@ class OrderCard extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.black,
                         backgroundColor: Colors.grey.withOpacity(0.5),
-                        side: BorderSide(color: Colors.black),
+                        side: const BorderSide(color: Colors.black),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50.0)),
-                        padding: EdgeInsets.symmetric(vertical: 12),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                       child: Text('Return Product',
                           style: buttonTextStyle(context)),
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {},
@@ -291,7 +295,7 @@ class OrderCard extends StatelessWidget {
                         backgroundColor: buttonColorPurple,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50.0)),
-                        padding: EdgeInsets.symmetric(vertical: 12),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                       child: Text('Buy Again', style: buttonTextStyle(context)),
                     ),
@@ -324,8 +328,8 @@ class OrderCard extends StatelessWidget {
         color = Colors.grey;
     }
     return Container(
-      margin: EdgeInsets.only(left: 4),
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      margin: const EdgeInsets.only(left: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: color.withOpacity(0.2),
         borderRadius: BorderRadius.circular(borderRadius),

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:app/Screens/Authentication/Verify_OTP_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,6 +7,8 @@ import '../../../Utils/app_constants.dart';
 import 'AddChild_Screen.dart';
 
 class ProfilePhotoScreen extends StatefulWidget {
+  const ProfilePhotoScreen({super.key});
+
   @override
   _ProfilePhotoScreenState createState() => _ProfilePhotoScreenState();
 }
@@ -95,24 +96,24 @@ class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
                         child: Wrap(
                           children: <Widget>[
                             ListTile(
-                              leading: Icon(Icons.camera),
-                              title: Text('Take Photo'),
+                              leading: const Icon(Icons.camera),
+                              title: const Text('Take Photo'),
                               onTap: () {
                                 _pickImage(ImageSource.camera);
                                 Navigator.of(context).pop();
                               },
                             ),
                             ListTile(
-                              leading: Icon(Icons.photo_library),
-                              title: Text('Add from Gallery'),
+                              leading: const Icon(Icons.photo_library),
+                              title: const Text('Add from Gallery'),
                               onTap: () {
                                 _pickImage(ImageSource.gallery);
                                 Navigator.of(context).pop();
                               },
                             ),
                             ListTile(
-                              leading: Icon(Icons.cancel),
-                              title: Text('Cancel'),
+                              leading: const Icon(Icons.cancel),
+                              title: const Text('Cancel'),
                               onTap: () {
                                 Navigator.of(context).pop();
                               },
@@ -144,13 +145,13 @@ class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
                 ),
               ),
               SizedBox(height: getSpacing(context) * 5),
-              if (_imageFile == null) Text('+ Upload Photo', style: outfitBold),
+              if (_imageFile == null) const Text('+ Upload Photo', style: outfitBold),
               if (_imageFile != null)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SvgPicture.asset('assets/images/edit-icon.svg'),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                     Text(
                       'Change Photo',
                       style: outfitBold.copyWith(color: Colors.black),
@@ -168,7 +169,7 @@ class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AddChildScreen()),
+                            builder: (context) => const AddChildScreen()),
                       );
                     },
                     style: TextButton.styleFrom(
@@ -177,7 +178,7 @@ class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
                           horizontal: getSpacing(context) * 10,
                           vertical: getSpacing(context) * 5),
                       shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.black),
+                        side: const BorderSide(color: Colors.black),
                         borderRadius: BorderRadius.circular(roundBorderRadius),
                       ),
                     ),
@@ -191,7 +192,7 @@ class _ProfilePhotoScreenState extends State<ProfilePhotoScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AddChildScreen()),
+                                  builder: (context) => const AddChildScreen()),
                             );
                           }
                         : null,

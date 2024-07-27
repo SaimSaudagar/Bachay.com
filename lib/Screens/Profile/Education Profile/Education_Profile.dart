@@ -3,19 +3,23 @@ import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: EducationScreen(),
     );
   }
 }
 
 class EducationScreen extends StatelessWidget {
+  const EducationScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +35,7 @@ class EducationScreen extends StatelessWidget {
             SizedBox(height: getSpacing(context)),
             _buildFeatureButtonsRow(context),
             SizedBox(height: getSpacing(context) * 4),
-            Divider(thickness: 1.0),
+            const Divider(thickness: 1.0),
             SizedBox(height: getSpacing(context) * 4),
             _buildQuizCard(context),
           ],
@@ -45,17 +49,17 @@ class EducationScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       elevation: 0,
       leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: Colors.black),
+        icon: const Icon(Icons.arrow_back, color: Colors.black),
         onPressed: () {},
       ),
       title: Image.asset('assets/logo/LogoEducation.png', height: getBigFontSize(context) * 2),
       actions: [
         IconButton(
-          icon: Icon(Icons.search, color: Colors.black),
+          icon: const Icon(Icons.search, color: Colors.black),
           onPressed: () {},
         ),
         IconButton(
-          icon: Icon(Icons.notifications, color: Colors.black),
+          icon: const Icon(Icons.notifications, color: Colors.black),
           onPressed: () {},
         ),
       ],
@@ -67,7 +71,7 @@ class EducationScreen extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: getBigFontSize(context) * 2,
-          backgroundImage: AssetImage('assets/images/Celebrate.png'),
+          backgroundImage: const AssetImage('assets/images/Celebrate.png'),
         ),
         SizedBox(width: getSpacing(context) * 3.2),
         Expanded(
@@ -125,7 +129,7 @@ class EducationScreen extends StatelessWidget {
         leading: Image.asset('assets/images/Quiz.png', height: getBigFontSize(context), width: getBigFontSize(context)),
         title: Text('Quizzes', style: interBold.copyWith(fontSize: getBigFontSize(context))),
         subtitle: Text('Your Child Quizzes.', style: interRegular.copyWith(fontSize: getFontSize(context))),
-        trailing: Icon(Icons.arrow_forward_ios, color: Colors.black),
+        trailing: const Icon(Icons.arrow_forward_ios, color: Colors.black),
         onTap: () {},
       ),
     );

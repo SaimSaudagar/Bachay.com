@@ -23,7 +23,7 @@ class ProductRepository {
   Future<SingleProduct> fetchSingleproduct(int productId) async {
     try {
       final response =
-          await http.get(Uri.parse('${baseUrl}products/single/${productId}'));
+          await http.get(Uri.parse('${baseUrl}products/single/$productId'));
       print(response.body);
       print(productId);
       if (response.statusCode == 200) {

@@ -1,7 +1,6 @@
 import 'package:app/API/Bloc/Home/Home_Event.dart';
 import 'package:app/API/Bloc/Home/Home_State.dart';
 import 'package:app/API/Repository/Homepage_Repo.dart';
-import 'package:app/API/Repository/Product_Repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {

@@ -11,7 +11,7 @@ class ReturnRequestScreen extends StatefulWidget {
   final int quantity;
   final double totalPrice;
 
-  ReturnRequestScreen({
+  const ReturnRequestScreen({super.key, 
     required this.orderNo,
     required this.imageUrl,
     required this.title,
@@ -38,7 +38,7 @@ class _ReturnRequestScreenState extends State<ReturnRequestScreen> {
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -52,19 +52,19 @@ class _ReturnRequestScreenState extends State<ReturnRequestScreen> {
             alignment: Alignment.topRight,
             children: [
               IconButton(
-                icon: Icon(Icons.notifications, color: Colors.black),
+                icon: const Icon(Icons.notifications, color: Colors.black),
                 onPressed: () {},
               ),
               Positioned(
                 right: 10,
                 top: 10,
                 child: Container(
-                  padding: EdgeInsets.all(1),
+                  padding: const EdgeInsets.all(1),
                   decoration: BoxDecoration(
                     color: Colors.orange,
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  constraints: BoxConstraints(
+                  constraints: const BoxConstraints(
                     minWidth: 12,
                     minHeight: 12,
                   ),
@@ -105,7 +105,7 @@ class _ReturnRequestScreenState extends State<ReturnRequestScreen> {
                   children: [
                     Text('Rs. ${widget.price}  Rs. ${widget.originalPrice}'),
                     Text('Quantity: ${widget.quantity}'),
-                    Text('Total Order:'),
+                    const Text('Total Order:'),
                     Text('Rs. ${widget.totalPrice}'),
                   ],
                 ),
@@ -126,7 +126,7 @@ class _ReturnRequestScreenState extends State<ReturnRequestScreen> {
           ),
         ),
       ),
-      bottomSheet: _showReasonSelection ? _buildReasonSelection(context) : SizedBox.shrink(),
+      bottomSheet: _showReasonSelection ? _buildReasonSelection(context) : const SizedBox.shrink(),
     );
   }
 
@@ -141,7 +141,7 @@ class _ReturnRequestScreenState extends State<ReturnRequestScreen> {
         foregroundColor: Colors.black, backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(borderRadius),
-          side: BorderSide(color: Colors.grey),
+          side: const BorderSide(color: Colors.grey),
         ),
         padding: EdgeInsets.symmetric(vertical: getPadding(context)),
       ),
@@ -152,7 +152,7 @@ class _ReturnRequestScreenState extends State<ReturnRequestScreen> {
             _selectedReason.isEmpty ? 'Return Reason' : _selectedReason,
             style: interRegular.copyWith(fontSize: getFontSize(context)),
           ),
-          Icon(Icons.arrow_drop_down, color: Colors.grey),
+          const Icon(Icons.arrow_drop_down, color: Colors.grey),
         ],
       ),
     );
@@ -169,7 +169,7 @@ class _ReturnRequestScreenState extends State<ReturnRequestScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.upload_file, size: 40, color: Colors.grey),
+            const Icon(Icons.upload_file, size: 40, color: Colors.grey),
             Text('+ Upload Images', style: TextStyle(color: Colors.grey, fontSize: getFontSize(context))),
           ],
         ),
@@ -230,7 +230,7 @@ class _ReturnRequestScreenState extends State<ReturnRequestScreen> {
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Please select a return reason.')),
+            const SnackBar(content: Text('Please select a return reason.')),
           );
         }
       },

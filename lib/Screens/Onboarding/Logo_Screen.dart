@@ -26,7 +26,7 @@ class _LogoScreenState extends State<LogoScreen>
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => OnboardingScreen1()),
+            MaterialPageRoute(builder: (context) => const OnboardingScreen1()),
           );
         }
       });

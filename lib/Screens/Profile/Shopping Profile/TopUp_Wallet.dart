@@ -3,6 +3,8 @@ import '../../../Utils/app_constants.dart';
 import 'Wallet.dart';
 
 class TopUpWalletScreen extends StatefulWidget {
+  const TopUpWalletScreen({super.key});
+
   @override
   _TopUpWalletScreenState createState() => _TopUpWalletScreenState();
 }
@@ -10,7 +12,7 @@ class TopUpWalletScreen extends StatefulWidget {
 class _TopUpWalletScreenState extends State<TopUpWalletScreen> {
   Future<Map<String, dynamic>> _fetchData() async {
     // Simulating network request delay
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
 
     // Simulated response data
     return {
@@ -26,12 +28,12 @@ class _TopUpWalletScreenState extends State<TopUpWalletScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Top Up Wallet'),
+        title: const Text('Top Up Wallet'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => WalletScreen()),
+              MaterialPageRoute(builder: (context) => const WalletScreen()),
             );
           },
         ),
@@ -40,13 +42,13 @@ class _TopUpWalletScreenState extends State<TopUpWalletScreen> {
         future: _fetchData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData) {
             return TopUpWalletContent(data: snapshot.data!);
           } else {
-            return Center(child: Text('No data available'));
+            return const Center(child: Text('No data available'));
           }
         },
       ),
@@ -57,7 +59,7 @@ class _TopUpWalletScreenState extends State<TopUpWalletScreen> {
 class TopUpWalletContent extends StatefulWidget {
   final Map<String, dynamic> data;
 
-  TopUpWalletContent({required this.data});
+  const TopUpWalletContent({super.key, required this.data});
 
   @override
   _TopUpWalletContentState createState() => _TopUpWalletContentState();
@@ -109,7 +111,7 @@ class _TopUpWalletContentState extends State<TopUpWalletContent> {
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(50.0),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.grey,
                               ),
                             ),
@@ -152,7 +154,7 @@ class _TopUpWalletContentState extends State<TopUpWalletContent> {
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 5,
                   blurRadius: 7,
-                  offset: Offset(0, 3),
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
@@ -238,7 +240,7 @@ class _TopUpWalletContentState extends State<TopUpWalletContent> {
 class PaymentMethodsSheet extends StatefulWidget {
   final List<dynamic> paymentMethods;
 
-  PaymentMethodsSheet({required this.paymentMethods});
+  const PaymentMethodsSheet({super.key, required this.paymentMethods});
 
   @override
   _PaymentMethodsSheetState createState() => _PaymentMethodsSheetState();
@@ -263,7 +265,7 @@ class _PaymentMethodsSheetState extends State<PaymentMethodsSheet> {
                   style: interBold.copyWith(fontSize: getBigFontSize(context)),
                 ),
                 IconButton(
-                  icon: Icon(Icons.close),
+                  icon: const Icon(Icons.close),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -301,25 +303,25 @@ class _PaymentMethodsSheetState extends State<PaymentMethodsSheet> {
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    IconButton(icon: Icon(Icons.edit), onPressed: () {}),
+                    IconButton(icon: const Icon(Icons.edit), onPressed: () {}),
                     IconButton(
-                        icon: Icon(Icons.delete, color: Colors.red),
+                        icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: () {}),
                   ],
                 ),
               );
-            }).toList(),
-            Divider(),
+            }),
+            const Divider(),
             Text(
               'Other Methods',
               style: interBold.copyWith(fontSize: getFontSize(context)),
             ),
             ListTile(
-              leading: Icon(Icons.add),
+              leading: const Icon(Icons.add),
               title: Row(
                 children: [
-                  Text('Add Card'),
-                  Spacer(),
+                  const Text('Add Card'),
+                  const Spacer(),
                   Row(
                     children: [
                       Image.asset('assets/images/visa.png', height: 24),
@@ -333,8 +335,8 @@ class _PaymentMethodsSheetState extends State<PaymentMethodsSheet> {
               onTap: () {},
             ),
             ListTile(
-              leading: Icon(Icons.phone_android),
-              title: Text('Pay With Jazz Cash'),
+              leading: const Icon(Icons.phone_android),
+              title: const Text('Pay With Jazz Cash'),
               onTap: () {},
             ),
           ],

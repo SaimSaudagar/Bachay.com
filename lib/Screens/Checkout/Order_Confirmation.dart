@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../Utils/app_constants.dart';
 
 class OrderConfirmationScreen extends StatelessWidget {
+  const OrderConfirmationScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,7 +13,7 @@ class OrderConfirmationScreen extends StatelessWidget {
             style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
         actions: [
           IconButton(
-            icon: Icon(Icons.favorite_border),
+            icon: const Icon(Icons.favorite_border),
             onPressed: () {},
           ),
         ],
@@ -25,25 +27,25 @@ class OrderConfirmationScreen extends StatelessWidget {
               Text('Total: Rs. 1,445',
                   style: interBold.copyWith(
                       fontSize: getBigFontSize(context), color: Colors.red)),
-              Divider(color: Colors.blue),
+              const Divider(color: Colors.blue),
               SizedBox(height: getSpacing(context)),
-              DeliveryInformationSection(),
+              const DeliveryInformationSection(),
               SizedBox(height: getSpacing(context)),
-              ShippingMethodSection(),
+              const ShippingMethodSection(),
               SizedBox(height: getSpacing(context)),
-              PaymentMethodSection(),
+              const PaymentMethodSection(),
               SizedBox(height: getSpacing(context)),
-              OptionsSection(),
+              const OptionsSection(),
               SizedBox(height: getSpacing(context)),
-              OrderDetailsSection(),
+              const OrderDetailsSection(),
               SizedBox(height: getSpacing(context)),
-              TotalPriceSection(),
+              const TotalPriceSection(),
               SizedBox(height: getSpacing(context)),
-              PaymentSecuritySection(),
+              const PaymentSecuritySection(),
               SizedBox(height: getSpacing(context)),
-              SecurityPrivacySection(),
+              const SecurityPrivacySection(),
               SizedBox(height: getSpacing(context)),
-              PlaceOrderButton(),
+              const PlaceOrderButton(),
             ],
           ),
         ),
@@ -53,6 +55,8 @@ class OrderConfirmationScreen extends StatelessWidget {
 }
 
 class DeliveryInformationSection extends StatelessWidget {
+  const DeliveryInformationSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -74,7 +78,7 @@ class DeliveryInformationSection extends StatelessWidget {
               style: interRegular.copyWith(fontSize: getFontSize(context))),
           Text('Karachi - Clifton, Sindh, Pakistan',
               style: interRegular.copyWith(fontSize: getFontSize(context))),
-          Align(
+          const Align(
             alignment: Alignment.topRight,
             child: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
           ),
@@ -85,6 +89,8 @@ class DeliveryInformationSection extends StatelessWidget {
 }
 
 class ShippingMethodSection extends StatelessWidget {
+  const ShippingMethodSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -100,14 +106,14 @@ class ShippingMethodSection extends StatelessWidget {
           SizedBox(height: getSpacing(context)),
           Row(
             children: [
-              Icon(Icons.check_circle, color: Colors.purple),
+              const Icon(Icons.check_circle, color: Colors.purple),
               SizedBox(width: getSpacing(context)),
               Text('Standard Shipping',
                   style: interRegular.copyWith(fontSize: getFontSize(context))),
-              Spacer(),
+              const Spacer(),
               Text('Rs. 150',
                   style: interRegular.copyWith(fontSize: getFontSize(context))),
-              Align(
+              const Align(
                 alignment: Alignment.topRight,
                 child:
                     Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
@@ -124,6 +130,8 @@ class ShippingMethodSection extends StatelessWidget {
 }
 
 class PaymentMethodSection extends StatelessWidget {
+  const PaymentMethodSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -140,13 +148,13 @@ class PaymentMethodSection extends StatelessWidget {
           Row(
             children: [
               // Replace with actual payment method icons
-              Icon(Icons.credit_card, color: Colors.purple),
+              const Icon(Icons.credit_card, color: Colors.purple),
               SizedBox(width: getSpacing(context)),
-              Icon(Icons.payment, color: Colors.purple),
+              const Icon(Icons.payment, color: Colors.purple),
               SizedBox(width: getSpacing(context)),
               // Add more icons as needed
-              Spacer(),
-              Align(
+              const Spacer(),
+              const Align(
                 alignment: Alignment.topRight,
                 child:
                     Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
@@ -160,9 +168,11 @@ class PaymentMethodSection extends StatelessWidget {
 }
 
 class OptionsSection extends StatelessWidget {
+  const OptionsSection({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
         OptionItem(icon: Icons.code, text: 'Coupon Code: FIRSTORDER1'),
         OptionItem(icon: Icons.card_giftcard, text: 'Gift Card:'),
@@ -177,7 +187,7 @@ class OptionItem extends StatelessWidget {
   final IconData icon;
   final String text;
 
-  OptionItem({required this.icon, required this.text});
+  const OptionItem({super.key, required this.icon, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -192,8 +202,8 @@ class OptionItem extends StatelessWidget {
           SizedBox(width: getSpacing(context)),
           Text(text,
               style: interRegular.copyWith(fontSize: getFontSize(context))),
-          Spacer(),
-          Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+          const Spacer(),
+          const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
         ],
       ),
     );
@@ -201,6 +211,8 @@ class OptionItem extends StatelessWidget {
 }
 
 class OrderDetailsSection extends StatelessWidget {
+  const OrderDetailsSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -215,7 +227,7 @@ class OrderDetailsSection extends StatelessWidget {
             children: [
               Text('Order Details',
                   style: outfitBold.copyWith(fontSize: getFontSize(context))),
-              Spacer(),
+              const Spacer(),
               Text('View All Items',
                   style: TextStyle(
                       color: Colors.blue, fontSize: getFontSize(context))),
@@ -224,12 +236,12 @@ class OrderDetailsSection extends StatelessWidget {
           SizedBox(height: getSpacing(context)),
           Row(
             children: [
-              OrderItem(
+              const OrderItem(
                   imageUrl:
                       'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
                   price: 'Rs. 1,472'),
               SizedBox(width: getSpacing(context)),
-              OrderItem(
+              const OrderItem(
                   imageUrl:
                       'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
                   price: 'Rs. 500'),
@@ -245,7 +257,7 @@ class OrderItem extends StatelessWidget {
   final String imageUrl;
   final String price;
 
-  OrderItem({required this.imageUrl, required this.price});
+  const OrderItem({super.key, required this.imageUrl, required this.price});
 
   @override
   Widget build(BuildContext context) {
@@ -260,6 +272,8 @@ class OrderItem extends StatelessWidget {
 }
 
 class TotalPriceSection extends StatelessWidget {
+  const TotalPriceSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -267,7 +281,7 @@ class TotalPriceSection extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           PriceItem(label: 'Subtotal:', price: 'Rs. 1,495'),
@@ -286,7 +300,7 @@ class PriceItem extends StatelessWidget {
   final String price;
   final bool isBold;
 
-  PriceItem({required this.label, required this.price, this.isBold = false});
+  const PriceItem({super.key, required this.label, required this.price, this.isBold = false});
 
   @override
   Widget build(BuildContext context) {
@@ -308,6 +322,8 @@ class PriceItem extends StatelessWidget {
 }
 
 class PaymentSecuritySection extends StatelessWidget {
+  const PaymentSecuritySection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -327,15 +343,15 @@ class PaymentSecuritySection extends StatelessWidget {
           SizedBox(height: getSpacing(context)),
           Row(
             children: [
-              Icon(Icons.security, color: Colors.purple),
+              const Icon(Icons.security, color: Colors.purple),
               SizedBox(width: getSpacing(context)),
-              Icon(Icons.credit_card, color: Colors.purple),
+              const Icon(Icons.credit_card, color: Colors.purple),
               SizedBox(width: getSpacing(context)),
-              Icon(Icons.check, color: Colors.purple),
+              const Icon(Icons.check, color: Colors.purple),
               SizedBox(width: getSpacing(context)),
-              Icon(Icons.verified_user, color: Colors.purple),
+              const Icon(Icons.verified_user, color: Colors.purple),
               SizedBox(width: getSpacing(context)),
-              Icon(Icons.payment, color: Colors.purple),
+              const Icon(Icons.payment, color: Colors.purple),
             ],
           ),
         ],
@@ -345,6 +361,8 @@ class PaymentSecuritySection extends StatelessWidget {
 }
 
 class SecurityPrivacySection extends StatelessWidget {
+  const SecurityPrivacySection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -368,6 +386,8 @@ class SecurityPrivacySection extends StatelessWidget {
 }
 
 class PlaceOrderButton extends StatelessWidget {
+  const PlaceOrderButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -380,11 +400,11 @@ class PlaceOrderButton extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => OrderPlacedScreen()),
+            MaterialPageRoute(builder: (context) => const OrderPlacedScreen()),
           );
         },
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: buttonPaddingValue),
+          padding: const EdgeInsets.symmetric(vertical: buttonPaddingValue),
           backgroundColor: Colors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(roundBorderRadius),

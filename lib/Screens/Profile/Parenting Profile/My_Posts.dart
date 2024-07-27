@@ -5,10 +5,12 @@ import 'dart:convert';
 import '../../../Utils/app_constants.dart';
 
 void main() {
-  runApp(SocialMediaApp());
+  runApp(const SocialMediaApp());
 }
 
 class SocialMediaApp extends StatelessWidget {
+  const SocialMediaApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,12 +18,14 @@ class SocialMediaApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyPosts(),
+      home: const MyPosts(),
     );
   }
 }
 
 class MyPosts extends StatefulWidget {
+  const MyPosts({super.key});
+
   @override
   _MyPostsState createState() => _MyPostsState();
 }
@@ -45,7 +49,7 @@ class _MyPostsState extends State<MyPosts> {
         future: _fetchPosts(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
@@ -99,7 +103,7 @@ PreferredSizeWidget myPostsAppBar(BuildContext context) {
     backgroundColor: Colors.white,
     elevation: 1.0,
     leading: IconButton(
-      icon: Icon(Icons.arrow_back, color: Colors.black),
+      icon: const Icon(Icons.arrow_back, color: Colors.black),
       onPressed: () {},
     ),
     title: Column(
@@ -146,7 +150,7 @@ Widget postHeader(BuildContext context, Post post) {
         Text(post.timeAgo),
         SizedBox(width: getSpacing(context)),
         IconButton(
-          icon: Icon(Icons.more_horiz),
+          icon: const Icon(Icons.more_horiz),
           onPressed: () {
             showModalBottomSheet(
               context: context,
@@ -205,13 +209,13 @@ Widget postActionButton(BuildContext context, String iconPath, String label) {
 Widget postCommentsSection(BuildContext context) {
   return Column(
     children: [
-      Divider(),
+      const Divider(),
       Padding(
         padding: EdgeInsets.symmetric(horizontal: getPadding(context), vertical: getSpacing(context)),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               backgroundImage: NetworkImage('https://via.placeholder.com/150/92c952'),
               radius: 12,
             ),
@@ -226,7 +230,7 @@ Widget postCommentsSection(BuildContext context) {
                 ],
               ),
             ),
-            Icon(Icons.more_horiz),
+            const Icon(Icons.more_horiz),
           ],
         ),
       ),
@@ -276,7 +280,7 @@ Widget postCommentInput(BuildContext context) {
     padding: EdgeInsets.symmetric(horizontal: getPadding(context), vertical: getSpacing(context)),
     child: Row(
       children: [
-        CircleAvatar(
+        const CircleAvatar(
           backgroundImage: NetworkImage('https://via.placeholder.com/150/92c952'),
           radius: 16,
         ),
@@ -291,7 +295,7 @@ Widget postCommentInput(BuildContext context) {
             padding: EdgeInsets.symmetric(horizontal: getPadding(context)),
             child: Row(
               children: [
-                Expanded(
+                const Expanded(
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: 'Write what\'s in your mind...',
@@ -314,7 +318,7 @@ Widget postCommentInput(BuildContext context) {
 
 Widget bottomSheet(BuildContext context) {
   return Container(
-    padding: EdgeInsets.all(16),
+    padding: const EdgeInsets.all(16),
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -331,7 +335,7 @@ Widget bottomSheetOption(BuildContext context, String iconPath, String label) {
   return ListTile(
     leading: Image.asset(iconPath, width: 24.0, height: 24.0),
     title: Text(label),
-    trailing: Icon(Icons.arrow_forward_ios), // Added arrow icon
+    trailing: const Icon(Icons.arrow_forward_ios), // Added arrow icon
     onTap: () {
       Navigator.pop(context);
     },

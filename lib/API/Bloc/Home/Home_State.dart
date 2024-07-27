@@ -6,7 +6,6 @@ import 'package:app/Models/Home/Featured_Product.dart';
 import 'package:app/Models/Home/Main_Banner.dart';
 import 'package:app/Models/Home/Season_Banner.dart';
 import 'package:app/Models/Home/Trends.dart';
-import 'package:app/Models/Products/Products.dart';
 
 abstract class HomeState {}
 

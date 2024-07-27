@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 
 class PointsScreen extends StatelessWidget {
+  const PointsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       appBar: PointsAppBar(),
       body: Column(
         children: [
@@ -18,11 +20,13 @@ class PointsScreen extends StatelessWidget {
 }
 
 class PointsAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const PointsAppBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
       leading: IconButton(
-        icon: Icon(Icons.arrow_back),
+        icon: const Icon(Icons.arrow_back),
         onPressed: () {},
       ),
       title: Text('Points', style: interBold.copyWith(fontSize: getBigFontSize(context))),
@@ -30,23 +34,23 @@ class PointsAppBar extends StatelessWidget implements PreferredSizeWidget {
         Stack(
           children: [
             IconButton(
-              icon: Icon(Icons.notifications_none),
+              icon: const Icon(Icons.notifications_none),
               onPressed: () {},
             ),
             Positioned(
               right: 11,
               top: 11,
               child: Container(
-                padding: EdgeInsets.all(2),
+                padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
                   color: Colors.red,
                   borderRadius: BorderRadius.circular(6),
                 ),
-                constraints: BoxConstraints(
+                constraints: const BoxConstraints(
                   minWidth: 14,
                   minHeight: 14,
                 ),
-                child: Text(
+                child: const Text(
                   '02',
                   style: TextStyle(
                     color: Colors.white,
@@ -63,10 +67,12 @@ class PointsAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class PointsSummary extends StatelessWidget {
+  const PointsSummary({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -80,7 +86,7 @@ class PointsSummary extends StatelessWidget {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 5,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -122,6 +128,8 @@ class PointsSummary extends StatelessWidget {
 }
 
 class TabBarWidget extends StatefulWidget {
+  const TabBarWidget({super.key});
+
   @override
   _TabBarWidgetState createState() => _TabBarWidgetState();
 }
@@ -148,7 +156,7 @@ class _TabBarWidgetState extends State<TabBarWidget> with SingleTickerProviderSt
       labelColor: Colors.black,
       unselectedLabelColor: Colors.grey,
       indicatorColor: buttonColorPurple,
-      tabs: [
+      tabs: const [
         Tab(text: 'All'),
         Tab(text: 'Earned'),
         Tab(text: 'Used'),
@@ -159,11 +167,13 @@ class _TabBarWidgetState extends State<TabBarWidget> with SingleTickerProviderSt
 }
 
 class TransactionList extends StatelessWidget {
+  const TransactionList({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.all(getPadding(context)),
-      children: [
+      children: const [
         TransactionItem(
           imagePath: 'assets/images/purchase.png',
           type: 'Purchase',
@@ -225,7 +235,7 @@ class TransactionItem extends StatelessWidget {
   final String status;
   final Color color;
 
-  TransactionItem({
+  const TransactionItem({super.key, 
     required this.imagePath,
     required this.type,
     required this.date,
