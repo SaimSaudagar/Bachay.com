@@ -363,7 +363,11 @@ class FeatureIcon extends StatelessWidget {
   final String label;
   final BuildContext context;
 
-  const FeatureIcon({super.key, required this.icon, required this.label, required this.context});
+  const FeatureIcon(
+      {super.key,
+      required this.icon,
+      required this.label,
+      required this.context});
 
   @override
   Widget build(BuildContext context) {
