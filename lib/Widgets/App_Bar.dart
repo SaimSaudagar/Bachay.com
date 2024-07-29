@@ -251,7 +251,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: Row(
                   children: [
                     CircleAvatar(
-                      backgroundImage: const AssetImage('assets/images/boy-icon.png'),
+                      backgroundImage:
+                          const AssetImage('assets/images/boy-icon.png'),
                       radius: iconSize / 1.5,
                     ),
                     Column(
@@ -319,7 +320,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ShoppingCartScreen(),
+                        builder: (context) => CartScreen(),
                       ),
                     );
                   },
