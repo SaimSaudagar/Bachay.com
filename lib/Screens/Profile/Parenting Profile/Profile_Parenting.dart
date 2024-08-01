@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 import '../../../Widgets/App_Bar.dart';
 import 'Expert_Following.dart';
+import 'Expert_Panel.dart';
 import 'My_Posts.dart';
 import 'My_Questions.dart';
 class Parenting_Profile extends StatefulWidget {
@@ -101,8 +102,8 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
             }),
             _buildFeatureItem(
                 context, 'Expert Panel', 'assets/images/Expert Panel.png', () {
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => PointsScreen()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ExpertPanelScreen()));
             }),
             _buildFeatureItem(
                 context, 'Bachay Club', 'assets/images/BachayClub.png', () {
