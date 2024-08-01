@@ -15,72 +15,110 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   List<CartItem> _cartItems = [];
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Cart(${_cartItems.length})',
-            style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.favorite_border),
-            onPressed: () {},
+    // Providing the CartBloc at the top level of this screen
+    return BlocProvider<CartBloc>(
+      create: (_) =>
+          CartBloc(cartRepository: CartRepository())..add(LoadCartList()),
+      child: Scaffold(
+        appBar: AppBar(
+          title: BlocBuilder<CartBloc, CartState>(
+            builder: (context, state) {
+              // Update the cart count directly from the state
+              int itemCount =
+                  state is CartListLoaded ? state.cartList.cartItems.length : 0;
+              return Text('Cart($itemCount)',
+                  style:
+                      outfitBold.copyWith(fontSize: getBigFontSize(context)));
+            },
           ),
-        ],
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(getPadding(context)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SignInSection(),
-                    SizedBox(height: getSpacing(context)),
-                    VoucherInputSection(),
-                    SizedBox(height: getSpacing(context)),
-                    AllProductsSection(),
-                    SizedBox(height: getSpacing(context)),
-                    cart(),
-                    SizedBox(height: getSpacing(context)),
-                    featuresSection(context),
-                  ],
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.favorite_border),
+              onPressed: () {},
+            ),
+          ],
+        ),
+        body: Padding(
+          padding: EdgeInsets.all(getPadding(context)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SignInSection(),
+                      SizedBox(height: getSpacing(context)),
+                      VoucherInputSection(),
+                      SizedBox(height: getSpacing(context)),
+                      allProductsSection(),
+                      SizedBox(height: getSpacing(context)),
+                      cart(),
+                      SizedBox(height: getSpacing(context)),
+                      featuresSection(context),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            CheckoutSection(),
-          ],
+              CheckoutSection(),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  void _deleteCartItem(CartItem item) {
-    setState(() {
-      _cartItems.remove(item);
-    });
+  Widget allProductsSection() {
+    return BlocBuilder<CartBloc, CartState>(
+      builder: (context, state) {
+        if (state is CartListLoading) {
+          return Container();
+        } else if (state is CartListLoaded) {
+          return buildAllProductsSection(context);
+        } else if (state is CartListError) {
+          return Container();
+        }
+        return Container();
+      },
+    );
+  }
+
+  Widget buildAllProductsSection(BuildContext context) {
+    return Row(
+      children: [
+        const Radio(
+          value: true,
+          groupValue: true,
+          onChanged: null,
+          activeColor: buttonColorPurple,
+        ),
+        Text('All Products',
+            style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
+        const Spacer(),
+        TextButton(
+          onPressed: () {
+            context.read<CartBloc>().add(DeleteCart());
+          },
+          child: const Text('Delete All', style: TextStyle(color: Colors.red)),
+        ),
+      ],
+    );
   }
 
   Widget cart() {
-    return BlocProvider(
-      create: (_) =>
-          CartBloc(cartRepository: CartRepository())..add(LoadCartList()),
-      child: BlocBuilder<CartBloc, CartState>(
-        builder: (context, state) {
-          if (state is CartListLoading) {
-            return SizedBox();
-          } else if (state is CartListLoaded) {
-            return cartSection("Bachay", state.cartList.carts, context);
-          } else if (state is CartListError) {
-            return SizedBox();
-          }
-          return Center(child: Text('Press a button to load discount banner'));
-        },
-      ),
+    return BlocBuilder<CartBloc, CartState>(
+      builder: (context, state) {
+        if (state is CartListLoading || state is UpdateCartLoading) {
+          return Center(child: CircularProgressIndicator());
+        } else if (state is CartListLoaded) {
+          return cartSection("Your Cart", state.cartList.cartItems, context);
+        } else {
+          return Center(child: Text('Cart is empty'));
+        }
+      },
     );
   }
 
@@ -112,7 +150,7 @@ class _CartScreenState extends State<CartScreen> {
               onChanged: (value) {},
               activeColor: buttonColorPurple,
             ),
-            Image.network(item.thumbnail, width: 60, height: 60),
+            // Image.network(item.thumbnail, width: 60, height: 60),
             SizedBox(width: getSpacing(context)),
             Expanded(
               child: Column(
@@ -164,7 +202,12 @@ class _CartScreenState extends State<CartScreen> {
                 IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: () {
-                    _deleteCartItem(item);
+                    setState(() {
+                      _cartItems.remove(item);
+                    });
+                    context
+                        .read<CartBloc>()
+                        .add(DeleteCartItem(key: item.id.toString()));
                   },
                   color: Colors.red,
                 ),
@@ -179,8 +222,12 @@ class _CartScreenState extends State<CartScreen> {
                       icon: Icon(Icons.remove),
                       onPressed: () {
                         setState(() {
-                          if (item.quantity > 1) item.quantity--;
+                          if (item.quantity > 1) {
+                            item.quantity--;
+                          }
                         });
+                        context.read<CartBloc>().add(
+                            UpdateCart(key: item.id, quantity: item.quantity));
                       },
                     ),
                     Text('${item.quantity}',
@@ -192,6 +239,8 @@ class _CartScreenState extends State<CartScreen> {
                         setState(() {
                           item.quantity++;
                         });
+                        context.read<CartBloc>().add(
+                            UpdateCart(key: item.id, quantity: item.quantity));
                       },
                     ),
                   ],
@@ -320,31 +369,6 @@ class VoucherInputSection extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class AllProductsSection extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Radio(
-          value: true,
-          groupValue: true,
-          onChanged: (value) {},
-          activeColor: buttonColorPurple,
-        ),
-        Text('All Products',
-            style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
-        Spacer(),
-        TextButton(
-          onPressed: () {},
-          child: Text('Delete',
-              style:
-                  TextStyle(color: Colors.red, fontSize: getFontSize(context))),
-        ),
-      ],
     );
   }
 }

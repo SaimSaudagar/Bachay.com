@@ -35,7 +35,7 @@ class SingleProductError extends ProductState {
 class AddToCartLoading extends ProductState {}
 
 class AddToCartLoaded extends ProductState {
-  final int status;
+  final String status;
   AddToCartLoaded(this.status);
 }
 

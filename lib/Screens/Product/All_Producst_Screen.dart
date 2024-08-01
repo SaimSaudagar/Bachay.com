@@ -281,9 +281,7 @@ class DeliveryButtons extends StatelessWidget {
               color: Colors.orange.shade100,
               textColor: Colors.orange.shade700,
               icon: Icons.local_shipping,
-              onTap: () {
-                print('Fast Delivery clicked');
-              },
+              onTap: () {},
             ),
             horizontalSpacing(context),
             DeliveryButton(
@@ -291,9 +289,7 @@ class DeliveryButtons extends StatelessWidget {
               color: Colors.green.shade100,
               textColor: Colors.green.shade700,
               icon: Icons.local_shipping,
-              onTap: () {
-                print('Free Delivery clicked');
-              },
+              onTap: () {},
             ),
             horizontalSpacing(context),
             DeliveryButton(
@@ -301,18 +297,14 @@ class DeliveryButtons extends StatelessWidget {
               color: Colors.grey.shade200,
               textColor: Colors.black,
               borderColor: Colors.black,
-              onTap: () {
-                print('Best Selling clicked');
-              },
+              onTap: () {},
             ),
             horizontalSpacing(context),
             DeliveryButton(
               text: 'Trending',
               color: Colors.grey.shade200,
               textColor: Colors.grey.shade500,
-              onTap: () {
-                print('Trending clicked');
-              },
+              onTap: () {},
             ),
           ],
         ),

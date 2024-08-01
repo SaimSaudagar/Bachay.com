@@ -54,7 +54,8 @@ class EditProfileScreen extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: getFontSize(context) * 4,
-                  backgroundImage: const AssetImage('assets/images/Celebrate.png'), // Adjust the asset path
+                  backgroundImage: const AssetImage(
+                      'assets/images/Celebrate.png'), // Adjust the asset path
                 ),
                 SizedBox(width: getPadding(context)),
                 Column(
@@ -62,11 +63,13 @@ class EditProfileScreen extends StatelessWidget {
                   children: [
                     Text(
                       'Samira Khan',
-                      style: interBold.copyWith(fontSize: getBigFontSize(context)),
+                      style:
+                          interBold.copyWith(fontSize: getBigFontSize(context)),
                     ),
                     Text(
                       'Mother of 03',
-                      style: interRegular.copyWith(color: Colors.grey, fontSize: getFontSize(context)),
+                      style: interRegular.copyWith(
+                          color: Colors.grey, fontSize: getFontSize(context)),
                     ),
                   ],
                 ),
@@ -75,7 +78,8 @@ class EditProfileScreen extends StatelessWidget {
                   onPressed: () {},
                   child: Text(
                     'Change Profile',
-                    style: interRegular.copyWith(fontSize: getFontSize(context)),
+                    style:
+                        interRegular.copyWith(fontSize: getFontSize(context)),
                   ),
                 ),
               ],
@@ -84,31 +88,38 @@ class EditProfileScreen extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                _buildListTile(context, 'Personal Information', Icons.person_outline, () {
+                _buildListTile(
+                    context, 'Personal Information', Icons.person_outline, () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const PersonalInformationScreen()),
-                  );                  print('Personal Information tapped');
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const PersonalInformationScreen()),
+                  );
                 }),
-                _buildListTile(context, 'Contact Details', Icons.contact_mail, () {
+                _buildListTile(context, 'Contact Details', Icons.contact_mail,
+                    () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ContactDetailsScreen()),
-                  );                     
+                    MaterialPageRoute(
+                        builder: (context) => const ContactDetailsScreen()),
+                  );
                 }),
-                _buildListTile(context, 'Children Details', Icons.child_care_outlined, () {
-                      Navigator.push(
+                _buildListTile(
+                    context, 'Children Details', Icons.child_care_outlined, () {
+                  Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ChildrenDetailsScreen()),
-                  );                   print('Children Details tapped'); 
+                    MaterialPageRoute(
+                        builder: (context) => const ChildrenDetailsScreen()),
+                  );
                 }),
-                _buildListTile(context, 'Address Book', Icons.home_outlined, () {
+                _buildListTile(context, 'Address Book', Icons.home_outlined,
+                    () {
                   // Add your onPressed functionality here
-                  print('Address Book tapped');
                 }),
-                _buildListTile(context, 'Change Password', Icons.lock_outline, () {
+                _buildListTile(context, 'Change Password', Icons.lock_outline,
+                    () {
                   // Add your onPressed functionality here
-                  print('Change Password tapped');
                 }),
               ],
             ),
@@ -118,7 +129,8 @@ class EditProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildListTile(BuildContext context, String title, IconData icon, VoidCallback onTap) {
+  Widget _buildListTile(
+      BuildContext context, String title, IconData icon, VoidCallback onTap) {
     return Container(
       margin: EdgeInsets.symmetric(
         horizontal: getPadding(context),
