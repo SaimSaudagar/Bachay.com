@@ -486,9 +486,10 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Icon(
-                  Icons.local_shipping,
-                  size: MediaQuery.of(context).size.width * 0.1,
+                Image.asset(
+                  'assets/images/truck.png', 
+                  width: MediaQuery.of(context).size.width * 0.1,
+                  height: MediaQuery.of(context).size.width * 0.1,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -532,9 +533,10 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Icon(
-                  Icons.keyboard_return,
-                  size: MediaQuery.of(context).size.width * 0.1,
+                Image.asset(
+                  'assets/images/return.png', 
+                  width: MediaQuery.of(context).size.width * 0.1,
+                  height: MediaQuery.of(context).size.width * 0.1,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
