@@ -49,7 +49,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginRequested event,
     Emitter<LoginState> emit,
   ) async {
-    print('LoginRequested event received');  // Debugging line
     emit(LoginLoading());
     try {
       final response = await http.post(
@@ -60,15 +59,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       if (response.statusCode == 200) {
         final responseBody = jsonDecode(response.body);
-        final message = responseBody['message'].toString(); // Ensure message is a string
-        print('Login success: $message');  // Debugging line
+        final message =
+            responseBody['message'].toString(); // Ensure message is a string
         emit(LoginSuccess(message));
       } else {
-        print('Login failed with status: ${response.statusCode}');  // Debugging line
         emit(LoginFailure('Failed to login'));
       }
     } catch (e) {
-      print('Exception during login: $e');  // Debugging line
       emit(LoginFailure(e.toString()));
     }
   }

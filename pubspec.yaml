@@ -48,6 +48,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   email_validator: ^3.0.0
   intl: ^0.19.0
+  rxdart: ^0.27.1
 
   bloc: any
 dev_dependencies:

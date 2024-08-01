@@ -13,7 +13,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         final banners = await categoryRepository.fetchCategoryBanner(1);
         emit(CategoryBannerLoaded(banners));
       } catch (e) {
-        print(e.toString());
         emit(CategoryBannerError(e.toString()));
       }
     });
@@ -22,10 +21,8 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       emit(SubCategoryLoading());
       try {
         final category = await categoryRepository.fetchSubCategory(1);
-        print(category.categories.first.icon);  
         emit(SubCategoryLoaded(category));
       } catch (e) {
-        print(e.toString());
         emit(SubCategoryError(e.toString()));
       }
     });

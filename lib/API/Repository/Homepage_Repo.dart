@@ -48,7 +48,6 @@ class HomeRepository {
         throw Exception('Failed to load alert banners');
       }
     } catch (e) {
-      print(e.toString());
       throw Exception('Failed to fetch alert banner: ${e.toString()}');
     }
   }
@@ -64,7 +63,6 @@ class HomeRepository {
         throw Exception('Failed to load deal banners');
       }
     } catch (e) {
-      print(e.toString());
       throw Exception('Failed to fetch deal banner: ${e.toString()}');
     }
   }
@@ -80,7 +78,6 @@ class HomeRepository {
         throw Exception('Failed to load season banners');
       }
     } catch (e) {
-      print(e.toString());
       throw Exception('Failed to fetch season banner: ${e.toString()}');
     }
   }
@@ -127,7 +124,6 @@ class HomeRepository {
         throw Exception('Failed to trends banner');
       }
     } catch (e) {
-      print(e.toString());
       throw Exception('Failed to trends banner: ${e.toString()}');
     }
   }

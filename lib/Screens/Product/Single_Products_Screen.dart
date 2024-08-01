@@ -29,52 +29,60 @@ class SingleProductScreen extends StatefulWidget {
 class _SingleProductScreenState extends State<SingleProductScreen> {
   String _selectedSize = '2 - 4 Years';
   String? selectedColor;
+  late ProductBloc _productBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _productBloc = ProductBloc(productRepository: ProductRepository());
+    _productBloc.add(LoadSingleProduct(productId: widget.productId));
+  }
 
   void _onSizeSelected(String size) {
-    setState(() {
-      _selectedSize = size;
-    });
+    if (_selectedSize != size) {
+      setState(() {
+        _selectedSize = size;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ProductBloc>(
-      create: (_) => ProductBloc(productRepository: ProductRepository()),
-      child: Builder(builder: (context) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          BlocProvider.of<ProductBloc>(context)
-              .add(LoadSingleProduct(productId: widget.productId));
-        });
-
-        return Scaffold(
-          appBar: const CustomAppBar(state: 3),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(getPadding(context)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BlocBuilder<ProductBloc, ProductState>(
-                    builder: (context, state) {
-                      if (state is SingleProductLoading) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (state is SingleProductLoaded) {
-                        return singleProduct(state.singleProduct);
-                      } else if (state is SingleProductError) {
-                        return Center(child: Text('Error: ${state.message}'));
-                      } else {
-                        return const Center(
-                            child: Text('Press the button to load product.'));
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ),
+      create: (context) => _productBloc,
+      child: Scaffold(
+        appBar: const CustomAppBar(state: 3),
+        body: BlocListener<ProductBloc, ProductState>(
+          listener: (context, state) {
+            if (state is AddToCartLoaded) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.status)),
+              );
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomePage()));
+            } else if (state is AddToCartError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.message)),
+              );
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomePage()));
+            }
+          },
+          child: BlocBuilder<ProductBloc, ProductState>(
+            builder: (context, state) {
+              if (state is SingleProductLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is SingleProductLoaded) {
+                return singleProduct(state.singleProduct, context);
+              } else if (state is SingleProductError) {
+                return Center(child: Text('Error: ${state.message}'));
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            },
           ),
-          bottomNavigationBar: bottomNavigationBar(context),
-        );
-      }),
+        ),
+      ),
     );
   }
 
@@ -99,8 +107,6 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
             context
                 .read<ProductBloc>()
                 .add(AddToCart(productId: widget.productId, quantity: 1));
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => const HomePage()));
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -115,183 +121,200 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
     );
   }
 
-  Widget singleProduct(SingleProduct product) {
-    double circleRadius = MediaQuery.of(context).size.width *
-        0.03; // Responsive radius for color options
-    double chipFontSize = MediaQuery.of(context).size.width *
-        0.03; // Responsive font size for size options
-    double chipHeight = MediaQuery.of(context).size.width *
-        0.01; // Responsive height for size options
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  Widget singleProduct(SingleProduct product, BuildContext context) {
+    double circleRadius = MediaQuery.of(context).size.width * 0.03;
+    double chipFontSize = MediaQuery.of(context).size.width * 0.03;
+    double chipHeight = MediaQuery.of(context).size.width * 0.01;
+    return Stack(
       children: [
-        prodcutImages(product.images),
-        SizedBox(height: getSpacing(context) * 3),
-        header(product.unitPrice.toString(), product.discount.toString(),
-            product.name),
-        SizedBox(height: getSpacing(context) * 3),
-        colors(product.colorImage, product.choiceOptions.first),
-        SizedBox(height: getSpacing(context) * 3),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Size:',
-              style: interRegular.copyWith(fontSize: getFontSize(context)),
-            ),
-            TextButton(
-              onPressed: () {},
-              child: Row(
+        SingleChildScrollView(
+          child: Padding(
+              padding: EdgeInsets.all(getPadding(context)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.straighten,
-                      size: 18, color: buttonColorPurple),
-                  const SizedBox(width: 4),
+                  prodcutImages(product.images),
+                  SizedBox(height: getSpacing(context) * 3),
+                  header(product.unitPrice.toString(),
+                      product.discount.toString(), product.name),
+                  SizedBox(height: getSpacing(context) * 3),
+                  colors(product.colorImage, product.choiceOptions.first),
+                  SizedBox(height: getSpacing(context) * 3),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Size:',
+                        style: interRegular.copyWith(
+                            fontSize: getFontSize(context)),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: Row(
+                          children: [
+                            const Icon(Icons.straighten,
+                                size: 18, color: buttonColorPurple),
+                            const SizedBox(width: 4),
+                            Text(
+                              'Size Guide',
+                              style: interRegular.copyWith(
+                                  color: buttonColorPurple),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Wrap(
+                    spacing: 8.0,
+                    runSpacing: 8.0,
+                    children: product.choiceOptions.first.options.map((size) {
+                      return _sizeOption(
+                        size,
+                        MediaQuery.of(context).size.width * 0.03,
+                        MediaQuery.of(context).size.width * 0.08,
+                      );
+                    }).toList(),
+                  ),
+                  SizedBox(height: getSpacing(context) * 3),
+                  Container(
+                    padding: EdgeInsets.all(getPadding(context)),
+                    decoration: BoxDecoration(
+                      color: Colors.orange[100],
+                      borderRadius: BorderRadius.circular(borderRadius),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.monetization_on,
+                            color: Colors.orange, size: 30),
+                        SizedBox(width: getSpacing(context) * 3),
+                        Expanded(
+                          child: Text(
+                            'Earn 50 Points Worth Rs. 8 on this Product.',
+                            style: interRegular.copyWith(
+                                fontSize: getFontSize(context)),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(getPadding(context) / 4),
+                              decoration: BoxDecoration(
+                                color: Colors.orange,
+                                borderRadius:
+                                    BorderRadius.circular(borderRadius),
+                              ),
+                              child: Text(
+                                '08',
+                                style: interRegular.copyWith(
+                                  fontSize: getFontSize(context),
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            Container(
+                              padding: EdgeInsets.all(getPadding(context) / 4),
+                              decoration: BoxDecoration(
+                                color: Colors.orange,
+                                borderRadius:
+                                    BorderRadius.circular(borderRadius),
+                              ),
+                              child: Text(
+                                '39',
+                                style: interRegular.copyWith(
+                                  fontSize: getFontSize(context),
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            Container(
+                              padding: EdgeInsets.all(getPadding(context) / 4),
+                              decoration: BoxDecoration(
+                                color: Colors.orange,
+                                borderRadius:
+                                    BorderRadius.circular(borderRadius),
+                              ),
+                              child: Text(
+                                '42',
+                                style: interRegular.copyWith(
+                                  fontSize: getFontSize(context),
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: getSpacing(context) * 3),
+                  Container(
+                    padding: EdgeInsets.all(getPadding(context)),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(borderRadius),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.local_shipping,
+                            color: Colors.black, size: 30),
+                        SizedBox(width: getSpacing(context) * 3),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Standard Delivery',
+                                style: interBold.copyWith(
+                                    fontSize: getFontSize(context)),
+                              ),
+                              Text(
+                                '19 Jun - 24 Jun',
+                                style: interRegular.copyWith(
+                                    fontSize: getFontSize(context)),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Text(
+                          'Rs. 125',
+                          style: interRegular.copyWith(
+                            fontSize: getFontSize(context),
+                            color: Colors.grey,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
+                        SizedBox(width: getSpacing(context) * 3),
+                        Text(
+                          'FREE',
+                          style: interBold.copyWith(
+                            fontSize: getFontSize(context),
+                            color: Colors.green,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: getSpacing(context) * 3),
                   Text(
-                    'Size Guide',
-                    style: interRegular.copyWith(color: buttonColorPurple),
+                    'Offers & Discount',
+                    style:
+                        interBold.copyWith(fontSize: getBigFontSize(context)),
                   ),
+                  SizedBox(height: getSpacing(context) * 3),
+                  Image.asset("assets/images/coupon_card.png"),
+                  SizedBox(height: getSpacing(context) * 3),
+                  reviews(context, product.reviews),
+                  SizedBox(height: getSpacing(context) * 3),
+                  productsTab(context),
+                  SizedBox(height: getSpacing(context) * 3),
                 ],
-              ),
-            ),
-          ],
+              )),
         ),
-        Wrap(
-          spacing: 8.0,
-          runSpacing: 8.0,
-          children: product.choiceOptions.first.options.map((size) {
-            return _sizeOption(
-              size,
-              MediaQuery.of(context).size.width * 0.03,
-              MediaQuery.of(context).size.width * 0.08,
-            );
-          }).toList(),
-        ),
-        SizedBox(height: getSpacing(context) * 3),
-        Container(
-          padding: EdgeInsets.all(getPadding(context)),
-          decoration: BoxDecoration(
-            color: Colors.orange[100],
-            borderRadius: BorderRadius.circular(borderRadius),
-          ),
-          child: Row(
-            children: [
-              const Icon(Icons.monetization_on, color: Colors.orange, size: 30),
-              SizedBox(width: getSpacing(context) * 3),
-              Expanded(
-                child: Text(
-                  'Earn 50 Points Worth Rs. 8 on this Product.',
-                  style: interRegular.copyWith(fontSize: getFontSize(context)),
-                ),
-              ),
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(getPadding(context) / 4),
-                    decoration: BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.circular(borderRadius),
-                    ),
-                    child: Text(
-                      '08',
-                      style: interRegular.copyWith(
-                        fontSize: getFontSize(context),
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  Container(
-                    padding: EdgeInsets.all(getPadding(context) / 4),
-                    decoration: BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.circular(borderRadius),
-                    ),
-                    child: Text(
-                      '39',
-                      style: interRegular.copyWith(
-                        fontSize: getFontSize(context),
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  Container(
-                    padding: EdgeInsets.all(getPadding(context) / 4),
-                    decoration: BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.circular(borderRadius),
-                    ),
-                    child: Text(
-                      '42',
-                      style: interRegular.copyWith(
-                        fontSize: getFontSize(context),
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: getSpacing(context) * 3),
-        Container(
-          padding: EdgeInsets.all(getPadding(context)),
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(borderRadius),
-          ),
-          child: Row(
-            children: [
-              const Icon(Icons.local_shipping, color: Colors.black, size: 30),
-              SizedBox(width: getSpacing(context) * 3),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Standard Delivery',
-                      style: interBold.copyWith(fontSize: getFontSize(context)),
-                    ),
-                    Text(
-                      '19 Jun - 24 Jun',
-                      style:
-                          interRegular.copyWith(fontSize: getFontSize(context)),
-                    ),
-                  ],
-                ),
-              ),
-              Text(
-                'Rs. 125',
-                style: interRegular.copyWith(
-                  fontSize: getFontSize(context),
-                  color: Colors.grey,
-                  decoration: TextDecoration.lineThrough,
-                ),
-              ),
-              SizedBox(width: getSpacing(context) * 3),
-              Text(
-                'FREE',
-                style: interBold.copyWith(
-                  fontSize: getFontSize(context),
-                  color: Colors.green,
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: getSpacing(context) * 3),
-        Text(
-          'Offers & Discount',
-          style: interBold.copyWith(fontSize: getBigFontSize(context)),
-        ),
-        SizedBox(height: getSpacing(context) * 3),
-        Image.asset("assets/images/coupon_card.png"),
-        SizedBox(height: getSpacing(context) * 3),
-        reviews(context, product.reviews),
-        SizedBox(height: getSpacing(context) * 3),
-        productsTab(context),
-        SizedBox(height: getSpacing(context) * 3),
+        Positioned(
+            bottom: 0, left: 0, right: 0, child: bottomNavigationBar(context))
       ],
     );
   }
