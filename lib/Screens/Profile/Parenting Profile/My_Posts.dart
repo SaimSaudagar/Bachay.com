@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../../../Utils/app_constants.dart';
+import 'Profile_Parenting.dart';
 
 void main() {
   runApp(const SocialMediaApp());
@@ -104,7 +105,12 @@ PreferredSizeWidget myPostsAppBar(BuildContext context) {
     elevation: 1.0,
     leading: IconButton(
       icon: const Icon(Icons.arrow_back, color: Colors.black),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Parenting_Profile()),
+        );
+      },
     ),
     title: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
