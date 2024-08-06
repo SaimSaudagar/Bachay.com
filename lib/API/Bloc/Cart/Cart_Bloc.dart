@@ -10,17 +10,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   final _debounce = PublishSubject<UpdateCart>();
 
   CartBloc({required this.cartRepository}) : super(CartInitial()) {
-    // on<AddToCart>((event, emit) async {
-    //   emit(AddToCartLoading());
-    //   try {
-    //     final response = await cartRepository.addToCart(
-    //         event.id.toString(), event.quantity.toString());
-    //     emit(AddToCartLoaded(response));
-    //   } catch (e) {
-    //     emit(AddToCartError(e.toString()));
-    //   }
-    // });
-
     on<LoadCartList>((event, emit) async {
       emit(CartListLoading());
       try {

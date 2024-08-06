@@ -1,10 +1,24 @@
+import 'package:app/API/Bloc/Order/Order_Bloc.dart';
+import 'package:app/API/Bloc/Order/Order_Event.dart';
+import 'package:app/API/Bloc/Order/Order_State.dart';
+import 'package:app/API/Repository/Order_Repo.dart';
+import 'package:app/Models/Cart/CartItem.dart';
 import 'package:app/Screens/Checkout/Order_Placed.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Utils/app_constants.dart';
 
-class OrderConfirmationScreen extends StatelessWidget {
-  const OrderConfirmationScreen({super.key});
+class OrderConfirmationScreen extends StatefulWidget {
+  final List<CartItem> cartItem;
 
+  const OrderConfirmationScreen({super.key, required this.cartItem});
+  @override
+  _OrderConfirmationScreenState createState() =>
+      _OrderConfirmationScreenState();
+}
+
+class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,15 +43,15 @@ class OrderConfirmationScreen extends StatelessWidget {
                       fontSize: getBigFontSize(context), color: Colors.red)),
               const Divider(color: Colors.blue),
               SizedBox(height: getSpacing(context)),
-              const DeliveryInformationSection(),
+              deliveryInformationSection(context),
               SizedBox(height: getSpacing(context)),
-              const ShippingMethodSection(),
+              shippingMethodSection(context),
               SizedBox(height: getSpacing(context)),
               const PaymentMethodSection(),
               SizedBox(height: getSpacing(context)),
               const OptionsSection(),
               SizedBox(height: getSpacing(context)),
-              const OrderDetailsSection(),
+              orderDetailsSection(context),
               SizedBox(height: getSpacing(context)),
               const TotalPriceSection(),
               SizedBox(height: getSpacing(context)),
@@ -45,20 +59,15 @@ class OrderConfirmationScreen extends StatelessWidget {
               SizedBox(height: getSpacing(context)),
               const SecurityPrivacySection(),
               SizedBox(height: getSpacing(context)),
-              const PlaceOrderButton(),
+              placeOrderButton(context),
             ],
           ),
         ),
       ),
     );
   }
-}
 
-class DeliveryInformationSection extends StatelessWidget {
-  const DeliveryInformationSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
+  Widget deliveryInformationSection(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(getPadding(context)),
       decoration: BoxDecoration(
@@ -86,13 +95,8 @@ class DeliveryInformationSection extends StatelessWidget {
       ),
     );
   }
-}
 
-class ShippingMethodSection extends StatelessWidget {
-  const ShippingMethodSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
+  Widget shippingMethodSection(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(getPadding(context)),
       decoration: BoxDecoration(
@@ -124,6 +128,117 @@ class ShippingMethodSection extends StatelessWidget {
           Text('Estimated time Jun 19 - Jun 24',
               style: interRegular.copyWith(fontSize: getFontSize(context))),
         ],
+      ),
+    );
+  }
+
+  Widget orderDetailsSection(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(getPadding(context)),
+      decoration: BoxDecoration(
+        border: Border(
+            bottom: BorderSide(color: Colors.grey.shade300)), // More null-safe
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text('Order Details',
+                  style: TextStyle(
+                      fontWeight:
+                          FontWeight.bold, // Assuming outfitBold was bold
+                      fontSize: getFontSize(context))),
+              const Spacer(),
+              Text('View All Items',
+                  style: TextStyle(
+                      color: Colors.blue, fontSize: getFontSize(context))),
+            ],
+          ),
+          SizedBox(height: getSpacing(context)),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: widget.cartItem.length,
+            itemBuilder: (context, index) {
+              return Row(
+                children: [
+                  OrderItem(
+                    imageUrl: widget.cartItem[index].thumbnail,
+                    price: widget.cartItem[index].price.toString(),
+                  ),
+                  SizedBox(width: 20), // Example spacing, adjust as needed
+                ],
+              );
+            },
+          ),
+          SizedBox(height: getSpacing(context)),
+        ],
+      ),
+    );
+  }
+
+  Widget placeOrderButton(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: appGradient,
+        borderRadius: BorderRadius.circular(roundBorderRadius),
+      ),
+      child: BlocListener<OrderBloc, OrderState>(
+        listener: (context, state) {
+          if (state is PlaceOrderLoaded) {
+            state.response.isNotEmpty
+                ? ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Order Placed Successfully'),
+                    ),
+                  )
+                : ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Failed to place order'),
+                    ),
+                  );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => OrderPlacedScreen(
+                        price: widget.cartItem
+                            .map((e) => e.price)
+                            .reduce((value, element) => value + element)
+                            .toString(),
+                      )),
+            );
+          } else if (state is PlaceOrderLoading) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Placing Order...'),
+              ),
+            );
+          } else if (state is PlaceOrderError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Failed to place order: ${state.message}'),
+              ),
+            );
+          }
+        },
+        child: ElevatedButton(
+          onPressed: () {
+            context.read<OrderBloc>().add(PlaceOrder());
+          },
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: buttonPaddingValue),
+            backgroundColor: Colors.transparent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(roundBorderRadius),
+            ),
+            shadowColor: Colors.transparent,
+          ),
+          child: Text('Place Order',
+              style: buttonTextStyle(context)
+                  .copyWith(fontSize: getBigFontSize(context))),
+        ),
       ),
     );
   }
@@ -210,49 +325,6 @@ class OptionItem extends StatelessWidget {
   }
 }
 
-class OrderDetailsSection extends StatelessWidget {
-  const OrderDetailsSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(getPadding(context)),
-      decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text('Order Details',
-                  style: outfitBold.copyWith(fontSize: getFontSize(context))),
-              const Spacer(),
-              Text('View All Items',
-                  style: TextStyle(
-                      color: Colors.blue, fontSize: getFontSize(context))),
-            ],
-          ),
-          SizedBox(height: getSpacing(context)),
-          Row(
-            children: [
-              const OrderItem(
-                  imageUrl:
-                      'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
-                  price: 'Rs. 1,472'),
-              SizedBox(width: getSpacing(context)),
-              const OrderItem(
-                  imageUrl:
-                      'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
-                  price: 'Rs. 500'),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class OrderItem extends StatelessWidget {
   final String imageUrl;
   final String price;
@@ -263,7 +335,40 @@ class OrderItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Image.network(imageUrl, width: 60, height: 60),
+        Image.network(
+          imageUrl,
+          width: 60,
+          height: 60,
+          fit: BoxFit.cover,
+          loadingBuilder: (BuildContext context, Widget child,
+              ImageChunkEvent? loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Center(
+              child: CircularProgressIndicator(
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded /
+                        loadingProgress.expectedTotalBytes!
+                    : null,
+              ),
+            );
+          },
+          errorBuilder:
+              (BuildContext context, Object exception, StackTrace? stackTrace) {
+            return const Column(
+              children: [
+                Icon(
+                  Icons.error,
+                  size: 30,
+                  color: Colors.red,
+                ),
+                Text(
+                  'Image not found',
+                  style: TextStyle(color: Colors.red, fontSize: 10),
+                )
+              ],
+            );
+          },
+        ),
         Text(price,
             style: interRegular.copyWith(fontSize: getFontSize(context))),
       ],
@@ -300,7 +405,11 @@ class PriceItem extends StatelessWidget {
   final String price;
   final bool isBold;
 
-  const PriceItem({super.key, required this.label, required this.price, this.isBold = false});
+  const PriceItem(
+      {super.key,
+      required this.label,
+      required this.price,
+      this.isBold = false});
 
   @override
   Widget build(BuildContext context) {
@@ -380,40 +489,6 @@ class SecurityPrivacySection extends StatelessWidget {
               'Bachay.com respects the privacy of users and visitors on our site, and we are committed to protecting it through maintaining industry-standard physical, technical, and administrative measures designed to guard your personal information from unauthorized processing, use or disclosure.',
               style: interRegular.copyWith(fontSize: getFontSize(context))),
         ],
-      ),
-    );
-  }
-}
-
-class PlaceOrderButton extends StatelessWidget {
-  const PlaceOrderButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: appGradient,
-        borderRadius: BorderRadius.circular(roundBorderRadius),
-      ),
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const OrderPlacedScreen()),
-          );
-        },
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: buttonPaddingValue),
-          backgroundColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(roundBorderRadius),
-          ),
-          shadowColor: Colors.transparent,
-        ),
-        child: Text('Place Order',
-            style: buttonTextStyle(context)
-                .copyWith(fontSize: getBigFontSize(context))),
       ),
     );
   }

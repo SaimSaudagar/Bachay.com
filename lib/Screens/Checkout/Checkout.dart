@@ -15,9 +15,10 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   List<CartItem> _cartItems = [];
+  int itemCount = 0;
+
   @override
   Widget build(BuildContext context) {
-    // Providing the CartBloc at the top level of this screen
     return BlocProvider<CartBloc>(
       create: (_) =>
           CartBloc(cartRepository: CartRepository())..add(LoadCartList()),
@@ -26,7 +27,12 @@ class _CartScreenState extends State<CartScreen> {
           title: BlocBuilder<CartBloc, CartState>(
             builder: (context, state) {
               // Update the cart count directly from the state
-              int itemCount =
+              // setState(() {
+              //   itemCount = state is CartListLoaded
+              //       ? state.cartList.cartItems.length
+              //       : 0;
+              // });
+              itemCount =
                   state is CartListLoaded ? state.cartList.cartItems.length : 0;
               return Text('Cart($itemCount)',
                   style:
@@ -63,7 +69,7 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 ),
               ),
-              CheckoutSection(),
+              checkoutSection(),
             ],
           ),
         ),
@@ -114,6 +120,7 @@ class _CartScreenState extends State<CartScreen> {
         if (state is CartListLoading || state is UpdateCartLoading) {
           return Center(child: CircularProgressIndicator());
         } else if (state is CartListLoaded) {
+          _cartItems = state.cartList.cartItems;
           return cartSection("Your Cart", state.cartList.cartItems, context);
         } else {
           return Center(child: Text('Cart is empty'));
@@ -284,6 +291,80 @@ class _CartScreenState extends State<CartScreen> {
       ],
     );
   }
+
+  Widget checkoutSection() {
+    return Container(
+      padding: EdgeInsets.all(getPadding(context)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text('Delivery',
+                      style: interRegular.copyWith(
+                          fontSize: getFontSize(context))),
+                  SizedBox(width: 5),
+                  Text('Rs. 125',
+                      style: interRegular.copyWith(
+                          fontSize: getFontSize(context),
+                          decoration: TextDecoration.lineThrough)),
+                  SizedBox(width: 5),
+                  Text('FREE',
+                      style: interRegular.copyWith(
+                          fontSize: getFontSize(context),
+                          color: Colors.purple)),
+                ],
+              ),
+              SizedBox(height: getSpacing(context)),
+              Row(
+                children: [
+                  Text('Total',
+                      style:
+                          interBold.copyWith(fontSize: getFontSize(context))),
+                  SizedBox(width: 10),
+                  Text('Rs. 5,288',
+                      style: interBold.copyWith(
+                          fontSize: getFontSize(context),
+                          color: Colors.purple)),
+                ],
+              ),
+            ],
+          ),
+          Container(
+            decoration: BoxDecoration(
+              gradient: appGradient,
+              borderRadius: BorderRadius.circular(roundBorderRadius),
+            ),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => OrderConfirmationScreen(
+                            cartItem: _cartItems,
+                          )),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(
+                    vertical: buttonPaddingValue, horizontal: 30),
+                backgroundColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(roundBorderRadius),
+                ), // Important for gradient
+                shadowColor: Colors.transparent, // Important for gradient
+              ),
+              child: Text('Checkout ($itemCount)',
+                  style: buttonTextStyle(context)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class SignInSection extends StatelessWidget {
@@ -397,80 +478,6 @@ class FeatureIcon extends StatelessWidget {
             textAlign: TextAlign.center,
             style: interRegular.copyWith(fontSize: getFontSize(context))),
       ],
-    );
-  }
-}
-
-class CheckoutSection extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(getPadding(context)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text('Delivery',
-                      style: interRegular.copyWith(
-                          fontSize: getFontSize(context))),
-                  SizedBox(width: 5),
-                  Text('Rs. 125',
-                      style: interRegular.copyWith(
-                          fontSize: getFontSize(context),
-                          decoration: TextDecoration.lineThrough)),
-                  SizedBox(width: 5),
-                  Text('FREE',
-                      style: interRegular.copyWith(
-                          fontSize: getFontSize(context),
-                          color: Colors.purple)),
-                ],
-              ),
-              SizedBox(height: getSpacing(context)),
-              Row(
-                children: [
-                  Text('Total',
-                      style:
-                          interBold.copyWith(fontSize: getFontSize(context))),
-                  SizedBox(width: 10),
-                  Text('Rs. 5,288',
-                      style: interBold.copyWith(
-                          fontSize: getFontSize(context),
-                          color: Colors.purple)),
-                ],
-              ),
-            ],
-          ),
-          Container(
-            decoration: BoxDecoration(
-              gradient: appGradient,
-              borderRadius: BorderRadius.circular(roundBorderRadius),
-            ),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => OrderConfirmationScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(
-                    vertical: buttonPaddingValue, horizontal: 30),
-                backgroundColor: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(roundBorderRadius),
-                ), // Important for gradient
-                shadowColor: Colors.transparent, // Important for gradient
-              ),
-              child: Text('Checkout (02)', style: buttonTextStyle(context)),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
