@@ -113,7 +113,7 @@ class OrderDetailsSection extends StatelessWidget {
           const PriceItem(
               label: 'Total Order:', price: 'Rs. 1,445', isBold: true),
           SizedBox(height: getSpacing(context)),
-          Row(
+          const Row(
             children: [
               // Expanded(
               //   child: Image.network('https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg', width: 60, height: 60),

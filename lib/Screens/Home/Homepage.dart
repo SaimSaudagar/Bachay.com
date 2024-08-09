@@ -113,7 +113,8 @@ class _HomePageState extends State<HomePage> {
           } else if (state is DiscountBannersError) {
             return const SizedBox();
           }
-          return const Center(child: Text('Press a button to load discount banner'));
+          return const Center(
+              child: Text('Press a button to load discount banner'));
         },
       ),
     );
@@ -220,7 +221,8 @@ class _HomePageState extends State<HomePage> {
           } else if (state is AlertBannersError) {
             return const SizedBox();
           }
-          return const Center(child: Text('Press a button to load alert banners'));
+          return const Center(
+              child: Text('Press a button to load alert banners'));
         },
       ),
     );
@@ -276,7 +278,8 @@ class _HomePageState extends State<HomePage> {
           } else if (state is DealBannersError) {
             return const SizedBox();
           }
-          return const Center(child: Text('Press a button to load deal banners'));
+          return const Center(
+              child: Text('Press a button to load deal banners'));
         },
       ),
     );
@@ -380,7 +383,8 @@ class _HomePageState extends State<HomePage> {
           } else if (state is SeasonBannersError) {
             return const SizedBox();
           }
-          return const Center(child: Text('Press a button to load season banner'));
+          return const Center(
+              child: Text('Press a button to load season banner'));
         },
       ),
     );
@@ -487,7 +491,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Image.asset(
-                  'assets/images/truck.png', 
+                  'assets/images/truck.png',
                   width: MediaQuery.of(context).size.width * 0.1,
                   height: MediaQuery.of(context).size.width * 0.1,
                 ),
@@ -534,7 +538,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Image.asset(
-                  'assets/images/return.png', 
+                  'assets/images/return.png',
                   width: MediaQuery.of(context).size.width * 0.1,
                   height: MediaQuery.of(context).size.width * 0.1,
                 ),
@@ -635,7 +639,6 @@ class _HomePageState extends State<HomePage> {
     Color color = const Color.fromRGBO(255, 244, 223, 1);
     Color borderColor = const Color.fromRGBO(255, 198, 95, 1);
     double fontSize = MediaQuery.of(context).size.width * 0.025;
-    double fontSizeBig = MediaQuery.of(context).size.width * 0.025;
 
     return Padding(
       padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.01),
@@ -793,7 +796,8 @@ class _HomePageState extends State<HomePage> {
           } else if (state is TrendsBannerError) {
             return const SizedBox();
           }
-          return const Center(child: Text('Press a button to load trends banner'));
+          return const Center(
+              child: Text('Press a button to load trends banner'));
         },
       ),
     );
@@ -921,7 +925,7 @@ class _HomePageState extends State<HomePage> {
   Widget allProducts() {
     return BlocProvider(
       create: (_) => ProductBloc(productRepository: ProductRepository())
-        ..add(LoadAllProducts()),
+        ..add(LoadAllProducts(colors: [], ages: [])),
       child: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
           if (state is AllProductsLoading) {
@@ -982,7 +986,6 @@ class _HomePageState extends State<HomePage> {
     Color color = const Color.fromRGBO(255, 244, 223, 1);
     Color borderColor = const Color.fromRGBO(255, 198, 95, 1);
     double fontSize = MediaQuery.of(context).size.width * 0.025;
-    double fontSizeBig = MediaQuery.of(context).size.width * 0.025;
 
     return Padding(
       padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.01),

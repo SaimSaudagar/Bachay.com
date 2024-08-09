@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class OrderList {
   final List<OrderDetail> orders;
 

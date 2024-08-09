@@ -5,6 +5,7 @@ import 'Expert_Following.dart';
 import 'Expert_Panel.dart';
 import 'My_Posts.dart';
 import 'My_Questions.dart';
+
 class Parenting_Profile extends StatefulWidget {
   const Parenting_Profile({super.key});
 
@@ -90,20 +91,25 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildFeatureItem(
-                context, 'Add Child', 'assets/images/child.png', () {
+            _buildFeatureItem(context, 'Add Child', 'assets/images/child.png',
+                () {
               // Navigator.push(context,
               //     MaterialPageRoute(builder: (context) => WalletScreen()));
             }),
             _buildFeatureItem(
-                context, 'Expert Follow', 'assets/images/Expert Follow.png', () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const ExpertFollowingScreen()));
+                context, 'Expert Follow', 'assets/images/Expert Follow.png',
+                () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ExpertFollowingScreen()));
             }),
             _buildFeatureItem(
                 context, 'Expert Panel', 'assets/images/Expert Panel.png', () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ExpertPanelScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ExpertPanelScreen()));
             }),
             _buildFeatureItem(
                 context, 'Bachay Club', 'assets/images/BachayClub.png', () {
@@ -125,15 +131,11 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildOrderItem(context, 'Posts', 'assets/images/posts.png',
-                () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const MyPosts()));
+            _buildOrderItem(context, 'Posts', 'assets/images/posts.png', () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const MyPosts()));
             }),
-            _buildOrderItem(context, 'Saved', 'assets/images/saved.png',
-                () {
+            _buildOrderItem(context, 'Saved', 'assets/images/saved.png', () {
               // Navigator.push(
               //     context,
               //     MaterialPageRoute(
@@ -143,7 +145,8 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
             }),
             _buildOrderItem(context, 'Questions', 'assets/images/Questions.png',
                 () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const MyQuestions()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const MyQuestions()));
             }),
             _buildOrderItem(context, 'Answers', 'assets/images/Answers.png',
                 () {
@@ -169,23 +172,25 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildOtherItem(context, 'Follow Question', 'assets/images/Follow Question.png',
+            _buildOtherItem(
+                context, 'Follow Question', 'assets/images/Follow Question.png',
                 () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritesScreen()));
             }),
-            _buildOtherItem(context, 'My Followers', 'assets/images/My Followers.png', () {
+            _buildOtherItem(
+                context, 'My Followers', 'assets/images/My Followers.png', () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentScreen()));
             }),
-            _buildOtherItem(context, 'Vaccine Tracking', 'assets/images/vaccine.png',
-                () {
+            _buildOtherItem(
+                context, 'Vaccine Tracking', 'assets/images/vaccine.png', () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => AccountScreen()));
             }),
-            _buildOtherItem(context, 'Growth Details', 'assets/images/growth.png',
-                () {
+            _buildOtherItem(
+                context, 'Growth Details', 'assets/images/growth.png', () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => ChildrenScreen()));
             }),
-            _buildOtherItem(context, 'Baby Names', 'assets/images/baby-name.png',
-                () {
+            _buildOtherItem(
+                context, 'Baby Names', 'assets/images/baby-name.png', () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => ContactScreen()));
             }),
           ],

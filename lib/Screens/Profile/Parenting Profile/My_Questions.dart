@@ -5,25 +5,6 @@ import 'dart:convert';
 import '../../../Utils/app_constants.dart';
 import 'Profile_Parenting.dart';
 
-void main() {
-  runApp(const SocialMediaApp());
-}
-
-class SocialMediaApp extends StatelessWidget {
-  const SocialMediaApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Social Media Feed',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyQuestions(),
-    );
-  }
-}
-
 class MyQuestions extends StatefulWidget {
   const MyQuestions({super.key});
 
@@ -33,10 +14,11 @@ class MyQuestions extends StatefulWidget {
 
 class _MyQuestionsState extends State<MyQuestions> {
   Future<List<Question>> _fetchQuestions() async {
-    final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/photos'));
+    final response = await http
+        .get(Uri.parse('https://jsonplaceholder.typicode.com/photos'));
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
-      return jsonResponse.map((Post) => Question.fromJson(Post)).toList();
+      return jsonResponse.map((post) => Question.fromJson(post)).toList();
     } else {
       throw Exception('Failed to load Questions');
     }
@@ -57,7 +39,7 @@ class _MyQuestionsState extends State<MyQuestions> {
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                return QuestionWidget(context, snapshot.data![index]);
+                return questionWidget(context, snapshot.data![index]);
               },
             );
           }
@@ -90,7 +72,8 @@ class Question {
     return Question(
       author: 'Samira Khan',
       timeAgo: '2 days ago',
-      content: 'Hello doctor, shall we give head both daily for 6 month old baby?',
+      content:
+          'Hello doctor, shall we give head both daily for 6 month old baby?',
       imageUrl: json['url'],
       likes: 17,
       comments: 25,
@@ -108,7 +91,7 @@ PreferredSizeWidget MyQuestionsAppBar(BuildContext context) {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Parenting_Profile()),
+          MaterialPageRoute(builder: (context) => const Parenting_Profile()),
         );
       },
     ),
@@ -117,7 +100,10 @@ PreferredSizeWidget MyQuestionsAppBar(BuildContext context) {
       children: [
         Text(
           'My Questions',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: getBigFontSize(context)),
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: getBigFontSize(context)),
         ),
         Text(
           'Questions Questioned by me',
@@ -128,7 +114,7 @@ PreferredSizeWidget MyQuestionsAppBar(BuildContext context) {
   );
 }
 
-Widget QuestionWidget(BuildContext context, Question Question) {
+Widget questionWidget(BuildContext context, Question Question) {
   return Card(
     child: Padding(
       padding: const EdgeInsets.all(16.0),
@@ -139,24 +125,26 @@ Widget QuestionWidget(BuildContext context, Question Question) {
             leading: CircleAvatar(
               backgroundImage: NetworkImage(Question.profileImageUrl),
             ),
-            title: Text(Question.author, style: interBold.copyWith(fontSize: getBigFontSize(context))),
-            subtitle: Text('Mother - 2 Children\'s', style: interRegular.copyWith(fontSize: getFontSize(context))),
-trailing: Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(Question.timeAgo),
-        SizedBox(width: getSpacing(context)),
-        IconButton(
-          icon: const Icon(Icons.more_horiz),
-          onPressed: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) => bottomSheet(context),
-            );
-          },
-        ),
-      ],
-    ),
+            title: Text(Question.author,
+                style: interBold.copyWith(fontSize: getBigFontSize(context))),
+            subtitle: Text('Mother - 2 Children\'s',
+                style: interRegular.copyWith(fontSize: getFontSize(context))),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(Question.timeAgo),
+                SizedBox(width: getSpacing(context)),
+                IconButton(
+                  icon: const Icon(Icons.more_horiz),
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => bottomSheet(context),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
           Row(
             children: [
@@ -169,7 +157,8 @@ trailing: Row(
             ],
           ),
           const SizedBox(height: 8.0),
-          Text(Question.content, style: interBold.copyWith(fontSize: getFontSize(context))),
+          Text(Question.content,
+              style: interBold.copyWith(fontSize: getFontSize(context))),
           const Divider(),
           const SizedBox(height: 16.0),
           Row(
@@ -180,14 +169,18 @@ trailing: Row(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: Row(
                   children: [
                     Row(
                       children: [
-                        Image.asset('assets/images/up-arrow.png', width: 16, height: 16, color: Colors.pink),
+                        Image.asset('assets/images/up-arrow.png',
+                            width: 16, height: 16, color: Colors.pink),
                         const SizedBox(width: 4.0),
-                        Text('${Question.likes}', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                        Text('${Question.likes}',
+                            style: interRegular.copyWith(
+                                fontSize: getFontSize(context))),
                       ],
                     ),
                     const SizedBox(
@@ -196,7 +189,8 @@ trailing: Row(
                     ),
                     Row(
                       children: [
-                        Image.asset('assets/images/down-arrow.png', width: 16, height: 16, color: Colors.blue),
+                        Image.asset('assets/images/down-arrow.png',
+                            width: 16, height: 16, color: Colors.blue),
                       ],
                     ),
                   ],
@@ -204,19 +198,25 @@ trailing: Row(
               ),
               Row(
                 children: [
-                  Image.asset('assets/images/share.png', width: 16, height: 16, color: Colors.black),
+                  Image.asset('assets/images/share.png',
+                      width: 16, height: 16, color: Colors.black),
                   const SizedBox(width: 4.0),
-                  Text('Share', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                  Text('Share',
+                      style: interRegular.copyWith(
+                          fontSize: getFontSize(context))),
                 ],
               ),
               Row(
                 children: [
                   const CircleAvatar(
-                    backgroundImage: NetworkImage('https://via.placeholder.com/150/92c952'),
+                    backgroundImage:
+                        NetworkImage('https://via.placeholder.com/150/92c952'),
                     radius: 12,
                   ),
                   const SizedBox(width: 8.0),
-                  Text('Question for Kamran', style: interBold.copyWith(fontSize: getFontSize(context))),
+                  Text('Question for Kamran',
+                      style:
+                          interBold.copyWith(fontSize: getFontSize(context))),
                 ],
               ),
             ],
@@ -224,40 +224,54 @@ trailing: Row(
           const Divider(height: 32.0),
           ListTile(
             leading: const CircleAvatar(
-              backgroundImage: NetworkImage('https://via.placeholder.com/150/92c952'),
+              backgroundImage:
+                  NetworkImage('https://via.placeholder.com/150/92c952'),
             ),
-            title: Text('Fatima', style: interBold.copyWith(fontSize: getBigFontSize(context))),
-            subtitle: Text('Mother - 1 Children\'s', style: interRegular.copyWith(fontSize: getFontSize(context))),
-        trailing: Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Text('Just Now', style: outfitRegular,),
-        SizedBox(width: getSpacing(context)),
-        IconButton(
-          icon: const Icon(Icons.more_horiz),
-          onPressed: () {},
-        ),
-      ],
-    ),         
-     ),
+            title: Text('Fatima',
+                style: interBold.copyWith(fontSize: getBigFontSize(context))),
+            subtitle: Text('Mother - 1 Children\'s',
+                style: interRegular.copyWith(fontSize: getFontSize(context))),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Just Now',
+                  style: outfitRegular,
+                ),
+                SizedBox(width: getSpacing(context)),
+                IconButton(
+                  icon: const Icon(Icons.more_horiz),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
                   Image.asset('assets/images/message-answer.png'),
-                  const SizedBox(width: 4.0), // Adding some space between the icon and the text
+                  const SizedBox(
+                      width:
+                          4.0), // Adding some space between the icon and the text
                   Text(
                     'Answer:',
-                    style: interBold.copyWith(fontSize: getFontSize(context), color: Colors.pink),
+                    style: interBold.copyWith(
+                        fontSize: getFontSize(context), color: Colors.pink),
                   ),
                 ],
               ),
               Row(
                 children: [
-                  Image.asset('assets/images/heart.png', width: 16, height: 16, color: Colors.pink),
-                  const SizedBox(width: 4.0), // Adding some space between the icon and the text
-                  Text('${Question.comments}', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                  Image.asset('assets/images/heart.png',
+                      width: 16, height: 16, color: Colors.pink),
+                  const SizedBox(
+                      width:
+                          4.0), // Adding some space between the icon and the text
+                  Text('${Question.comments}',
+                      style: interRegular.copyWith(
+                          fontSize: getFontSize(context))),
                 ],
               ),
             ],
@@ -271,7 +285,8 @@ trailing: Row(
           Row(
             children: [
               const CircleAvatar(
-                backgroundImage: NetworkImage('https://via.placeholder.com/150/92c952'),
+                backgroundImage:
+                    NetworkImage('https://via.placeholder.com/150/92c952'),
                 radius: 16,
               ),
               const SizedBox(width: 8.0),
@@ -294,7 +309,8 @@ trailing: Row(
                         ),
                       ),
                       IconButton(
-                        icon: Image.asset('assets/images/send.png', color: Colors.pinkAccent),
+                        icon: Image.asset('assets/images/send.png',
+                            color: Colors.pinkAccent),
                         onPressed: () {},
                       ),
                     ],
@@ -317,8 +333,10 @@ Widget bottomSheet(BuildContext context) {
       children: [
         bottomSheetOption(context, 'assets/images/edit.png', 'Edit Question'),
         bottomSheetOption(context, 'assets/images/pin.png', 'Pin Question'),
-        bottomSheetOption(context, 'assets/images/notification-cancel.png', 'Turn Off Notification for this Question'),
-        bottomSheetOption(context, 'assets/images/delete.png', 'Delete this Question'),
+        bottomSheetOption(context, 'assets/images/notification-cancel.png',
+            'Turn Off Notification for this Question'),
+        bottomSheetOption(
+            context, 'assets/images/delete.png', 'Delete this Question'),
       ],
     ),
   );

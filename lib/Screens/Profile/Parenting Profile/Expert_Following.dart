@@ -3,21 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 import 'Profile_Parenting.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: ExpertFollowingScreen(),
-    );
-  }
-}
-
 class ExpertFollowingScreen extends StatelessWidget {
   const ExpertFollowingScreen({super.key});
 

@@ -27,7 +27,7 @@ class SingleProductScreen extends StatefulWidget {
 }
 
 class _SingleProductScreenState extends State<SingleProductScreen> {
-  String _selectedSize = '2 - 4 Years';
+  String _selectedSize = '';
   String? selectedColor;
   late ProductBloc _productBloc;
 
@@ -77,7 +77,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
               } else if (state is SingleProductError) {
                 return Center(child: Text('Error: ${state.message}'));
               } else {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
             },
           ),
@@ -122,9 +122,6 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
   }
 
   Widget singleProduct(SingleProduct product, BuildContext context) {
-    double circleRadius = MediaQuery.of(context).size.width * 0.03;
-    double chipFontSize = MediaQuery.of(context).size.width * 0.03;
-    double chipHeight = MediaQuery.of(context).size.width * 0.01;
     return Stack(
       children: [
         SingleChildScrollView(
@@ -325,29 +322,27 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
 
     return Stack(
       children: [
-        Container(
-          child: CarouselSlider(
-            options: CarouselOptions(
-              height: MediaQuery.of(context).size.height * 0.4,
-              enlargeCenterPage: false,
-              enableInfiniteScroll: false,
-              autoPlay: false,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  currentIndex = index;
-                });
-              },
-            ),
-            items: imageUrls.map((imageUrl) {
-              return SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Image.network(
-                  "https://bachay.com$imageUrl",
-                  fit: BoxFit.cover,
-                ),
-              );
-            }).toList(),
+        CarouselSlider(
+          options: CarouselOptions(
+            height: MediaQuery.of(context).size.height * 0.4,
+            enlargeCenterPage: false,
+            enableInfiniteScroll: false,
+            autoPlay: false,
+            onPageChanged: (index, reason) {
+              setState(() {
+                currentIndex = index;
+              });
+            },
           ),
+          items: imageUrls.map((imageUrl) {
+            return SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Image.network(
+                "https://bachay.com$imageUrl",
+                fit: BoxFit.cover,
+              ),
+            );
+          }).toList(),
         ),
         Positioned(
           bottom: 10,

@@ -10,9 +10,11 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<LoadAllProducts>((event, emit) async {
       emit(AllProductsLoading());
       try {
-        final allProducts = await productRepository.fetchAllProducts();
+        final allProducts =
+            await productRepository.fetchAllProducts(event.colors, event.ages);
         emit(AllProductsLoaded(allProducts));
       } catch (e) {
+        print(e.toString());
         emit(AllProductsError(e.toString()));
       }
     });

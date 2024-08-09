@@ -16,18 +16,18 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         final cartList = await cartRepository.fetchCartList();
         emit(CartListLoaded(cartList));
       } catch (e) {
+        print(e.toString());
         emit(CartListError(e.toString()));
       }
     });
 
     on<UpdateCart>((event, emit) => _debounce.add(event),
-        transformer: debounceTransformer(Duration(seconds: 1)));
+        transformer: debounceTransformer(const Duration(seconds: 1)));
 
     _debounce.stream.listen((event) async {
       emit(UpdateCartLoading());
       try {
-        final response =
-            await cartRepository.updateCart(event.key, event.quantity);
+        await cartRepository.updateCart(event.key, event.quantity);
 
         add(LoadCartList());
         emit(UpdateCartLoaded("Cart Updated"));

@@ -33,7 +33,7 @@ class CartRepository {
 
       if (response.body.split(",")[1] != "401]") {
         final data = jsonDecode(response.body);
-
+        // print(data);
         return CartItemList.fromJson(data);
       } else {
         throw Exception('Failed to load cart list');

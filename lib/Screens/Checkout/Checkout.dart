@@ -9,6 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Utils/app_constants.dart';
 
 class CartScreen extends StatefulWidget {
+  const CartScreen({super.key});
+
   @override
   _CartScreenState createState() => _CartScreenState();
 }
@@ -118,12 +120,12 @@ class _CartScreenState extends State<CartScreen> {
     return BlocBuilder<CartBloc, CartState>(
       builder: (context, state) {
         if (state is CartListLoading || state is UpdateCartLoading) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (state is CartListLoaded) {
           _cartItems = state.cartList.cartItems;
           return cartSection("Your Cart", state.cartList.cartItems, context);
         } else {
-          return Center(child: Text('Cart is empty'));
+          return const Center(child: Text('Cart is empty'));
         }
       },
     );
@@ -207,7 +209,7 @@ class _CartScreenState extends State<CartScreen> {
             Column(
               children: [
                 IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: const Icon(Icons.delete),
                   onPressed: () {
                     setState(() {
                       _cartItems.remove(item);
@@ -219,14 +221,14 @@ class _CartScreenState extends State<CartScreen> {
                   color: Colors.red,
                 ),
                 IconButton(
-                  icon: Icon(Icons.favorite_border),
+                  icon: const Icon(Icons.favorite_border),
                   onPressed: () {},
                   color: Colors.purple,
                 ),
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.remove),
+                      icon: const Icon(Icons.remove),
                       onPressed: () {
                         setState(() {
                           if (item.quantity > 1) {
@@ -241,7 +243,7 @@ class _CartScreenState extends State<CartScreen> {
                         style: interRegular.copyWith(
                             fontSize: getFontSize(context))),
                     IconButton(
-                      icon: Icon(Icons.add),
+                      icon: const Icon(Icons.add),
                       onPressed: () {
                         setState(() {
                           item.quantity++;
@@ -306,12 +308,12 @@ class _CartScreenState extends State<CartScreen> {
                   Text('Delivery',
                       style: interRegular.copyWith(
                           fontSize: getFontSize(context))),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 5),
                   Text('Rs. 125',
                       style: interRegular.copyWith(
                           fontSize: getFontSize(context),
                           decoration: TextDecoration.lineThrough)),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 5),
                   Text('FREE',
                       style: interRegular.copyWith(
                           fontSize: getFontSize(context),
@@ -324,7 +326,7 @@ class _CartScreenState extends State<CartScreen> {
                   Text('Total',
                       style:
                           interBold.copyWith(fontSize: getFontSize(context))),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Text('Rs. 5,288',
                       style: interBold.copyWith(
                           fontSize: getFontSize(context),
@@ -349,7 +351,7 @@ class _CartScreenState extends State<CartScreen> {
                 );
               },
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                     vertical: buttonPaddingValue, horizontal: 30),
                 backgroundColor: Colors.transparent,
                 shape: RoundedRectangleBorder(
@@ -428,7 +430,7 @@ class VoucherInputSection extends StatelessWidget {
         children: [
           Expanded(
             child: TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Enter Voucher',
                 border: InputBorder.none,
               ),
@@ -459,7 +461,8 @@ class FeatureIcon extends StatelessWidget {
   final String label;
   final BuildContext context;
 
-  FeatureIcon({required this.icon, required this.label, required this.context});
+  const FeatureIcon(
+      {required this.icon, required this.label, required this.context});
 
   @override
   Widget build(BuildContext context) {

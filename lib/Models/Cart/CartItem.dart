@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class CartItemList {
   final List<CartItem> cartItems;
 
@@ -24,8 +22,8 @@ class CartItem {
   String productType;
   String? digitalProductType;
   String? color;
-  Map<String, dynamic>? choices;
-  Map<String, dynamic>? variations;
+  List<dynamic>? choices;
+  List<dynamic>? variations;
   String variant;
   int quantity;
   double price;
@@ -81,6 +79,7 @@ class CartItem {
 
   factory CartItem.fromJson(Map<String, dynamic> json) {
     try {
+      print("Cart Item: $json");
       return CartItem(
         id: json['id'] as int,
         customerId: json['customer_id'] as int,
@@ -89,8 +88,8 @@ class CartItem {
         productType: json['product_type'] as String,
         digitalProductType: json['digital_product_type'] as String?,
         color: json['color'] as String?,
-        choices: json['choices'] as Map<String, dynamic>?,
-        variations: json['variations'] as Map<String, dynamic>?,
+        choices: json['choices'] as List<dynamic>?,
+        variations: json['variations'] as List<dynamic>?,
         variant: json['variant'] as String,
         quantity: json['quantity'] as int,
         price: (json['price'] as num).toDouble(),
@@ -114,7 +113,7 @@ class CartItem {
         product: CartProduct.fromJson(json['product'] as Map<String, dynamic>),
       );
     } catch (e) {
-      print("Error in CartItem.fromJson: $e"); // Error log
+      print("Cart Item Error: $e");
       rethrow;
     }
   }
@@ -174,15 +173,21 @@ class FreeDeliveryOrderAmount {
   });
 
   factory FreeDeliveryOrderAmount.fromJson(Map<String, dynamic> json) {
-    return FreeDeliveryOrderAmount(
-      status: json['status'] as int,
-      amount: json['amount'] as int,
-      percentage: json['percentage'] as int,
-      amountNeed: (json['amount_need'] as num).toDouble(),
-      shippingCostSaved: json['shipping_cost_saved'] as int,
-      cartId: json['cart_id'] as String,
-      responsibility: json['responsibility'] as String,
-    );
+    try {
+      print("Free Delivery Order Amount: $json");
+      return FreeDeliveryOrderAmount(
+        status: json['status'] as int,
+        amount: json['amount'] as int,
+        percentage: json['percentage'] as int,
+        amountNeed: (json['amount_need'] as num).toDouble(),
+        shippingCostSaved: json['shipping_cost_saved'] as int,
+        cartId: json['cart_id'] as String,
+        responsibility: json['responsibility'] as String,
+      );
+    } catch (e) {
+      print("Free Delivery Order Amount Error: $e");
+      rethrow;
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -222,19 +227,25 @@ class CartProduct {
   });
 
   factory CartProduct.fromJson(Map<String, dynamic> json) {
-    return CartProduct(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      slug: json['slug'] as String,
-      currentStock: json['current_stock'] as int,
-      minimumOrderQty: json['minimum_order_qty'] as int,
-      reviewsCount: json['reviews_count'] as int,
-      totalCurrentStock: json['total_current_stock'] as int,
-      translations: json['translations'] as List<dynamic>,
-      reviews: (json['reviews'] as List<dynamic>)
-          .map((e) => CartReview.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
+    try {
+      print("Cart Product: $json");
+      return CartProduct(
+        id: json['id'] as int,
+        name: json['name'] as String,
+        slug: json['slug'] as String,
+        currentStock: json['current_stock'] as int,
+        minimumOrderQty: json['minimum_order_qty'] as int,
+        reviewsCount: json['reviews_count'] as int,
+        totalCurrentStock: json['total_current_stock'] as int,
+        translations: json['translations'] as List<dynamic>,
+        reviews: (json['reviews'] as List<dynamic>)
+            .map((e) => CartReview.fromJson(e as Map<String, dynamic>))
+            .toList(),
+      );
+    } catch (e) {
+      print("Cart Product Error: $e");
+      rethrow;
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -282,20 +293,26 @@ class CartReview {
   });
 
   factory CartReview.fromJson(Map<String, dynamic> json) {
-    return CartReview(
-      id: json['id'] as int,
-      productId: json['product_id'] as int,
-      customerId: json['customer_id'] as int,
-      deliveryManId: json['delivery_man_id'] as int?,
-      orderId: json['order_id'] as int?,
-      comment: json['comment'] as String,
-      attachment: json['attachment'] as String,
-      rating: json['rating'] as int,
-      status: json['status'] as int,
-      isSaved: json['is_saved'] as bool,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
-    );
+    try {
+      print("Cart Review: $json");
+      return CartReview(
+        id: json['id'] as int,
+        productId: json['product_id'] as int,
+        customerId: json['customer_id'] as int,
+        deliveryManId: json['delivery_man_id'] as int?,
+        orderId: json['order_id'] as int?,
+        comment: json['comment'] as String,
+        attachment: json['attachment'] as String,
+        rating: json['rating'] as int,
+        status: json['status'] as int,
+        isSaved: json['is_saved'] as bool,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        updatedAt: DateTime.parse(json['updated_at'] as String),
+      );
+    } catch (e) {
+      print("Cart Review Error: $e");
+      rethrow;
+    }
   }
 
   Map<String, dynamic> toJson() {

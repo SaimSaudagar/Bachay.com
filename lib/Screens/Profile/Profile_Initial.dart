@@ -1,4 +1,10 @@
+import 'package:app/API/Bloc/Profile/Profile_Bloc.dart';
+import 'package:app/API/Bloc/Profile/Profile_Event.dart';
+import 'package:app/API/Bloc/Profile/Profile_State.dart';
+import 'package:app/API/Repository/Profile_Repo.dart';
+import 'package:app/Models/Profile/User_Profile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Utils/app_constants.dart';
 import '../../Widgets/App_Bar.dart';
 import '../../Widgets/Botton_Nav_Bar.dart';
@@ -28,13 +34,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(state: 2,),
-      body: _buildProfileScreen(context),
-      bottomNavigationBar: CustomBottomNavigationBar(onTabSelected: _onTabSelected),
+      appBar: const CustomAppBar(
+        state: 2,
+      ),
+      body: profileScreen(context),
+      bottomNavigationBar:
+          CustomBottomNavigationBar(onTabSelected: _onTabSelected),
     );
   }
 
-  Widget _buildProfileScreen(BuildContext context) {
+  Widget profileScreen(BuildContext context) {
+    return BlocProvider(
+      create: (_) => ProfileBloc(profileRepository: ProfileRepository())
+        ..add(LoadProfile()),
+      child: BlocBuilder<ProfileBloc, ProfileState>(
+        builder: (context, state) {
+          if (state is ProfileLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is ProfileLoaded) {
+            return _buildProfileScreen(context, state.profile);
+          } else if (state is ProfileError) {
+            return const SizedBox();
+          }
+          return const Center(child: SizedBox());
+        },
+      ),
+    );
+  }
+
+  Widget _buildProfileScreen(BuildContext context, UserProfile user) {
     return SingleChildScrollView(
       padding: EdgeInsets.all(getPadding(context)),
       child: Column(
@@ -45,18 +75,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           SizedBox(height: getSpacing(context)),
           Text(
-            "Samira Khan",
+            "${user.fName} ${user.lName}",
             style: interBold.copyWith(fontSize: getBigFontSize(context)),
           ),
           Text(
-            "Mother of 03",
-            style: interRegular.copyWith(color: Colors.grey, fontSize: getFontSize(context)),
+            user.tagline!,
+            style: interRegular.copyWith(
+                color: Colors.grey, fontSize: getFontSize(context)),
           ),
           TextButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const EditProfileScreen()),
+                MaterialPageRoute(
+                    builder: (context) => const EditProfileScreen()),
               );
             },
             child: Text("Update Profile",
@@ -82,23 +114,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildIconCard(context, 'assets/images/settings-child.png', "Add Child", Colors.pink[50]!, () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const ChildrenDetailsScreen()));
+        _buildIconCard(context, 'assets/images/settings-child.png', "Add Child",
+            Colors.pink[50]!, () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const ChildrenDetailsScreen()));
         }),
-        _buildIconCard(context, 'assets/images/wallet.png', "Wallet\nRs. 150", Colors.lightGreen[100]!, () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const WalletScreen()));
+        _buildIconCard(context, 'assets/images/wallet.png', "Wallet\nRs. 150",
+            Colors.lightGreen[100]!, () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const WalletScreen()));
         }),
-        _buildIconCard(context, 'assets/images/points.png', "Points\n150", Colors.orange[100]!, () {
+        _buildIconCard(context, 'assets/images/points.png', "Points\n150",
+            Colors.orange[100]!, () {
           // Navigator.push(context, MaterialPageRoute(builder: (context) => PointsScreen()));
         }),
-        _buildIconCard(context, 'assets/images/bachay_club.png', "Bachay\nClub", Colors.yellow[100]!, () {
+        _buildIconCard(context, 'assets/images/bachay_club.png', "Bachay\nClub",
+            Colors.yellow[100]!, () {
           // Navigator.push(context, MaterialPageRoute(builder: (context) => BachayClubScreen()));
         }),
       ],
     );
   }
 
-  Widget _buildIconCard(BuildContext context, String imagePath, String text, Color bgColor, VoidCallback onTap) {
+  Widget _buildIconCard(BuildContext context, String imagePath, String text,
+      Color bgColor, VoidCallback onTap) {
     return Column(
       children: [
         InkWell(
@@ -132,51 +173,101 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildProfileOptions(BuildContext context) {
     return Column(
       children: [
-        _buildProfileOptionRow(context, "Shopping", "Go to your Shopping Profile", 'assets/images/home/shopping-active.png', [
-          _buildSmallIconCard(context, 'assets/images/account.png', "Account", () {
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingAccountScreen()));
-          }),
-          _buildSmallIconCard(context, 'assets/images/history.png', "History", () {
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingHistoryScreen()));
-          }),
-        ], Colors.purple[50]!, Colors.purple[100]!, () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const Shopping_Profile()));
+        _buildProfileOptionRow(
+            context,
+            "Shopping",
+            "Go to your Shopping Profile",
+            'assets/images/home/shopping-active.png',
+            [
+              _buildSmallIconCard(
+                  context, 'assets/images/account.png', "Account", () {
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingAccountScreen()));
+              }),
+              _buildSmallIconCard(
+                  context, 'assets/images/history.png', "History", () {
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingHistoryScreen()));
+              }),
+            ],
+            Colors.purple[50]!,
+            Colors.purple[100]!, () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const Shopping_Profile()));
         }),
-        _buildProfileOptionRow(context, "Explore", "Go to your Explore Profile", 'assets/images/home/explore-active.png', [
-          _buildSmallIconCard(context, 'assets/images/profileicon.png', "Profile", () {
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => ExploreProfileScreen()));
-          }),
-          _buildSmallIconCard(context, 'assets/images/saved.png', "Saved", () {
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => SavedItemsScreen()));
-          }),
-        ], Colors.orange[50]!, Colors.orange[100]!, () {
+        _buildProfileOptionRow(
+            context,
+            "Explore",
+            "Go to your Explore Profile",
+            'assets/images/home/explore-active.png',
+            [
+              _buildSmallIconCard(
+                  context, 'assets/images/profileicon.png', "Profile", () {
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => ExploreProfileScreen()));
+              }),
+              _buildSmallIconCard(context, 'assets/images/saved.png', "Saved",
+                  () {
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => SavedItemsScreen()));
+              }),
+            ],
+            Colors.orange[50]!,
+            Colors.orange[100]!, () {
           // Navigator.push(context, MaterialPageRoute(builder: (context) => ExploreProfileScreen()));
         }),
-        _buildProfileOptionRow(context, "Parenting", "Go to your Parenting Profile", 'assets/images/home/parenting.png', [
-          _buildSmallIconCard(context, 'assets/images/vacc_grow.png', "Vacc/Grow", () {
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => VaccinationGrowthScreen()));
-          }),
-          _buildSmallIconCard(context, 'assets/images/QA.png', "Q/A", () {
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => QAScreen()));
-          }),
-        ], Colors.pink[50]!, Colors.pink[100]!, () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const Parenting_Profile()));
+        _buildProfileOptionRow(
+            context,
+            "Parenting",
+            "Go to your Parenting Profile",
+            'assets/images/home/parenting.png',
+            [
+              _buildSmallIconCard(
+                  context, 'assets/images/vacc_grow.png', "Vacc/Grow", () {
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => VaccinationGrowthScreen()));
+              }),
+              _buildSmallIconCard(context, 'assets/images/QA.png', "Q/A", () {
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => QAScreen()));
+              }),
+            ],
+            Colors.pink[50]!,
+            Colors.pink[100]!, () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const Parenting_Profile()));
         }),
-        _buildProfileOptionRow(context, "Education", "Go to your Education Profile", 'assets/images/home/education-active.png', [
-          _buildSmallIconCard(context, 'assets/images/Quiz.png', "Quizzes", () {
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => QuizzesScreen()));
-          }),
-          _buildSmallIconCard(context, 'assets/images/courses.png', "Courses", () {
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesScreen()));
-          }),
-        ], Colors.yellow[50]!, Colors.yellow[100]!, () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const EducationScreen()));
+        _buildProfileOptionRow(
+            context,
+            "Education",
+            "Go to your Education Profile",
+            'assets/images/home/education-active.png',
+            [
+              _buildSmallIconCard(context, 'assets/images/Quiz.png', "Quizzes",
+                  () {
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => QuizzesScreen()));
+              }),
+              _buildSmallIconCard(
+                  context, 'assets/images/courses.png', "Courses", () {
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesScreen()));
+              }),
+            ],
+            Colors.yellow[50]!,
+            Colors.yellow[100]!, () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const EducationScreen()));
         }),
       ],
     );
   }
 
-  Widget _buildProfileOptionRow(BuildContext context, String title, String subtitle, String imagePath, List<Widget> smallIcons, Color bgColor, Color borderColor, VoidCallback onTap) {
+  Widget _buildProfileOptionRow(
+      BuildContext context,
+      String title,
+      String subtitle,
+      String imagePath,
+      List<Widget> smallIcons,
+      Color bgColor,
+      Color borderColor,
+      VoidCallback onTap) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -191,9 +282,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               child: ListTile(
                 leading: Image.asset(imagePath, width: 40, height: 40),
-                title: Text(title, style: interBold.copyWith(fontSize: getFontSize(context))),
-                subtitle: Text(subtitle, style: interRegular.copyWith(fontSize: getFontSize(context))),
-                trailing: const Icon(Icons.arrow_forward_ios, color: Colors.black),
+                title: Text(title,
+                    style: interBold.copyWith(fontSize: getFontSize(context))),
+                subtitle: Text(subtitle,
+                    style:
+                        interRegular.copyWith(fontSize: getFontSize(context))),
+                trailing:
+                    const Icon(Icons.arrow_forward_ios, color: Colors.black),
                 onTap: onTap,
               ),
             ),
@@ -207,7 +302,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildSmallIconCard(BuildContext context, String imagePath, String text, VoidCallback onTap) {
+  Widget _buildSmallIconCard(
+      BuildContext context, String imagePath, String text, VoidCallback onTap) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: InkWell(
@@ -241,20 +337,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildCustomerServiceOptions(BuildContext context) {
     return Column(
       children: [
-        _buildCustomerServiceOption(context, "Help & Support", 'assets/images/24-support.png', () {
+        _buildCustomerServiceOption(
+            context, "Help & Support", 'assets/images/24-support.png', () {
           // Navigator.push(context, MaterialPageRoute(builder: (context) => HelpSupportScreen()));
         }),
-        _buildCustomerServiceOption(context, "Notifications", 'assets/images/notification.png', () {
+        _buildCustomerServiceOption(
+            context, "Notifications", 'assets/images/notification.png', () {
           // Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationsScreen()));
         }),
-        _buildCustomerServiceOption(context, "Our Policies", 'assets/images/policy.png', () {
+        _buildCustomerServiceOption(
+            context, "Our Policies", 'assets/images/policy.png', () {
           // Navigator.push(context, MaterialPageRoute(builder: (context) => PoliciesScreen()));
         }),
       ],
     );
   }
 
-  Widget _buildCustomerServiceOption(BuildContext context, String title, String imagePath, VoidCallback onTap) {
+  Widget _buildCustomerServiceOption(BuildContext context, String title,
+      String imagePath, VoidCallback onTap) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
@@ -272,7 +372,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         child: ListTile(
           leading: Image.asset(imagePath, width: 40, height: 40),
-          title: Text(title, style: interBold.copyWith(fontSize: getFontSize(context))),
+          title: Text(title,
+              style: interBold.copyWith(fontSize: getFontSize(context))),
           trailing: const Icon(Icons.arrow_forward_ios, color: Colors.black),
           onTap: onTap,
         ),
@@ -280,31 +381,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
- Widget _buildSignOutButton(BuildContext context) {
-  return Padding(
-    padding: EdgeInsets.symmetric(horizontal: getSpacing(context) * 2),
-    child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.black,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50),
+  Widget _buildSignOutButton(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: getSpacing(context) * 2),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+          padding: EdgeInsets.symmetric(vertical: getSpacing(context) * 2),
         ),
-        padding: EdgeInsets.symmetric(vertical: getSpacing(context) * 2),
+        onPressed: () {
+          // Add sign-out logic here
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.logout, color: Colors.white),
+            SizedBox(width: getSpacing(context)),
+            Text('Sign Out', style: buttonTextStyle(context)),
+          ],
+        ),
       ),
-      onPressed: () {
-        // Add sign-out logic here
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.logout, color: Colors.white),
-          SizedBox(width: getSpacing(context)),
-          Text('Sign Out', style: buttonTextStyle(context)),
-        ],
-      ),
-    ),
-  );
+    );
+  }
 }
-
-}
-

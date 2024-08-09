@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart'; // Add this package to pubspec.yaml
+import 'package:email_validator/email_validator.dart';
 import '../../../Utils/app_constants.dart';
-
-void main() {
-  runApp(const MaterialApp(
-    home: ContactDetailsScreen(),
-  ));
-}
 
 class ContactDetailsScreen extends StatefulWidget {
   const ContactDetailsScreen({super.key});
@@ -94,7 +88,9 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
   }
 
   PreferredSizeWidget customAppBar(BuildContext context,
-      {required String title, required String subtitle, required String actionText}) {
+      {required String title,
+      required String subtitle,
+      required String actionText}) {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
@@ -197,7 +193,8 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
   Widget errorMessage(BuildContext context) {
     return Text(
       'Please check your mobile before clicking on verify & save.',
-      style: interRegular.copyWith(color: Colors.red, fontSize: getFontSize(context)),
+      style: interRegular.copyWith(
+          color: Colors.red, fontSize: getFontSize(context)),
     );
   }
 

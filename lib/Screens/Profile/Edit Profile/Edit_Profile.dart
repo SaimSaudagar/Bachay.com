@@ -6,12 +6,6 @@ import 'Add_Children.dart';
 import 'Contact_Details.dart';
 import 'Personal_Information.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    home: EditProfileScreen(),
-  ));
-}
-
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
 
@@ -62,12 +56,12 @@ class EditProfileScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Samira Khan',
+                      'Talha Ahmed',
                       style:
                           interBold.copyWith(fontSize: getBigFontSize(context)),
                     ),
                     Text(
-                      'Mother of 03',
+                      'Father of 01',
                       style: interRegular.copyWith(
                           color: Colors.grey, fontSize: getFontSize(context)),
                     ),

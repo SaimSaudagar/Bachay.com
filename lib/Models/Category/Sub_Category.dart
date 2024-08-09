@@ -1,4 +1,3 @@
-
 class SubCategoryList {
   final List<SubCategory> categories;
 

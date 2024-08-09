@@ -2,12 +2,6 @@ import 'package:app/Screens/Profile/Edit%20Profile/Edit_Profile.dart';
 import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    home: PersonalInformationScreen(),
-  ));
-}
-
 class PersonalInformationScreen extends StatelessWidget {
   const PersonalInformationScreen({super.key});
 
