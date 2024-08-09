@@ -10,13 +10,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: ProfileScreen(),
+      home: ExploreProfileScreen(),
     );
   }
 }
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class ExploreProfileScreen extends StatelessWidget {
+  const ExploreProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

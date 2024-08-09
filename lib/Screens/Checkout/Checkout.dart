@@ -207,7 +207,7 @@ class _CartScreenState extends State<CartScreen> {
             Column(
               children: [
                 IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: Image.asset('assets/images/delete.png'),
                   onPressed: () {
                     setState(() {
                       _cartItems.remove(item);
