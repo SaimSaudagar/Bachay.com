@@ -201,16 +201,18 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
         ),
         SizedBox(height: getSpacing(context)),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             _buildOtherItem(context, 'Address', 'assets/images/address.png',
                 () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => AddressScreen()));
             }),
+            SizedBox(width: getSpacing(context) * 10),
             _buildOtherItem(context, 'Password', 'assets/images/password.png',
                 () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => PasswordScreen()));
             }),
+              SizedBox(width: getSpacing(context) * 10),
             _buildOtherItem(context, 'Support', 'assets/images/24-support.png',
                 () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => SupportScreen()));

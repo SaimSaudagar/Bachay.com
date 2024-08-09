@@ -3,6 +3,7 @@ import 'package:app/API/Bloc/Profile/Profile_Event.dart';
 import 'package:app/API/Bloc/Profile/Profile_State.dart';
 import 'package:app/API/Repository/Profile_Repo.dart';
 import 'package:app/Models/Profile/User_Profile.dart';
+import 'package:app/Screens/Profile/Explore%20Profile/Explore_Profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Utils/app_constants.dart';
@@ -93,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             },
             child: Text("Update Profile",
                 style: interRegular.copyWith(
-                    color: Colors.green,
+                    color: Colors.black,
                     fontSize: getFontSize(context),
                     decoration: TextDecoration.underline)),
           ),
@@ -138,35 +139,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildIconCard(BuildContext context, String imagePath, String text,
-      Color bgColor, VoidCallback onTap) {
-    return Column(
-      children: [
-        InkWell(
-          onTap: onTap,
-          child: Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: bgColor,
-            ),
-            child: Center(
-              child: Image.asset(
-                imagePath,
-                width: 40,
-                height: 40,
-              ),
-            ),
-          ),
+  Widget _buildIconCard(BuildContext context, String imagePath, String text, Color bgColor, VoidCallback onTap) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: 80,
+        height: 80,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: bgColor,
         ),
-        SizedBox(height: getSpacing(context)),
-        Text(
-          text,
-          textAlign: TextAlign.center,
-          style: interRegular.copyWith(fontSize: getFontSize(context)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              imagePath,
+              width: 40,
+              height: 40,
+            ),
+            SizedBox(height: getSpacing(context) / 2),
+            Text(
+              text,
+              textAlign: TextAlign.center,
+              style: interRegular.copyWith(fontSize: getFontSize(context) * 0.8),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
@@ -212,13 +211,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
             Colors.orange[50]!,
             Colors.orange[100]!, () {
-          // Navigator.push(context, MaterialPageRoute(builder: (context) => ExploreProfileScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ExploreProfileScreen()));
         }),
         _buildProfileOptionRow(
             context,
             "Parenting",
             "Go to your Parenting Profile",
-            'assets/images/home/parenting.png',
+            'assets/images/home/parenting-active.png',
             [
               _buildSmallIconCard(
                   context, 'assets/images/vacc_grow.png', "Vacc/Grow", () {
@@ -276,7 +275,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             flex: 2,
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24.0),
+                borderRadius: BorderRadius.circular(10.0),
                 color: bgColor,
                 border: Border.all(color: borderColor, width: 1),
               ),
@@ -288,7 +287,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style:
                         interRegular.copyWith(fontSize: getFontSize(context))),
                 trailing:
-                    const Icon(Icons.arrow_forward_ios, color: Colors.black),
+                    Image.asset('assets/images/arrow-right.png', width: 24, height: 24),
                 onTap: onTap,
               ),
             ),
@@ -308,32 +307,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: InkWell(
         onTap: onTap,
-        child: Column(
-          children: [
-            Container(
-              width: 60,
-              height: 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.grey[100],
-                border: Border.all(color: Colors.grey[300]!, width: 1),
+        child: Container(
+          width: 60,
+          height: 80,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.grey[100],
+            border: Border.all(color: Colors.grey[300]!, width: 1),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(imagePath, width: 30, height: 30),
+              SizedBox(height: getSpacing(context)),
+              Text(
+                text,
+                textAlign: TextAlign.center,
+                style: interRegular.copyWith(fontSize: getFontSize(context)),
               ),
-              child: Center(
-                child: Image.asset(imagePath, width: 30, height: 30),
-              ),
-            ),
-            SizedBox(height: getSpacing(context)),
-            Text(
-              text,
-              textAlign: TextAlign.center,
-              style: interRegular.copyWith(fontSize: getFontSize(context)),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
-
   Widget _buildCustomerServiceOptions(BuildContext context) {
     return Column(
       children: [
@@ -398,7 +395,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.logout, color: Colors.white),
+            Image.asset('assets/images/logout.png'),         
             SizedBox(width: getSpacing(context)),
             Text('Sign Out', style: buttonTextStyle(context)),
           ],

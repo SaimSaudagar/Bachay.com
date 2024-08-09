@@ -3,9 +3,11 @@ import '../../../Utils/app_constants.dart';
 import '../../../Widgets/App_Bar.dart';
 import 'Expert_Following.dart';
 import 'Expert_Panel.dart';
+import 'Following.dart';
 import 'My_Posts.dart';
 import 'My_Questions.dart';
 
+import 'Questions_Following.dart';
 class Parenting_Profile extends StatefulWidget {
   const Parenting_Profile({super.key});
 
@@ -154,7 +156,7 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
             }),
             _buildOrderItem(context, 'Following', 'assets/images/following.png',
                 () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewProductScreen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => FollowingScreen()));
             }),
           ],
         ),
@@ -173,40 +175,37 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _buildOtherItem(
-                context, 'Follow Question', 'assets/images/Follow Question.png',
+                context, 'Follow\nQuestion', 'assets/images/Follow Question.png',
                 () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritesScreen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionsFollowing()));
             }),
             _buildOtherItem(
-                context, 'My Followers', 'assets/images/My Followers.png', () {
+                context, 'My\nFollowers', 'assets/images/My Followers.png', () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentScreen()));
             }),
             _buildOtherItem(
-                context, 'Vaccine Tracking', 'assets/images/vaccine.png', () {
+                context, 'Vaccine\nTracking', 'assets/images/vaccine.png', () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => AccountScreen()));
             }),
             _buildOtherItem(
-                context, 'Growth Details', 'assets/images/growth.png', () {
+                context, 'Growth\nDetails', 'assets/images/growth.png', () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => ChildrenScreen()));
             }),
             _buildOtherItem(
-                context, 'Baby Names', 'assets/images/baby-name.png', () {
+                context, 'Baby\nNames', 'assets/images/baby-name.png', () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => ContactScreen()));
             }),
           ],
         ),
         SizedBox(height: getSpacing(context)),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             _buildOtherItem(context, 'Children', 'assets/images/children.png',
                 () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => AddressScreen()));
             }),
-            // _buildOtherItem(context, 'Password', 'assets/images/password.png',
-            //     () {
-            //   // Navigator.push(context, MaterialPageRoute(builder: (context) => PasswordScreen()));
-            // }),
+              SizedBox(width: getSpacing(context) * 10),
             _buildOtherItem(context, 'Support', 'assets/images/24-support.png',
                 () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => SupportScreen()));
@@ -239,7 +238,7 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
               ),
               child: Center(
                 child: Text(
-                  'Recently View',
+                  'Recently Like',
                   style: buttonTextStyle(context).copyWith(
                       color:
                           isRecentlyViewPressed ? Colors.white : Colors.black),
@@ -267,7 +266,7 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
               ),
               child: Center(
                 child: Text(
-                  'Recent Ordered',
+                  'Recent Upvote',
                   style: buttonTextStyle(context).copyWith(
                       color:
                           isRecentOrderedPressed ? Colors.white : Colors.black),
