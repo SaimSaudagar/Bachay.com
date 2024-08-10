@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../Utils/app_constants.dart';
+import '../Home/Homepage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -73,7 +74,9 @@ class _ExploreState extends State<Explore> with SingleTickerProviderStateMixin {
       elevation: 0,
       leading: IconButton(
         icon: const Icon(Icons.close, color: Colors.black),
-        onPressed: () {},
+        onPressed: () {
+           Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+        },
       ),
       title: Center(
         child: Image.asset(

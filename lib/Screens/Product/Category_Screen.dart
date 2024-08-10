@@ -25,7 +25,7 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  int? _selectedIndex;
+  int? _selectedIndex = 0;
   int? _selectedCategoryId;
 
   @override

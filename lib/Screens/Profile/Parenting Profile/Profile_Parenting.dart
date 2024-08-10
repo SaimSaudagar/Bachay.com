@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 import '../../../Widgets/App_Bar.dart';
+import '../Edit Profile/Add_Children.dart';
 import 'Expert_Following.dart';
 import 'Expert_Panel.dart';
 import 'Following.dart';
@@ -95,8 +96,8 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
           children: [
             _buildFeatureItem(context, 'Add Child', 'assets/images/child.png',
                 () {
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => WalletScreen()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ChildrenDetailsScreen()));
             }),
             _buildFeatureItem(
                 context, 'Expert Follow', 'assets/images/Expert Follow.png',
@@ -203,7 +204,8 @@ class _Parenting_ProfileState extends State<Parenting_Profile> {
           children: [
             _buildOtherItem(context, 'Children', 'assets/images/children.png',
                 () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => AddressScreen()));
+               Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ChildrenDetailsScreen()));
             }),
               SizedBox(width: getSpacing(context) * 10),
             _buildOtherItem(context, 'Support', 'assets/images/24-support.png',

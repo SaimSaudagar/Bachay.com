@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
+import 'Shopping_profile.dart';
 
 class PointsScreen extends StatelessWidget {
   const PointsScreen({super.key});
@@ -27,7 +28,11 @@ class PointsAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
-        onPressed: () {},
+        onPressed: () {            Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Shopping_Profile()),
+                      );},
       ),
       title: Text('Points', style: interBold.copyWith(fontSize: getBigFontSize(context))),
       actions: [
