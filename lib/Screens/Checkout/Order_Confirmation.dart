@@ -1,11 +1,9 @@
 import 'package:app/API/Bloc/Order/Order_Bloc.dart';
 import 'package:app/API/Bloc/Order/Order_Event.dart';
 import 'package:app/API/Bloc/Order/Order_State.dart';
-import 'package:app/API/Repository/Order_Repo.dart';
 import 'package:app/Models/Cart/CartItem.dart';
 import 'package:app/Screens/Checkout/Order_Placed.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Utils/app_constants.dart';
 
@@ -158,7 +156,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
           SizedBox(height: getSpacing(context)),
           ListView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: widget.cartItem.length,
             itemBuilder: (context, index) {
               return Row(
@@ -167,7 +165,8 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                     imageUrl: widget.cartItem[index].thumbnail,
                     price: widget.cartItem[index].price.toString(),
                   ),
-                  SizedBox(width: 20), // Example spacing, adjust as needed
+                  const SizedBox(
+                      width: 20), // Example spacing, adjust as needed
                 ],
               );
             },
@@ -188,7 +187,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
       child: BlocListener<OrderBloc, OrderState>(
         listener: (context, state) {
           if (state is PlaceOrderLoaded) {
-            state.response.isNotEmpty
+            state.response != 0
                 ? ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Order Placed Successfully'),

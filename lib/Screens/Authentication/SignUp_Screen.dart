@@ -1,27 +1,7 @@
 import 'package:app/Utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'SignUp-Flow/AddImage_Screen.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Setup Your Account',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const SetupAccountScreen(),
-    );
-  }
-}
 
 class SetupAccountScreen extends StatefulWidget {
   const SetupAccountScreen({super.key});

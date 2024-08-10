@@ -11,7 +11,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       emit(PlaceOrderLoading());
       try {
         final response = await orderRepository.placeOrder();
-        print(response);
         emit(PlaceOrderLoaded(response));
       } catch (e) {
         emit(PlaceOrderError(e.toString()));
@@ -19,4 +18,3 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     });
   }
 }
-// orderDetails

@@ -1,4 +1,3 @@
-// color_state.dart
 import 'dart:ui';
 
 import 'package:equatable/equatable.dart';

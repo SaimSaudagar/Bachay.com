@@ -1,4 +1,3 @@
-// color_event.dart
 import 'package:equatable/equatable.dart';
 
 abstract class ColorEvent extends Equatable {

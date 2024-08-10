@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 import '../../../Widgets/App_Bar.dart';
@@ -97,18 +95,24 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
           children: [
             _buildFeatureItem(
                 context, 'Wallet: Rs. 140', 'assets/images/wallet.png', () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const WalletScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const WalletScreen()));
             }),
             _buildFeatureItem(
                 context, 'Coupons: 02', 'assets/images/coupons.png', () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const CouponScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const CouponScreen()));
             }),
             _buildFeatureItem(
                 context, 'Points: 200', 'assets/images/points.png', () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const PointsScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const PointsScreen()));
             }),
             _buildFeatureItem(
                 context, 'Gift Cards', 'assets/images/gift_cards.png', () {

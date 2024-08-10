@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    home: AddressBookScreen(),
-  ));
-}
-
 class AddressBookScreen extends StatelessWidget {
   const AddressBookScreen({super.key});
 

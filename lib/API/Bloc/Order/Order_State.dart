@@ -6,7 +6,7 @@ class OrderInitial extends OrderState {}
 class PlaceOrderLoading extends OrderState {}
 
 class PlaceOrderLoaded extends OrderState {
-  final String response;
+  final int response;
   PlaceOrderLoaded(this.response);
 }
 

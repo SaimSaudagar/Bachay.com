@@ -8,14 +8,21 @@ class AllProduct {
   });
 
   factory AllProduct.fromJson(Map<String, dynamic> json) {
-    return AllProduct(
-      allProducts: json['all_products'] != null
-          ? AllProducts.fromJson(json['all_products'])
-          : throw Exception("all_products is null"),
-      filter: json['filter'] != null
-          ? Filter.fromJson(json['filter'])
-          : throw Exception("filter is null"),
-    );
+    try {
+      print("Parsing All Products");
+
+      return AllProduct(
+        allProducts: json['all_products'] != null
+            ? AllProducts.fromJson(json['all_products'])
+            : throw Exception("all_products is null"),
+        filter: json['filter'] != null
+            ? Filter.fromJson(json['filter'])
+            : throw Exception("filter is null"),
+      );
+    } catch (e) {
+      print("Error parsing AllProduct: $e");
+      rethrow;
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -60,16 +67,16 @@ class AllProducts {
   factory AllProducts.fromJson(Map<String, dynamic> json) {
     return AllProducts(
       currentPage: json['current_page'] ?? 0,
-      data: json['data'] != null
-          ? List<Product>.from(json['data'].map((x) => Product.fromJson(x)))
-          : [],
+      data: (json['data'] as List)
+          .map((item) => Product.fromJson(item as Map<String, dynamic>))
+          .toList(),
       firstPageUrl: json['first_page_url'] ?? '',
       from: json['from'] ?? 0,
       lastPage: json['last_page'] ?? 0,
       lastPageUrl: json['last_page_url'] ?? '',
-      links: json['links'] != null
-          ? List<Link>.from(json['links'].map((x) => Link.fromJson(x)))
-          : [],
+      links: (json['links'] as List)
+          .map((item) => Link.fromJson(item as Map<String, dynamic>))
+          .toList(),
       nextPageUrl: json['next_page_url'] ?? '',
       path: json['path'] ?? '',
       perPage: json['per_page'] ?? 0,
@@ -127,7 +134,7 @@ class Product {
   dynamic sizes;
   int variantProduct;
   dynamic attributes;
-  String choiceOptions;
+  dynamic choiceOptions;
   String variation;
   int published;
   double unitPrice;
@@ -236,87 +243,93 @@ class Product {
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
-    return Product(
-      id: json['id'] ?? 0,
-      addedBy: json['added_by'],
-      userId: json['user_id'] ?? 0,
-      name: json['name'] ?? '',
-      slug: json['slug'] ?? '',
-      gender: json['gender'],
-      productType: json['product_type'],
-      categoryIds: json['category_ids'] ?? '',
-      categoryId: json['category_id'] ?? 0,
-      subCategoryId: json['subCategory_id'],
-      subSubCategoryId: json['subSubCategory_id'],
-      brandId: json['brand_id'] ?? 0,
-      unit: json['unit'],
-      minQty: json['min_qty'] ?? 0,
-      refundable: json['refundable'] ?? 0,
-      digitalProductType: json['digital_product_type'],
-      digitalFileReady: json['digital_file_ready'],
-      images: json['images'] ?? '',
-      colorImage: json['color_image'] ?? '',
-      thumbnail: json['thumbnail'] ?? '',
-      featured: json['featured'],
-      flashDeal: json['flash_deal'],
-      videoProvider: json['video_provider'],
-      videoUrl: json['video_url'],
-      colors: json['colors'] ?? '',
-      sizes: json['sizes'],
-      variantProduct: json['variant_product'] ?? 0,
-      attributes: json['attributes'],
-      choiceOptions: json['choice_options'] ?? '',
-      variation: json['variation'] ?? '',
-      published: json['published'] ?? 0,
-      unitPrice: json['unit_price']?.toDouble() ?? 0.0,
-      purchasePrice: json['purchase_price'] ?? 0,
-      tax: json['tax'] ?? 0,
-      taxType: json['tax_type'],
-      taxModel: json['tax_model'],
-      discount: json['discount'] ?? 0,
-      discountType: json['discount_type'],
-      currentStock: json['current_stock'] ?? 0,
-      minimumOrderQty: json['minimum_order_qty'] ?? 0,
-      details: json['details'] ?? '',
-      freeShipping: json['free_shipping'] ?? 0,
-      attachment: json['attachment'],
-      createdAt: DateTime.parse(
-          json['created_at'] ?? DateTime.now().toIso8601String()),
-      updatedAt: DateTime.parse(
-          json['updated_at'] ?? DateTime.now().toIso8601String()),
-      status: json['status'] ?? 0,
-      featuredStatus: json['featured_status'] ?? 0,
-      metaTitle: json['meta_title'],
-      metaDescription: json['meta_description'],
-      metaImage: json['meta_image'],
-      requestStatus: json['request_status'] ?? 0,
-      deniedNote: json['denied_note'],
-      shippingCost: json['shipping_cost'] ?? 0,
-      multiplyQty: json['multiply_qty'] ?? 0,
-      tempShippingCost: json['temp_shipping_cost'],
-      isShippingCostUpdated: json['is_shipping_cost_updated'],
-      code: json['code'] ?? '',
-      orderDetailsSumQty: json['order_details_sum_qty'] ?? '',
-      reviewsCount: json['reviews_count'] ?? 0,
-      flashDealStatus: json['flash_deal_status'] ?? 0,
-      flashDealEndDate: json['flash_deal_end_date'],
-      category: json['category'] != null
-          ? ProductCategory.fromJson(json['category'])
-          : throw Exception("category is null"),
-      reviews: json['reviews'] != null
-          ? List<Review>.from(json['reviews'].map((x) => Review.fromJson(x)))
-          : [],
-      flashDealProducts: json['flash_deal_products'] != null
-          ? List<FlashDealProduct>.from(json['flash_deal_products']
-              .map((x) => FlashDealProduct.fromJson(x)))
-          : [],
-      wishList: json['wish_list'] != null
-          ? List<dynamic>.from(json['wish_list'])
-          : [],
-      translations: json['translations'] != null
-          ? List<dynamic>.from(json['translations'])
-          : [],
-    );
+    try {
+      print("Parsing Product with ID: ${json['id']}");
+      return Product(
+        id: json['id'] ?? 0,
+        addedBy: json['added_by'],
+        userId: json['user_id'] ?? 0,
+        name: json['name'] ?? '',
+        slug: json['slug'] ?? '',
+        gender: json['gender'],
+        productType: json['product_type'],
+        categoryIds: json['category_ids'] ?? '',
+        categoryId: json['category_id'] ?? 0,
+        subCategoryId: json['subCategory_id'],
+        subSubCategoryId: json['subSubCategory_id'],
+        brandId: json['brand_id'] ?? 0,
+        unit: json['unit'],
+        minQty: json['min_qty'] ?? 0,
+        refundable: json['refundable'] ?? 0,
+        digitalProductType: json['digital_product_type'],
+        digitalFileReady: json['digital_file_ready'],
+        images: json['images'] ?? '',
+        colorImage: json['color_image'] ?? '',
+        thumbnail: json['thumbnail'] ?? '',
+        featured: json['featured'],
+        flashDeal: json['flash_deal'],
+        videoProvider: json['video_provider'],
+        videoUrl: json['video_url'],
+        colors: json['colors'] ?? '',
+        sizes: json['sizes'],
+        variantProduct: json['variant_product'] ?? 0,
+        attributes: json['attributes'],
+        choiceOptions: json['choice_options'] ?? '',
+        variation: json['variation'] ?? '',
+        published: json['published'] ?? 0,
+        unitPrice: json['unit_price']?.toDouble() ?? 0.0,
+        purchasePrice: json['purchase_price'] ?? 0,
+        tax: json['tax'] ?? 0,
+        taxType: json['tax_type'],
+        taxModel: json['tax_model'],
+        discount: json['discount'] ?? 0,
+        discountType: json['discount_type'],
+        currentStock: json['current_stock'] ?? 0,
+        minimumOrderQty: json['minimum_order_qty'] ?? 0,
+        details: json['details'] ?? '',
+        freeShipping: json['free_shipping'] ?? 0,
+        attachment: json['attachment'],
+        createdAt: DateTime.parse(
+            json['created_at'] ?? DateTime.now().toIso8601String()),
+        updatedAt: DateTime.parse(
+            json['updated_at'] ?? DateTime.now().toIso8601String()),
+        status: json['status'] ?? 0,
+        featuredStatus: json['featured_status'] ?? 0,
+        metaTitle: json['meta_title'],
+        metaDescription: json['meta_description'],
+        metaImage: json['meta_image'],
+        requestStatus: json['request_status'] ?? 0,
+        deniedNote: json['denied_note'],
+        shippingCost: json['shipping_cost'] ?? 0,
+        multiplyQty: json['multiply_qty'] ?? 0,
+        tempShippingCost: json['temp_shipping_cost'],
+        isShippingCostUpdated: json['is_shipping_cost_updated'],
+        code: json['code'] ?? '',
+        orderDetailsSumQty: json['order_details_sum_qty'] ?? '',
+        reviewsCount: json['reviews_count'] ?? 0,
+        flashDealStatus: json['flash_deal_status'] ?? 0,
+        flashDealEndDate: json['flash_deal_end_date'],
+        category: json['category'] != null
+            ? ProductCategory.fromJson(json['category'])
+            : throw Exception("category is null"),
+        reviews: json['reviews'] != null
+            ? List<Review>.from(json['reviews'].map((x) => Review.fromJson(x)))
+            : [],
+        flashDealProducts: json['flash_deal_products'] != null
+            ? List<FlashDealProduct>.from(json['flash_deal_products']
+                .map((x) => FlashDealProduct.fromJson(x)))
+            : [],
+        wishList: json['wish_list'] != null
+            ? List<dynamic>.from(json['wish_list'])
+            : [],
+        translations: json['translations'] != null
+            ? List<dynamic>.from(json['translations'])
+            : [],
+      );
+    } catch (e) {
+      print("Error parsing Product: $e");
+      rethrow;
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -420,23 +433,29 @@ class ProductCategory {
   });
 
   factory ProductCategory.fromJson(Map<String, dynamic> json) {
-    return ProductCategory(
-      id: json['id'] ?? 0,
-      name: json['name'],
-      slug: json['slug'],
-      icon: json['icon'],
-      parentId: json['parent_id'] ?? 0,
-      position: json['position'] ?? 0,
-      createdAt: DateTime.parse(
-          json['created_at'] ?? DateTime.now().toIso8601String()),
-      updatedAt: DateTime.parse(
-          json['updated_at'] ?? DateTime.now().toIso8601String()),
-      homeStatus: json['home_status'] ?? 0,
-      priority: json['priority'] ?? 0,
-      translations: json['translations'] != null
-          ? List<dynamic>.from(json['translations'])
-          : [],
-    );
+    try {
+      print("Parsing Product Category with ID: ${json['id']}");
+      return ProductCategory(
+        id: json['id'] ?? 0,
+        name: json['name'],
+        slug: json['slug'],
+        icon: json['icon'],
+        parentId: json['parent_id'] ?? 0,
+        position: json['position'] ?? 0,
+        createdAt: DateTime.parse(
+            json['created_at'] ?? DateTime.now().toIso8601String()),
+        updatedAt: DateTime.parse(
+            json['updated_at'] ?? DateTime.now().toIso8601String()),
+        homeStatus: json['home_status'] ?? 0,
+        priority: json['priority'] ?? 0,
+        translations: json['translations'] != null
+            ? List<dynamic>.from(json['translations'])
+            : [],
+      );
+    } catch (e) {
+      print("Error parsing ProductCategory: $e");
+      rethrow;
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -694,14 +713,20 @@ class Filter {
   });
 
   factory Filter.fromJson(Map<String, dynamic> json) {
-    return Filter(
-      choice1: json['choice_1'] != null
-          ? Choice1.fromJson(json['choice_1'])
-          : throw Exception("choice_1 is null"),
-      choice0: json['choice_0'] != null
-          ? Choice0.fromJson(json['choice_0'])
-          : throw Exception("choice_0 is null"),
-    );
+    try {
+      print("Parsing Filter");
+      return Filter(
+        choice1: json['choice_1'] != null
+            ? Choice1.fromJson(json['choice_1'])
+            : throw Exception("choice_1 is null"),
+        choice0: json['choice_0'] != null
+            ? Choice0.fromJson(json['choice_0'])
+            : throw Exception("choice_0 is null"),
+      );
+    } catch (e) {
+      print("Error parsing Filter: $e");
+      rethrow;
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -753,8 +778,9 @@ class Choice1 {
     return Choice1(
       name: json['name'] ?? '',
       title: json['title'] ?? '',
-      options:
-          json['options'] != null ? List<String>.from(json['options']) : [],
+      options: json['options'] != null
+          ? List<String>.from(json['options'].map((x) => x as String))
+          : [],
     );
   }
 
@@ -762,7 +788,7 @@ class Choice1 {
     return {
       'name': name,
       'title': title,
-      'options': List<dynamic>.from(options),
+      'options': options,
     };
   }
 }

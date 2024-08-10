@@ -1,11 +1,10 @@
-import 'package:app/Models/Cart/CartItem.dart';
 import 'package:app/Models/Order/Order_Item.dart';
 import 'package:app/Utils/app_constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class OrderRepository {
-  Future<String> placeOrder() async {
+  Future<int> placeOrder() async {
     try {
       final response =
           await http.get(Uri.parse('${baseUrl}customer/order/place'), headers: {
@@ -14,8 +13,7 @@ class OrderRepository {
 
       if (response.statusCode == 200) {
         final responseBody = jsonDecode(response.body);
-
-        return responseBody['order_ids'];
+        return responseBody['order_ids'][0];
       } else {
         throw Exception('Failed to place order');
       }

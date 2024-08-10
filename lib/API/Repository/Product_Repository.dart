@@ -6,11 +6,19 @@ import 'dart:convert';
 import '../../Models/Products/Products.dart';
 
 class ProductRepository {
-  Future<AllProduct> fetchAllProducts() async {
+  Future<AllProduct> fetchAllProducts(
+      List<String> colors, List<String> ages) async {
     try {
-      final response = await http.get(Uri.parse('${baseUrl}all_products/'));
+      print("LoadAllProducts");
+      String agesQuery =
+          ages.isNotEmpty ? ages.map((age) => "'$age'").join(', ') : '';
+      String url = '${baseUrl}all_products/?&sizes=[$agesQuery]';
+      print("LoadAllProducts with URL: $url");
+
+      final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
+        print("LoadAllProducts with data: $data");
         return AllProduct.fromJson(data);
       } else {
         throw Exception('Failed to all products');
@@ -36,7 +44,6 @@ class ProductRepository {
   }
 
   Future<String> addToCart(int productId, int quantity) async {
-    ;
     try {
       final response = await http.post(Uri.parse('${baseUrl}cart/add'),
           body: {'id': productId.toString(), 'quantity': quantity.toString()},

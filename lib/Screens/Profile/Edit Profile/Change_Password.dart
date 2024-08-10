@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    home: PasswordChangeScreen(),
-  ));
-}
-
 class PasswordChangeScreen extends StatefulWidget {
   const PasswordChangeScreen({super.key});
 
@@ -22,14 +16,10 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
   bool _currentPasswordVisible = false;
   bool _newPasswordVisible = false;
   bool _reEnterPasswordVisible = false;
-  bool _passwordMatchError = false;
   int _passwordStrength = 0;
 
   void _validatePasswords() {
-    setState(() {
-      _passwordMatchError =
-          _newPasswordController.text != _reEnterPasswordController.text;
-    });
+    setState(() {});
   }
 
   void _checkPasswordStrength(String password) {

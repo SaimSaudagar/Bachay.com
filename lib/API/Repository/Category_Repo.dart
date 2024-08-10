@@ -22,10 +22,14 @@ class CategoryRepository {
 
   Future<SubCategoryList> fetchSubCategory(int categoryId) async {
     try {
-      final response =
-          await http.get(Uri.parse('${baseUrl}categories/sub-categories/1'));
+      final response = await http
+          .get(Uri.parse('${baseUrl}categories/sub-categories/$categoryId/'));
+      // print('${baseUrl}categories/sub-categories/$categoryId/');
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
+        // print(data);
+        final subCategory = SubCategoryList.fromJson(data);
+        print(subCategory.categories[0]);
         return SubCategoryList.fromJson(data);
       } else {
         throw Exception('Failed to load sub category');

@@ -5,10 +5,6 @@ import 'dart:convert';
 import '../../../Utils/app_constants.dart';
 import 'Profile_Parenting.dart';
 
-void main() {
-  runApp(const SocialMediaApp());
-}
-
 class SocialMediaApp extends StatelessWidget {
   const SocialMediaApp({super.key});
 
@@ -33,7 +29,8 @@ class MyPosts extends StatefulWidget {
 
 class _MyPostsState extends State<MyPosts> {
   Future<List<Post>> _fetchPosts() async {
-    final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/photos'));
+    final response = await http
+        .get(Uri.parse('https://jsonplaceholder.typicode.com/photos'));
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       return jsonResponse.map((post) => Post.fromJson(post)).toList();
@@ -108,7 +105,7 @@ PreferredSizeWidget myPostsAppBar(BuildContext context) {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Parenting_Profile()),
+          MaterialPageRoute(builder: (context) => const Parenting_Profile()),
         );
       },
     ),
@@ -117,7 +114,10 @@ PreferredSizeWidget myPostsAppBar(BuildContext context) {
       children: [
         Text(
           'My Posts',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: getBigFontSize(context)),
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: getBigFontSize(context)),
         ),
         Text(
           'posted on my feed',
@@ -148,8 +148,10 @@ Widget postHeader(BuildContext context, Post post) {
     leading: CircleAvatar(
       backgroundImage: NetworkImage(post.profileImageUrl),
     ),
-    title: Text(post.author, style: interBold.copyWith(fontSize: getBigFontSize(context))),
-    subtitle: Text('Mother - 2 Children\'s', style: interRegular.copyWith(fontSize: getFontSize(context))),
+    title: Text(post.author,
+        style: interBold.copyWith(fontSize: getBigFontSize(context))),
+    subtitle: Text('Mother - 2 Children\'s',
+        style: interRegular.copyWith(fontSize: getFontSize(context))),
     trailing: Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -175,7 +177,8 @@ Widget postContent(BuildContext context, Post post) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(post.content, style: contentC5.copyWith(fontSize: getFontSize(context))),
+        Text(post.content,
+            style: contentC5.copyWith(fontSize: getFontSize(context))),
         SizedBox(height: getSpacing(context)),
         Image.network(post.imageUrl),
       ],
@@ -185,7 +188,8 @@ Widget postContent(BuildContext context, Post post) {
 
 Widget postFooter(BuildContext context, Post post) {
   return Padding(
-    padding: EdgeInsets.symmetric(horizontal: getPadding(context), vertical: getSpacing(context)),
+    padding: EdgeInsets.symmetric(
+        horizontal: getPadding(context), vertical: getSpacing(context)),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -196,7 +200,8 @@ Widget postFooter(BuildContext context, Post post) {
           backgroundImage: NetworkImage(post.profileImageUrl),
           radius: 12,
         ),
-        Text('Post for Kamran', style: interBold.copyWith(fontSize: getFontSize(context))),
+        Text('Post for Kamran',
+            style: interBold.copyWith(fontSize: getFontSize(context))),
       ],
     ),
   );
@@ -207,7 +212,8 @@ Widget postActionButton(BuildContext context, String iconPath, String label) {
     children: [
       Image.asset(iconPath, width: 24.0, height: 24.0),
       SizedBox(width: getSpacing(context)),
-      Text(label, style: interRegular.copyWith(fontSize: getBigFontSize(context))),
+      Text(label,
+          style: interRegular.copyWith(fontSize: getBigFontSize(context))),
     ],
   );
 }
@@ -217,12 +223,14 @@ Widget postCommentsSection(BuildContext context) {
     children: [
       const Divider(),
       Padding(
-        padding: EdgeInsets.symmetric(horizontal: getPadding(context), vertical: getSpacing(context)),
+        padding: EdgeInsets.symmetric(
+            horizontal: getPadding(context), vertical: getSpacing(context)),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CircleAvatar(
-              backgroundImage: NetworkImage('https://via.placeholder.com/150/92c952'),
+              backgroundImage:
+                  NetworkImage('https://via.placeholder.com/150/92c952'),
               radius: 12,
             ),
             SizedBox(width: getPadding(context)),
@@ -248,8 +256,11 @@ Widget postCommentHeader(BuildContext context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Text('Fatima', style: interBold.copyWith(fontSize: getBigFontSize(context))),
-      Text('01 Month Ago', style: interRegular.copyWith(fontSize: getFontSize(context), color: Colors.grey)),
+      Text('Fatima',
+          style: interBold.copyWith(fontSize: getBigFontSize(context))),
+      Text('01 Month Ago',
+          style: interRegular.copyWith(
+              fontSize: getFontSize(context), color: Colors.grey)),
     ],
   );
 }
@@ -283,11 +294,13 @@ Widget postActionIcon(BuildContext context, String iconPath, String label) {
 
 Widget postCommentInput(BuildContext context) {
   return Padding(
-    padding: EdgeInsets.symmetric(horizontal: getPadding(context), vertical: getSpacing(context)),
+    padding: EdgeInsets.symmetric(
+        horizontal: getPadding(context), vertical: getSpacing(context)),
     child: Row(
       children: [
         const CircleAvatar(
-          backgroundImage: NetworkImage('https://via.placeholder.com/150/92c952'),
+          backgroundImage:
+              NetworkImage('https://via.placeholder.com/150/92c952'),
           radius: 16,
         ),
         SizedBox(width: getPadding(context)),
@@ -310,7 +323,8 @@ Widget postCommentInput(BuildContext context) {
                   ),
                 ),
                 IconButton(
-                  icon: Image.asset('assets/images/send.png', color: Colors.pinkAccent),
+                  icon: Image.asset('assets/images/send.png',
+                      color: Colors.pinkAccent),
                   onPressed: () {},
                 ),
               ],
@@ -330,8 +344,10 @@ Widget bottomSheet(BuildContext context) {
       children: [
         bottomSheetOption(context, 'assets/images/edit.png', 'Edit Post'),
         bottomSheetOption(context, 'assets/images/pin.png', 'Pin Post'),
-        bottomSheetOption(context, 'assets/images/notification-cancel.png', 'Turn Off Notification for this Post'),
-        bottomSheetOption(context, 'assets/images/delete.png', 'Delete this Post'),
+        bottomSheetOption(context, 'assets/images/notification-cancel.png',
+            'Turn Off Notification for this Post'),
+        bottomSheetOption(
+            context, 'assets/images/delete.png', 'Delete this Post'),
       ],
     ),
   );
