@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../Utils/app_constants.dart';
 
 void main() {
@@ -12,19 +13,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: HomePage(),
+      home: Explore(),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class Explore extends StatefulWidget {
+  const Explore({super.key});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _ExploreState createState() => _ExploreState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+class _ExploreState extends State<Explore> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -42,115 +43,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.close, color: Colors.black),
-          onPressed: () {},
-        ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/logo/LogoExplore.png', // Ensure you have the correct path to the logo image
-              height: 40, // Adjust the height as needed
-            ),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search, color: Colors.black),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.notifications_none, color: Colors.black),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.bookmark_border, color: Colors.black),
-            onPressed: () {},
-          ),
-        ],
-        bottom: TabBar(
-          controller: _tabController,
-          indicatorColor: Colors.orange,
-          labelColor: Colors.black,
-          unselectedLabelColor: Colors.grey,
-          tabs: const [
-            Tab(text: 'Following'),
-            Tab(text: 'Trending'),
-            Tab(text: 'Discover'),
-          ],
-        ),
-      ),
+      appBar: _buildAppBar(context),
       body: Padding(
         padding: EdgeInsets.all(getPadding(context)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const CircleAvatar(
-                  backgroundImage: AssetImage('assets/logo/LogoExplore.png'), // Ensure you have the correct path to the avatar image
-                  radius: 20,
-                ),
-                SizedBox(width: getSpacing(context)),
-                Expanded(
-                  child: Text(
-                    'Bachay.com',
-                    style: outfitBold.copyWith(fontSize: getBigFontSize(context)),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                SizedBox(width: getSpacing(context)),
-                Icon(
-                  Icons.verified,
-                  color: Colors.green,
-                  size: getFontSize(context),
-                ),
-                SizedBox(width: getSpacing(context)),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.orange, backgroundColor: Colors.orange[100],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      side: const BorderSide(color: Colors.orange),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    'Follow',
-                    style: buttonTextStyle(context),
-                  ),
-                ),
-                SizedBox(width: getSpacing(context)),
-                Row(
-                  children: [
-                    const Icon(Icons.thumb_up_off_alt, color: Colors.black),
-                    SizedBox(width: getSpacing(context)),
-                    const Text('24', style: TextStyle(color: Colors.black)),
-                  ],
-                ),
-                SizedBox(width: getSpacing(context)),
-                Row(
-                  children: [
-                    const Icon(Icons.bookmark_border, color: Colors.black),
-                    SizedBox(width: getSpacing(context)),
-                    const Text('Save', style: TextStyle(color: Colors.black)),
-                  ],
-                ),
-                SizedBox(width: getSpacing(context)),
-                Row(
-                  children: [
-                    const Icon(Icons.share, color: Colors.black),
-                    SizedBox(width: getSpacing(context)),
-                    const Text('Share', style: TextStyle(color: Colors.black)),
-                  ],
-                ),
-              ],
-            ),
+            _buildProfileHeader(context),
             SizedBox(height: getSpacing(context)),
             Expanded(
               child: TabBarView(
@@ -167,8 +66,116 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       ),
     );
   }
-}
 
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      leading: IconButton(
+        icon: const Icon(Icons.close, color: Colors.black),
+        onPressed: () {},
+      ),
+      title: Center(
+        child: Image.asset(
+          'assets/logo/LogoExplore.png', // Ensure you have the correct path to the logo image
+          height: 40, // Adjust the height as needed
+        ),
+      ),
+      actions: [
+        IconButton(
+          icon: SvgPicture.asset(
+            'assets/images/search-icon.svg',
+            width: 24,
+            height: 24,
+          ),
+          onPressed: () {},
+        ),
+        IconButton(
+          icon: SvgPicture.asset(
+            'assets/images/notification.svg',
+            width: 24,
+            height: 24,
+          ),
+          onPressed: () {},
+        ),
+        IconButton(
+          icon: Image.asset('assets/images/saved.png', width: 24, height: 24),
+          onPressed: () {},
+        ),
+      ],
+      bottom: TabBar(
+        controller: _tabController,
+        indicator: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.orange.withOpacity(0.1),
+        ),
+        labelColor: Colors.orange,
+        unselectedLabelColor: Colors.grey,
+        labelPadding: EdgeInsets.symmetric(horizontal: 16.0),
+        tabs: const [
+          Tab(child: Text('Following')),
+          Tab(child: Text('Trending')),
+          Tab(child: Text('Discover')),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProfileHeader(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const CircleAvatar(
+          backgroundImage: AssetImage('assets/logo/LogoExplore.png'), // Ensure you have the correct path to the avatar image
+          radius: 20,
+        ),
+        SizedBox(width: getSpacing(context)),
+        Expanded(
+          child: Text(
+            'Bachay.com',
+            style: outfitBold.copyWith(fontSize: getBigFontSize(context)),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        SizedBox(width: getSpacing(context)),
+        Icon(Icons.verified, color: Colors.green, size: getFontSize(context)),
+        SizedBox(width: getSpacing(context)),
+        _buildFollowButton(context),
+        SizedBox(width: getSpacing(context)),
+        _buildIconWithText(context, Icons.thumb_up_off_alt, '24'),
+        SizedBox(width: getSpacing(context)),
+        _buildIconWithText(context, Icons.bookmark_border, 'Save'),
+        SizedBox(width: getSpacing(context)),
+        _buildIconWithText(context, Icons.share, 'Share'),
+      ],
+    );
+  }
+
+  Widget _buildFollowButton(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.orange,
+        backgroundColor: Colors.orange[100],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          side: const BorderSide(color: Colors.orange),
+        ),
+      ),
+      onPressed: () {},
+      child: Text('Follow', style: buttonTextStyle(context)),
+    );
+  }
+
+  Widget _buildIconWithText(BuildContext context, IconData icon, String text) {
+    return Row(
+      children: [
+        Icon(icon, color: Colors.black),
+        SizedBox(width: getSpacing(context)),
+        Text(text, style: const TextStyle(color: Colors.black)),
+      ],
+    );
+  }
+}
 
 class CarouselWidget extends StatelessWidget {
   const CarouselWidget({super.key});
@@ -188,18 +195,17 @@ class CarouselWidget extends StatelessWidget {
       ),
       items: const [
         ProductCard(
-          imageUrl: 'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg', // Replace with your image assets
+          imageUrl: 'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
           title: 'Tween Boy Loose Fit Athletic Solid Color Stand Collar Short Sleeve S...',
           price: 'Rs.850',
           oldPrice: 'Rs.3999',
         ),
         ProductCard(
-          imageUrl: 'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg', // Replace with your image assets
+          imageUrl: 'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
           title: 'Tween Boy Loose Fit Athletic Solid Color Stand Collar Short Sleeve S...',
           price: 'Rs.850',
           oldPrice: 'Rs.3999',
         ),
-        // Add more ProductCard widgets as needed
       ],
     );
   }
@@ -211,7 +217,8 @@ class ProductCard extends StatelessWidget {
   final String price;
   final String oldPrice;
 
-  const ProductCard({super.key, 
+  const ProductCard({
+    super.key,
     required this.imageUrl,
     required this.title,
     required this.price,
@@ -249,17 +256,22 @@ class ProductCard extends StatelessWidget {
                   SizedBox(height: getSpacing(context)),
                   Text(
                     price,
-                    style: interBold.copyWith(fontSize: getBigFontSize(context), color: Colors.purple),
+                    style: interBold.copyWith(
+                        fontSize: getBigFontSize(context), color: Colors.purple),
                   ),
                   SizedBox(height: getSpacing(context)),
                   Text(
                     oldPrice,
-                    style: interBold.copyWith(fontSize: getFontSize(context), color: Colors.grey, decoration: TextDecoration.lineThrough),
+                    style: interBold.copyWith(
+                        fontSize: getFontSize(context),
+                        color: Colors.grey,
+                        decoration: TextDecoration.lineThrough),
                   ),
                   SizedBox(height: getSpacing(context)),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white, backgroundColor: Colors.orange,
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.orange,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(borderRadius),
                       ),

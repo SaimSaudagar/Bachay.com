@@ -71,6 +71,8 @@ import 'package:app/Screens/Home/Homepage.dart';
 import 'package:app/Screens/Profile/Profile_Initial.dart';
 import 'package:flutter/material.dart';
 
+import '../Screens/Explore/Explore.dart';
+
 class CustomBottomNavigationBar extends StatefulWidget {
   final ValueChanged<int> onTabSelected;
 
@@ -98,10 +100,10 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => const HomePage()));
         break;
-      // case 1:
-      //   Navigator.pushReplacement(
-      //       context, MaterialPageRoute(builder: (context) => ExploreScreen()));
-      //   break;
+      case 1:
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Explore()));
+        break;
       // case 2:
       //   Navigator.pushReplacement(
       //       context, MaterialPageRoute(builder: (context) => ParentingScreen()));

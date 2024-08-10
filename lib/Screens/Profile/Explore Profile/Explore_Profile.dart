@@ -1,4 +1,7 @@
+import 'package:app/Screens/Profile/Profile_Initial.dart';
 import 'package:flutter/material.dart';
+
+import '../Parenting Profile/Following.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +29,9 @@ class ExploreProfileScreen extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+          },
         ),
         title: Image.asset('assets/logo/LogoExplore.png', height: 40),
         actions: [
@@ -85,9 +90,15 @@ class ExploreProfileScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildAccountButton(context, 'assets/images/following.png', 'Following'),
-                _buildAccountButton(context, 'assets/images/saved.png', 'Saved'),
-                _buildAccountButton(context, 'assets/images/liked.png', 'Liked'),
+                _buildAccountButton(context, 'assets/images/following.png', 'Following', () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => FollowingScreen()));
+                }),
+                _buildAccountButton(context, 'assets/images/saved.png', 'Saved', () {
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => SavedScreen()));
+                }),
+                _buildAccountButton(context, 'assets/images/liked.png', 'Liked', () {
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => LikedScreen()));
+                }),
               ],
             ),
             const SizedBox(height: 16),
@@ -106,21 +117,24 @@ class ExploreProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAccountButton(BuildContext context, String iconPath, String label) {
+  Widget _buildAccountButton(BuildContext context, String iconPath, String label, VoidCallback onPressed) {
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade300),
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          child: Column(
-            children: [
-              Image.asset(iconPath, height: 32, width: 32),
-              const SizedBox(height: 8),
-              Text(label, style: const TextStyle(fontSize: 14)),
-            ],
+        GestureDetector(
+          onTap: onPressed,
+          child: Container(
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey.shade300),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Row(
+              children: [
+                Image.asset(iconPath, height: 32, width: 32),
+                const SizedBox(width: 8),
+                Text(label, style: const TextStyle(fontSize: 14)),
+              ],
+            ),
           ),
         ),
       ],
