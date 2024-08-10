@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../Utils/app_constants.dart';
+import 'Order_Confirmation.dart';
 
 class OrderPlacedScreen extends StatefulWidget {
   final String price;
@@ -16,7 +17,8 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.close),
-          onPressed: () {},
+          onPressed: () { 
+            Navigator.push(context, MaterialPageRoute(builder: (context) => OrderConfirmationScreen(cartItem: [],)));}, 
         ),
         title: Text('Order Placed',
             style: outfitBold.copyWith(fontSize: getBigFontSize(context))),

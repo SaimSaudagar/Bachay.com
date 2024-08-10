@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
-
+import 'Shopping_profile.dart';
 class CouponScreen extends StatelessWidget {
   const CouponScreen({super.key});
 
@@ -10,7 +10,13 @@ class CouponScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Shopping_Profile()),
+                      );
+          },
         ),
         title: Text('Coupons',
             style: interBold.copyWith(fontSize: getFontSize(context) * 2)),

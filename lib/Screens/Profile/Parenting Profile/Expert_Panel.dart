@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
+import 'Profile_Parenting.dart';
 
 class ExpertPanelScreen extends StatelessWidget {
   const ExpertPanelScreen({super.key});
@@ -12,7 +13,10 @@ class ExpertPanelScreen extends StatelessWidget {
         elevation: 1.0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {},
+          onPressed: () {
+                       Navigator.push(context, MaterialPageRoute(builder: (context) => Parenting_Profile()));
+
+          },
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
