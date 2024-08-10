@@ -9,6 +9,7 @@ import 'package:app/API/Repository/Homepage_Repo.dart';
 import 'package:app/Models/Category/Category_Banner.dart';
 import 'package:app/Models/Category/Sub_Category.dart';
 import 'package:app/Models/Home/Category.dart';
+import 'package:app/Screens/Product/All_Producst_Screen.dart';
 import 'package:app/Utils/app_constants.dart';
 import 'package:app/Widgets/App_Bar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -199,12 +200,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: <Widget>[
-          Image.network(category.icon,
-              fit: BoxFit.cover,
-              height: MediaQuery.of(context).size.height * 0.08,
-              errorBuilder: (context, error, stackTrace) {
-            return const Center(child: Text('Image not available'));
-          }),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AllProductsScreen()));
+            },
+            child: Image.network(category.icon,
+                fit: BoxFit.cover,
+                height: MediaQuery.of(context).size.height * 0.08,
+                errorBuilder: (context, error, stackTrace) {
+              return const Center(child: Text('Image not available'));
+            }),
+          ),
           Expanded(
             child: Padding(
                 padding:
