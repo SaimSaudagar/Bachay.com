@@ -25,38 +25,41 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
+  int? _selectedIndex;
+  int? _selectedCategoryId;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(
-        state: 1,
-      ),
-      drawer: const CustomDrawer(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(getPadding(context)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              categoryBanner(),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.5,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [mainCategory(), subCategory()],
+    return BlocProvider(
+      create: (_) => CategoryBloc(categoryRepository: CategoryRepository()),
+      child: Scaffold(
+        appBar: const CustomAppBar(
+          state: 1,
+        ),
+        drawer: const CustomDrawer(),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(getPadding(context)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                categoryBanner(),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [mainCategory(), subCategory()],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-      // bottomNavigationBar: CustomBottomNavigationBar(
-      //   onTabSelected: _onTabSelected,
-      // ),
     );
   }
 
-  //Category Banner
+  // Category Banner
   Widget categoryBanner() {
     return BlocProvider(
       create: (_) => CategoryBloc(categoryRepository: CategoryRepository())
@@ -80,10 +83,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return CarouselSlider(
       options: CarouselOptions(
         autoPlay: true,
-        // aspectRatio: 1.0,
         viewportFraction: 1,
         height: MediaQuery.of(context).size.height * 0.3,
-        // enlargeCenterPage: true,
       ),
       items: categoryBanner.map((banner) {
         return Builder(
@@ -139,23 +140,25 @@ class _CategoryScreenState extends State<CategoryScreen> {
         itemCount: categories.length,
         itemBuilder: (context, index) {
           return ListTile(
-            // leading: categories[index].icon != null
-            //     ? Image.network(
-            //         categories[index].icon!,
-            //         width: 50,
-            //         height: 50,
-            //         fit: BoxFit.cover,
-            //         errorBuilder: (context, error, stackTrace) {
-            //           return Icon(Icons.broken_image);
-            //         },
-            //       )
-            //     : Icon(Icons.category),
             title: Text(
               categories[index].name!,
-              style: TextStyle(fontSize: getFontSize(context)),
+              style: TextStyle(
+                fontSize: getFontSize(context),
+                color: _selectedIndex == index ? Colors.blue : Colors.black,
+                fontWeight: _selectedIndex == index
+                    ? FontWeight.bold
+                    : FontWeight.normal,
+              ),
             ),
+            selected: _selectedIndex == index,
             onTap: () {
-              // Handle the tap event
+              setState(() {
+                _selectedIndex = index;
+                _selectedCategoryId = categories[index].id!;
+              });
+              BlocProvider.of<CategoryBloc>(context).add(
+                LoadSubCategory(categoryId: _selectedCategoryId!),
+              );
             },
           );
         },
@@ -163,58 +166,59 @@ class _CategoryScreenState extends State<CategoryScreen> {
     );
   }
 
+  // Sub Category
   Widget subCategory() {
-    return BlocProvider(
-      create: (_) => CategoryBloc(categoryRepository: CategoryRepository())
-        ..add(LoadSubCategory()),
-      child: BlocBuilder<CategoryBloc, CategoryState>(
-        builder: (context, state) {
-          if (state is SubCategoryLoading) {
-            return const SizedBox();
-          } else if (state is SubCategoryLoaded) {
-            return buildSubCategory(state.subCategory.categories);
-          } else if (state is SubCategoryError) {
-            return const SizedBox();
-          }
-          return const Center(child: Text('Press a button to load categories'));
-        },
-      ),
+    return BlocBuilder<CategoryBloc, CategoryState>(
+      builder: (context, state) {
+        if (state is SubCategoryLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is SubCategoryLoaded) {
+          // print(state.subCategory.categories.length);
+          return buildSubCategory(state.subCategory.categories[0].childes!);
+        } else if (state is SubCategoryError) {
+          return const SizedBox();
+        }
+        return const Center(child: Text('Select a category'));
+      },
     );
   }
 
   Widget buildSubCategory(List<SubCategory> categories) {
     return Expanded(
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.2,
-        child: GridView.count(
-          crossAxisCount: 3,
-          childAspectRatio: 1 / 1.5,
-          physics: const NeverScrollableScrollPhysics(),
-          children: categories[0]
-              .childes!
-              .map((category) => buildCategoryTile(category))
-              .toList(),
-        ),
+      child: GridView.count(
+        crossAxisCount: 3,
+        childAspectRatio: 1 / 1.5,
+        children:
+            categories.map((category) => buildCategoryTile(category)).toList(),
       ),
     );
   }
 
   Widget buildCategoryTile(SubCategory category) {
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: Image.network(category.icon, fit: BoxFit.cover,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: <Widget>[
+          Image.network(category.icon,
+              fit: BoxFit.cover,
+              height: MediaQuery.of(context).size.height * 0.08,
               errorBuilder: (context, error, stackTrace) {
             return const Center(child: Text('Image not available'));
           }),
-        ),
-        Padding(
-            padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
-            child: Text(
-              category.name,
-              style: TextStyle(fontSize: getFontSize(context)),
-            )),
-      ],
+          Expanded(
+            child: Padding(
+                padding:
+                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
+                child: Text(
+                  category.name,
+                  style: TextStyle(
+                    fontSize: getFontSize(context),
+                  ),
+                  textAlign: TextAlign.center,
+                )),
+          ),
+        ],
+      ),
     );
   }
 }

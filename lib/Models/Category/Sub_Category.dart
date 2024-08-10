@@ -64,7 +64,7 @@ class SubCategory {
           ? (json['childes'] as List<dynamic>)
               .map((e) => SubCategory.fromJson(e as Map<String, dynamic>))
               .toList()
-          : null,
+          : [],
       translations: json['translations'] as List<dynamic>?,
     );
   }

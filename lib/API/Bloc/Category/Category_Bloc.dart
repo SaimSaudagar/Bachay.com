@@ -20,7 +20,10 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     on<LoadSubCategory>((event, emit) async {
       emit(SubCategoryLoading());
       try {
-        final category = await categoryRepository.fetchSubCategory(1);
+        final category =
+            await categoryRepository.fetchSubCategory(event.categoryId);
+        // print('here');
+        // print(category.categories.length);
         emit(SubCategoryLoaded(category));
       } catch (e) {
         emit(SubCategoryError(e.toString()));

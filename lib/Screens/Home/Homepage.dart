@@ -584,7 +584,7 @@ class _HomePageState extends State<HomePage> {
             return buildFeaturedProducts(
                 context, state.featuredProduct.products);
           } else if (state is FeaturedProductError) {
-            return const Text('Failed to load products');
+            return Container();
           }
           return const Center(
               child: Text('Press a button to load featuted products'));
@@ -602,7 +602,7 @@ class _HomePageState extends State<HomePage> {
           child: const Text(
             'Featured Products',
             style: TextStyle(
-              fontSize: 20, // Example font size, adjust as needed
+              fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
