@@ -74,7 +74,7 @@ class ExploreProfileScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _buildAccountButton(context, 'assets/images/following.png', 'Following', () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => FollowingScreen()));
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => FollowingScreen()));
                 }),
                 _buildAccountButton(context, 'assets/images/saved.png', 'Saved', () {
                   // Navigator.push(context, MaterialPageRoute(builder: (context) => SavedScreen()));
