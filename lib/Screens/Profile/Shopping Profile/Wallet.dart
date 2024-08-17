@@ -11,7 +11,7 @@ class WalletScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () {Navigator.pop(context);},
         ),
         title: Text('Wallet', style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
         actions: [
