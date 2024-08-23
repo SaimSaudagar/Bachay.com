@@ -154,13 +154,13 @@ class CartItem {
 }
 
 class FreeDeliveryOrderAmount {
-  int status;
-  int amount;
-  int percentage;
+  dynamic status;
+  dynamic amount;
+  dynamic percentage;
   double amountNeed;
-  int shippingCostSaved;
-  String cartId;
-  String responsibility;
+  dynamic shippingCostSaved;
+  dynamic cartId;
+  dynamic responsibility;
 
   FreeDeliveryOrderAmount({
     required this.status,
@@ -176,13 +176,13 @@ class FreeDeliveryOrderAmount {
     try {
       print("Free Delivery Order Amount: $json");
       return FreeDeliveryOrderAmount(
-        status: json['status'] as int,
-        amount: json['amount'] as int,
-        percentage: json['percentage'] as int,
+        status: json['status'] as dynamic,
+        amount: json['amount'] as dynamic,
+        percentage: json['percentage'] as dynamic,
         amountNeed: (json['amount_need'] as num).toDouble(),
-        shippingCostSaved: json['shipping_cost_saved'] as int,
-        cartId: json['cart_id'] as String,
-        responsibility: json['responsibility'] as String,
+        shippingCostSaved: json['shipping_cost_saved'] as dynamic,
+        cartId: json['cart_id'] as dynamic,
+        responsibility: json['responsibility'] as dynamic,
       );
     } catch (e) {
       print("Free Delivery Order Amount Error: $e");
