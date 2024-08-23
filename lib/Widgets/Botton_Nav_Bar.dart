@@ -72,6 +72,7 @@ import 'package:app/Screens/Profile/Profile_Initial.dart';
 import 'package:flutter/material.dart';
 
 import '../Screens/Explore/Explore.dart';
+import '../Screens/Parenting/Feed/feed.dart';
 import '../Screens/Quiz/quiz_loading.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
@@ -105,10 +106,10 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Explore()));
         break;
-      // case 2:
-      //   Navigator.pushReplacement(
-      //       context, MaterialPageRoute(builder: (context) => ParentingScreen()));
-      //   break;
+      case 2:
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => FeedsScreen()));
+        break;
       case 3:
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => QuizLoading()));
