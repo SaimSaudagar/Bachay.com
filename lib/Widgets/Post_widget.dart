@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../Screens/Parenting/Feed/post_comments.dart';
 import '../Utils/app_constants.dart';
 
 class PostWidget extends StatelessWidget {
@@ -89,16 +90,24 @@ class PostWidget extends StatelessWidget {
                       Text('$likesCount', style: interRegular.copyWith(fontSize: getFontSize(context))),
                     ],
                   ),
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/images/comment.svg',
-                        width: getFontSize(context) * 2,
-                        height: getFontSize(context) * 2,
-                      ),
-                      SizedBox(width: getSpacing(context)),
-                      Text('Comments', style: interRegular.copyWith(fontSize: getFontSize(context))),
-                    ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const CommentsScreen()),
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/images/comment.svg',
+                          width: getFontSize(context) * 2,
+                          height: getFontSize(context) * 2,
+                        ),
+                        SizedBox(width: getSpacing(context)),
+                        Text('Comments', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                      ],
+                    ),
                   ),
                   Row(
                     children: [
