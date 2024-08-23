@@ -12,7 +12,7 @@ class UpdateCart extends CartEvent {
   final int key;
   final int quantity;
 
-  UpdateCart({required this.key, required this.quantity});
+  UpdateCart({required this.key, required this.quantity, String? color});
 }
 
 class DeleteCartItem extends CartEvent {

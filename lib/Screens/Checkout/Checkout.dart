@@ -6,6 +6,7 @@ import 'package:app/Models/Cart/CartItem.dart';
 import 'package:app/Screens/Checkout/Order_Confirmation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../Utils/app_constants.dart';
 
 class CartScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   List<CartItem> _cartItems = [];
   int itemCount = 0;
+  double totalPrice = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +28,12 @@ class _CartScreenState extends State<CartScreen> {
           CartBloc(cartRepository: CartRepository())..add(LoadCartList()),
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: SvgPicture.asset('assets/images/Back-Button.svg'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
           title: BlocBuilder<CartBloc, CartState>(
             builder: (context, state) {
-              // Update the cart count directly from the state
-              // setState(() {
-              //   itemCount = state is CartListLoaded
-              //       ? state.cartList.cartItems.length
-              //       : 0;
-              // });
               itemCount =
                   state is CartListLoaded ? state.cartList.cartItems.length : 0;
               return Text('Cart($itemCount)',
@@ -43,16 +43,22 @@ class _CartScreenState extends State<CartScreen> {
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.favorite_border),
+              icon: SvgPicture.asset('assets/images/notification.svg'),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: SvgPicture.asset('assets/images/favorites.svg'),
               onPressed: () {},
             ),
           ],
         ),
-        body: Padding(
+        body: 
+        Padding(
           padding: EdgeInsets.all(getPadding(context)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Divider(thickness: 2),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
@@ -123,12 +129,22 @@ class _CartScreenState extends State<CartScreen> {
           return const Center(child: CircularProgressIndicator());
         } else if (state is CartListLoaded) {
           _cartItems = state.cartList.cartItems;
+          _calculateCartTotals(_cartItems);
           return cartSection("Your Cart", state.cartList.cartItems, context);
         } else {
           return const Center(child: Text('Cart is empty'));
         }
       },
     );
+  }
+
+  void _calculateCartTotals(List<CartItem> cartItems) {
+    totalPrice = 0.0;
+    itemCount = 0;
+    for (var item in cartItems) {
+      totalPrice += item.price * item.quantity;
+      itemCount += item.quantity;
+    }
   }
 
   Widget cartSection(String title, List<CartItem> items, BuildContext context) {
@@ -146,8 +162,14 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Widget cartItemWidget(CartItem item, BuildContext context) {
+    // Convert the color string to a Color object (assuming color is stored as a hex string like "#FFFFFF")
+    Color? itemColor;
+    if (item.color != null && item.color!.isNotEmpty) {
+      itemColor = _getColorFromHex(item.color!);
+    }
+
     return Card(
-      margin: EdgeInsets.symmetric(vertical: getSpacing(context)),
+      margin: EdgeInsets.symmetric(vertical: getSpacing(context) / 2),
       child: Padding(
         padding: EdgeInsets.all(getPadding(context)),
         child: Row(
@@ -159,100 +181,168 @@ class _CartScreenState extends State<CartScreen> {
               onChanged: (value) {},
               activeColor: buttonColorPurple,
             ),
-            // Image.network(item.thumbnail, width: 60, height: 60),
-            SizedBox(width: getSpacing(context)),
+            SizedBox(width: getSpacing(context) / 2),
+            // Item image
+            Image.network(item.thumbnail, width: 80, height: 80),
+            SizedBox(width: getSpacing(context) / 2),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(item.name,
-                      style: interRegular.copyWith(
-                          fontSize: getFontSize(context))),
-                  SizedBox(height: getSpacing(context)),
+                  // Item name
+                  Text(
+                    item.name,
+                    style: interRegular.copyWith(
+                      fontSize: getFontSize(context),
+                      color: Colors.black,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: getSpacing(context) / 2),
+                  // Item color dropdown or color display
                   Row(
                     children: [
-                      Text('Color: ${item.color}',
+                      if (item.color != null) ...[
+                        Text(
+                          'Color:',
                           style: contentC5.copyWith(
-                              fontSize: getFontSize(context))),
-                      SizedBox(width: getSpacing(context)),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: getPadding(context),
-                            vertical: getSpacing(context)),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(borderRadius),
+                              fontSize: getFontSize(context)),
                         ),
-                        child: Text(item.color ?? '',
-                            style: interRegular.copyWith(
-                                fontSize: getFontSize(context))),
-                      ),
+                        SizedBox(width: 8.0),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 2.0),
+                          decoration: BoxDecoration(
+                            color: itemColor,
+                            borderRadius: BorderRadius.circular(5.0),
+                            border: Border.all(color: Colors.grey),
+                          ),
+                          child: Text(
+                            item.color!,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ]
                     ],
                   ),
-                  SizedBox(height: getSpacing(context)),
+                  SizedBox(height: getSpacing(context) / 2),
+                  // Item price and discount
                   Row(
                     children: [
-                      Text('Rs.${item.price}',
+                      Text(
+                        'Rs.${item.price}',
+                        style: TextStyle(
+                          color: buttonColorPurple,
+                          fontSize: getFontSize(context),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: getSpacing(context) / 2),
+                      if (item.discount > 0) ...[
+                        Text(
+                          'Rs.${item.price + item.discount}',
                           style: TextStyle(
-                              color: Colors.red,
-                              fontSize: getFontSize(context))),
-                      SizedBox(width: getSpacing(context)),
-                      Text('Rs.${item.price}',
-                          style: TextStyle(
-                              decoration: TextDecoration.lineThrough,
-                              fontSize: getFontSize(context))),
+                            decoration: TextDecoration.lineThrough,
+                            fontSize: getFontSize(context),
+                            color: Colors.grey),
+                        ),
+                      ],
                     ],
                   ),
+                  SizedBox(height: getSpacing(context) / 2),
+                  // Additional Information (e.g., Shipping Cost)
+                  if (item.shippingCost > 0)
+                    Text(
+                      'Shipping: Rs.${item.shippingCost}',
+                      style: interRegular.copyWith(
+                          fontSize: getFontSize(context),
+                          color: Colors.grey),
+                    ),
                 ],
               ),
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                IconButton(
-                  icon: Image.asset('assets/images/delete.png'),
-                  onPressed: () {
-                    setState(() {
-                      _cartItems.remove(item);
-                    });
-                    context
-                        .read<CartBloc>()
-                        .add(DeleteCartItem(key: item.id.toString()));
-                  },
-                  color: Colors.red,
-                ),
-                IconButton(
-                  icon: const Icon(Icons.favorite_border),
-                  onPressed: () {},
-                  color: Colors.purple,
-                ),
+                // Row for Favorites and Delete Icons
                 Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.remove),
+                      icon: SvgPicture.asset('assets/images/favorites.svg'),
                       onPressed: () {
-                        setState(() {
-                          if (item.quantity > 1) {
-                            item.quantity--;
-                          }
-                        });
-                        context.read<CartBloc>().add(
-                            UpdateCart(key: item.id, quantity: item.quantity));
+                        // Add to favorites logic here
                       },
                     ),
-                    Text('${item.quantity}',
-                        style: interRegular.copyWith(
-                            fontSize: getFontSize(context))),
                     IconButton(
-                      icon: const Icon(Icons.add),
+                      icon: SvgPicture.asset('assets/images/delete.svg'),
                       onPressed: () {
                         setState(() {
-                          item.quantity++;
+                          _cartItems.remove(item);
                         });
-                        context.read<CartBloc>().add(
-                            UpdateCart(key: item.id, quantity: item.quantity));
+                        context
+                            .read<CartBloc>()
+                            .add(DeleteCartItem(key: item.id.toString()));
                       },
                     ),
                   ],
+                ),
+                SizedBox(height: 8.0),
+                // Row for Remove, Quantity, and Add Icons
+                Container(
+                  height: 40, // Adjusted height
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min, // Shrink to fit content
+                    children: [
+                      _buildIconButton(
+                        context,
+                        iconPath: 'assets/images/delete.png', // Assuming this is the remove icon
+                        iconSize: 16.0, // Adjust size as per the design
+                        onPressed: () {
+                          setState(() {
+                            if (item.quantity > 1) {
+                              item.quantity--;
+                            }
+                          });
+                          context.read<CartBloc>().add(
+                              UpdateCart(key: item.id, quantity: item.quantity));
+                        },
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.symmetric(
+                            vertical: BorderSide(color: Colors.grey),
+                          ),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+                        child: Text(
+                          '${item.quantity.toString().padLeft(2, '0')}',
+                          style: interRegular.copyWith(
+                            fontSize: getFontSize(context),
+                          ),
+                        ),
+                      ),
+                      _buildIconButton(
+                        context,
+                        iconPath: 'assets/images/add.png', // Assuming this is the add icon
+                        iconSize: 16.0, // Adjust size as per the design
+                        onPressed: () {
+                          setState(() {
+                            item.quantity++;
+                          });
+                          context.read<CartBloc>().add(
+                              UpdateCart(key: item.id, quantity: item.quantity));
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -260,6 +350,29 @@ class _CartScreenState extends State<CartScreen> {
         ),
       ),
     );
+  }
+
+  // Helper function to build an IconButton with custom styling
+  Widget _buildIconButton(BuildContext context, {required String iconPath, required VoidCallback onPressed, double iconSize = 12.0}) {
+    return IconButton(
+      icon: Image.asset(
+        iconPath,
+        width: iconSize,
+        height: iconSize,
+      ),
+      onPressed: onPressed,
+      padding: EdgeInsets.zero, // Remove padding around the icon
+      constraints: BoxConstraints(), // Remove default constraints
+    );
+  }
+
+  // Helper function to convert hex string to Color object
+  Color _getColorFromHex(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = "FF" + hexColor;
+    }
+    return Color(int.parse(hexColor, radix: 16));
   }
 
   Widget featuresSection(BuildContext context) {
@@ -273,19 +386,19 @@ class _CartScreenState extends State<CartScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             FeatureIcon(
-                icon: Icons.security,
+                svgPath: 'assets/images/quicksecurepayments.png',
                 label: 'Quick & Secure\nPayments',
                 context: context),
             FeatureIcon(
-                icon: Icons.refresh,
+                svgPath: 'assets/images/easyreturnrefunds.png',
                 label: 'Easy Returns &\nRefunds',
                 context: context),
             FeatureIcon(
-                icon: Icons.lock,
+                svgPath: 'assets/images/encrypteduserdata.png',
                 label: 'Encrypted User\nData',
                 context: context),
             FeatureIcon(
-                icon: Icons.verified,
+                svgPath: 'assets/images/PCI.png',
                 label: 'PCI\nCertified',
                 context: context),
           ],
@@ -327,7 +440,7 @@ class _CartScreenState extends State<CartScreen> {
                       style:
                           interBold.copyWith(fontSize: getFontSize(context))),
                   const SizedBox(width: 10),
-                  Text('Rs. 5,288',
+                  Text('Rs. ${totalPrice.toStringAsFixed(2)}',
                       style: interBold.copyWith(
                           fontSize: getFontSize(context),
                           color: Colors.purple)),
@@ -457,29 +570,34 @@ class VoucherInputSection extends StatelessWidget {
 }
 
 class FeatureIcon extends StatelessWidget {
-  final IconData icon;
+  final String svgPath;
   final String label;
   final BuildContext context;
 
-  const FeatureIcon(
-      {required this.icon, required this.label, required this.context});
+  const FeatureIcon({
+    required this.svgPath,
+    required this.label,
+    required this.context,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          padding: EdgeInsets.all(getSpacing(context)),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.black),
-          ),
-          child: Icon(icon, size: 30, color: buttonColorPurple),
+        Image.asset(
+          svgPath,
+          width: 40,  // Adjust the size as needed
+          height: 40, // Adjust the size as needed
         ),
-        SizedBox(height: getSpacing(context)),
-        Text(label,
-            textAlign: TextAlign.center,
-            style: interRegular.copyWith(fontSize: getFontSize(context))),
+        SizedBox(height: getSpacing(context) / 2),
+        Text(
+          label,
+          textAlign: TextAlign.center,
+          style: outfitRegular.copyWith(
+            fontSize: getFontSize(context),
+            color: Colors.black,
+          ),
+        ),
       ],
     );
   }
