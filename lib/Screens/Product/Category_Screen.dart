@@ -37,7 +37,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         appBar: const CustomAppBar(
           state: 1,
         ),
-        drawer: const CustomDrawer(),
+        drawer: const MainDrawer(),
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(getPadding(context)),

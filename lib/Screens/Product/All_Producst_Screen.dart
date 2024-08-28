@@ -41,7 +41,7 @@ class AllProductsScreen extends StatelessWidget {
           state: 3,
         ),
         bottomNavigationBar: filterOptions(context),
-        drawer: const CustomDrawer(),
+        drawer: const MainDrawer(),
         body: SingleChildScrollView(
           child: Column(
             children: [

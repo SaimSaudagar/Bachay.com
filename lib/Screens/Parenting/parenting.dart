@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../Widgets/parenting_hamburger.dart';
 import 'Articles/articles.dart';
 import 'Feed/feed.dart';
 import 'parenting_appbar.dart';
@@ -28,6 +29,7 @@ class _ParentingAppState extends State<ParentingApp> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ParentingAppBar(tabController: _tabController),
+      drawer: ParentingHamburger(), // Add this line to include the drawer
       body: TabBarView(
         controller: _tabController,
         children: [

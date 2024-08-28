@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
       appBar: const CustomAppBar(
         state: 3,
       ),
-      drawer: const CustomDrawer(),
+      drawer: const MainDrawer(),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(getPadding(context)),
