@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../Screens/Explore/Explore.dart';
 import '../Screens/Parenting/Feed/feed.dart';
+import '../Screens/Parenting/parenting.dart';
 import '../Screens/Quiz/quiz_loading.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
@@ -39,7 +40,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         break;
       case 2:
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => FeedsScreen()));
+            context, MaterialPageRoute(builder: (context) => ParentingApp()));
         break;
       case 3:
         Navigator.push(

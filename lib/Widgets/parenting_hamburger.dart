@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../Utils/app_constants.dart';
 
-class MainDrawer extends StatelessWidget {
-  const MainDrawer({super.key});
+class ParentingHamburger extends StatelessWidget {
+  const ParentingHamburger({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.75, // Adjust the width as needed
+        width: MediaQuery.of(context).size.width * 0.50, // Adjust the width as needed
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
@@ -23,29 +23,29 @@ class MainDrawer extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SvgPicture.asset('assets/logo/Logo.svg', height: 40), // Replace with your logo
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: buttonColorPurple,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                      SvgPicture.asset('assets/logo/Parenting.svg', height: 40), // Replace with your logo
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Colors.grey[300],
+                            child: Icon(Icons.person, color: Colors.grey[600]),
                           ),
-                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                        ),
-                        child: const Text(
-                          "Login",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
+                          SizedBox(width: 10),
+                          Text(
+                            "User Name",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
                   SizedBox(height: getSpacing(context)),
                   Text(
-                    'Welcome to Bachay.com',
+                    'Welcome to Bachay Parenting',
                     style: outfitBold.copyWith(
                       color: Colors.black,
                       fontSize: getBigFontSize(context),
@@ -55,22 +55,21 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
             _buildLanguageSelector(context),
-            _buildCategoryItem(context, 'assets/images/home/parenting-active.png', 'Parenting', Colors.pink.shade100),
+            _buildCategoryItem(context, 'assets/images/home/shopping-active.png', 'Shopping', Colors.pink.shade100),
             _buildCategoryItem(context, 'assets/images/home/education-active.png', 'Education', Colors.yellow.shade100),
             _buildCategoryItem(context, 'assets/images/home/explore-active.png', 'Explore', Colors.orange.shade100),
             const Divider(),
-            _buildMenuSectionTitle('Menu'),
-            _buildMenuItemWithBackground(context, 'assets/images/shop_by_category.png', 'Shop by Category', Colors.pink.shade100),
-            _buildMenuItemWithBackground(context, 'assets/images/offer_zone.png', 'Offer Zone', Colors.orange.shade100),
-            _buildMenuItemWithBackground(context, 'assets/images/gifts_cards.png', 'Gifts & Cards', Colors.purple.shade100),
-            _buildMenuItemWithBackground(context, 'assets/images/sell_with_us.png', 'Sell With Us', Colors.blue.shade100),
-            _buildMenuItemWithBackground(context, 'assets/images/customer_service.png', 'Customer Service', Colors.lightBlue.shade100),
+            _buildMenuSectionTitle('Featured'),
+            _buildMenuItemWithBackground(context, 'assets/images/settings-child.png', 'Add Child'),
+            _buildMenuItemWithBackground(context, 'assets/images/food.png', 'Food & Nutrients'),
+            _buildMenuItemWithBackground(context, 'assets/images/Expert Panel.png', 'Expert Panel'),
+            _buildMenuItemWithBackground(context, 'assets/images/Expert Follow.png', 'Follow Expert'),
             const Divider(),
             _buildMenuSectionTitle('My Activity'),
-            _buildMenuItem(context, 'assets/images/favorites.png', 'My Favorites'),
-            _buildMenuItem(context, 'assets/images/account.png', 'Account'),
-            _buildMenuItem(context, 'assets/images/children.png', 'Children\'s'),
-            _buildMenuItem(context, 'assets/images/24-support.png', 'Help & Support'),
+            _buildMenuItem(context, 'assets/images/posts.png', 'Create Post'),
+            _buildMenuItem(context, 'assets/images/Video.svg', 'Popular Articles'),
+            _buildMenuItem(context, 'assets/images/children.png', 'Video Articles'),
+            _buildMenuItem(context, 'assets/images/24-support.png', 'Ask Questions'),
           ],
         ),
       ),
@@ -107,7 +106,7 @@ class MainDrawer extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(25),
         ),
         child: ListTile(
           leading: CircleAvatar(
@@ -130,10 +129,9 @@ class MainDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuItemWithBackground(BuildContext context, String iconPath, String title, Color color) {
+  Widget _buildMenuItemWithBackground(BuildContext context, String iconPath, String title) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: color,
         child: Image.asset(iconPath, width: 24, height: 24),
       ),
       title: Text(title, style: outfitRegular.copyWith(color: Colors.black, fontSize: getFontSize(context))),

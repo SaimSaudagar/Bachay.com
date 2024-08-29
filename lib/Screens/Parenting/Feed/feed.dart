@@ -37,7 +37,7 @@ class _FeedsScreenState extends State<FeedsScreen> with TickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ParentingAppBar(tabController: _appBarTabController!), // Use the custom AppBar
+      // appBar: ParentingAppBar(tabController: _appBarTabController!), // Use the custom AppBar
       body: Stack(
         children: [
           SingleChildScrollView(
