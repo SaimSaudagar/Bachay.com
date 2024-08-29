@@ -1,3 +1,4 @@
+import 'package:app/Widgets/Botton_Nav_Bar.dart';
 import 'package:flutter/material.dart';
 import '../../../Utils/app_constants.dart';
 import '../../../Widgets/App_Bar.dart';
@@ -18,10 +19,20 @@ class Shopping_Profile extends StatefulWidget {
 class _Shopping_ProfileState extends State<Shopping_Profile> {
   bool isRecentlyViewPressed = false;
   bool isRecentOrderedPressed = false;
+  int _selectedIndex = 0;
+
+  void _onTabSelected(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: CustomBottomNavigationBar(
+        onTabSelected: _onTabSelected,
+      ),
       appBar: const CustomAppBar(state: 1),
       body: Padding(
         padding: EdgeInsets.all(getPadding(context)),
@@ -212,7 +223,7 @@ class _Shopping_ProfileState extends State<Shopping_Profile> {
                 () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => PasswordScreen()));
             }),
-              SizedBox(width: getSpacing(context) * 10),
+            SizedBox(width: getSpacing(context) * 10),
             _buildOtherItem(context, 'Support', 'assets/images/24-support.png',
                 () {
               // Navigator.push(context, MaterialPageRoute(builder: (context) => SupportScreen()));

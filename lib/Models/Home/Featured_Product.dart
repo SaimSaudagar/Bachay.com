@@ -41,8 +41,6 @@ class FeaturedProduct {
   List<ColorImage> colorImages;
   String thumbnail;
   bool featured;
-  String? videoProvider;
-  String? videoUrl;
   List<String> colors;
   List<ChoiceOption> choiceOptions;
   List<Variation> variations;
@@ -67,8 +65,6 @@ class FeaturedProduct {
     required this.colorImages,
     required this.thumbnail,
     required this.featured,
-    this.videoProvider,
-    this.videoUrl,
     required this.colors,
     required this.choiceOptions,
     required this.variations,
@@ -83,8 +79,8 @@ class FeaturedProduct {
       slug: json['slug'],
       gender: json['gender'],
       productType: json['product_type'],
-      categoryIds: jsonDecode(json['category_ids'])
-          .map<CategoryId>((x) => CategoryId.fromJson(x))
+      categoryIds: (jsonDecode(json['category_ids']) as List)
+          .map((x) => CategoryId.fromJson(x))
           .toList(),
       categoryId: int.parse(json['category_id'].toString()),
       subCategoryId: json['sub_category_id'] != null
@@ -98,17 +94,18 @@ class FeaturedProduct {
       minQty: int.parse(json['min_qty'].toString()),
       refundable: json['refundable'] == 1,
       images: List<String>.from(jsonDecode(json['images'])),
-      colorImages: List<ColorImage>.from(
-          jsonDecode(json['color_image']).map((x) => ColorImage.fromJson(x))),
+      colorImages: (jsonDecode(json['color_image']) as List)
+          .map((x) => ColorImage.fromJson(x))
+          .toList(),
       thumbnail: json['thumbnail'],
       featured: json['featured'] == 1,
-      videoProvider: json['video_provider'],
-      videoUrl: json['video_url'],
       colors: List<String>.from(jsonDecode(json['colors'])),
-      choiceOptions: List<ChoiceOption>.from(jsonDecode(json['choice_options'])
-          .map((x) => ChoiceOption.fromJson(x))),
-      variations: List<Variation>.from(
-          jsonDecode(json['variation']).map((x) => Variation.fromJson(x))),
+      choiceOptions: (json['choice_options'] as List)
+          .map((x) => ChoiceOption.fromJson(x))
+          .toList(),
+      variations: (jsonDecode(json['variation']) as List)
+          .map((x) => Variation.fromJson(x))
+          .toList(),
     );
   }
 
@@ -133,8 +130,6 @@ class FeaturedProduct {
       'color_image': jsonEncode(colorImages.map((x) => x.toJson()).toList()),
       'thumbnail': thumbnail,
       'featured': featured ? 1 : 0,
-      'video_provider': videoProvider,
-      'video_url': videoUrl,
       'colors': jsonEncode(colors),
       'choice_options':
           jsonEncode(choiceOptions.map((x) => x.toJson()).toList()),

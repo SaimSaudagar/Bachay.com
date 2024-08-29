@@ -1,10 +1,10 @@
-class OrderList {
+class OrderItemList {
   final List<OrderDetail> orders;
 
-  OrderList({required this.orders});
+  OrderItemList({required this.orders});
 
-  factory OrderList.fromJson(Map<String, dynamic> json) {
-    return OrderList(
+  factory OrderItemList.fromJson(Map<String, dynamic> json) {
+    return OrderItemList(
       orders: List<OrderDetail>.from(json['orders'].map((x) => OrderDetail.fromJson(x as Map<String, dynamic>))),
     );
   }

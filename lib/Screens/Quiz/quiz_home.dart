@@ -24,10 +24,7 @@ class QuizAppBar extends StatelessWidget implements PreferredSizeWidget {
             IconButton(
               icon: SvgPicture.asset('assets/logo/close.svg'),
               onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
-                );
+                Navigator.pop(context);
               },
             ),
             SvgPicture.asset(
@@ -38,7 +35,8 @@ class QuizAppBar extends StatelessWidget implements PreferredSizeWidget {
             Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/boy-icon.png'), // replace with your image asset
+                  backgroundImage: AssetImage(
+                      'assets/images/boy-icon.png'), // replace with your image asset
                   radius: 20,
                 ),
                 SizedBox(width: 8),
@@ -81,9 +79,11 @@ class QuizSearchBar extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15), // Updated to match rounded edges
+        borderRadius:
+            BorderRadius.circular(15), // Updated to match rounded edges
         border: Border.all(
-          color: Colors.black.withOpacity(1), // Adjusted to give a subtle border
+          color:
+              Colors.black.withOpacity(1), // Adjusted to give a subtle border
           width: 1.5, // Border thickness matching the UI
         ),
         boxShadow: [
@@ -108,7 +108,8 @@ class QuizSearchBar extends StatelessWidget {
           hintText: 'Search...',
           hintStyle: TextStyle(
             color: Colors.grey.shade600, // Hint text color to match the UI
-            fontWeight: FontWeight.w500, // Adjust font weight for better visibility
+            fontWeight:
+                FontWeight.w500, // Adjust font weight for better visibility
           ),
           border: InputBorder.none,
           contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -210,14 +211,17 @@ class QuizProgressCard extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(15), // Same border radius as QuizSearchBar
+          borderRadius:
+              BorderRadius.circular(15), // Same border radius as QuizSearchBar
           border: Border.all(
-            color: Colors.black.withOpacity(1), // Same border color as QuizSearchBar
+            color: Colors.black
+                .withOpacity(1), // Same border color as QuizSearchBar
             width: 1.5, // Same border thickness as QuizSearchBar
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(1), // Same shadow color as QuizSearchBar
+              color: Colors.black
+                  .withOpacity(1), // Same shadow color as QuizSearchBar
               spreadRadius: 1,
               blurRadius: 3,
               offset: Offset(0, 2), // Same shadow offset as QuizSearchBar
@@ -228,21 +232,20 @@ class QuizProgressCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 30,
-              backgroundImage: AssetImage('assets/images/boy-icon.png'), // Replace with your image asset
+              backgroundImage: AssetImage(
+                  'assets/images/boy-icon.png'), // Replace with your image asset
             ),
             SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Recent Quiz',
-                    style: outfitRegular.copyWith(color: fontcolor, fontSize: getBigFontSize(context))
-                  ),
-                  Text(
-                    'Movie Mania',
-                    style: outfitBold.copyWith(fontSize: getBigFontSize(context))
-                  ),
+                  Text('Recent Quiz',
+                      style: outfitRegular.copyWith(
+                          color: fontcolor, fontSize: getBigFontSize(context))),
+                  Text('Movie Mania',
+                      style: outfitBold.copyWith(
+                          fontSize: getBigFontSize(context))),
                   SizedBox(height: 8),
                   Row(
                     children: [
@@ -275,7 +278,8 @@ class QuizProgressCard extends StatelessWidget {
                 // Add functionality here
               },
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, backgroundColor: Colors.blueAccent,
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blueAccent,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                   side: BorderSide(
@@ -285,10 +289,7 @@ class QuizProgressCard extends StatelessWidget {
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               ),
-              child: Text(
-                'Continue',
-                style: outfitRegular
-              ),
+              child: Text('Continue', style: outfitRegular),
             ),
           ],
         ),
@@ -351,8 +352,7 @@ class ScrollableCategoryCard extends StatelessWidget {
               color: Colors.black87,
             ),
           ),
-                    SizedBox(height: 8),
-
+          SizedBox(height: 8),
           Text(
             'Explore More',
             style: TextStyle(
@@ -368,10 +368,8 @@ class ScrollableCategoryCard extends StatelessWidget {
               imagePath,
               height: 50, // Adjust size as necessary
               width: 100,
-             
             ),
           ),
-          
         ],
       ),
     );
@@ -388,21 +386,29 @@ class HorizontalScrollCards extends StatelessWidget {
         children: [
           ScrollableCategoryCard(
             title: 'All Category',
-            description: 'All kind of categories from education to tech and more.',
-            imagePath: 'assets/logo/allcategory.png', // Replace with your actual image path
-            backgroundColor: Colors.amber.shade100, // Adjust to match the background color
+            description:
+                'All kind of categories from education to tech and more.',
+            imagePath:
+                'assets/logo/allcategory.png', // Replace with your actual image path
+            backgroundColor:
+                Colors.amber.shade100, // Adjust to match the background color
           ),
           ScrollableCategoryCard(
             title: 'Education Quiz',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-            imagePath: 'assets/logo/educationcategory.png', // Replace with your actual image path
-            backgroundColor: Colors.blue.shade100, // Adjust to match the background color
+            description:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            imagePath:
+                'assets/logo/educationcategory.png', // Replace with your actual image path
+            backgroundColor:
+                Colors.blue.shade100, // Adjust to match the background color
           ),
           ScrollableCategoryCard(
             title: 'Science Quiz',
             description: 'Test your knowledge on various science topics.',
-            imagePath: 'assets/logo/educationcategory.png', // Replace with your actual image path
-            backgroundColor: Colors.red.shade100, // Adjust to match the background color
+            imagePath:
+                'assets/logo/educationcategory.png', // Replace with your actual image path
+            backgroundColor:
+                Colors.red.shade100, // Adjust to match the background color
           ),
         ],
       ),

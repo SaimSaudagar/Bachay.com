@@ -15,7 +15,8 @@ class OrderDetailScreen extends StatelessWidget {
   final int quantity;
   final double totalPrice;
 
-  const OrderDetailScreen({super.key, 
+  const OrderDetailScreen({
+    super.key,
     required this.orderNo,
     required this.placedDate,
     required this.paidDate,
@@ -42,7 +43,8 @@ class OrderDetailScreen extends StatelessWidget {
         ),
         title: Text(
           'Order Details',
-          style: TextStyle(color: Colors.black, fontSize: getBigFontSize(context)),
+          style:
+              TextStyle(color: Colors.black, fontSize: getBigFontSize(context)),
         ),
         actions: [
           Stack(
@@ -86,7 +88,8 @@ class OrderDetailScreen extends StatelessWidget {
             SizedBox(height: getSpacing(context)),
             Card(
               elevation: 2,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(borderRadius)),
               child: Padding(
                 padding: EdgeInsets.all(getPadding(context)),
                 child: Column(
@@ -96,19 +99,34 @@ class OrderDetailScreen extends StatelessWidget {
                       children: [
                         Image.asset('assets/images/cash.png'),
                         SizedBox(width: getSpacing(context)),
-                        Text('Cash on Delivery', style: interBold.copyWith(fontSize: getFontSize(context))),
+                        Text('Cash on Delivery',
+                            style: interBold.copyWith(
+                                fontSize: getFontSize(context))),
                       ],
                     ),
                     const Divider(),
-                    Text('Talha Ahmed', style: interBold.copyWith(fontSize: getFontSize(context))),
+                    Text('Talha Ahmed',
+                        style:
+                            interBold.copyWith(fontSize: getFontSize(context))),
                     SizedBox(width: getSpacing(context)),
-                    Text('03048987785', style: interRegular.copyWith(fontSize: getFontSize(context), color: Colors.grey)),
+                    Text('03048987785',
+                        style: interRegular.copyWith(
+                            fontSize: getFontSize(context),
+                            color: Colors.grey)),
                     SizedBox(height: getSpacing(context)),
-                    Text('Street No 05, Sector 19', style: interRegular.copyWith(fontSize: getFontSize(context))),
-                    Text('Karachi – Clifton, Sindh, Pakistan', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                    Text('Street No 05, Sector 19',
+                        style: interRegular.copyWith(
+                            fontSize: getFontSize(context))),
+                    Text('Karachi – Clifton, Sindh, Pakistan',
+                        style: interRegular.copyWith(
+                            fontSize: getFontSize(context))),
                     const Divider(),
-                    Text('Standard Shipping', style: interBold.copyWith(fontSize: getFontSize(context))),
-                    Text('Rs. 150 (Estimated time Jun 19 - Jun 24)', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                    Text('Standard Shipping',
+                        style:
+                            interBold.copyWith(fontSize: getFontSize(context))),
+                    Text('Rs. 150 (Estimated time Jun 19 - Jun 24)',
+                        style: interRegular.copyWith(
+                            fontSize: getFontSize(context))),
                   ],
                 ),
               ),
@@ -116,7 +134,8 @@ class OrderDetailScreen extends StatelessWidget {
             SizedBox(height: getSpacing(context)),
             Card(
               elevation: 2,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(borderRadius)),
               child: Padding(
                 padding: EdgeInsets.all(getPadding(context)),
                 child: Column(
@@ -128,38 +147,62 @@ class OrderDetailScreen extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Order No: $orderNo', style: interBold.copyWith(fontSize: getFontSize(context))),
-                            Text('Placed on $placedDate', style: interRegular.copyWith(fontSize: getFontSize(context))),
-                            Text('Paid on $paidDate', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                            Text('Order No: $orderNo',
+                                style: interBold.copyWith(
+                                    fontSize: getFontSize(context))),
+                            Text('Placed on $placedDate',
+                                style: interRegular.copyWith(
+                                    fontSize: getFontSize(context))),
+                            Text('Paid on $paidDate',
+                                style: interRegular.copyWith(
+                                    fontSize: getFontSize(context))),
                           ],
                         ),
                         Row(
-                          children: statuses.map((status) => _buildStatusChip(status, context)).toList(),
+                          children: statuses
+                              .map(
+                                  (status) => _buildStatusChip(status, context))
+                              .toList(),
                         ),
                       ],
                     ),
                     const Divider(),
                     Row(
                       children: [
-                        Image.network(imageUrl, width: 80, height: 80, fit: BoxFit.cover),
+                        Container(
+                          height: 10,
+                          child: Image.network(imageUrl,
+                              width: 80, height: 80, fit: BoxFit.cover),
+                        ),
                         SizedBox(width: getSpacing(context)),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(title, style: interBold.copyWith(fontSize: getFontSize(context))),
+                              Text(title,
+                                  style: interBold.copyWith(
+                                      fontSize: getFontSize(context))),
                               Row(
                                 children: [
-                                  Text('Rs. $price', style: TextStyle(color: buttonColorPurple, fontSize: getBigFontSize(context))),
+                                  Text('Rs. $price',
+                                      style: TextStyle(
+                                          color: buttonColorPurple,
+                                          fontSize: getBigFontSize(context))),
                                   const SizedBox(width: 4),
-                                  Text('Rs. $originalPrice', style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: getFontSize(context))),
+                                  Text('Rs. $originalPrice',
+                                      style: TextStyle(
+                                          decoration:
+                                              TextDecoration.lineThrough,
+                                          fontSize: getFontSize(context))),
                                 ],
                               ),
-                              Text('Quantity: $quantity', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                              Text('Quantity: $quantity',
+                                  style: interRegular.copyWith(
+                                      fontSize: getFontSize(context))),
                             ],
                           ),
                         ),
-                       Image.asset('assets/images/24-support.png'),
+                        Image.asset('assets/images/24-support.png'),
                       ],
                     ),
                     SizedBox(height: getSpacing(context)),
@@ -185,12 +228,18 @@ class OrderDetailScreen extends StatelessWidget {
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.black, backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                              backgroundColor: Colors.white,
                               side: const BorderSide(color: Colors.black),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
-                              padding: EdgeInsets.symmetric(vertical: getSpacing(context), horizontal: getPadding(context)),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50.0)),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: getSpacing(context),
+                                  horizontal: getPadding(context)),
                             ),
-                            child: Text('Return Product', style: buttonTextStyle(context).copyWith(color: Colors.black)),
+                            child: Text('Return Product',
+                                style: buttonTextStyle(context)
+                                    .copyWith(color: Colors.black)),
                           ),
                         ),
                         SizedBox(width: getSpacing(context)),
@@ -214,10 +263,14 @@ class OrderDetailScreen extends StatelessWidget {
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.orange,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
-                              padding: EdgeInsets.symmetric(vertical: getSpacing(context), horizontal: getPadding(context)),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50.0)),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: getSpacing(context),
+                                  horizontal: getPadding(context)),
                             ),
-                            child: Text('Review Product', style: buttonTextStyle(context)),
+                            child: Text('Review Product',
+                                style: buttonTextStyle(context)),
                           ),
                         ),
                       ],
@@ -229,17 +282,24 @@ class OrderDetailScreen extends StatelessWidget {
             SizedBox(height: getSpacing(context)),
             Card(
               elevation: 2,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(borderRadius)),
               child: Padding(
                 padding: EdgeInsets.all(getPadding(context)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildOrderSummaryRow('Subtotal:', 'Rs. $totalPrice', context),
-                    _buildOrderSummaryRow('Coupon Code: FIRSTORDER1', '- Rs. 180', context, isCoupon: true),
-                    _buildOrderSummaryRow('Delivery Fee:', 'FREE', context, isDelivery: true),
+                    _buildOrderSummaryRow(
+                        'Subtotal:', 'Rs. $totalPrice', context),
+                    _buildOrderSummaryRow(
+                        'Coupon Code: FIRSTORDER1', '- Rs. 180', context,
+                        isCoupon: true),
+                    _buildOrderSummaryRow('Delivery Fee:', 'FREE', context,
+                        isDelivery: true),
                     const Divider(),
-                    _buildOrderSummaryRow('Total Order:', 'Rs. ${totalPrice - 180}', context, isTotal: true),
+                    _buildOrderSummaryRow(
+                        'Total Order:', 'Rs. ${totalPrice - 180}', context,
+                        isTotal: true),
                   ],
                 ),
               ),
@@ -276,11 +336,16 @@ class OrderDetailScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(borderRadius),
         border: Border.all(color: color),
       ),
-      child: Text(status, style: TextStyle(color: color, fontSize: getFontSize(context), fontWeight: FontWeight.bold)),
+      child: Text(status,
+          style: TextStyle(
+              color: color,
+              fontSize: getFontSize(context),
+              fontWeight: FontWeight.bold)),
     );
   }
 
-  Widget _buildOrderSummaryRow(String label, String value, BuildContext context, {bool isCoupon = false, bool isDelivery = false, bool isTotal = false}) {
+  Widget _buildOrderSummaryRow(String label, String value, BuildContext context,
+      {bool isCoupon = false, bool isDelivery = false, bool isTotal = false}) {
     Color valueColor = Colors.black;
     TextDecoration? decoration;
 
@@ -298,10 +363,14 @@ class OrderDetailScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: interBold.copyWith(fontSize: getFontSize(context))),
+          Text(label,
+              style: interBold.copyWith(fontSize: getFontSize(context))),
           Text(
             value,
-            style: TextStyle(color: valueColor, decoration: decoration, fontSize: getFontSize(context)),
+            style: TextStyle(
+                color: valueColor,
+                decoration: decoration,
+                fontSize: getFontSize(context)),
           ),
         ],
       ),

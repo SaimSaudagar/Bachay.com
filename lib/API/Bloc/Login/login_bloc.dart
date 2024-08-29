@@ -60,7 +60,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (response.statusCode == 200) {
         final responseBody = jsonDecode(response.body);
         final message =
-            responseBody['message'].toString(); // Ensure message is a string
+            responseBody['message'].toString();
         emit(LoginSuccess(message));
       } else {
         emit(LoginFailure('Failed to login'));

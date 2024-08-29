@@ -21,7 +21,8 @@ class ProductReturnScreen extends StatelessWidget {
         ),
         title: Text(
           'Product Return',
-          style: TextStyle(color: Colors.black, fontSize: getBigFontSize(context)),
+          style:
+              TextStyle(color: Colors.black, fontSize: getBigFontSize(context)),
         ),
         actions: [
           Stack(
@@ -91,7 +92,8 @@ class ProductReturnScreen extends StatelessWidget {
               padding: EdgeInsets.only(bottom: getSpacing(context) * 2),
               child: Card(
                 elevation: 2,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(borderRadius)),
                 child: Padding(
                   padding: EdgeInsets.all(getPadding(context)),
                   child: Column(
@@ -103,25 +105,44 @@ class ProductReturnScreen extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Order No: ${returnRequest.orderNo}', style: interBold.copyWith(fontSize: getFontSize(context))),
-                              Text('Initiated Refund on ${returnRequest.initiatedDate}', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                              Text('Order No: ${returnRequest.orderNo}',
+                                  style: interBold.copyWith(
+                                      fontSize: getFontSize(context))),
+                              Text(
+                                  'Initiated Refund on ${returnRequest.initiatedDate}',
+                                  style: interRegular.copyWith(
+                                      fontSize: getFontSize(context))),
                               if (returnRequest.status == 'Approved')
-                                Text('Refunded on ${returnRequest.refundDate}', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                                Text('Refunded on ${returnRequest.refundDate}',
+                                    style: interRegular.copyWith(
+                                        fontSize: getFontSize(context))),
                               if (returnRequest.status == 'Canceled')
-                                Text('Refund Cancel', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                                Text('Refund Cancel',
+                                    style: interRegular.copyWith(
+                                        fontSize: getFontSize(context))),
                             ],
                           ),
                           Container(
-                            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 4, horizontal: 8),
                             decoration: BoxDecoration(
-                              color: returnRequest.status == 'Approved' ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1),
+                              color: returnRequest.status == 'Approved'
+                                  ? Colors.green.withOpacity(0.1)
+                                  : Colors.red.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(20),
-                              border: Border.all(color: returnRequest.status == 'Approved' ? Colors.green : Colors.red),
+                              border: Border.all(
+                                  color: returnRequest.status == 'Approved'
+                                      ? Colors.green
+                                      : Colors.red),
                             ),
                             child: Text(
-                              returnRequest.status == 'Approved' ? 'Refund Approved' : 'Refund Canceled',
+                              returnRequest.status == 'Approved'
+                                  ? 'Refund Approved'
+                                  : 'Refund Canceled',
                               style: interBold.copyWith(
-                                color: returnRequest.status == 'Approved' ? Colors.green : Colors.red,
+                                color: returnRequest.status == 'Approved'
+                                    ? Colors.green
+                                    : Colors.red,
                                 fontSize: getFontSize(context),
                               ),
                             ),
@@ -131,26 +152,40 @@ class ProductReturnScreen extends StatelessWidget {
                       SizedBox(height: getSpacing(context)),
                       Row(
                         children: [
-                          Image.network(
-                            returnRequest.imageUrl,
-                            width: 50,
-                            height: 50,
-                            fit: BoxFit.cover,
+                          Container(
+                            height: 10,
+                            child: Image.network(
+                              returnRequest.imageUrl,
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                           SizedBox(width: getSpacing(context)),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(returnRequest.title, style: interBold.copyWith(fontSize: getFontSize(context))),
+                                Text(returnRequest.title,
+                                    style: interBold.copyWith(
+                                        fontSize: getFontSize(context))),
                                 Row(
                                   children: [
-                                    Text('Rs. ${returnRequest.price}', style: TextStyle(color: buttonColorPurple, fontSize: getBigFontSize(context))),
+                                    Text('Rs. ${returnRequest.price}',
+                                        style: TextStyle(
+                                            color: buttonColorPurple,
+                                            fontSize: getBigFontSize(context))),
                                     const SizedBox(width: 4),
-                                    Text('Rs. ${returnRequest.originalPrice}', style: TextStyle(decoration: TextDecoration.lineThrough, fontSize: getFontSize(context))),
+                                    Text('Rs. ${returnRequest.originalPrice}',
+                                        style: TextStyle(
+                                            decoration:
+                                                TextDecoration.lineThrough,
+                                            fontSize: getFontSize(context))),
                                   ],
                                 ),
-                                Text('Quantity: ${returnRequest.quantity}', style: interRegular.copyWith(fontSize: getFontSize(context))),
+                                Text('Quantity: ${returnRequest.quantity}',
+                                    style: interRegular.copyWith(
+                                        fontSize: getFontSize(context))),
                               ],
                             ),
                           ),
@@ -160,14 +195,17 @@ class ProductReturnScreen extends StatelessWidget {
                       if (returnRequest.reason.isNotEmpty)
                         Container(
                           width: double.infinity,
-                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 12),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(borderRadius),
                           ),
                           child: Text(
                             'Reason: ${returnRequest.reason}',
-                            style: interRegular.copyWith(fontSize: getFontSize(context), color: Colors.grey),
+                            style: interRegular.copyWith(
+                                fontSize: getFontSize(context),
+                                color: Colors.grey),
                           ),
                         ),
                     ],

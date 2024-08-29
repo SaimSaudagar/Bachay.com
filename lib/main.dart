@@ -5,6 +5,7 @@ import 'package:app/API/Repository/Cart_Repo.dart';
 import 'package:app/API/Repository/Order_Repo.dart';
 import 'package:app/API/Repository/Product_Repository.dart';
 import 'package:app/Screens/Home/Homepage.dart';
+import 'package:app/Widgets/CP_Bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'Screens/Parenting/Feed/feed.dart';
@@ -15,7 +16,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
- 
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -37,7 +38,12 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
           useMaterial3: true,
         ),
-        home: FeedsScreen(),
+        home: Center(
+          child: BouncingSvgLoader(
+            svgAssetPath: 'assets/logo/progress_logo.svg',
+            size: 100.0,
+          ),
+        ),
       ),
     );
   }

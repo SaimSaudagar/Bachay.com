@@ -1,4 +1,12 @@
+import 'package:app/API/Bloc/Order/Order_Bloc.dart';
+import 'package:app/API/Bloc/Order/Order_Event.dart';
+import 'package:app/API/Bloc/Order/Order_State.dart';
+import 'package:app/API/Repository/Order_Repo.dart';
+import 'package:app/Models/Order/Order_List.dart';
+import 'package:app/Screens/Profile/Shopping%20Profile/Refund/Refund_Request.dart';
+import 'package:app/Screens/Profile/Shopping%20Profile/Refund/Refund_Status.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../Utils/app_constants.dart';
 import 'Order_Details.dart';
 
@@ -33,7 +41,9 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         title: Text(
           'Order History',
@@ -89,8 +99,8 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
       ),
       body: TabBarView(
         controller: _tabController,
-        children: const [
-          OrderListView(),
+        children: [
+          orderListView(),
           Center(child: Text('To Pay Orders')),
           Center(child: Text('To Ship Orders')),
           Center(child: Text('To Receive Orders')),
@@ -100,46 +110,53 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
   }
 }
 
-class OrderListView extends StatelessWidget {
-  const OrderListView({super.key});
+Widget orderListView() {
+  return BlocProvider(
+    create: (context) =>
+        OrderBloc(orderRepository: OrderRepository())..add(AllOrder()),
+    child: BlocBuilder<OrderBloc, OrderState>(
+      builder: (context, state) {
+        if (state is AllOrderLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is AllOrderLoaded) {
+          return buildOrderListView(context, state.orderList);
+        } else if (state is AllOrderError) {
+          return Center(child: Text(state.message));
+        } else {
+          return const Center(child: Text('Something went wrong!'));
+        }
+      },
+    ),
+  );
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.all(getPadding(context)),
-      children: [
-        const OrderCard(
-          orderNo: '01254547',
-          placedDate: '02 Jun 2024, 20:14:56',
-          paidDate: '07 Jun 2024, 18:04:56',
-          statuses: ['Paid', 'Delivered'],
-          imageUrl:
-              'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
-          title:
-              'Tween Boy Loose Fit Athletic Solid Color Stand Collar Short Sleeve Shirt',
-          price: 850,
-          originalPrice: 3999,
-          quantity: 1,
-          totalPrice: 850,
-        ),
-        SizedBox(height: getSpacing(context)),
-        const OrderCard(
-          orderNo: '0855547',
-          placedDate: '02 Jun 2024, 20:14:56',
-          paidDate: '07 Jun 2024, 18:04:56',
-          statuses: ['Unpaid', 'Processing'],
-          imageUrl:
-              'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
-          title:
-              'BUMZEE Interlock Half Sleeves Star Printed Tee & Shorts Set With Suspender - Beige & Navy Blue',
-          price: 257,
-          originalPrice: 3999,
-          quantity: 4,
-          totalPrice: 1445,
-        ),
-      ],
-    );
-  }
+Widget buildOrderListView(BuildContext context, OrderList orderList) {
+  return ListView.builder(
+    padding: EdgeInsets.all(getPadding(context)),
+    itemCount: orderList.orders.length,
+    itemBuilder: (context, index) {
+      final order = orderList.orders[index];
+      final orderDetail = order.details.first;
+
+      return Column(
+        children: [
+          OrderCard(
+            orderNo: order.id.toString(),
+            placedDate: order.createdAt!,
+            paidDate: order.updatedAt!,
+            statuses: [order.paymentStatus!, order.orderStatus!],
+            imageUrl: orderDetail.product.thumbnail!,
+            title: orderDetail.product.name!,
+            price: orderDetail.price,
+            originalPrice: orderDetail.product.unitPrice.toDouble(),
+            quantity: orderDetail.qty,
+            totalPrice: order.orderAmount.toDouble(),
+          ),
+          SizedBox(height: getSpacing(context)),
+        ],
+      );
+    },
+  );
 }
 
 class OrderCard extends StatelessWidget {
@@ -154,7 +171,8 @@ class OrderCard extends StatelessWidget {
   final int quantity;
   final double totalPrice;
 
-  const OrderCard({super.key, 
+  const OrderCard({
+    super.key,
     required this.orderNo,
     required this.placedDate,
     required this.paidDate,
@@ -225,8 +243,11 @@ class OrderCard extends StatelessWidget {
               const Divider(),
               Row(
                 children: [
-                  Image.network(imageUrl,
-                      width: 80, height: 80, fit: BoxFit.cover),
+                  Container(
+                    height: 10,
+                    child: Image.network(imageUrl,
+                        width: 10, height: 10, fit: BoxFit.cover),
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Column(
@@ -274,7 +295,20 @@ class OrderCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ReturnRequestScreen(
+                                      orderNo: orderNo,
+                                      imageUrl: imageUrl,
+                                      title: title,
+                                      price: price,
+                                      quantity: quantity,
+                                      totalPrice: totalPrice,
+                                      originalPrice: originalPrice,
+                                    )));
+                      },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.black,
                         backgroundColor: Colors.grey.withOpacity(0.5),

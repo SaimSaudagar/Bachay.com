@@ -1,26 +1,15 @@
 import 'dart:io';
+import 'package:app/API/Bloc/Child/Child_Bloc.dart';
+import 'package:app/API/Bloc/Child/Child_Event.dart';
+import 'package:app/API/Bloc/Child/Child_State.dart';
+import 'package:app/API/Repository/Child_Repo.dart';
+import 'package:app/Models/Child/Child.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import '../../../Utils/app_constants.dart';
-
-class ChildDetails {
-  final String name;
-  final String dateOfBirth;
-  final String gender;
-  final String weight;
-  final String height;
-  final String imagePath;
-
-  ChildDetails({
-    required this.name,
-    required this.dateOfBirth,
-    required this.gender,
-    required this.weight,
-    required this.height,
-    required this.imagePath,
-  });
-}
 
 class ChildrenDetailsScreen extends StatefulWidget {
   const ChildrenDetailsScreen({super.key});
@@ -30,15 +19,15 @@ class ChildrenDetailsScreen extends StatefulWidget {
 }
 
 class _ChildrenDetailsScreenState extends State<ChildrenDetailsScreen> {
-  List<ChildDetails> children = [];
+  List<Children> children = [];
 
-  void _addChild(ChildDetails child) {
+  void _addChild(Children child) {
     setState(() {
       children.add(child);
     });
   }
 
-  void _editChild(int index, ChildDetails child) {
+  void _editChild(int index, Children child) {
     setState(() {
       children[index] = child;
     });
@@ -50,7 +39,7 @@ class _ChildrenDetailsScreenState extends State<ChildrenDetailsScreen> {
     });
   }
 
-  void _showChildDetails(BuildContext context, ChildDetails child) {
+  void _showChild(BuildContext context, Children child) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -62,7 +51,8 @@ class _ChildrenDetailsScreenState extends State<ChildrenDetailsScreen> {
           left: getPadding(context),
           right: getPadding(context),
           top: getPadding(context),
-          bottom: MediaQuery.of(context).viewInsets.bottom + getPadding(context),
+          bottom:
+              MediaQuery.of(context).viewInsets.bottom + getPadding(context),
         ),
         child: ListView(
           shrinkWrap: true,
@@ -91,7 +81,7 @@ class _ChildrenDetailsScreenState extends State<ChildrenDetailsScreen> {
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    backgroundImage: FileImage(File(child.imagePath)),
+                    backgroundImage: FileImage(File(child.profilePicture)),
                   ),
                   Positioned(
                     bottom: 0,
@@ -127,10 +117,12 @@ class _ChildrenDetailsScreenState extends State<ChildrenDetailsScreen> {
                         context: context,
                         isScrollControlled: true,
                         shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(30.0)),
                         ),
                         builder: (context) => AddChildBottomSheet(
-                          onAddChild: (editedChild) => _editChild(children.indexOf(child), editedChild),
+                          onAddChild: (editedChild) =>
+                              _editChild(children.indexOf(child), editedChild),
                           initialChild: child,
                         ),
                       );
@@ -147,10 +139,11 @@ class _ChildrenDetailsScreenState extends State<ChildrenDetailsScreen> {
               ),
             ),
             SizedBox(height: getSpacing(context) * 2),
-            _buildDetailRow(context, 'Date of Birth:', child.dateOfBirth),
+            _buildDetailRow(
+                context, 'Date of Birth:', child.dob.toIso8601String()),
             _buildDetailRow(context, 'Gender:', child.gender),
-            _buildDetailRow(context, 'Weight (KG):', child.weight),
-            _buildDetailRow(context, 'Height (CM):', child.height),
+            // _buildDetailRow(context, 'Weight (KG):', child.weight),
+            // _buildDetailRow(context, 'Height (CM):', child.height),
           ],
         ),
       ),
@@ -186,154 +179,183 @@ class _ChildrenDetailsScreenState extends State<ChildrenDetailsScreen> {
       ),
       body: Padding(
         padding: EdgeInsets.all(getPadding(context)),
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
+        child: Center(
+          child: Column(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(30.0)),
+                    ),
+                    builder: (context) => AddChildBottomSheet(
+                      onAddChild: _addChild,
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 16.0, horizontal: 48.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
-                  builder: (context) => AddChildBottomSheet(
-                    onAddChild: _addChild,
-                  ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
-                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 48.0), 
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.add, color: Colors.white),
+                    SizedBox(width: getSpacing(context)),
+                    Text(
+                      'Add Child',
+                      style: interBold.copyWith(
+                        color: Colors.white,
+                        fontSize: getFontSize(context),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: Row(
+              SizedBox(height: getSpacing(context) * 2),
+              Expanded(child: childItem()),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget childItem() {
+    return BlocProvider(
+      create: (_) =>
+          ChildBloc(childRepository: ChildRepository())..add(LoadChildren()),
+      child: BlocBuilder<ChildBloc, ChildState>(
+        builder: (context, state) {
+          if (state is ChildLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is ChildLoaded) {
+            children = state.child.children;
+
+            return _buildChildItem(context, state.child.children, 1);
+          } else if (state is ChildError) {
+            return const Text('Failed to load all Childs');
+          }
+          return const Center(child: Text('Press a button to load categories'));
+        },
+      ),
+    );
+  }
+
+  Widget _buildChildItem(
+      BuildContext context, List<Children> children, int index) {
+    return ListView.builder(
+        itemCount: children.length,
+        itemBuilder: (context, index) {
+          return Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            child: ListTile(
+              leading: CircleAvatar(
+                backgroundImage:
+                    FileImage(File(children[index].profilePicture)),
+                radius: 30,
+              ),
+              title: GestureDetector(
+                onTap: () => _showChild(context, children[index]),
+                child: Row(
+                  children: [
+                    Text(
+                      children[index].name,
+                      style: interBold.copyWith(
+                          fontSize: getFontSize(context) * 1.2),
+                    ),
+                    const Icon(Icons.expand_more),
+                  ],
+                ),
+              ),
+              subtitle: Text(
+                children[index].dob.toIso8601String(),
+                style: interRegular.copyWith(
+                    color: Colors.grey, fontSize: getFontSize(context) * 0.9),
+              ),
+              trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.add, color: Colors.white),
-                  SizedBox(width: getSpacing(context)),
-                  Text(
-                    'Add Child',
-                    style: interBold.copyWith(
-                      color: Colors.white,
-                      fontSize: getFontSize(context),
-                    ),
+                  IconButton(
+                    icon: const Icon(Icons.edit, color: Colors.grey),
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(30.0)),
+                        ),
+                        builder: (context) => AddChildBottomSheet(
+                          onAddChild: (editedChild) =>
+                              _editChild(index, editedChild),
+                          initialChild: children[index],
+                        ),
+                      );
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    onPressed: () {
+                      _deleteChild(index);
+                    },
                   ),
                 ],
               ),
             ),
-            SizedBox(height: getSpacing(context) * 2),
-            Expanded(
-              child: ListView.builder(
-                itemCount: children.length,
-                itemBuilder: (context, index) {
-                  return _buildChildItem(context, children[index], index);
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildChildItem(BuildContext context, ChildDetails child, int index) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundImage: FileImage(File(child.imagePath)),
-          radius: 30,
-        ),
-        title: GestureDetector(
-          onTap: () => _showChildDetails(context, child),
-          child: Row(
-            children: [
-              Text(
-                child.name,
-                style: interBold.copyWith(fontSize: getFontSize(context) * 1.2),
-              ),
-              const Icon(Icons.expand_more),
-            ],
-          ),
-        ),
-        subtitle: Text(
-          child.dateOfBirth,
-          style: interRegular.copyWith(color: Colors.grey, fontSize: getFontSize(context) * 0.9),
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.edit, color: Colors.grey),
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
-                  ),
-                  builder: (context) => AddChildBottomSheet(
-                    onAddChild: (editedChild) => _editChild(index, editedChild),
-                    initialChild: child,
-                  ),
-                );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.delete, color: Colors.red),
-              onPressed: () {
-                _deleteChild(index);
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  PreferredSizeWidget customAppBar(BuildContext context,
-      {required String title, required String subtitle}) {
-    return AppBar(
-      backgroundColor: Colors.white,
-      elevation: 0,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.black),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: interBold.copyWith(
-              color: Colors.black,
-              fontSize: getBigFontSize(context),
-            ),
-          ),
-          Text(
-            subtitle,
-            style: interRegular.copyWith(
-              color: Colors.grey,
-              fontSize: getFontSize(context),
-            ),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 }
 
-class AddChildBottomSheet extends StatefulWidget {
-  final void Function(ChildDetails) onAddChild;
-  final ChildDetails? initialChild;
+PreferredSizeWidget customAppBar(BuildContext context,
+    {required String title, required String subtitle}) {
+  return AppBar(
+    backgroundColor: Colors.white,
+    elevation: 0,
+    leading: IconButton(
+      icon: const Icon(Icons.arrow_back, color: Colors.black),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    ),
+    title: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: interBold.copyWith(
+            color: Colors.black,
+            fontSize: getBigFontSize(context),
+          ),
+        ),
+        Text(
+          subtitle,
+          style: interRegular.copyWith(
+            color: Colors.grey,
+            fontSize: getFontSize(context),
+          ),
+        ),
+      ],
+    ),
+  );
+}
 
-  const AddChildBottomSheet({super.key, required this.onAddChild, this.initialChild});
+class AddChildBottomSheet extends StatefulWidget {
+  final void Function(Children) onAddChild;
+  final Children? initialChild;
+
+  const AddChildBottomSheet(
+      {super.key, required this.onAddChild, this.initialChild});
 
   @override
   _AddChildBottomSheetState createState() => _AddChildBottomSheetState();
@@ -355,11 +377,11 @@ class _AddChildBottomSheetState extends State<AddChildBottomSheet> {
     super.initState();
     if (widget.initialChild != null) {
       nameController.text = widget.initialChild!.name;
-      dateController.text = widget.initialChild!.dateOfBirth;
-      weightController.text = widget.initialChild!.weight;
-      heightController.text = widget.initialChild!.height;
+      dateController.text = widget.initialChild!.dob.toIso8601String();
+      // weightController.text = widget.initialChild!.weight;
+      // heightController.text = widget.initialChild!.height;
       isBoySelected = widget.initialChild!.gender == 'Male (Boy)';
-      _image = XFile(widget.initialChild!.imagePath);
+      _image = XFile(widget.initialChild!.profilePicture);
     }
   }
 
@@ -467,13 +489,17 @@ class _AddChildBottomSheetState extends State<AddChildBottomSheet> {
             ),
           ),
           SizedBox(height: getSpacing(context) * 2),
-          _buildTextField(context, 'Child\'s Name', 'Enter Child Name', nameController),
+          _buildTextField(
+              context, 'Child\'s Name', 'Enter Child Name', nameController),
           SizedBox(height: getSpacing(context) * 2),
-          _buildDateField(context, 'Date of Birth', 'Enter Child\'s Date of Birth', dateController),
+          _buildDateField(context, 'Date of Birth',
+              'Enter Child\'s Date of Birth', dateController),
           SizedBox(height: getSpacing(context) * 2),
-          _buildWeightHeightField(context, 'Weight', 'Enter Child\'s Weight', _buildWeightSuffix(context)),
+          _buildWeightHeightField(context, 'Weight', 'Enter Child\'s Weight',
+              _buildWeightSuffix(context)),
           SizedBox(height: getSpacing(context) * 2),
-          _buildWeightHeightField(context, 'Height', 'Enter Child\'s Height', _buildHeightSuffix(context)),
+          _buildWeightHeightField(context, 'Height', 'Enter Child\'s Height',
+              _buildHeightSuffix(context)),
           SizedBox(height: getSpacing(context) * 2),
           _buildGenderSelection(context),
           SizedBox(height: getSpacing(context) * 4),
@@ -504,15 +530,15 @@ class _AddChildBottomSheetState extends State<AddChildBottomSheet> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    final newChild = ChildDetails(
-                      name: nameController.text,
-                      dateOfBirth: dateController.text,
-                      gender: isBoySelected ? 'Male (Boy)' : 'Female (Girl)',
-                      weight: weightController.text,
-                      height: heightController.text,
-                      imagePath: _image?.path ?? '',
-                    );
-                    widget.onAddChild(newChild);
+                    // final newChild = Child(
+                    //   name: nameController.text,
+                    //   dob: DateTime.parse(dateController.text),
+                    //   gender: isBoySelected ? 'Male (Boy)' : 'Female (Girl)',
+                    //   // weight: weightController.text,
+                    //   // height: heightController.text,
+                    //   profilePicture: _image?.path ?? '', id: ,
+                    // );
+                    // widget.onAddChild(newChild);
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
@@ -538,7 +564,9 @@ class _AddChildBottomSheetState extends State<AddChildBottomSheet> {
     );
   }
 
-  Widget _buildTextField(BuildContext context, String label, String hint, TextEditingController controller, [IconData? icon]) {
+  Widget _buildTextField(BuildContext context, String label, String hint,
+      TextEditingController controller,
+      [IconData? icon]) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -563,7 +591,8 @@ class _AddChildBottomSheetState extends State<AddChildBottomSheet> {
     );
   }
 
-  Widget _buildDateField(BuildContext context, String label, String hint, TextEditingController controller) {
+  Widget _buildDateField(BuildContext context, String label, String hint,
+      TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -591,7 +620,8 @@ class _AddChildBottomSheetState extends State<AddChildBottomSheet> {
     );
   }
 
-  Widget _buildWeightHeightField(BuildContext context, String label, String hint, Widget suffix) {
+  Widget _buildWeightHeightField(
+      BuildContext context, String label, String hint, Widget suffix) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -609,12 +639,15 @@ class _AddChildBottomSheetState extends State<AddChildBottomSheet> {
             children: [
               Expanded(
                 child: TextField(
-                  controller: label == 'Weight' ? weightController : heightController,
+                  controller:
+                      label == 'Weight' ? weightController : heightController,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: hint,
-                    hintStyle: const TextStyle(fontSize: 16, color: Colors.grey),
-                    contentPadding: EdgeInsets.symmetric(horizontal: getPadding(context)),
+                    hintStyle:
+                        const TextStyle(fontSize: 16, color: Colors.grey),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: getPadding(context)),
                   ),
                 ),
               ),
@@ -644,7 +677,8 @@ class _AddChildBottomSheetState extends State<AddChildBottomSheet> {
     );
   }
 
-  Widget _buildUnitButton(BuildContext context, String label, {required bool isSelected}) {
+  Widget _buildUnitButton(BuildContext context, String label,
+      {required bool isSelected}) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
@@ -681,14 +715,17 @@ class _AddChildBottomSheetState extends State<AddChildBottomSheet> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildGenderChip(context, 'Boys', 'assets/images/boy-icon.png', isBoySelected),
+        _buildGenderChip(
+            context, 'Boys', 'assets/images/boy-icon.png', isBoySelected),
         SizedBox(width: getSpacing(context) * 2),
-        _buildGenderChip(context, 'Girls', 'assets/images/girl-icon.png', !isBoySelected),
+        _buildGenderChip(
+            context, 'Girls', 'assets/images/girl-icon.png', !isBoySelected),
       ],
     );
   }
 
-  Widget _buildGenderChip(BuildContext context, String label, String assetPath, bool isSelected) {
+  Widget _buildGenderChip(
+      BuildContext context, String label, String assetPath, bool isSelected) {
     return ChoiceChip(
       label: Row(
         mainAxisSize: MainAxisSize.min,

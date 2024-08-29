@@ -145,8 +145,6 @@
 //   }
 // }
 
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -203,10 +201,12 @@ class ParentingAppBar extends StatelessWidget implements PreferredSizeWidget {
         isScrollable: true,
         labelColor: Colors.purple,
         unselectedLabelColor: Colors.black,
-        indicatorColor: Colors.transparent, // No default indicator, we're using custom ones
+        indicatorColor:
+            Colors.transparent, // No default indicator, we're using custom ones
         tabs: [
           Tab(
             child: _buildTab("Feeds", 'assets/images/feeds.svg', 0),
+            
           ),
           Tab(
             child: _buildTab("Articles", 'assets/images/Video.svg', 1),
@@ -230,7 +230,9 @@ class ParentingAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
-        color: isSelected ? Colors.purple.withOpacity(0.2) : Colors.grey.withOpacity(0.2),
+        color: isSelected
+            ? Colors.purple.withOpacity(0.2)
+            : Colors.grey.withOpacity(0.2),
       ),
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Row(
@@ -239,7 +241,7 @@ class ParentingAppBar extends StatelessWidget implements PreferredSizeWidget {
             svgIconPath,
             color: isSelected ? Colors.purple : Colors.black,
             height: 24, // Adjust the height as needed
-            width: 24,  // Adjust the width as needed
+            width: 24, // Adjust the width as needed
           ),
           SizedBox(width: 8),
           Text(text),

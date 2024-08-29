@@ -75,6 +75,7 @@ flutter:
 
   assets:
     - assets/logo/
+    - assets/Bachay Icons/Navigation Bar/back.svg
     - assets/images/
     - assets/images/home/
     - assets/logo/Parenting.svg

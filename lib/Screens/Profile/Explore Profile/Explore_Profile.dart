@@ -13,7 +13,7 @@ class ExploreProfileScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+            Navigator.pop(context);
           },
         ),
         title: Image.asset('assets/logo/LogoExplore.png', height: 40),
@@ -68,18 +68,22 @@ class ExploreProfileScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            const Text('My Account', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            const Text('My Account',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildAccountButton(context, 'assets/images/following.png', 'Following', () {
+                _buildAccountButton(
+                    context, 'assets/images/following.png', 'Following', () {
                   // Navigator.push(context, MaterialPageRoute(builder: (context) => FollowingScreen()));
                 }),
-                _buildAccountButton(context, 'assets/images/saved.png', 'Saved', () {
+                _buildAccountButton(context, 'assets/images/saved.png', 'Saved',
+                    () {
                   // Navigator.push(context, MaterialPageRoute(builder: (context) => SavedScreen()));
                 }),
-                _buildAccountButton(context, 'assets/images/liked.png', 'Liked', () {
+                _buildAccountButton(context, 'assets/images/liked.png', 'Liked',
+                    () {
                   // Navigator.push(context, MaterialPageRoute(builder: (context) => LikedScreen()));
                 }),
               ],
@@ -100,7 +104,8 @@ class ExploreProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAccountButton(BuildContext context, String iconPath, String label, VoidCallback onPressed) {
+  Widget _buildAccountButton(BuildContext context, String iconPath,
+      String label, VoidCallback onPressed) {
     return Column(
       children: [
         GestureDetector(

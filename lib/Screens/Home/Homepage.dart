@@ -925,7 +925,7 @@ class _HomePageState extends State<HomePage> {
   Widget allProducts() {
     return BlocProvider(
       create: (_) => ProductBloc(productRepository: ProductRepository())
-        ..add(LoadAllProducts(colors: [], ages: [])),
+        ..add(LoadAllProducts(colors: [], ages: [], gender: '')),
       child: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
           if (state is AllProductsLoading) {

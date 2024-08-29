@@ -51,7 +51,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
     return BlocProvider<ProductBloc>(
       create: (context) => _productBloc,
       child: Scaffold(
-        appBar: const CustomAppBar(state: 3),
+        appBar: const CustomAppBarWithBack(state: 3),
         body: BlocListener<ProductBloc, ProductState>(
           listener: (context, state) {
             if (state is AddToCartLoaded) {
@@ -322,27 +322,28 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
 
     return Stack(
       children: [
-        CarouselSlider(
-          options: CarouselOptions(
-            height: MediaQuery.of(context).size.height * 0.4,
-            enlargeCenterPage: false,
-            enableInfiniteScroll: false,
-            autoPlay: false,
-            onPageChanged: (index, reason) {
-              setState(() {
-                currentIndex = index;
-              });
-            },
-          ),
-          items: imageUrls.map((imageUrl) {
-            return SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: Image.network(
-                "https://bachay.com$imageUrl",
-                fit: BoxFit.cover,
+        PageView.builder(
+          controller: PageController(viewportFraction: 0.9),
+          itemCount: imageUrls.length,
+          onPageChanged: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
+          physics: const BouncingScrollPhysics(), // Allows smooth scrolling
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0), // Add spacing between images
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width / 1.5,
+                child: Image.network(
+                  "https://bachay.com${imageUrls[index]}",
+                  fit: BoxFit.cover,
+                ),
               ),
             );
-          }).toList(),
+          },
         ),
         Positioned(
           bottom: 10,

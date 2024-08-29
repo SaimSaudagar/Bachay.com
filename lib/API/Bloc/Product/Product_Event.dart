@@ -3,8 +3,10 @@ abstract class ProductEvent {}
 class LoadAllProducts extends ProductEvent {
   List<String> colors;
   List<String> ages;
+  final String? gender;
 
-  LoadAllProducts({required this.colors, required this.ages});
+  LoadAllProducts(
+      {required this.colors, required this.ages, required this.gender});
 }
 
 class LoadSingleProduct extends ProductEvent {

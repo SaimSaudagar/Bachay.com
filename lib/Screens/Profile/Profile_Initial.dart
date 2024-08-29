@@ -4,6 +4,7 @@ import 'package:app/API/Bloc/Profile/Profile_State.dart';
 import 'package:app/API/Repository/Profile_Repo.dart';
 import 'package:app/Models/Profile/User_Profile.dart';
 import 'package:app/Screens/Profile/Explore%20Profile/Explore_Profile.dart';
+import 'package:app/Widgets/Sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Utils/app_constants.dart';
@@ -36,8 +37,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        state: 2,
+        state: 3,
       ),
+      drawer: const CustomDrawer(),
       body: profileScreen(context),
       bottomNavigationBar:
           CustomBottomNavigationBar(onTabSelected: _onTabSelected),
@@ -139,7 +141,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildIconCard(BuildContext context, String imagePath, String text, Color bgColor, VoidCallback onTap) {
+  Widget _buildIconCard(BuildContext context, String imagePath, String text,
+      Color bgColor, VoidCallback onTap) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -161,7 +164,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Text(
               text,
               textAlign: TextAlign.center,
-              style: interRegular.copyWith(fontSize: getFontSize(context) * 0.8),
+              style:
+                  interRegular.copyWith(fontSize: getFontSize(context) * 0.8),
             ),
           ],
         ),
@@ -180,7 +184,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             [
               _buildSmallIconCard(
                   context, 'assets/images/account.png', "Account", () {
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingAccountScreen()));
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Shopping_Profile()));
               }),
               _buildSmallIconCard(
                   context, 'assets/images/history.png', "History", () {
@@ -202,7 +209,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             [
               _buildSmallIconCard(
                   context, 'assets/images/profileicon.png', "Profile", () {
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => ExploreProfileScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ExploreProfileScreen()));
               }),
               _buildSmallIconCard(context, 'assets/images/saved.png', "Saved",
                   () {
@@ -211,7 +221,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
             Colors.orange[50]!,
             Colors.orange[100]!, () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ExploreProfileScreen()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => ExploreProfileScreen()));
         }),
         _buildProfileOptionRow(
             context,
@@ -286,8 +297,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 subtitle: Text(subtitle,
                     style:
                         interRegular.copyWith(fontSize: getFontSize(context))),
-                trailing:
-                    Image.asset('assets/images/arrow-right.png', width: 24, height: 24),
+                trailing: Image.asset('assets/images/arrow-right.png',
+                    width: 24, height: 24),
                 onTap: onTap,
               ),
             ),
@@ -331,6 +342,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+
   Widget _buildCustomerServiceOptions(BuildContext context) {
     return Column(
       children: [
@@ -395,7 +407,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/logout.png'),         
+            Image.asset('assets/images/logout.png'),
             SizedBox(width: getSpacing(context)),
             Text('Sign Out', style: buttonTextStyle(context)),
           ],

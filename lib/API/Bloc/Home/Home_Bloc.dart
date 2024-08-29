@@ -76,6 +76,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         final featuredProducts = await homeRepository.fetchFeaturedProducts();
         emit(FeaturedProductLoaded(featuredProducts));
       } catch (e) {
+        print(e);
         emit(FeaturedProductError(e.toString()));
       }
     });

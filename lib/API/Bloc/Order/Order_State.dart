@@ -1,3 +1,5 @@
+import 'package:app/Models/Order/Order_List.dart';
+
 abstract class OrderState {}
 
 class OrderInitial extends OrderState {}
@@ -26,4 +28,17 @@ class TrackOrderLoaded extends OrderState {
 class TrackOrderError extends OrderState {
   final String message;
   TrackOrderError(this.message);
+}
+
+// All Order
+class AllOrderLoading extends OrderState {}
+
+class AllOrderLoaded extends OrderState {
+  final OrderList orderList;
+  AllOrderLoaded(this.orderList);
+}
+
+class AllOrderError extends OrderState {
+  final String message;
+  AllOrderError(this.message);
 }

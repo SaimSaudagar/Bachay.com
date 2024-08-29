@@ -4,21 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../Utils/app_constants.dart';
 import '../Home/Homepage.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Explore(),
-    );
-  }
-}
-
 class Explore extends StatefulWidget {
   const Explore({super.key});
 
@@ -75,7 +60,9 @@ class _ExploreState extends State<Explore> with SingleTickerProviderStateMixin {
       leading: IconButton(
         icon: const Icon(Icons.close, color: Colors.black),
         onPressed: () {
-           Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+          // Navigator.push(
+          //     context, MaterialPageRoute(builder: (context) => HomePage()));
+          Navigator.pop(context);
         },
       ),
       title: Center(
@@ -129,7 +116,8 @@ class _ExploreState extends State<Explore> with SingleTickerProviderStateMixin {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const CircleAvatar(
-          backgroundImage: AssetImage('assets/logo/LogoExplore.png'), // Ensure you have the correct path to the avatar image
+          backgroundImage: AssetImage(
+              'assets/logo/LogoExplore.png'), // Ensure you have the correct path to the avatar image
           radius: 20,
         ),
         SizedBox(width: getSpacing(context)),
@@ -198,14 +186,18 @@ class CarouselWidget extends StatelessWidget {
       ),
       items: const [
         ProductCard(
-          imageUrl: 'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
-          title: 'Tween Boy Loose Fit Athletic Solid Color Stand Collar Short Sleeve S...',
+          imageUrl:
+              'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
+          title:
+              'Tween Boy Loose Fit Athletic Solid Color Stand Collar Short Sleeve S...',
           price: 'Rs.850',
           oldPrice: 'Rs.3999',
         ),
         ProductCard(
-          imageUrl: 'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
-          title: 'Tween Boy Loose Fit Athletic Solid Color Stand Collar Short Sleeve S...',
+          imageUrl:
+              'https://www.shutterstock.com/image-photo/black-tshirt-clothes-on-isolated-600nw-599532212.jpg',
+          title:
+              'Tween Boy Loose Fit Athletic Solid Color Stand Collar Short Sleeve S...',
           price: 'Rs.850',
           oldPrice: 'Rs.3999',
         ),
@@ -260,7 +252,8 @@ class ProductCard extends StatelessWidget {
                   Text(
                     price,
                     style: interBold.copyWith(
-                        fontSize: getBigFontSize(context), color: Colors.purple),
+                        fontSize: getBigFontSize(context),
+                        color: Colors.purple),
                   ),
                   SizedBox(height: getSpacing(context)),
                   Text(

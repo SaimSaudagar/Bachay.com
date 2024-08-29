@@ -14,6 +14,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../Widgets/Sidebar.dart';
 
 class AllProductsScreen extends StatelessWidget {
+  static const String routeName = '/all-products';
+
   AllProductsScreen({super.key});
   Filter _filter = Filter(
       choice1: Choice1(name: '', title: '', options: []),
@@ -21,6 +23,7 @@ class AllProductsScreen extends StatelessWidget {
   String _selectedSize = '';
   List<String> _selectedColors = [];
   List<String> _selectedAges = [];
+  String _selectedGender = '';
 
   void _onSizeSelected(String size) {
     if (_selectedSize != size) {
@@ -35,9 +38,10 @@ class AllProductsScreen extends StatelessWidget {
         ..add(LoadAllProducts(
           colors: _selectedColors,
           ages: _selectedAges,
+          gender: _selectedGender,
         )),
       child: Scaffold(
-        appBar: const CustomAppBar(
+        appBar: const CustomAppBarWithBack(
           state: 3,
         ),
         bottomNavigationBar: filterOptions(context),
@@ -230,8 +234,18 @@ class AllProductsScreen extends StatelessWidget {
               );
             },
           ),
-          FilterOptionButton(text: 'Age', onTap: () {}),
-          FilterOptionButton(text: 'Gender', onTap: () {}),
+          FilterOptionButton(
+            text: 'Age',
+            onTap: () {
+              _showAgeSelectionSheet(context);
+            },
+          ),
+          FilterOptionButton(
+            text: 'Gender',
+            onTap: () {
+              _showGenderSelectionSheet(context);
+            },
+          ),
           Builder(builder: (newContext) {
             return FilterOptionButton(
               text: 'Filters',
@@ -254,9 +268,9 @@ class AllProductsScreen extends StatelessWidget {
       builder: (context) => filterSheet(context),
     ).whenComplete(() {
       BlocProvider.of<ProductBloc>(context).add(LoadAllProducts(
-        colors: _selectedColors,
-        ages: _selectedAges,
-      ));
+          colors: _selectedColors,
+          ages: _selectedAges,
+          gender: _selectedGender));
     });
   }
 
@@ -369,9 +383,186 @@ class AllProductsScreen extends StatelessWidget {
                       ))
                   .toList(),
             ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  BlocProvider.of<ProductBloc>(context).add(LoadAllProducts(
+                    colors: _selectedColors,
+                    ages: _selectedAges,
+                    gender: _selectedGender,
+                  ));
+                },
+                child: Text('Apply'),
+              ),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  void _showAgeSelectionSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.all(getPadding(context)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Select Age',
+                    style: TextStyle(fontSize: getBigFontSize(context))),
+                SizedBox(height: getSpacing(context)),
+                Wrap(
+                  spacing: 8.0,
+                  runSpacing: 8.0,
+                  children: _filter.choice1.options
+                      .map((age) => ChoiceChip(
+                            label: Text(
+                              age,
+                              style: TextStyle(
+                                  fontSize: getFontSize(context),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            selected: _selectedAges.contains(age),
+                            selectedColor: Colors.purple.withOpacity(0.1),
+                            onSelected: (selected) {
+                              if (_selectedAges.contains(age)) {
+                                _selectedAges.remove(age);
+                              } else {
+                                _selectedAges.add(age);
+                              }
+                              (context as Element)
+                                  .markNeedsBuild(); // Trigger UI update
+                            },
+                            labelStyle: TextStyle(
+                              color: _selectedAges.contains(age)
+                                  ? Colors.purple
+                                  : Colors.black,
+                              fontWeight: _selectedAges.contains(age)
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              side: BorderSide(
+                                color: _selectedAges.contains(age)
+                                    ? Colors.purple
+                                    : Colors.grey,
+                                width: 1.0,
+                              ),
+                            ),
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: getBarHeight(context) / 4),
+                          ))
+                      .toList(),
+                ),
+                SizedBox(height: getSpacing(context)),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      BlocProvider.of<ProductBloc>(context).add(LoadAllProducts(
+                        colors: _selectedColors,
+                        ages: _selectedAges,
+                        gender: _selectedGender,
+                      ));
+                    },
+                    child: Text('Apply'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showGenderSelectionSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.all(getPadding(context)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Select Gender',
+                  style: TextStyle(fontSize: getBigFontSize(context))),
+              SizedBox(height: getSpacing(context)),
+              Wrap(
+                spacing: 8.0,
+                runSpacing: 8.0,
+                children: ['Male', 'Female', 'Unisex']
+                    .map((gender) => ChoiceChip(
+                          label: Text(
+                            gender,
+                            style: TextStyle(
+                                fontSize: getFontSize(context),
+                                fontWeight: FontWeight.bold),
+                          ),
+                          selected: _selectedGender == gender,
+                          selectedColor: Colors.purple.withOpacity(0.1),
+                          onSelected: (selected) {
+                            if (_selectedGender == gender) {
+                              _selectedGender = '';
+                            } else {
+                              _selectedGender = gender;
+                            }
+                            (context as Element)
+                                .markNeedsBuild(); // Trigger UI update
+                          },
+                          labelStyle: TextStyle(
+                            color: _selectedGender == gender
+                                ? Colors.purple
+                                : Colors.black,
+                            fontWeight: _selectedGender == gender
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(
+                              color: _selectedGender == gender
+                                  ? Colors.purple
+                                  : Colors.grey,
+                              width: 1.0,
+                            ),
+                          ),
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: getBarHeight(context) / 4),
+                        ))
+                    .toList(),
+              ),
+              SizedBox(height: getSpacing(context)),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    BlocProvider.of<ProductBloc>(context).add(LoadAllProducts(
+                      colors: _selectedColors,
+                      ages: _selectedAges,
+                      gender: _selectedGender,
+                    ));
+                  },
+                  child: Text('Apply'),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

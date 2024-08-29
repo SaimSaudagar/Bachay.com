@@ -16,5 +16,16 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         emit(PlaceOrderError(e.toString()));
       }
     });
+
+    on<AllOrder>((event, emit) async {
+      emit(AllOrderLoading());
+      try {
+        final response = await orderRepository.fetchAllOrder();
+        emit(AllOrderLoaded(response));
+      } catch (e) {
+        print(e);
+        emit(AllOrderError(e.toString()));
+      }
+    });
   }
 }
