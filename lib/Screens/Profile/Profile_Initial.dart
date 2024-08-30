@@ -39,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: const CustomAppBar(
         state: 3,
       ),
-      drawer: const CustomDrawer(),
+      drawer: const MainDrawer(),
       body: profileScreen(context),
       bottomNavigationBar:
           CustomBottomNavigationBar(onTabSelected: _onTabSelected),

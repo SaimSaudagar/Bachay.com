@@ -38,12 +38,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
           useMaterial3: true,
         ),
-        home: Center(
-          child: BouncingSvgLoader(
-            svgAssetPath: 'assets/logo/progress_logo.svg',
-            size: 100.0,
-          ),
-        ),
+        home: const HomePage(),
       ),
     );
   }
