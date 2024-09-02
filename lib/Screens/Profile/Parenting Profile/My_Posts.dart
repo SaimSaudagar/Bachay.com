@@ -1,3 +1,4 @@
+import 'package:app/Widgets/CP_Bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -47,7 +48,12 @@ class _MyPostsState extends State<MyPosts> {
         future: _fetchPosts(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: BouncingSvgLoader(
+                svgAssetPath: 'assets/logo/progress_logo.svg',
+                size: 100.0,
+              ),
+            );
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {

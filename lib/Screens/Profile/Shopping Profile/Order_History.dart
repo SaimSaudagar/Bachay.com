@@ -5,6 +5,7 @@ import 'package:app/API/Repository/Order_Repo.dart';
 import 'package:app/Models/Order/Order_List.dart';
 import 'package:app/Screens/Profile/Shopping%20Profile/Refund/Refund_Request.dart';
 import 'package:app/Screens/Profile/Shopping%20Profile/Refund/Refund_Status.dart';
+import 'package:app/Widgets/CP_Bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../Utils/app_constants.dart';
@@ -117,7 +118,12 @@ Widget orderListView() {
     child: BlocBuilder<OrderBloc, OrderState>(
       builder: (context, state) {
         if (state is AllOrderLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+            child: BouncingSvgLoader(
+              svgAssetPath: 'assets/logo/progress_logo.svg',
+              size: 100.0,
+            ),
+          );
         } else if (state is AllOrderLoaded) {
           return buildOrderListView(context, state.orderList);
         } else if (state is AllOrderError) {

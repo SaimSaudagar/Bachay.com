@@ -1,3 +1,4 @@
+import 'package:app/Widgets/CP_Bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,13 +7,15 @@ import '../API/Bloc/Colors/Colors_Event.dart';
 import '../API/Bloc/Colors/Colors_State.dart';
 import '../API/Repository/Colors_Repo.dart';
 import '../Utils/app_constants.dart';
+
 class ColorFilterSheet extends StatelessWidget {
   const ColorFilterSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ColorBloc(colorsRepository: ColorsRepository())..add(LoadColors()),
+      create: (_) =>
+          ColorBloc(colorsRepository: ColorsRepository())..add(LoadColors()),
       child: const ColorFilterSheetContent(),
     );
   }
@@ -22,7 +25,8 @@ class ColorFilterSheetContent extends StatefulWidget {
   const ColorFilterSheetContent({super.key});
 
   @override
-  _ColorFilterSheetContentState createState() => _ColorFilterSheetContentState();
+  _ColorFilterSheetContentState createState() =>
+      _ColorFilterSheetContentState();
 }
 
 class _ColorFilterSheetContentState extends State<ColorFilterSheetContent> {
@@ -38,7 +42,8 @@ class _ColorFilterSheetContentState extends State<ColorFilterSheetContent> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Select Colors', style: TextStyle(fontSize: getBigFontSize(context))),
+              Text('Select Colors',
+                  style: TextStyle(fontSize: getBigFontSize(context))),
               IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: () => Navigator.of(context).pop(),
@@ -50,7 +55,12 @@ class _ColorFilterSheetContentState extends State<ColorFilterSheetContent> {
             child: BlocBuilder<ColorBloc, ColorState>(
               builder: (context, state) {
                 if (state is ColorLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(
+                    child: BouncingSvgLoader(
+                      svgAssetPath: 'assets/logo/progress_logo.svg',
+                      size: 100.0,
+                    ),
+                  );
                 } else if (state is ColorLoaded) {
                   return buildColorGrid(state.colors);
                 } else if (state is ColorError) {

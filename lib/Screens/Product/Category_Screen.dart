@@ -14,6 +14,7 @@ import 'package:app/Screens/Product/All_Producst_Screen.dart';
 import 'package:app/Screens/Product/Single_Products_Screen.dart';
 import 'package:app/Utils/app_constants.dart';
 import 'package:app/Widgets/App_Bar.dart';
+import 'package:app/Widgets/CP_Bar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,7 +80,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           if (state is CategoryLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: BouncingSvgLoader(
+                svgAssetPath: 'assets/logo/progress_logo.svg',
+                size: 100.0,
+              ),
+            );
           } else if (state is CategoryLoaded) {
             return buildCategorySelection(context, state.category);
           } else if (state is CategoryError) {
@@ -203,7 +209,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return BlocBuilder<CategoryBloc, CategoryState>(
       builder: (context, state) {
         if (state is SubCategoryLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+            child: BouncingSvgLoader(
+              svgAssetPath: 'assets/logo/progress_logo.svg',
+              size: 100.0,
+            ),
+          );
         } else if (state is SubCategoryLoaded) {
           subSubCategory = state.subCategory.categories[0].childes!;
           return buildSubCategory(state.subCategory.categories[0].childes!);

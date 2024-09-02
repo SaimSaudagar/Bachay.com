@@ -42,7 +42,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(DealBannersLoading());
       try {
         final banners = await homeRepository.fetchDealPromoBanners();
-
+        if (banners.dealBanner.isEmpty) {
+          emit(DealBannersError("No data found"));
+          return;
+        }
         emit(DealBannersLoaded(banners));
       } catch (e) {
         emit(DealBannersError(e.toString()));
@@ -53,6 +56,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(SeasonBannersLoading());
       try {
         final banners = await homeRepository.fetchSeasonBanners();
+
+        if (banners.seasonBanner.isEmpty) {
+          emit(SeasonBannersError("No data found"));
+          return;
+        }
 
         emit(SeasonBannersLoaded(banners));
       } catch (e) {
@@ -85,6 +93,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(TrendsBannerLoading());
       try {
         final trendsBanner = await homeRepository.fetchTrendsBanner();
+
+        if (trendsBanner.banners.isEmpty) {
+          emit(TrendsBannerError("No data found"));
+          return;
+        }
+
         emit(TrendsBannerLoaded(trendsBanner));
       } catch (e) {
         emit(TrendsBannerError(e.toString()));

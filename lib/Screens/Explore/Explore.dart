@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../Utils/app_constants.dart';
-import '../Home/Homepage.dart';
 
 class Explore extends StatefulWidget {
   const Explore({super.key});

@@ -4,6 +4,7 @@ import 'package:app/API/Bloc/Child/Child_Event.dart';
 import 'package:app/API/Bloc/Child/Child_State.dart';
 import 'package:app/API/Repository/Child_Repo.dart';
 import 'package:app/Models/Child/Child.dart';
+import 'package:app/Widgets/CP_Bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -235,7 +236,12 @@ class _ChildrenDetailsScreenState extends State<ChildrenDetailsScreen> {
       child: BlocBuilder<ChildBloc, ChildState>(
         builder: (context, state) {
           if (state is ChildLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: BouncingSvgLoader(
+                svgAssetPath: 'assets/logo/progress_logo.svg',
+                size: 100.0,
+              ),
+            );
           } else if (state is ChildLoaded) {
             children = state.child.children;
 

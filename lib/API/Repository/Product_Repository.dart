@@ -58,4 +58,20 @@ class ProductRepository {
       throw Exception('Failed to add to cart: ${e.toString()}');
     }
   }
+
+  Future<String> realatedProducts(int productID) async {
+    try {
+      final response = await http.post(
+        Uri.parse('${baseUrl}products/related-products/${productID}'),
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data['message'];
+      } else {
+        throw Exception('Failed to add to cart');
+      }
+    } catch (e) {
+      throw Exception('Failed to add to cart: ${e.toString()}');
+    }
+  }
 }

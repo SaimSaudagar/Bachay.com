@@ -393,7 +393,16 @@ class _HomePageState extends State<HomePage> {
   Widget buildSeasonBanner(SeasonBannerList seasonBanner) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.2,
-      child: Image.network(seasonBanner.seasonBanner[0].photo!),
+      child: Image.network(
+        seasonBanner.seasonBanner[0].photo!,
+        errorBuilder: (context, error, stackTrace) {
+          return Center(
+              child: Text(
+            'Image not available',
+            style: TextStyle(fontSize: getFontSize(context)),
+          ));
+        },
+      ),
     );
   }
 
@@ -829,6 +838,13 @@ class _HomePageState extends State<HomePage> {
                       child: Image.network(
                         reverseList[0].photo,
                         fit: BoxFit.fill,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Center(
+                              child: Text(
+                            'Image not available',
+                            style: TextStyle(fontSize: getFontSize(context)),
+                          ));
+                        },
                       ),
                     ),
                   ),
@@ -842,6 +858,13 @@ class _HomePageState extends State<HomePage> {
                       child: Image.network(
                         reverseList[1].photo,
                         fit: BoxFit.fill,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Center(
+                              child: Text(
+                            'Image not available',
+                            style: TextStyle(fontSize: getFontSize(context)),
+                          ));
+                        },
                       ),
                     ),
                   ),
@@ -859,6 +882,13 @@ class _HomePageState extends State<HomePage> {
                   child: Image.network(
                     reverseList[2].photo,
                     fit: BoxFit.fill,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Center(
+                          child: Text(
+                        'Image not available',
+                        style: TextStyle(fontSize: getFontSize(context)),
+                      ));
+                    },
                   ),
                 ),
               ),
@@ -880,6 +910,13 @@ class _HomePageState extends State<HomePage> {
                   child: Image.network(
                     reverseList[3].photo,
                     fit: BoxFit.fill,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Center(
+                          child: Text(
+                        'Image not available',
+                        style: TextStyle(fontSize: getFontSize(context)),
+                      ));
+                    },
                   ),
                 ),
               ),
@@ -896,6 +933,13 @@ class _HomePageState extends State<HomePage> {
                       child: Image.network(
                         reverseList[4].photo,
                         fit: BoxFit.fill,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Center(
+                              child: Text(
+                            'Image not available',
+                            style: TextStyle(fontSize: getFontSize(context)),
+                          ));
+                        },
                       ),
                     ),
                   ),
@@ -909,6 +953,13 @@ class _HomePageState extends State<HomePage> {
                       child: Image.network(
                         reverseList[5].photo,
                         fit: BoxFit.fill,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Center(
+                              child: Text(
+                            'Image not available',
+                            style: TextStyle(fontSize: getFontSize(context)),
+                          ));
+                        },
                       ),
                     ),
                   ),

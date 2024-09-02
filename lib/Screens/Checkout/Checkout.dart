@@ -4,6 +4,7 @@ import 'package:app/API/Bloc/Cart/Cart_State.dart';
 import 'package:app/API/Repository/Cart_Repo.dart';
 import 'package:app/Models/Cart/CartItem.dart';
 import 'package:app/Screens/Checkout/Order_Confirmation.dart';
+import 'package:app/Widgets/CP_Bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -52,8 +53,7 @@ class _CartScreenState extends State<CartScreen> {
             ),
           ],
         ),
-        body: 
-        Padding(
+        body: Padding(
           padding: EdgeInsets.all(getPadding(context)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,7 +126,12 @@ class _CartScreenState extends State<CartScreen> {
     return BlocBuilder<CartBloc, CartState>(
       builder: (context, state) {
         if (state is CartListLoading || state is UpdateCartLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+            child: BouncingSvgLoader(
+              svgAssetPath: 'assets/logo/progress_logo.svg',
+              size: 100.0,
+            ),
+          );
         } else if (state is CartListLoaded) {
           _cartItems = state.cartList.cartItems;
           _calculateCartTotals(_cartItems);
@@ -246,9 +251,9 @@ class _CartScreenState extends State<CartScreen> {
                         Text(
                           'Rs.${item.price + item.discount}',
                           style: TextStyle(
-                            decoration: TextDecoration.lineThrough,
-                            fontSize: getFontSize(context),
-                            color: Colors.grey),
+                              decoration: TextDecoration.lineThrough,
+                              fontSize: getFontSize(context),
+                              color: Colors.grey),
                         ),
                       ],
                     ],
@@ -259,8 +264,7 @@ class _CartScreenState extends State<CartScreen> {
                     Text(
                       'Shipping: Rs.${item.shippingCost}',
                       style: interRegular.copyWith(
-                          fontSize: getFontSize(context),
-                          color: Colors.grey),
+                          fontSize: getFontSize(context), color: Colors.grey),
                     ),
                 ],
               ),
@@ -303,7 +307,8 @@ class _CartScreenState extends State<CartScreen> {
                     children: [
                       _buildIconButton(
                         context,
-                        iconPath: 'assets/images/delete.png', // Assuming this is the remove icon
+                        iconPath:
+                            'assets/images/delete.png', // Assuming this is the remove icon
                         iconSize: 16.0, // Adjust size as per the design
                         onPressed: () {
                           setState(() {
@@ -311,8 +316,8 @@ class _CartScreenState extends State<CartScreen> {
                               item.quantity--;
                             }
                           });
-                          context.read<CartBloc>().add(
-                              UpdateCart(key: item.id, quantity: item.quantity));
+                          context.read<CartBloc>().add(UpdateCart(
+                              key: item.id, quantity: item.quantity));
                         },
                       ),
                       Container(
@@ -321,7 +326,8 @@ class _CartScreenState extends State<CartScreen> {
                             vertical: BorderSide(color: Colors.grey),
                           ),
                         ),
-                        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 6.0),
                         child: Text(
                           '${item.quantity.toString().padLeft(2, '0')}',
                           style: interRegular.copyWith(
@@ -331,14 +337,15 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                       _buildIconButton(
                         context,
-                        iconPath: 'assets/images/add.png', // Assuming this is the add icon
+                        iconPath:
+                            'assets/images/add.png', // Assuming this is the add icon
                         iconSize: 16.0, // Adjust size as per the design
                         onPressed: () {
                           setState(() {
                             item.quantity++;
                           });
-                          context.read<CartBloc>().add(
-                              UpdateCart(key: item.id, quantity: item.quantity));
+                          context.read<CartBloc>().add(UpdateCart(
+                              key: item.id, quantity: item.quantity));
                         },
                       ),
                     ],
@@ -353,7 +360,10 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   // Helper function to build an IconButton with custom styling
-  Widget _buildIconButton(BuildContext context, {required String iconPath, required VoidCallback onPressed, double iconSize = 12.0}) {
+  Widget _buildIconButton(BuildContext context,
+      {required String iconPath,
+      required VoidCallback onPressed,
+      double iconSize = 12.0}) {
     return IconButton(
       icon: Image.asset(
         iconPath,
@@ -586,7 +596,7 @@ class FeatureIcon extends StatelessWidget {
       children: [
         Image.asset(
           svgPath,
-          width: 40,  // Adjust the size as needed
+          width: 40, // Adjust the size as needed
           height: 40, // Adjust the size as needed
         ),
         SizedBox(height: getSpacing(context) / 2),

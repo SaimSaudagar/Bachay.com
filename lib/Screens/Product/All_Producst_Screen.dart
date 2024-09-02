@@ -1,6 +1,7 @@
 import 'package:app/API/Repository/Product_Repository.dart';
 import 'package:app/Models/Products/Products.dart';
 import 'package:app/Screens/Product/Single_Products_Screen.dart';
+import 'package:app/Widgets/CP_Bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../API/Bloc/Product/Product_Bloc.dart';
@@ -69,7 +70,12 @@ class AllProductsScreen extends StatelessWidget {
       builder: (context, state) {
         print('State: $state');
         if (state is AllProductsLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+            child: BouncingSvgLoader(
+              svgAssetPath: 'assets/logo/progress_logo.svg',
+              size: 100.0,
+            ),
+          );
         } else if (state is AllProductsLoaded) {
           _filter = state.allProducts.filter!;
           return buildAllProducts(context, state.allProducts.allProducts!.data);

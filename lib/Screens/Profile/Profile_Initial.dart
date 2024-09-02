@@ -4,6 +4,7 @@ import 'package:app/API/Bloc/Profile/Profile_State.dart';
 import 'package:app/API/Repository/Profile_Repo.dart';
 import 'package:app/Models/Profile/User_Profile.dart';
 import 'package:app/Screens/Profile/Explore%20Profile/Explore_Profile.dart';
+import 'package:app/Widgets/CP_Bar.dart';
 import 'package:app/Widgets/Sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: const CustomAppBar(
         state: 3,
       ),
-      drawer: const CustomDrawer(),
+      drawer: const MainDrawer(),
       body: profileScreen(context),
       bottomNavigationBar:
           CustomBottomNavigationBar(onTabSelected: _onTabSelected),
@@ -54,7 +55,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         builder: (context, state) {
           if (state is ProfileLoading) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: BouncingSvgLoader(
+            svgAssetPath: 'assets/logo/progress_logo.svg',
+            size: 100.0,
+          ),
             );
           } else if (state is ProfileLoaded) {
             return _buildProfileScreen(context, state.profile);
