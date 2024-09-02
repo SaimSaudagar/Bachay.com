@@ -41,7 +41,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       create: (_) => CategoryBloc(categoryRepository: CategoryRepository())
         ..add(LoadSubCategory(categoryId: _selectedCategoryId!)),
       child: Scaffold(
-        appBar: const CustomAppBarWithBack(
+        appBar: const CustomAppBar(
           state: 1,
         ),
         drawer: const MainDrawer(),

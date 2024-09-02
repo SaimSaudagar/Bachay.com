@@ -143,11 +143,7 @@ class _FeedsScreenState extends State<FeedsScreen> with TickerProviderStateMixin
           ),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        onTabSelected: (index) {
-          // Handle tab selection if needed
-        },
-      ),
+      
     );
   }
 

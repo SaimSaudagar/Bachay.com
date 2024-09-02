@@ -52,7 +52,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
     return BlocProvider<ProductBloc>(
       create: (context) => _productBloc,
       child: Scaffold(
-        appBar: const CustomAppBarWithBack(state: 3),
+        appBar: const CustomAppBar(state: 3),
         body: BlocListener<ProductBloc, ProductState>(
           listener: (context, state) {
             if (state is AddToCartLoaded) {

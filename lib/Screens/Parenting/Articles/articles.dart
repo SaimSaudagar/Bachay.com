@@ -95,7 +95,7 @@ class _ArticlesScreenState extends State<ArticlesScreen> with TickerProviderStat
           ),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(onTabSelected: (index) {}),
+     
     );
   }
 

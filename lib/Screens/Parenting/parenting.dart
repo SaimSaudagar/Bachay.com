@@ -1,8 +1,10 @@
+import 'package:app/Widgets/Botton_Nav_Bar.dart';
 import 'package:flutter/material.dart';
 
 import '../../Widgets/parenting_hamburger.dart';
 import 'Articles/articles.dart';
 import 'Feed/feed.dart';
+import 'Q&A/q&a.dart';
 import 'parenting_appbar.dart';
 
 class ParentingApp extends StatefulWidget {
@@ -29,16 +31,26 @@ class _ParentingAppState extends State<ParentingApp> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ParentingAppBar(tabController: _tabController),
-      drawer: ParentingHamburger(), // Add this line to include the drawer
+      drawer: const ParentingHamburger(), // Add this line to include the drawer
       body: TabBarView(
         controller: _tabController,
         children: [
           FeedsScreen(),  // Feeds Screen
           ArticlesScreen(),               // Articles Screen
-          Center(child: Text('Q/A')),     // Q/A Screen
+          QAscreen(),     // Q/A Screen
           Center(child: Text('Vaccine')), // Vaccine Screen
           Center(child: Text('Food')),    // Food Screen
         ],
+      ),
+   bottomNavigationBar: CustomBottomNavigationBar(
+        onTabSelected: (index) {
+          if (index == 2) {
+            // No additional action is needed since you're already on the Parenting screen
+          } else {
+            // Handle other tab selections if needed
+          }
+        },
+        initialIndex: 2,  // Set the initial index to 2 for Parenting
       ),
     );
   }

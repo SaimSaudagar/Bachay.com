@@ -21,80 +21,86 @@ class CreatePostScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: Padding(
-          padding: EdgeInsets.only(left: getPadding(context) * 0.5),
-          child: IconButton(
-            icon: SvgPicture.asset('assets/images/Back-Button.svg'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ),
-        title: SvgPicture.asset(
-          'assets/logo/Parenting.svg',
-          height: getFontSize(context) * 3,
-        ),
-        centerTitle: true,
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: getPadding(context) * 0.5),
-            child: IconButton(
-              icon: SvgPicture.asset(
-                'assets/images/search-icon.svg',
-                color: Colors.black,
-                width: getFontSize(context) * 2,
-                height: getFontSize(context) * 2,
-              ),
-              onPressed: () {
-                // Handle search action
-              },
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(right: getPadding(context) * 0.5),
-            child: IconButton(
-              icon: Stack(
-                children: [
-                  SvgPicture.asset(
-                    'assets/images/notification.svg',
-                    color: Colors.black,
-                    width: getFontSize(context) * 2,
-                    height: getFontSize(context) * 2,
-                  ),
-                  Positioned(
-                    right: 0,
-                    child: Container(
-                      padding: EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                        color: Colors.orange,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      constraints: BoxConstraints(
-                        minWidth: 14,
-                        minHeight: 14,
-                      ),
-                      child: Text(
-                        '02',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: getFontSize(context) * 0.8,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              onPressed: () {
-                // Handle notification action
-              },
-            ),
-          ),
-        ],
+  backgroundColor: Colors.white,
+  elevation: 0,
+  leading: Padding(
+    padding: EdgeInsets.only(left: getPadding(context) * 0.5),
+    child: IconButton(
+      icon: SvgPicture.asset('assets/images/Back-Button.svg'),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    ),
+  ),
+  title: Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      SvgPicture.asset(
+        'assets/logo/Parenting.svg',
+        height: getFontSize(context) * 3,
       ),
+    ],
+  ),
+  centerTitle: false, // Set this to false
+  actions: [
+    Padding(
+      padding: EdgeInsets.only(right: getPadding(context) * 0.5),
+      child: IconButton(
+        icon: SvgPicture.asset(
+          'assets/images/search-icon.svg',
+          color: Colors.black,
+          width: getFontSize(context) * 2,
+          height: getFontSize(context) * 2,
+        ),
+        onPressed: () {
+          // Handle search action
+        },
+      ),
+    ),
+    Padding(
+      padding: EdgeInsets.only(right: getPadding(context) * 0.5),
+      child: IconButton(
+        icon: Stack(
+          children: [
+            SvgPicture.asset(
+              'assets/images/notification.svg',
+              color: Colors.black,
+              width: getFontSize(context) * 2,
+              height: getFontSize(context) * 2,
+            ),
+            Positioned(
+              right: 0,
+              child: Container(
+                padding: EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  color: Colors.orange,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                constraints: BoxConstraints(
+                  minWidth: 14,
+                  minHeight: 14,
+                ),
+                child: Text(
+                  '02',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: getFontSize(context) * 0.8,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ],
+        ),
+        onPressed: () {
+          // Handle notification action
+        },
+      ),
+    ),
+  ],
+),
+
       body: Padding(
         padding: EdgeInsets.all(getPadding(context)),
         child: Column(
