@@ -9,6 +9,7 @@ import 'package:app/API/Repository/Product_Repository.dart';
 import 'package:app/Models/Home/Featured_Product.dart';
 import 'package:app/Models/Products/Single_Product.dart';
 import 'package:app/Screens/Home/Homepage.dart';
+import 'package:app/Widgets/CP_Bar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -71,13 +72,23 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
           child: BlocBuilder<ProductBloc, ProductState>(
             builder: (context, state) {
               if (state is SingleProductLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(
+                  child: BouncingSvgLoader(
+                    svgAssetPath: 'assets/logo/progress_logo.svg',
+                    size: 100.0,
+                  ),
+                );
               } else if (state is SingleProductLoaded) {
                 return singleProduct(state.singleProduct, context);
               } else if (state is SingleProductError) {
                 return Center(child: Text('Error: ${state.message}'));
               } else {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(
+                  child: BouncingSvgLoader(
+                    svgAssetPath: 'assets/logo/progress_logo.svg',
+                    size: 100.0,
+                  ),
+                );
               }
             },
           ),
@@ -130,7 +141,7 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  prodcutImages(product.images),
+                  productImages(product.images),
                   SizedBox(height: getSpacing(context) * 3),
                   header(product.unitPrice.toString(),
                       product.discount.toString(), product.name),
@@ -316,34 +327,44 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
     );
   }
 
-//Images
-  Widget prodcutImages(List<String> imageUrls) {
+  //Images
+  Widget productImages(List<String> imageUrls) {
     int currentIndex = 0;
 
     return Stack(
       children: [
-        PageView.builder(
-          controller: PageController(viewportFraction: 0.9),
-          itemCount: imageUrls.length,
-          onPageChanged: (index) {
-            setState(() {
-              currentIndex = index;
-            });
-          },
-          physics: const BouncingScrollPhysics(), // Allows smooth scrolling
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 8.0), // Add spacing between images
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width / 1.5,
-                child: Image.network(
-                  "https://bachay.com${imageUrls[index]}",
-                  fit: BoxFit.cover,
+        SizedBox(
+          height: 300.0, // Set a fixed height for the PageView
+          child: PageView.builder(
+            controller: PageController(viewportFraction: 0.9),
+            itemCount: imageUrls.length,
+            onPageChanged: (index) {
+              setState(() {
+                currentIndex = index;
+              });
+            },
+            physics: const BouncingScrollPhysics(), // Allows smooth scrolling
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 8.0), // Add spacing between images
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width / 1.5,
+                  child: Image.network(
+                    "https://bachay.com${imageUrls[index]}",
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Center(
+                          child: Text(
+                        'Image not available',
+                        style: TextStyle(fontSize: getFontSize(context)),
+                      ));
+                    },
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
         Positioned(
           bottom: 10,
@@ -500,6 +521,14 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
                                   child: Image.network(
                                     "https://bachay.com${colorImage.imageName}",
                                     fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Center(
+                                          child: Text(
+                                        'Image not available',
+                                        style: TextStyle(
+                                            fontSize: getFontSize(context)),
+                                      ));
+                                    },
                                     height: 100,
                                     width: 100,
                                   ),
@@ -860,7 +889,12 @@ Widget featuredProducts(BuildContext context) {
     child: BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         if (state is FeaturedProductLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+            child: BouncingSvgLoader(
+              svgAssetPath: 'assets/logo/progress_logo.svg',
+              size: 100.0,
+            ),
+          );
         } else if (state is FeaturedProductLoaded) {
           return buildFeaturedProducts(context, state.featuredProduct.products);
         } else if (state is FeaturedProductError) {
@@ -919,12 +953,12 @@ Widget buildFeaturedProductTile(BuildContext context, FeaturedProduct product) {
                 decoration: BoxDecoration(
                   borderRadius:
                       const BorderRadius.vertical(top: Radius.circular(10)),
-                  image: DecorationImage(
-                    image: NetworkImage(product.thumbnail),
-                    fit: BoxFit.cover,
-                    onError: (error, stackTrace) =>
-                        const Center(child: Text('Image not available')),
-                  ),
+                  // image: DecorationImage(
+                  //   image: NetworkImage(product.thumbnail),
+                  //   fit: BoxFit.cover,
+                  //   onError: (error, stackTrace) =>
+                  //       const Center(child: Text('Image not available')),
+                  // ),
                 ),
               ),
             ),
