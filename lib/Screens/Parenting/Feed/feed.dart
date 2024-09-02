@@ -143,16 +143,7 @@ class _FeedsScreenState extends State<FeedsScreen> with TickerProviderStateMixin
           ),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        onTabSelected: (index) {
-          if (index == 2) {
-            // No additional action is needed since you're already on the Parenting screen
-          } else {
-            // Handle other tab selections if needed
-          }
-        },
-        initialIndex: 2,  // Set the initial index to 2 for Parenting
-      ),
+      
     );
   }
 

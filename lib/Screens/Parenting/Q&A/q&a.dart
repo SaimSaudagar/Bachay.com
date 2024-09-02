@@ -107,20 +107,11 @@ class _QAscreenState extends State<QAscreen> with TickerProviderStateMixin {
                 Divider(),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        onTabSelected: (index) {
-          if (index == 2) {
-            // No additional action is needed since you're already on the Parenting screen
-          } else {
-            // Handle other tab selections if needed
-          }
-        },
-        initialIndex: 2,  // Set the initial index to 2 for Parenting
-      ),
+
     );
   }
 
-  // Method to build each app bar tab with rounded rectangular border
+  
   Widget _buildAppBarTab(String text) {
     return Tab(
       child: Container(
@@ -138,8 +129,7 @@ class _QAscreenState extends State<QAscreen> with TickerProviderStateMixin {
   }
 }
 
-// Add the Doctor model and ExpertPanelWidget code here
-// Doctor model
+
 class Doctor {
   final String imageUrl;
   final String name;
