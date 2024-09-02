@@ -51,6 +51,7 @@ dependencies:
   rxdart: ^0.27.1
   dotted_border: ^2.1.0
   bloc: any
+  responsive_framework: ^1.5.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

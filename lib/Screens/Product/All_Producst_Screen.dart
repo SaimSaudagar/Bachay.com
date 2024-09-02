@@ -41,7 +41,7 @@ class AllProductsScreen extends StatelessWidget {
           gender: _selectedGender,
         )),
       child: Scaffold(
-        appBar: const CustomAppBarWithBack(
+        appBar: const CustomAppBar(
           state: 3,
         ),
         bottomNavigationBar: filterOptions(context),
