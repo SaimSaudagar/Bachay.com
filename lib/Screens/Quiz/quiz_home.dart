@@ -9,7 +9,7 @@ class QuizAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Size preferredSize;
 
   QuizAppBar({Key? key})
-      : preferredSize = const Size.fromHeight(100.0),
+      : preferredSize = const Size.fromHeight(50.0),
         super(key: key);
 
   @override
@@ -31,8 +31,8 @@ class QuizAppBar extends StatelessWidget implements PreferredSizeWidget {
               'assets/logo/bachay_education.svg',
               height: 40,
             ),
-            Spacer(),
-            Row(
+            const Spacer(),
+            const Row(
               children: [
                 CircleAvatar(
                   backgroundImage: AssetImage(
@@ -76,7 +76,7 @@ class QuizSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius:
@@ -91,18 +91,18 @@ class QuizSearchBar extends StatelessWidget {
             color: Colors.black.withOpacity(1), // Adjusted shadow color
             spreadRadius: 1,
             blurRadius: 3,
-            offset: Offset(0, 2), // Subtle shadow for depth
+            offset: const Offset(0, 2), // Subtle shadow for depth
           ),
         ],
       ),
       child: TextField(
         decoration: InputDecoration(
           prefixIcon: Padding(
-            padding: EdgeInsets.all(12),
+            padding: const EdgeInsets.all(12),
             child: SvgPicture.asset('assets/logo/search.svg'),
           ),
           suffixIcon: Padding(
-            padding: EdgeInsets.all(12),
+            padding: const EdgeInsets.all(12),
             child: SvgPicture.asset('assets/logo/filter.svg'),
           ),
           hintText: 'Search...',
@@ -112,7 +112,7 @@ class QuizSearchBar extends StatelessWidget {
                 FontWeight.w500, // Adjust font weight for better visibility
           ),
           border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         ),
       ),
     );
@@ -146,7 +146,7 @@ class _QuizImageContainerState extends State<QuizImageContainer> {
             BoxShadow(
               color: Colors.black.withOpacity(1),
               blurRadius: 8,
-              offset: Offset(0, 4),
+              offset: const Offset(0, 4),
             ),
           ],
         ),
@@ -190,8 +190,8 @@ class _QuizImageContainerState extends State<QuizImageContainer> {
 
   Widget buildDot(int index, BuildContext context) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 200),
-      margin: EdgeInsets.symmetric(horizontal: 4),
+      duration: const Duration(milliseconds: 200),
+      margin: const EdgeInsets.symmetric(horizontal: 4),
       height: 8,
       width: _currentPage == index ? 16 : 8,
       decoration: BoxDecoration(
@@ -208,7 +208,7 @@ class QuizProgressCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius:
@@ -224,18 +224,18 @@ class QuizProgressCard extends StatelessWidget {
                   .withOpacity(1), // Same shadow color as QuizSearchBar
               spreadRadius: 1,
               blurRadius: 3,
-              offset: Offset(0, 2), // Same shadow offset as QuizSearchBar
+              offset: const Offset(0, 2), // Same shadow offset as QuizSearchBar
             ),
           ],
         ),
         child: Row(
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               radius: 30,
               backgroundImage: AssetImage(
                   'assets/images/boy-icon.png'), // Replace with your image asset
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -246,7 +246,7 @@ class QuizProgressCard extends StatelessWidget {
                   Text('Movie Mania',
                       style: outfitBold.copyWith(
                           fontSize: getBigFontSize(context))),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Row(
                     children: [
                       Expanded(
@@ -260,8 +260,8 @@ class QuizProgressCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(width: 8),
-                      Text(
+                      const SizedBox(width: 8),
+                      const Text(
                         '50%',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -272,7 +272,7 @@ class QuizProgressCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             ElevatedButton(
               onPressed: () {
                 // Add functionality here
@@ -287,9 +287,9 @@ class QuizProgressCard extends StatelessWidget {
                     width: 1.5, // Border thickness
                   ),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               ),
-              child: Text('Continue', style: outfitRegular),
+              child: const Text('Continue', style: outfitRegular),
             ),
           ],
         ),
@@ -315,8 +315,8 @@ class ScrollableCategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 220, // Adjust width as necessary
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
-      padding: EdgeInsets.all(16.0),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(15),
@@ -329,7 +329,7 @@ class ScrollableCategoryCard extends StatelessWidget {
             color: Colors.black.withOpacity(1), // Lighter shadow
             spreadRadius: 1,
             blurRadius: 5,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -338,22 +338,22 @@ class ScrollableCategoryCard extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             description,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 14,
               color: Colors.black87,
             ),
           ),
-          SizedBox(height: 8),
-          Text(
+          const SizedBox(height: 8),
+          const Text(
             'Explore More',
             style: TextStyle(
               fontSize: 16,
@@ -416,6 +416,316 @@ class HorizontalScrollCards extends StatelessWidget {
   }
 }
 
+
+class QuizCard extends StatelessWidget {
+  final String title;
+  final String imagePath;
+  final int numQuestions;
+  final String quizType;
+  final int numPlays;
+
+  QuizCard({
+    required this.title,
+    required this.imagePath,
+    required this.numQuestions,
+    required this.quizType,
+    required this.numPlays,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(
+            color: Colors.black.withOpacity(1),
+            width: 1.5,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(1),
+              spreadRadius: 1,
+              blurRadius: 3,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(15),
+              ),
+              child: Image.asset(
+                imagePath,
+                height: 200,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const Divider(thickness: 3,color: Colors.black,),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Container(
+                    width: 40, // Adjust size as needed
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.black, // Circle border color
+                        width: 2.0, // Bold border
+                      ),
+                    ),
+                    child: IconButton(
+                      icon: const Icon(Icons.more_horiz, color: Colors.black),
+                      onPressed: () {
+                        // Handle more options here
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Text(
+                '$numQuestions Questions   •   $quizType   •   ${numPlays}k Plays',
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.black54,
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class PopularQuizSection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+               Text(
+                'Popular Quiz',
+                style: outfitBold.copyWith(fontSize:getBigFontSize(context)*1.2),
+              ),
+              TextButton(
+                onPressed: () {
+                  // Handle "See All" navigation here
+                },
+                child: Text(
+                  'See All',
+                  style: outfitBold.copyWith(
+                    color: Colors.blueAccent,
+                    fontSize: getBigFontSize(context),
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              )
+            ],
+          ),
+          QuizCard(
+            title: 'Name the Dish',
+            imagePath: 'assets/images/namethequiz.png', // Replace with actual image path
+            numQuestions: 15,
+            quizType: 'Educational',
+            numPlays: 1,
+          ),
+          QuizCard(
+            title: 'Identify the Alphabet',
+            imagePath: 'assets/images/identifythealphabet.png', // Replace with actual image path
+            numQuestions: 20,
+            quizType: 'Educational',
+            numPlays: 1,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MostRecentQuizCard extends StatelessWidget {
+  final String title;
+  final String imagePath;
+  final int numQuestions;
+  final String quizType;
+  final int numPlays;
+
+  MostRecentQuizCard({
+    required this.title,
+    required this.imagePath,
+    required this.numQuestions,
+    required this.quizType,
+    required this.numPlays,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(
+            color: Colors.black.withOpacity(0.8),
+            width: 1.5,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 3,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Image container on the left
+            Container(
+              height: 90,
+              width: 90,
+              margin: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.black.withOpacity(0.8), width: 1.5),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            // Text information on the right
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            title,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        // Icon (for example, a star)
+                        Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                          size: 24,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '$numQuestions Questions • $quizType • ${numPlays}k Plays',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MostRecentSection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Most Recents',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  // Handle "See All" navigation here
+                },
+                child: Text(
+                  'See All',
+                  style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontSize: 14,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          // Add MostRecentQuizCard widgets
+          MostRecentQuizCard(
+            title: 'Name the Dish',
+            imagePath: 'assets/images/namethequiz.png',
+            numQuestions: 15,
+            quizType: 'Educational',
+            numPlays: 1,
+          ),
+          MostRecentQuizCard(
+            title: 'Identify the Alphabet',
+            imagePath: 'assets/images/identifythealphabet.png',
+            numQuestions: 15,
+            quizType: 'Educational',
+            numPlays: 1,
+          ),
+          // Add more cards if needed
+        ],
+      ),
+    );
+  }
+}
+
+
 class QuizHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -428,6 +738,8 @@ class QuizHome extends StatelessWidget {
             QuizImageContainer(), // Add the image container below the search bar
             QuizProgressCard(), // Add the progress card below the image container
             HorizontalScrollCards(),
+            PopularQuizSection(),
+            MostRecentSection(),
             // Add other widgets here
           ],
         ),
