@@ -10,7 +10,6 @@ import 'package:app/Models/Home/Featured_Product.dart';
 import 'package:app/Models/Products/Single_Product.dart';
 import 'package:app/Screens/Home/Homepage.dart';
 import 'package:app/Widgets/CP_Bar.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
