@@ -1,3 +1,4 @@
+import 'package:app/API/Bloc/Articles/Articles_Bloc.dart';
 import 'package:app/API/Bloc/Cart/Cart_Bloc.dart';
 import 'package:app/API/Bloc/Order/Order_Bloc.dart';
 import 'package:app/API/Bloc/Product/Product_Bloc.dart';
@@ -9,6 +10,8 @@ import 'package:app/Screens/Onboarding/Loading_Screen.dart';
 import 'package:app/Widgets/CP_Bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'API/Bloc/Articles/Articles_Event.dart';
+import 'API/Repository/Articles_Repo.dart';
 import 'Screens/Parenting/Feed/feed.dart';
 import 'Screens/Parenting/parenting.dart';
 import 'Screens/Quiz/quiz_home.dart';
@@ -27,6 +30,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<CartBloc>(
           create: (context) => CartBloc(cartRepository: CartRepository()),
         ),
+        BlocProvider<LatestArticleBloc>(create: (context) => LatestArticleBloc(LatestArticlesRepository())..add(FetchLatestArticles())),
+        BlocProvider<ArticleBloc>(create: (context) => ArticleBloc(ArticleRepository())..add(FetchArticles())),
         BlocProvider<ProductBloc>(
           create: (context) =>
               ProductBloc(productRepository: ProductRepository()),

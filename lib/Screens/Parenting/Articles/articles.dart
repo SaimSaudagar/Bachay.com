@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import '../../../Widgets/article_card_small.dart';
-import '../../../Widgets/Botton_Nav_Bar.dart';
-import '../../../Widgets/article_card_large.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:app/API/Bloc/Articles/Articles_Bloc.dart';
+import 'package:app/API/Bloc/Articles/Articles_Event.dart';
+import 'package:app/API/Repository/Articles_Repo.dart';
+import 'Articles_widgets/Latest_Articles.dart';
+import 'Articles_widgets/Trending_Articles.dart';
 
 class ArticlesScreen extends StatefulWidget {
   @override
@@ -38,8 +40,7 @@ class _ArticlesScreenState extends State<ArticlesScreen> with TickerProviderStat
             isScrollable: true,
             labelColor: Colors.pinkAccent,
             unselectedLabelColor: Colors.black,
-            // Remove the bottom divider or underline
-            indicator: BoxDecoration(),
+            indicator: const BoxDecoration(),
             tabs: [
               _buildAppBarTab("Read"),
               _buildAppBarTab("Video"),
@@ -48,54 +49,53 @@ class _ArticlesScreenState extends State<ArticlesScreen> with TickerProviderStat
               _buildAppBarTab("Saved"),
             ],
           ),
-          const Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  children: [
-                    // Trending Content
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 12.0),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Trending',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24,
-                            color: Colors.pinkAccent,
+          // Wrap the content with BlocProvider to provide ArticleBloc to the widget tree
+           Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    children: [
+                      // Trending Content
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Trending',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                              color: Colors.pinkAccent,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    ArticleCardLarge(
-                      imageUrl: 'https://via.placeholder.com/600',
-                      sourceImageUrl: 'https://via.placeholder.com/24',
-                      sourceName: 'Bachay.com',
-                      isVerified: true,
-                      title: 'Zinc in Pregnancy – Benefits, Dosage and Food Sources',
-                      date: 'May 28 2024',
-                    ),
-                    SizedBox(height: 24),
-                    ArticleCardSmall(
-                      imageUrl: 'https://via.placeholder.com/24',
-                      sourceImageUrl: 'https://via.placeholder.com/24',
-                      sourceName: 'Bachay.com',
-                      isVerified: true,
-                      title: 'Babyhug Froggy Gyro Swing Car With Easy Steering Wheels Review',
-                      description: 'We were super excited when the Babyhug Froggy Gyro Swing Car was delivered...',
-                      date: 'May 28 2024',
-                    ),
-                    // Add more ArticleCardSmall widgets here if needed
-                  ],
+                      TrendingArticlesSection(), // This section dynamically displays articles
+                      Divider(),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Latest',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                              color: Colors.pinkAccent,
+                            ),
+                          ),
+                        ),
+                      ),
+                    LatestArticlesSection(),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
+        
         ],
       ),
-     
     );
   }
 

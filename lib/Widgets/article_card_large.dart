@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
 class ArticleCardLarge extends StatelessWidget {
   final String imageUrl;
   final String sourceImageUrl;

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:html/parser.dart';  // Import HTML parser to parse and clean up the text
 
 class ArticleCardSmall extends StatelessWidget {
   final String imageUrl;
@@ -6,7 +8,7 @@ class ArticleCardSmall extends StatelessWidget {
   final String sourceName;
   final bool isVerified;
   final String title;
-  final String description;
+  final String description;  // HTML text
   final String date;
 
   const ArticleCardSmall({
@@ -19,8 +21,41 @@ class ArticleCardSmall extends StatelessWidget {
     required this.date,
   });
 
+  // Helper function to strip HTML tags and return plain text
+  String _parseHtmlString(String htmlString) {
+    final document = parse(htmlString);
+    final String parsedString = parse(document.body?.text).documentElement?.text ?? '';
+    return parsedString;
+  }
+
+  // Helper function to limit text to 3 lines or a certain number of characters
+  String _getFirstThreeLines(String text, {int maxLines = 3, int maxCharsPerLine = 100}) {
+    List<String> lines = text.split('\n');  // Split by lines
+    String truncatedText = '';
+
+    for (int i = 0; i < maxLines && i < lines.length; i++) {
+      // If the line is too long, truncate it and add ellipsis
+      if (lines[i].length > maxCharsPerLine) {
+        truncatedText += lines[i].substring(0, maxCharsPerLine) + '... ';
+      } else {
+        truncatedText += lines[i] + ' ';
+      }
+    }
+
+    // Add ellipsis if there is more content
+    if (lines.length > maxLines) {
+      truncatedText += '...';
+    }
+
+    return truncatedText.trim();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Clean up HTML and limit to first 3 lines of text
+    final plainTextDescription = _parseHtmlString(description);
+    final limitedDescription = _getFirstThreeLines(plainTextDescription);
+
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
@@ -28,9 +63,10 @@ class ArticleCardSmall extends StatelessWidget {
       elevation: 4,
       margin: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Left side: Text content
           Expanded(
+            flex: 2,
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
@@ -44,11 +80,15 @@ class ArticleCardSmall extends StatelessWidget {
                         radius: 12,
                       ),
                       SizedBox(width: 8),
-                      Text(
-                        sourceName,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
+                      Expanded(
+                        child: Text(
+                          sourceName,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                          overflow: TextOverflow.ellipsis,  // Truncate with ellipsis
+                          maxLines: 1,  // Ensure it stays on a single line
                         ),
                       ),
                       if (isVerified) ...[
@@ -71,13 +111,13 @@ class ArticleCardSmall extends StatelessWidget {
                   ),
                   SizedBox(height: 4),
                   Text(
-                    description,
+                    limitedDescription,  // Display the truncated description
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
                     ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
+                    maxLines: 3,  // This ensures it's 3 lines in case of overflow
+                    overflow: TextOverflow.ellipsis,  // Add ellipsis if content overflows
                   ),
                   SizedBox(height: 8),
                   Text(
@@ -91,24 +131,27 @@ class ArticleCardSmall extends StatelessWidget {
               ),
             ),
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(15),
-              bottomRight: Radius.circular(15),
-            ),
-            child: Container(
-              width: 120, // Constrain the width to avoid infinite size
-              height: 120, // Constrain the height to avoid infinite size
-              child: Image.network(
-                imageUrl,
-                fit: BoxFit.cover,
+          // Right side: Image thumbnail
+          Expanded(
+            flex: 1,
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(15),
+                bottomRight: Radius.circular(15),
+              ),
+              child: Container(
+                height: 120, // Ensure height consistency
+                child: Image.network(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                  width: double.infinity, // Make the image fill the right side
+                  height: double.infinity,
+                ),
               ),
             ),
           ),
-
         ],
       ),
-    
     );
   }
 }
