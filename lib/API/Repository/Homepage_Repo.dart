@@ -13,7 +13,7 @@ import 'package:app/Utils/app_constants.dart';
 class HomeRepository {
   Future<DiscountBannerList> fetchDiscountBanner() async {
     try {
-      final response = await http.get(Uri.parse('${baseUrl}custom_page/'));
+      final response = await http.get(Uri.parse('${baseUrl}custom_page'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         return DiscountBannerList.fromJson(data);
@@ -26,7 +26,11 @@ class HomeRepository {
   }
 
   Future<BannerList> fetchBanners() async {
-    final response = await http.get(Uri.parse('${baseUrl}main_banner/'));
+    final response = await http.get(Uri.parse('${baseUrl}main_banner'));
+    //  final response = await http.get(
+    //   Uri.parse(
+    //       'https://bachay.com/api/v1/main_banner?child=boy'), // Replace with your API endpoint
+    // );
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
@@ -40,7 +44,7 @@ class HomeRepository {
   Future<AlertBannerList> fetchAlertPromoBanners() async {
     try {
       final response =
-          await http.get(Uri.parse('${baseUrl}promo-alert-banner/'));
+          await http.get(Uri.parse('${baseUrl}promo-alert-banner'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         return AlertBannerList.fromJson(data);
@@ -54,8 +58,7 @@ class HomeRepository {
 
   Future<DealBannerList> fetchDealPromoBanners() async {
     try {
-      final response =
-          await http.get(Uri.parse('${baseUrl}promo-deal-banner/'));
+      final response = await http.get(Uri.parse('${baseUrl}promo-deal-banner'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         return DealBannerList.fromJson(data);
@@ -70,7 +73,7 @@ class HomeRepository {
   Future<SeasonBannerList> fetchSeasonBanners() async {
     try {
       final response =
-          await http.get(Uri.parse('${baseUrl}promo-season-banner/'));
+          await http.get(Uri.parse('${baseUrl}promo-season-banner'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         return SeasonBannerList.fromJson(data);
@@ -84,7 +87,7 @@ class HomeRepository {
 
   Future<CategoryList> fetchCategories() async {
     try {
-      final response = await http.get(Uri.parse('${baseUrl}categories-list/'));
+      final response = await http.get(Uri.parse('${baseUrl}categories-list'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
@@ -99,8 +102,7 @@ class HomeRepository {
 
   Future<FeaturedProductList> fetchFeaturedProducts() async {
     try {
-      final response =
-          await http.get(Uri.parse('${baseUrl}featured_products/'));
+      final response = await http.get(Uri.parse('${baseUrl}featured_products'));
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);

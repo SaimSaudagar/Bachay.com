@@ -12,7 +12,7 @@ class ProductRepository {
       print("LoadAllProducts");
       String agesQuery =
           ages.isNotEmpty ? ages.map((age) => "'$age'").join(', ') : '';
-      String url = '${baseUrl}all_products/?&sizes=[$agesQuery]';
+      String url = '${baseUrl}all_products?&sizes=[$agesQuery]';
       print("LoadAllProducts with URL: $url");
 
       final response = await http.get(Uri.parse(url));
