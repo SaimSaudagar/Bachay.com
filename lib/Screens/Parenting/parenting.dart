@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../Widgets/parenting_hamburger.dart';
 import 'Articles/articles.dart';
 import 'Feed/feed.dart';
+import 'Food/food.dart';
 import 'Q&A/q&a.dart';
 import 'parenting_appbar.dart';
 
@@ -39,7 +40,7 @@ class _ParentingAppState extends State<ParentingApp> with SingleTickerProviderSt
           ArticlesScreen(),               // Articles Screen
           QAscreen(),     // Q/A Screen
           Center(child: Text('Vaccine')), // Vaccine Screen
-          Center(child: Text('Food')),    // Food Screen
+          FoodScreen(),    // Food Screen
         ],
       ),
    bottomNavigationBar: CustomBottomNavigationBar(

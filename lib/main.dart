@@ -10,6 +10,7 @@ import 'package:app/Widgets/CP_Bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'Screens/Parenting/Feed/feed.dart';
+import 'Screens/Parenting/parenting.dart';
 import 'Screens/Quiz/quiz_home.dart';
 
 void main() {
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
         //   svgAssetPath: 'assets/logo/progress_logo.svg',
         //   size: 10.0,
         // ),
-        home: QuizHome(),
+        home: ParentingApp(),
       ),
     );
   }
