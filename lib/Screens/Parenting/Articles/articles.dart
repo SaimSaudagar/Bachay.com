@@ -50,7 +50,7 @@ class _ArticlesScreenState extends State<ArticlesScreen> with TickerProviderStat
             ],
           ),
           // Wrap the content with BlocProvider to provide ArticleBloc to the widget tree
-           Expanded(
+           const Expanded(
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
