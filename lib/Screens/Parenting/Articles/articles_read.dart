@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:html/parser.dart'; // For HTML parsing
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 class ArticleDetailScreen extends StatelessWidget {
   final String title;
-  final String content;
+  final String content; // HTML content from the API
   final String imageUrl;
   final String sourceName;
   final String date;
@@ -18,18 +18,8 @@ class ArticleDetailScreen extends StatelessWidget {
     required this.date,
   }) : super(key: key);
 
-  // Helper function to parse and clean up HTML content
-  String _parseHtmlString(String htmlString) {
-    final document = parse(htmlString);
-    final String parsedString = parse(document.body?.text).documentElement?.text ?? '';
-    return parsedString;
-  }
-
   @override
   Widget build(BuildContext context) {
-    // Clean the HTML content
-    final String plainTextContent = _parseHtmlString(content);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -52,7 +42,7 @@ class ArticleDetailScreen extends StatelessWidget {
             ),
           ],
         ),
-        centerTitle: false, // Set this to false
+        centerTitle: false,
         actions: [
           Padding(
             padding: EdgeInsets.only(right: getPadding(context) * 0.5),
@@ -117,6 +107,7 @@ class ArticleDetailScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Article Title
               Text(
                 title,
                 style: const TextStyle(
@@ -126,6 +117,7 @@ class ArticleDetailScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
+              // Article Source, Date
               Row(
                 children: [
                   CircleAvatar(
@@ -135,35 +127,23 @@ class ArticleDetailScreen extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     sourceName,
-                    style: const TextStyle(
-                      fontSize: 14, 
-                      fontWeight: FontWeight.bold
-                    ),
+                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(width: 8),
                   Text(
                     date,
-                    style: const TextStyle(
-                      fontSize: 12, 
-                      color: Colors.grey
-                    ),
+                    style: const TextStyle(fontSize: 12, color: Colors.grey),
                   ),
-                  const Spacer(),
-                  const Icon(Icons.remove_red_eye, color: Colors.grey),
-                  const SizedBox(width: 4),
-                  // Text(views), // Uncomment if views available
-                  const SizedBox(width: 16),
-                  const Icon(Icons.favorite, color: Colors.grey),
-                  const SizedBox(width: 4),
-                  // Text(likes), // Uncomment if likes available
                 ],
               ),
               const SizedBox(height: 16),
+              // Featured Image
               Image.network(imageUrl, height: 200, fit: BoxFit.cover),
               const SizedBox(height: 16),
-              Text(
-                plainTextContent, // Display the cleaned-up content
-                style: const TextStyle(fontSize: 16, color: Colors.black87),
+              // HTML Content Rendering
+              HtmlWidget(
+                content, // The HTML content from the API
+                textStyle: const TextStyle(fontSize: 16, color: Colors.black87),
               ),
             ],
           ),
