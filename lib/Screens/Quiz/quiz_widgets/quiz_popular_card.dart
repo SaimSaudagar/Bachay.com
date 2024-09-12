@@ -1,7 +1,11 @@
-import 'package:app/Utils/app_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart'; // Import shimmer package
+import '../../../API/Bloc/Quiz/quiz_bloc.dart';
+import '../../../API/Bloc/Quiz/quiz_event.dart';
+import '../../../API/Bloc/Quiz/quiz_state.dart';
+import '../../../API/Repository/quiz_repo.dart';
+import '../../../Models/Quiz/Quiz.dart';
 import '../quiz_description.dart';
 
 class QuizCard extends StatelessWidget {
@@ -10,7 +14,7 @@ class QuizCard extends StatelessWidget {
   final int numQuestions;
   final String quizType;
   final int numPlays;
-  final VoidCallback onPressed; // Add this to accept the onPressed callback
+  final VoidCallback onPressed;
 
   QuizCard({
     required this.title,
@@ -18,7 +22,7 @@ class QuizCard extends StatelessWidget {
     required this.numQuestions,
     required this.quizType,
     required this.numPlays,
-    required this.onPressed, // Make it required
+    required this.onPressed,
   });
 
   @override
@@ -26,7 +30,7 @@ class QuizCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: GestureDetector(
-        onTap: onPressed, // Add onTap here to handle card taps
+        onTap: onPressed,
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -51,7 +55,7 @@ class QuizCard extends StatelessWidget {
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(15),
                 ),
-                child: Image.asset(
+                child: Image.network(
                   imagePath,
                   height: 200,
                   width: double.infinity,
@@ -72,13 +76,13 @@ class QuizCard extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      width: 40, // Adjust size as needed
+                      width: 40,
                       height: 40,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: Colors.black, // Circle border color
-                          width: 2.0, // Bold border
+                          color: Colors.black,
+                          width: 2.0,
                         ),
                       ),
                       child: IconButton(
@@ -113,6 +117,50 @@ class QuizCard extends StatelessWidget {
 class PopularQuizSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => PopularQuizBloc(PopularQuizRepository())
+        ..add(FetchPopularQuizzes()),
+      child: BlocBuilder<PopularQuizBloc, PopularQuizState>(
+        builder: (context, state) {
+          if (state is PopularQuizLoading) {
+            return _buildShimmerEffect();
+          } else if (state is PopularQuizLoaded) {
+            return _buildQuizList(state.popularQuizzes);
+          } else if (state is PopularQuizError) {
+            return Center(child: Text('Error: ${state.message}'));
+          } else {
+            return Center(child: Text('No popular quizzes available'));
+          }
+        },
+      ),
+    );
+  }
+
+  // Shimmer Effect for loading state
+  Widget _buildShimmerEffect() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: List.generate(2, (index) {
+          return Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              height: 300, // Match the height of your quiz card
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+          );
+        }),
+      ),
+    );
+  }
+
+  Widget _buildQuizList(List<PopularQuiz> quizzes) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -123,7 +171,7 @@ class PopularQuizSection extends StatelessWidget {
             children: [
               Text(
                 'Popular Quiz',
-                style: outfitBold.copyWith(fontSize: getBigFontSize(context) * 1.2),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               TextButton(
                 onPressed: () {
@@ -131,40 +179,36 @@ class PopularQuizSection extends StatelessWidget {
                 },
                 child: Text(
                   'See All',
-                  style: outfitBold.copyWith(
+                  style: TextStyle(
                     color: Colors.blueAccent,
-                    fontSize: getBigFontSize(context),
+                    fontSize: 16,
                     decoration: TextDecoration.underline,
                   ),
                 ),
               ),
             ],
           ),
-          QuizCard(
-            title: 'Name the Dish',
-            imagePath: 'assets/images/namethequiz.png', // Replace with actual image path
-            numQuestions: 15,
-            quizType: 'Educational',
-            numPlays: 1,
-            onPressed: () {
-              // Handle what happens when the card is pressed
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => QuizDescription()), // Example
-              );
-            },
-          ),
-          QuizCard(
-            title: 'Identify the Alphabet',
-            imagePath: 'assets/images/identifythealphabet.png', // Replace with actual image path
-            numQuestions: 20,
-            quizType: 'Educational',
-            numPlays: 1,
-            onPressed: () {
-              // Handle what happens when the card is pressed
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => QuizDescription()), // Example
+          ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: quizzes.length,
+            itemBuilder: (context, index) {
+              final quiz = quizzes[index];
+              return QuizCard(
+                title: quiz.name,
+                imagePath: quiz.image,
+                numQuestions: 15, // You can hardcode if not provided by API
+                quizType: 'General', // Hardcode if not provided by API
+                numPlays: 1, // You can hardcode if not provided by API
+                onPressed: () {
+                  // Handle quiz card tap here
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QuizDescription(),
+                    ),
+                  );
+                },
               );
             },
           ),

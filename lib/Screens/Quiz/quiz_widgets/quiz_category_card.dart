@@ -1,16 +1,19 @@
-import 'package:app/Utils/app_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart'; // Import the shimmer package
+import '../../../API/Bloc/Quiz/quiz_bloc.dart';
+import '../../../API/Bloc/Quiz/quiz_event.dart';
+import '../../../API/Bloc/Quiz/quiz_state.dart';
+import '../../../API/Repository/quiz_repo.dart';
+import '../../../Models/Quiz/Quiz.dart';  // Ensure consistent model import
 
-class ScrollableCategoryCard extends StatelessWidget {
+class ScrollableQuizCategoryCard extends StatelessWidget {
   final String title;
-  final String description;
   final String imagePath;
   final Color backgroundColor;
 
-  ScrollableCategoryCard({
+  ScrollableQuizCategoryCard({
     required this.title,
-    required this.description,
     required this.imagePath,
     required this.backgroundColor,
   });
@@ -18,19 +21,19 @@ class ScrollableCategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 220, // Adjust width as necessary
+      width: 220,
       margin: const EdgeInsets.symmetric(horizontal: 8.0),
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
-          color: Colors.black.withOpacity(1), // Subtle border color
+          color: Colors.black.withOpacity(1),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(1), // Lighter shadow
+            color: Colors.black.withOpacity(1),
             spreadRadius: 1,
             blurRadius: 5,
             offset: const Offset(0, 3),
@@ -49,29 +52,13 @@ class ScrollableCategoryCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          Text(
-            description,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Explore More',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              decoration: TextDecoration.underline,
-            ),
-          ),
           Align(
             alignment: Alignment.bottomRight,
-            child: Image.asset(
+            child: Image.network(
               imagePath,
-              height: 50, // Adjust size as necessary
+              height: 50,
               width: 100,
+              fit: BoxFit.cover,
             ),
           ),
         ],
@@ -80,41 +67,87 @@ class ScrollableCategoryCard extends StatelessWidget {
   }
 }
 
-class HorizontalScrollCards extends StatelessWidget {
+class HorizontalScrollCards extends StatefulWidget {
+  @override
+  _HorizontalScrollCardsState createState() => _HorizontalScrollCardsState();
+}
+
+class _HorizontalScrollCardsState extends State<HorizontalScrollCards> {
+  late QuizCategoryBloc _quizCategoryBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _quizCategoryBloc = QuizCategoryBloc(QuizCategoryRepository());
+    _quizCategoryBloc.add(FetchQuizCategories());
+  }
+
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => _quizCategoryBloc,
+      child: BlocBuilder<QuizCategoryBloc, QuizCategoryState>(
+        builder: (context, state) {
+          if (state is QuizCategoryLoading) {
+            return _buildShimmerEffect(); // Show shimmer effect while loading
+          } else if (state is QuizCategoryLoaded) {
+            return _buildQuizCategoryList(state.quizCategories);
+          } else if (state is QuizCategoryError) {
+            return Center(child: Text('Error: ${state.message}'));
+          } else {
+            return Center(child: Text('No quiz categories available'));
+          }
+        },
+      ),
+    );
+  }
+
+  // Shimmer Effect
+  Widget _buildShimmerEffect() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: Container(
+          height: 190,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 3, // You can adjust the number of shimmer placeholders
+            itemBuilder: (context, index) {
+              return Container(
+                width: 220,
+                margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
+                    color: Colors.black.withOpacity(0.1),
+                    width: 1.5,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildQuizCategoryList(List<QuizCategory> quizCategories) {
     return Container(
-      height: 190, // Adjust height to match your design
-      child: ListView(
+      height: 190,
+      child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        children: [
-          ScrollableCategoryCard(
-            title: 'All Category',
-            description:
-                'All kind of categories from education to tech and more.',
-            imagePath:
-                'assets/logo/allcategory.png', // Replace with your actual image path
-            backgroundColor:
-                Colors.amber.shade100, // Adjust to match the background color
-          ),
-          ScrollableCategoryCard(
-            title: 'Education Quiz',
-            description:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-            imagePath:
-                'assets/logo/educationcategory.png', // Replace with your actual image path
-            backgroundColor:
-                Colors.blue.shade100, // Adjust to match the background color
-          ),
-          ScrollableCategoryCard(
-            title: 'Science Quiz',
-            description: 'Test your knowledge on various science topics.',
-            imagePath:
-                'assets/logo/educationcategory.png', // Replace with your actual image path
-            backgroundColor:
-                Colors.red.shade100, // Adjust to match the background color
-          ),
-        ],
+        itemCount: quizCategories.length,
+        itemBuilder: (context, index) {
+          final category = quizCategories[index];
+          return ScrollableQuizCategoryCard(
+            title: category.name,
+            imagePath: category.image,
+            backgroundColor: Colors.grey.shade100, // Adjust the background color as necessary
+          );
+        },
       ),
     );
   }

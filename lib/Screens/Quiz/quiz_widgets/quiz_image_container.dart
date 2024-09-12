@@ -1,6 +1,10 @@
-import 'package:app/Utils/app_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';  // Import the shimmer package
+import '../../../API/Bloc/Quiz/quiz_bloc.dart';
+import '../../../API/Bloc/Quiz/quiz_event.dart';
+import '../../../API/Bloc/Quiz/quiz_state.dart';
+
 class QuizImageContainer extends StatefulWidget {
   @override
   _QuizImageContainerState createState() => _QuizImageContainerState();
@@ -8,16 +12,53 @@ class QuizImageContainer extends StatefulWidget {
 
 class _QuizImageContainerState extends State<QuizImageContainer> {
   final PageController _controller = PageController();
-  final List<String> images = [
-    'assets/logo/quizoftheday.png', // Replace with your actual image paths
-    'assets/images/article.png',
-    'assets/images/article.png',
-  ];
-
   int _currentPage = 0;
 
   @override
+  void initState() {
+    super.initState();
+    // Trigger fetching of banners
+    BlocProvider.of<QuizBannerBloc>(context).add(FetchQuizBanners());
+  }
+
+  @override
   Widget build(BuildContext context) {
+    return BlocBuilder<QuizBannerBloc, QuizBannerState>(
+      builder: (context, state) {
+        if (state is QuizBannerLoading) {
+          return _buildShimmerEffect();  // Show shimmer effect when loading
+        } else if (state is QuizBannerLoaded) {
+          final images = state.quizBanners.map((banner) => banner.image).toList();
+          return _buildImageCarousel(images);
+        } else if (state is QuizBannerError) {
+          return Center(child: Text('Error loading banners'));
+        } else {
+          return Center(child: Text('No banners available'));
+        }
+      },
+    );
+  }
+
+  // Build Shimmer Effect
+  Widget _buildShimmerEffect() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0), // Padding around the container
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: Container(
+          height: 250, // Adjust height to match your design
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Build Image Carousel
+  Widget _buildImageCarousel(List<String> images) {
     return Padding(
       padding: const EdgeInsets.all(16.0), // Padding around the container
       child: Container(
@@ -45,7 +86,7 @@ class _QuizImageContainerState extends State<QuizImageContainer> {
                 },
                 itemCount: images.length,
                 itemBuilder: (context, index) {
-                  return Image.asset(
+                  return Image.network(
                     images[index],
                     fit: BoxFit.cover,
                   );

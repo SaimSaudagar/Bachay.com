@@ -1,6 +1,12 @@
-import 'package:app/Utils/app_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart'; // Import shimmer package
+import '../../../API/Bloc/Quiz/quiz_bloc.dart';
+import '../../../API/Bloc/Quiz/quiz_event.dart';
+import '../../../API/Bloc/Quiz/quiz_state.dart';
+import '../../../API/Repository/quiz_repo.dart';
+import '../../../Models/Quiz/Quiz.dart';
+
 class MostRecentQuizCard extends StatelessWidget {
   final String title;
   final String imagePath;
@@ -40,7 +46,6 @@ class MostRecentQuizCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Image container on the left
             Container(
               height: 90,
               width: 90,
@@ -51,13 +56,12 @@ class MostRecentQuizCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
+                child: Image.network(
                   imagePath,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            // Text information on the right
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -75,7 +79,6 @@ class MostRecentQuizCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        // Icon (for example, a star)
                         Icon(
                           Icons.star,
                           color: Colors.amber,
@@ -105,6 +108,49 @@ class MostRecentQuizCard extends StatelessWidget {
 class MostRecentSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => MostRecentQuizBloc(MostRecentQuizRepository())
+        ..add(FetchMostRecentQuizzes()),
+      child: BlocBuilder<MostRecentQuizBloc, MostRecentQuizState>(
+        builder: (context, state) {
+          if (state is MostRecentQuizLoading) {
+            return _buildShimmerEffect();
+          } else if (state is MostRecentQuizLoaded) {
+            return _buildMostRecentQuizList(state.mostRecentQuizzes);
+          } else if (state is MostRecentQuizError) {
+            return Center(child: Text('Error: ${state.message}'));
+          } else {
+            return Center(child: Text('No most recent quizzes available'));
+          }
+        },
+      ),
+    );
+  }
+
+  // Shimmer Effect for loading state
+  Widget _buildShimmerEffect() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: List.generate(2, (index) {
+          return Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              height: 120, // Match the height of your quiz card
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+          );
+        }),
+      ),
+    );
+  }
+
+  Widget _buildMostRecentQuizList(List<MostRecentQuiz> quizzes) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -135,22 +181,21 @@ class MostRecentSection extends StatelessWidget {
               ),
             ],
           ),
-          // Add MostRecentQuizCard widgets
-          MostRecentQuizCard(
-            title: 'Name the Dish',
-            imagePath: 'assets/images/namethequiz.png',
-            numQuestions: 15,
-            quizType: 'Educational',
-            numPlays: 1,
+          ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: quizzes.length,
+            itemBuilder: (context, index) {
+              final quiz = quizzes[index];
+              return MostRecentQuizCard(
+                title: quiz.name,
+                imagePath: quiz.image,
+                numQuestions: 15, // You can hardcode this if not provided by the API
+                quizType: 'General', // Hardcode if not provided
+                numPlays: 1, // Hardcode if not provided
+              );
+            },
           ),
-          MostRecentQuizCard(
-            title: 'Identify the Alphabet',
-            imagePath: 'assets/images/identifythealphabet.png',
-            numQuestions: 15,
-            quizType: 'Educational',
-            numPlays: 1,
-          ),
-          // Add more cards if needed
         ],
       ),
     );

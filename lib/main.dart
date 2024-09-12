@@ -11,7 +11,9 @@ import 'package:app/Widgets/CP_Bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'API/Bloc/Articles/Articles_Event.dart';
+import 'API/Bloc/Quiz/quiz_bloc.dart';
 import 'API/Repository/Articles_Repo.dart';
+import 'API/Repository/quiz_repo.dart';
 import 'Screens/Parenting/Feed/feed.dart';
 import 'Screens/Parenting/parenting.dart';
 import 'Screens/Quiz/quiz_home.dart';
@@ -30,6 +32,10 @@ class MyApp extends StatelessWidget {
         BlocProvider<CartBloc>(
           create: (context) => CartBloc(cartRepository: CartRepository()),
         ),
+        BlocProvider<QuizCategoryBloc>(
+          create: (context) => QuizCategoryBloc(QuizCategoryRepository())),
+        BlocProvider<QuizBannerBloc>(
+          create: (context) => QuizBannerBloc(QuizBannerRepository())),
         BlocProvider<LatestArticleBloc>(create: (context) => LatestArticleBloc(LatestArticlesRepository())..add(FetchLatestArticles())),
         BlocProvider<ArticleBloc>(create: (context) => ArticleBloc(ArticleRepository())..add(FetchArticles())),
         BlocProvider<ProductBloc>(
@@ -50,7 +56,7 @@ class MyApp extends StatelessWidget {
         //   svgAssetPath: 'assets/logo/progress_logo.svg',
         //   size: 10.0,
         // ),
-        home: ParentingApp(),
+        home: QuizHome(),
       ),
     );
   }
