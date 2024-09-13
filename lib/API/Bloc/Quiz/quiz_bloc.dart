@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'quiz_state.dart';
-import '../../Repository/quiz_repo.dart';
+import '../../Repository/Quiz_Repo.dart';
 import 'quiz_event.dart';
 
 class QuizBannerBloc extends Bloc<QuizBannerEvent, QuizBannerState> {

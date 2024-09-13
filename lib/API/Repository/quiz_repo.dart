@@ -4,7 +4,8 @@ import 'package:app/Utils/app_constants.dart';
 import '../../../Models/Quiz/Quiz.dart'; // Import the app_constants.dart
 
 class QuizBannerRepository {
-  final String apiUrl = "${baseUrl}quiz/banner"; // Using baseUrl from app_constants.dart
+  final String apiUrl =
+      "${baseUrl}quiz/banner"; // Using baseUrl from app_constants.dart
 
   Future<List<QuizBanner>> fetchQuizBanners() async {
     final response = await http.get(
@@ -14,8 +15,8 @@ class QuizBannerRepository {
         'Authorization': jwtToken, // Use the imported jwtToken here
       },
     );
-   print("API Response Code: ${response.statusCode}");  // Log the status code
-    print("API Response Body: ${response.body}");  // Log the response body
+    print("API Response Code: ${response.statusCode}"); // Log the status code
+    print("API Response Body: ${response.body}"); // Log the response body
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       final List<dynamic> bannerList = data['quiz_banner'];
@@ -25,6 +26,7 @@ class QuizBannerRepository {
     }
   }
 }
+
 class CategoryRepository {
   final String apiUrl = "${baseUrl}quiz/categories";
 
@@ -36,7 +38,7 @@ class CategoryRepository {
         'Authorization': jwtToken, // Use the imported jwtToken here
       },
     );
-print("API Response Code: ${response.statusCode}");  // Log the status code
+    print("API Response Code: ${response.statusCode}"); // Log the status code
     print("API Response Body: ${response.body}");
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
@@ -46,6 +48,7 @@ print("API Response Code: ${response.statusCode}");  // Log the status code
     }
   }
 }
+
 class QuizCategoryRepository {
   final String apiUrl = "${baseUrl}quiz/categories";
 
@@ -66,6 +69,7 @@ class QuizCategoryRepository {
     }
   }
 }
+
 class PopularQuizRepository {
   final String apiUrl = "${baseUrl}quiz/popular";
 
@@ -86,6 +90,7 @@ class PopularQuizRepository {
     }
   }
 }
+
 class MostRecentQuizRepository {
   final String apiUrl = "${baseUrl}quiz/most-recent";
 

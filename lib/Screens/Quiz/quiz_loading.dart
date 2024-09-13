@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../Utils/app_constants.dart';
-import 'quiz_home.dart';
+import 'Quiz_Home.dart';
 
 class QuizLoading extends StatefulWidget {
   @override

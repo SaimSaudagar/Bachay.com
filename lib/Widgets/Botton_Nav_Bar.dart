@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../Screens/Explore/Explore.dart';
 import '../Screens/Parenting/Feed/feed.dart';
-import '../Screens/Parenting/parenting.dart';
-import '../Screens/Quiz/quiz_loading.dart';
+import '../Screens/Parenting/Parenting.dart';
+import '../Screens/Quiz/Quiz_Loading.dart';
 
 // class CustomBottomNavigationBar extends StatefulWidget {
 //   final ValueChanged<int> onTabSelected;

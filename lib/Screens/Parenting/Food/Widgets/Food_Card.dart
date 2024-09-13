@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../Utils/app_constants.dart';
-import '../food_detail.dart';
+import '../Food_Detail.dart';
 
 class FoodCard extends StatelessWidget {
   final String imageUrl; // Image URL from backend

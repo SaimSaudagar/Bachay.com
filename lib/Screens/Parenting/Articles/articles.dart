@@ -11,7 +11,8 @@ class ArticlesScreen extends StatefulWidget {
   _ArticlesScreenState createState() => _ArticlesScreenState();
 }
 
-class _ArticlesScreenState extends State<ArticlesScreen> with TickerProviderStateMixin {
+class _ArticlesScreenState extends State<ArticlesScreen>
+    with TickerProviderStateMixin {
   TabController? _appBarTabController;
 
   @override
@@ -50,50 +51,49 @@ class _ArticlesScreenState extends State<ArticlesScreen> with TickerProviderStat
             ],
           ),
           // Wrap the content with BlocProvider to provide ArticleBloc to the widget tree
-           const Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
-                    children: [
-                      // Trending Content
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Trending',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24,
-                              color: Colors.pinkAccent,
-                            ),
+          const Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  children: [
+                    // Trending Content
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 12.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Trending',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                            color: Colors.pinkAccent,
                           ),
                         ),
                       ),
-                      TrendingArticlesSection(), // This section dynamically displays articles
-                      Divider(),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Latest',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24,
-                              color: Colors.pinkAccent,
-                            ),
+                    ),
+                    TrendingArticlesSection(), // This section dynamically displays articles
+                    Divider(),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 12.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Latest',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                            color: Colors.pinkAccent,
                           ),
                         ),
                       ),
+                    ),
                     LatestArticlesSection(),
-                    ],
-                  ),
+                  ],
                 ),
               ),
             ),
-        
+          ),
         ],
       ),
     );

@@ -13,10 +13,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'API/Bloc/Articles/Articles_Event.dart';
 import 'API/Bloc/Quiz/quiz_bloc.dart';
 import 'API/Repository/Articles_Repo.dart';
-import 'API/Repository/quiz_repo.dart';
-import 'Screens/Parenting/Feed/feed.dart';
-import 'Screens/Parenting/parenting.dart';
-import 'Screens/Quiz/quiz_home.dart';
+import 'API/Repository/Quiz_Repo.dart';
+import 'Screens/Parenting/Feed/Feed.dart';
+import 'Screens/Parenting/Parenting.dart';
+import 'Screens/Quiz/Quiz_Home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,11 +33,15 @@ class MyApp extends StatelessWidget {
           create: (context) => CartBloc(cartRepository: CartRepository()),
         ),
         BlocProvider<QuizCategoryBloc>(
-          create: (context) => QuizCategoryBloc(QuizCategoryRepository())),
+            create: (context) => QuizCategoryBloc(QuizCategoryRepository())),
         BlocProvider<QuizBannerBloc>(
-          create: (context) => QuizBannerBloc(QuizBannerRepository())),
-        BlocProvider<LatestArticleBloc>(create: (context) => LatestArticleBloc(LatestArticlesRepository())..add(FetchLatestArticles())),
-        BlocProvider<ArticleBloc>(create: (context) => ArticleBloc(ArticleRepository())..add(FetchArticles())),
+            create: (context) => QuizBannerBloc(QuizBannerRepository())),
+        BlocProvider<LatestArticleBloc>(
+            create: (context) => LatestArticleBloc(LatestArticlesRepository())
+              ..add(FetchLatestArticles())),
+        BlocProvider<ArticleBloc>(
+            create: (context) =>
+                ArticleBloc(ArticleRepository())..add(FetchArticles())),
         BlocProvider<ProductBloc>(
           create: (context) =>
               ProductBloc(productRepository: ProductRepository()),
@@ -56,7 +60,7 @@ class MyApp extends StatelessWidget {
         //   svgAssetPath: 'assets/logo/progress_logo.svg',
         //   size: 10.0,
         // ),
-        home: QuizHome(),
+        home: HomePage(),
       ),
     );
   }

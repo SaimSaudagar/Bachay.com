@@ -2,7 +2,7 @@ import 'package:app/Widgets/Botton_Nav_Bar.dart';
 import 'package:flutter/material.dart';
 
 import '../../Widgets/parenting_hamburger.dart';
-import 'Articles/articles.dart';
+import 'Articles/Articles.dart';
 import 'Feed/feed.dart';
 import 'Food/food.dart';
 import 'Q&A/q&a.dart';

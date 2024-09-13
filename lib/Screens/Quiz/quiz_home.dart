@@ -2,13 +2,13 @@ import 'package:app/Utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../Home/Homepage.dart';
-import 'quiz_widgets/quiz_appbar.dart';
-import 'quiz_widgets/quiz_category_card.dart';
-import 'quiz_widgets/quiz_image_container.dart';
-import 'quiz_widgets/quiz_most_recent_card.dart';
-import 'quiz_widgets/quiz_popular_card.dart';
-import 'quiz_widgets/quiz_progress_card.dart';
-import 'quiz_widgets/quiz_searchbar.dart';
+import 'Widgets/Quiz_Appbar.dart';
+import 'Widgets/Quiz_Category_Card.dart';
+import 'Widgets/Quiz_Image_Container.dart';
+import 'Widgets/Quiz_Most_Recent_Card.dart';
+import 'Widgets/Quiz_Popular_Card.dart';
+import 'Widgets/Quiz_Progress_Card.dart';
+import 'Widgets/Quiz_Searchbar.dart';
 
 class QuizHome extends StatelessWidget {
   @override

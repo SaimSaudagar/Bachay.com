@@ -1,4 +1,4 @@
-import 'package:app/Screens/Parenting/Articles/articles_read.dart';
+import 'package:app/Screens/Parenting/Articles/Articles_Read.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app/widgets/article_card_large.dart';

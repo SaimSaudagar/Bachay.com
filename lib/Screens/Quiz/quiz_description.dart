@@ -1,10 +1,10 @@
-import 'package:app/Screens/Quiz/quiz_widgets/how_it_works.dart';
+import 'package:app/Screens/Quiz/Widgets/How_It_Works.dart';
 import 'package:flutter/material.dart';
-import 'quiz_widgets/quiz_appbar.dart';
-import 'quiz_widgets/quiz_description_widget.dart';
-import 'quiz_widgets/quiz_image_display.dart';
-import 'quiz_widgets/quiz_info_card.dart';
-import 'quiz_widgets/quiz_top_scores.dart';
+import 'Widgets/Quiz_Appbar.dart';
+import 'Widgets/Quiz_Description_Widget.dart';
+import 'Widgets/Quiz_Image_Display.dart';
+import 'Widgets/Quiz_Info_Card.dart';
+import 'Widgets/Quiz_Top_Scores.dart';
 
 class QuizDescription extends StatelessWidget {
   @override

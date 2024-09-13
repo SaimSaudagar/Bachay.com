@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'food_widgets/food_card.dart';
+import 'Widgets/food_card.dart';
 
 class FoodScreen extends StatefulWidget {
   @override

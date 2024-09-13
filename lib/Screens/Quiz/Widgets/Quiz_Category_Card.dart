@@ -4,7 +4,7 @@ import 'package:shimmer/shimmer.dart'; // Import the shimmer package
 import '../../../API/Bloc/Quiz/quiz_bloc.dart';
 import '../../../API/Bloc/Quiz/quiz_event.dart';
 import '../../../API/Bloc/Quiz/quiz_state.dart';
-import '../../../API/Repository/quiz_repo.dart';
+import '../../../API/Repository/Quiz_Repo.dart';
 import '../../../Models/Quiz/Quiz.dart';  // Ensure consistent model import
 
 class ScrollableQuizCategoryCard extends StatelessWidget {

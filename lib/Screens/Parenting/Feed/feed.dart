@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../Widgets/Botton_Nav_Bar.dart';
 import '../../../Widgets/Post_widget.dart';
-import '../parenting_appbar.dart';
-import 'create_post.dart';
+import '../Parenting_Appbar.dart';
+import 'Create_Post.dart';
 
 class FeedsScreen extends StatefulWidget {
   @override

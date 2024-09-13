@@ -1,3 +1,4 @@
+import 'package:app/Screens/Parenting/Articles/Articles_widgets/Latest_Articles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -127,7 +128,8 @@ class ArticleDetailScreen extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     sourceName,
-                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(width: 8),
                   Text(
@@ -144,6 +146,28 @@ class ArticleDetailScreen extends StatelessWidget {
               HtmlWidget(
                 content, // The HTML content from the API
                 textStyle: const TextStyle(fontSize: 16, color: Colors.black87),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 12.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Latest',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                            color: Colors.pinkAccent,
+                          ),
+                        ),
+                      ),
+                    ),
+                    LatestArticlesSection(),
+                  ],
+                ),
               ),
             ],
           ),

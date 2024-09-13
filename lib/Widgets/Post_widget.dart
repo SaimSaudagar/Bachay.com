@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../Screens/Parenting/Feed/post_comments.dart';
+import '../Screens/Parenting/Feed/Post_Comments.dart';
 import '../Utils/app_constants.dart';
 
 class PostWidget extends StatelessWidget {
