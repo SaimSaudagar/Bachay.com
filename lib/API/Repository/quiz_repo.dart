@@ -132,4 +132,32 @@ class SingleQuizRepository {
       throw Exception("Failed to load quiz");
     }
   }
+
+  // Future<void> submitAnswers(List<String>) async {
+  //   try {
+  //     final response = await http.post(
+  //       Uri.parse('${baseUrl}quiz/submission'),
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': 'Bearer your_token',
+  //       },
+  //       body: json.encode(requestData),
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       // Success, navigate to the result screen
+  //       Navigator.pushReplacement(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => QuizResultScreen()),
+  //       );
+  //     } else {
+  //       // Handle failure response
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text('Failed to submit the quiz.')),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     // Handle errors
+  //   }
+  // }
 }

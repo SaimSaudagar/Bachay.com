@@ -6,7 +6,8 @@ class FoodCard extends StatelessWidget {
   final String imageUrl; // Image URL from backend
   final String foodName; // Food name from backend
   final List<String> nutrients; // List of nutrients from backend
-  final Map<String, bool> tags; // Tags with true (check) or false (remove) from backend
+  final Map<String, bool>
+      tags; // Tags with true (check) or false (remove) from backend
 
   const FoodCard({
     Key? key,
@@ -25,10 +26,7 @@ class FoodCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => FoodDetail(
-              imageUrl: imageUrl,
-              foodName: foodName,
-              nutrients: nutrients,
-              tags: tags,
+              foodId: 1,
             ),
           ),
         );
@@ -47,14 +45,17 @@ class FoodCard extends StatelessWidget {
                 alignment: Alignment.center,
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(borderRadius), // Rounded rectangle for image
+                    borderRadius: BorderRadius.circular(
+                        borderRadius), // Rounded rectangle for image
                     child: Image.network(
                       imageUrl, // Dynamic image URL from backend
                       width: double.infinity,
                       height: 150, // Responsive height
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
-                        return Icon(Icons.error, color: Colors.red); // Fallback if image fails to load
+                        return Icon(Icons.error,
+                            color:
+                                Colors.red); // Fallback if image fails to load
                       },
                     ),
                   ),
@@ -92,7 +93,8 @@ class FoodCard extends StatelessWidget {
                     SizedBox(height: getSpacing(context)),
                     // Nutrients list from backend
                     Text(
-                      nutrients.join(', '), // Display nutrients in a comma-separated format
+                      nutrients.join(
+                          ', '), // Display nutrients in a comma-separated format
                       style: interRegular.copyWith(
                         fontSize: getFontSize(context),
                       ),
@@ -107,8 +109,14 @@ class FoodCard extends StatelessWidget {
                         return _buildTag(
                           context,
                           entry.key, // Tag name (e.g., Baby, Postpartum)
-                          entry.value ? Icons.check_circle : Icons.remove_circle, // Check or remove icon based on boolean value
-                          entry.value ? Colors.green : Colors.yellow, // Green for true, yellow for false
+                          entry.value
+                              ? Icons.check_circle
+                              : Icons
+                                  .remove_circle, // Check or remove icon based on boolean value
+                          entry.value
+                              ? Colors.green
+                              : Colors
+                                  .yellow, // Green for true, yellow for false
                         );
                       }).toList(),
                     ),
@@ -123,7 +131,8 @@ class FoodCard extends StatelessWidget {
   }
 
   // Helper widget for tag display
-  Widget _buildTag(BuildContext context, String label, IconData icon, Color color) {
+  Widget _buildTag(
+      BuildContext context, String label, IconData icon, Color color) {
     return Row(
       children: [
         Icon(icon, color: color, size: getFontSize(context) * 1.5),
