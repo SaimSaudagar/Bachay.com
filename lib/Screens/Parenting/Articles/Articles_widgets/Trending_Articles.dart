@@ -80,7 +80,7 @@
 import 'package:app/Screens/Parenting/Articles/Articles_Read.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../Widgets/article_card_large.dart';
+import '../../../../Widgets/Article_Card_Large.dart';
 import '../../../../Widgets/Article_Card_Small.dart';
 import '../../../../API/Bloc/Articles/Articles_Bloc.dart';
 import '../../../../API/Bloc/Articles/Articles_State.dart';

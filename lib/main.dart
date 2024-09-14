@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
         //   svgAssetPath: 'assets/logo/progress_logo.svg',
         //   size: 10.0,
         // ),
-        home: LoadingScreen(),
+        home: HomePage(),
       ),
     );
   }

@@ -443,10 +443,10 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         children: [
           SizedBox(
-            height: 350,
+            height: MediaQuery.of(context).size.height * 0.9,
             child: GridView.count(
-              crossAxisCount: 5,
-              childAspectRatio: 1 / 1.5,
+              crossAxisCount: 3,
+              childAspectRatio: 1 * 0.8,
               physics: const NeverScrollableScrollPhysics(),
               children: doubledCategories
                   .map((category) => buildCategoryTile(category))
