@@ -78,7 +78,7 @@ class PopularQuizRepository {
       Uri.parse(apiUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': jwtToken, // Use the imported jwtToken here
+        'Authorization': jwtToken,
       },
     );
 
@@ -108,6 +108,28 @@ class MostRecentQuizRepository {
       return data.map((json) => MostRecentQuiz.fromJson(json)).toList();
     } else {
       throw Exception("Failed to load most recent quizzes");
+    }
+  }
+}
+
+class SingleQuizRepository {
+  final String apiUrl = "${baseUrl}quiz/view";
+
+  Future<QuizList> fetchQuiz(int id) async {
+    final response = await http.get(
+      Uri.parse('$apiUrl/$id'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': jwtToken,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      print(data);
+      return QuizList.fromJson(data);
+    } else {
+      throw Exception("Failed to load quiz");
     }
   }
 }

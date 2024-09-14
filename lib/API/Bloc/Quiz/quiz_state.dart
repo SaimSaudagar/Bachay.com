@@ -17,6 +17,7 @@ class QuizBannerError extends QuizBannerState {
 
   QuizBannerError(this.message);
 }
+
 abstract class QuizCategoryState {}
 
 class QuizCategoryInitial extends QuizCategoryState {}
@@ -34,6 +35,7 @@ class QuizCategoryError extends QuizCategoryState {
 
   QuizCategoryError(this.message);
 }
+
 abstract class PopularQuizState {}
 
 class PopularQuizInitial extends PopularQuizState {}
@@ -51,6 +53,7 @@ class PopularQuizError extends PopularQuizState {
 
   PopularQuizError(this.message);
 }
+
 abstract class MostRecentQuizState {}
 
 class MostRecentQuizInitial extends MostRecentQuizState {}
@@ -67,4 +70,22 @@ class MostRecentQuizError extends MostRecentQuizState {
   final String message;
 
   MostRecentQuizError(this.message);
+}
+
+abstract class SingleQuizState {}
+
+class SingleQuizInitial extends SingleQuizState {}
+
+class SingleQuizLoading extends SingleQuizState {}
+
+class SingleQuizLoaded extends SingleQuizState {
+  final QuizList quiz;
+
+  SingleQuizLoaded(this.quiz);
+}
+
+class SingleQuizError extends SingleQuizState {
+  final String message;
+
+  SingleQuizError(this.message);
 }

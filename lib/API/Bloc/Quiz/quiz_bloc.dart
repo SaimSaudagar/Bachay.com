@@ -14,12 +14,13 @@ class QuizBannerBloc extends Bloc<QuizBannerEvent, QuizBannerState> {
         final banners = await quizBannerRepository.fetchQuizBanners();
         emit(QuizBannerLoaded(banners));
       } catch (e) {
-         print("Error: $e");
+        print("Error: $e");
         emit(QuizBannerError(e.toString()));
       }
     });
   }
 }
+
 class QuizCategoryBloc extends Bloc<QuizCategoryEvent, QuizCategoryState> {
   final QuizCategoryRepository quizCategoryRepository;
 
@@ -35,6 +36,7 @@ class QuizCategoryBloc extends Bloc<QuizCategoryEvent, QuizCategoryState> {
     });
   }
 }
+
 class PopularQuizBloc extends Bloc<PopularQuizEvent, PopularQuizState> {
   final PopularQuizRepository popularQuizRepository;
 
@@ -50,10 +52,13 @@ class PopularQuizBloc extends Bloc<PopularQuizEvent, PopularQuizState> {
     });
   }
 }
-class MostRecentQuizBloc extends Bloc<MostRecentQuizEvent, MostRecentQuizState> {
+
+class MostRecentQuizBloc
+    extends Bloc<MostRecentQuizEvent, MostRecentQuizState> {
   final MostRecentQuizRepository mostRecentQuizRepository;
 
-  MostRecentQuizBloc(this.mostRecentQuizRepository) : super(MostRecentQuizInitial()) {
+  MostRecentQuizBloc(this.mostRecentQuizRepository)
+      : super(MostRecentQuizInitial()) {
     on<FetchMostRecentQuizzes>((event, emit) async {
       emit(MostRecentQuizLoading());
       try {
@@ -61,6 +66,23 @@ class MostRecentQuizBloc extends Bloc<MostRecentQuizEvent, MostRecentQuizState> 
         emit(MostRecentQuizLoaded(quizzes));
       } catch (e) {
         emit(MostRecentQuizError(e.toString()));
+      }
+    });
+  }
+}
+
+class SingleQuizBloc extends Bloc<SingleQuizEvent, SingleQuizState> {
+  final SingleQuizRepository singleQuizRepository;
+
+  SingleQuizBloc(this.singleQuizRepository) : super(SingleQuizInitial()) {
+    on<FetchSingleQuiz>((event, emit) async {
+      emit(SingleQuizLoading());
+      try {
+        final quiz = await singleQuizRepository.fetchQuiz(event.id);
+        emit(SingleQuizLoaded(quiz));
+      } catch (e) {
+        print(e.toString());
+        emit(SingleQuizError(e.toString()));
       }
     });
   }
