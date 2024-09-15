@@ -21,3 +21,15 @@ class AddToCart extends ProductEvent {
 
   AddToCart({required this.productId, required this.quantity});
 }
+
+class LoadRcommendedProducts extends ProductEvent {
+  final int productId;
+
+  LoadRcommendedProducts({required this.productId});
+}
+
+class LoadMostPopularProducts extends ProductEvent {}
+
+class LoadBestSellingProducts extends ProductEvent {}
+
+class LoadTopRatedProducts extends ProductEvent {}

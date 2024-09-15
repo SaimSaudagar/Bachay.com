@@ -7,14 +7,14 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
   final AddressRepository addressRepository;
 
   AddressBloc({required this.addressRepository}) : super(AddressInitial()) {
-    // on<LoadDiscountBanners>((event, emit) async {
-    //   emit(DiscountBannersLoading());
-    //   try {
-    //     final banners = await addressRepository.fetchDiscountBanner();
-    //     emit(DiscountBannersLoaded(banners));
-    //   } catch (e) {
-    //     emit(DiscountBannersError(e.toString()));
-    //   }
-    // });
+    on<LoadAddressList>((event, emit) async {
+      emit(AddressListLoading());
+      try {
+        final banners = await addressRepository.fetchAllAddresses();
+        emit(AddressListLoaded(banners));
+      } catch (e) {
+        emit(AddressListError(e.toString()));
+      }
+    });
   }
 }

@@ -1,3 +1,4 @@
+import 'package:app/Models/Products/Product_Card.dart';
 import 'package:app/Models/Products/Products.dart';
 import 'package:app/Models/Products/Single_Product.dart';
 
@@ -42,4 +43,56 @@ class AddToCartLoaded extends ProductState {
 class AddToCartError extends ProductState {
   final String message;
   AddToCartError(this.message);
+}
+
+//Recommended Products
+class RecommendedProductsLoading extends ProductState {}
+
+class RecommendedProductsLoaded extends ProductState {
+  final ListProductCard recommendedProducts;
+  RecommendedProductsLoaded(this.recommendedProducts);
+}
+
+class RecommendedProductsError extends ProductState {
+  final String message;
+  RecommendedProductsError(this.message);
+}
+
+//Most Popular Products
+class MostPopularProductsLoading extends ProductState {}
+
+class MostPopularProductsLoaded extends ProductState {
+  final ListProductCard mostPopularProducts;
+  MostPopularProductsLoaded(this.mostPopularProducts);
+}
+
+class MostPopularProductsError extends ProductState {
+  final String message;
+  MostPopularProductsError(this.message);
+}
+
+//Best Selling Products
+class BestSellingProductsLoading extends ProductState {}
+
+class BestSellingProductsLoaded extends ProductState {
+  final ListProductCard bestSellingProducts;
+  BestSellingProductsLoaded(this.bestSellingProducts);
+}
+
+class BestSellingProductsError extends ProductState {
+  final String message;
+  BestSellingProductsError(this.message);
+}
+
+//Top Rated Products
+class TopRatedProductsLoading extends ProductState {}
+
+class TopRatedProductsLoaded extends ProductState {
+  final ListProductCard topRatedProducts;
+  TopRatedProductsLoaded(this.topRatedProducts);
+}
+
+class TopRatedProductsError extends ProductState {
+  final String message;
+  TopRatedProductsError(this.message);
 }

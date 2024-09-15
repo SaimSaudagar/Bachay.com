@@ -1,3 +1,4 @@
+import 'package:app/Models/Products/Product_Card.dart';
 import 'package:app/Models/Products/Single_Product.dart';
 import 'package:app/Utils/app_constants.dart';
 import 'package:http/http.dart' as http;
@@ -59,19 +60,67 @@ class ProductRepository {
     }
   }
 
-  Future<String> realatedProducts(int productID) async {
+  Future<ListProductCard> fetchRecommendedProducts(int productId) async {
     try {
-      final response = await http.post(
-        Uri.parse('${baseUrl}products/related-products/${productID}'),
-      );
+      final response = await http
+          .get(Uri.parse('${baseUrl}products/related-products/$productId'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        return data['message'];
+        return ListProductCard.fromJson(data);
       } else {
-        throw Exception('Failed to add to cart');
+        throw Exception('Failed to recommended products');
       }
     } catch (e) {
-      throw Exception('Failed to add to cart: ${e.toString()}');
+      throw Exception('Failed to fetch recommended products: ${e.toString()}');
+    }
+  }
+
+  Future<ListProductCard> fetchMostPopularProducts() async {
+    try {
+      final response =
+          await http.get(Uri.parse('${baseUrl}products/most-searching'));
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return ListProductCard.fromJson(data);
+      } else {
+        throw Exception('Failed to most popular products');
+      }
+    } catch (e) {
+      print(e.toString());
+      throw Exception('Failed to fetch most popular products: ${e.toString()}');
+    }
+  }
+
+  Future<ListProductCard> fetchBestSellingProducts() async {
+    try {
+      final response =
+          await http.get(Uri.parse('${baseUrl}products/best-sellings'));
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return ListProductCard.fromJson(data);
+      } else {
+        throw Exception('Failed to best selling products');
+      }
+    } catch (e) {
+      throw Exception('Failed to fetch best selling products: ${e.toString()}');
+    }
+  }
+
+  Future<ListProductCard> fetchTopRatedProducts() async {
+    try {
+      final response =
+          await http.get(Uri.parse('${baseUrl}products/top-rated'));
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return ListProductCard.fromJson(data);
+      } else {
+        throw Exception('Failed to top rated products');
+      }
+    } catch (e) {
+      throw Exception('Failed to fetch top rated products: ${e.toString()}');
     }
   }
 }

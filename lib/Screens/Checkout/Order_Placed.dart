@@ -1,11 +1,22 @@
+import 'package:app/Models/Address/Address.dart';
 import 'package:flutter/material.dart';
 import '../../Utils/app_constants.dart';
 import 'Order_Confirmation.dart';
 
 class OrderPlacedScreen extends StatefulWidget {
-  final String price;
+  final String subTotal;
+  final String deliveryFee;
+  final String total;
+  final Address address;
+  final String orderId;
 
-  const OrderPlacedScreen({super.key, required this.price});
+  const OrderPlacedScreen(
+      {super.key,
+      required this.subTotal,
+      required this.deliveryFee,
+      required this.total,
+      required this.address,
+      required this.orderId});
   @override
   _OrderPlacedScreenState createState() => _OrderPlacedScreenState();
 }
@@ -17,8 +28,14 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.close),
-          onPressed: () { 
-            Navigator.push(context, MaterialPageRoute(builder: (context) => OrderConfirmationScreen(cartItem: [],)));}, 
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => OrderConfirmationScreen(
+                          cartItem: [],
+                        )));
+          },
         ),
         title: Text('Order Placed',
             style: outfitBold.copyWith(fontSize: getBigFontSize(context))),
@@ -45,13 +62,20 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
                 ),
               ),
               SizedBox(height: getSpacing(context) * 2),
-              const OrderDetailsSection(),
+              OrderDetailsSection(
+                subTotal: widget.subTotal,
+                deliveryFee: widget.deliveryFee,
+                total: widget.total,
+                address: widget.address,
+              ),
               SizedBox(height: getSpacing(context)),
               const PaymentSecuritySection(),
               SizedBox(height: getSpacing(context)),
               const SecurityPrivacySection(),
               SizedBox(height: getSpacing(context)),
-              const TrackOrderButton(),
+              TrackOrderButton(
+                orderId: widget.orderId,
+              ),
             ],
           ),
         ),
@@ -61,7 +85,16 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
 }
 
 class OrderDetailsSection extends StatelessWidget {
-  const OrderDetailsSection({super.key});
+  final String subTotal;
+  final String deliveryFee;
+  final String total;
+  final Address address;
+  const OrderDetailsSection(
+      {super.key,
+      required this.subTotal,
+      required this.deliveryFee,
+      required this.total,
+      required this.address});
 
   @override
   Widget build(BuildContext context) {
@@ -83,13 +116,13 @@ class OrderDetailsSection extends StatelessWidget {
             ],
           ),
           SizedBox(height: getSpacing(context)),
-          Text('Talha Ahmed',
+          Text(address.contactPersonName,
               style: interBold.copyWith(fontSize: getFontSize(context))),
-          Text('03041978736',
+          Text(address.phone,
               style: interRegular.copyWith(fontSize: getFontSize(context))),
-          Text('Street No 05, Sector 19',
+          Text(address.address,
               style: interRegular.copyWith(fontSize: getFontSize(context))),
-          Text('Karachi - Clifton, Sindh, Pakistan',
+          Text(address.addressType,
               style: interRegular.copyWith(fontSize: getFontSize(context))),
           SizedBox(height: getSpacing(context)),
           Row(
@@ -99,7 +132,7 @@ class OrderDetailsSection extends StatelessWidget {
               Text('Standard Shipping',
                   style: interRegular.copyWith(fontSize: getFontSize(context))),
               const Spacer(),
-              Text('Rs. 150',
+              Text(deliveryFee,
                   style: interRegular.copyWith(fontSize: getFontSize(context))),
             ],
           ),
@@ -108,12 +141,11 @@ class OrderDetailsSection extends StatelessWidget {
               style: interRegular.copyWith(fontSize: getFontSize(context))),
           SizedBox(height: getSpacing(context) * 2),
           const PriceItem(label: 'Subtotal:', price: 'Rs. 1,495'),
-          const PriceItem(
-              label: 'Coupon Code: FIRSTORDER1', price: '- Rs. 180'),
-          const PriceItem(label: 'Delivery Fee:', price: 'FREE'),
+          // const PriceItem(
+          //     label: 'Coupon Code: FIRSTORDER1', price: '- Rs. 180'),
+          PriceItem(label: 'Delivery Fee:', price: deliveryFee),
           const Divider(),
-          const PriceItem(
-              label: 'Total Order:', price: 'Rs. 1,445', isBold: true),
+          PriceItem(label: 'Total Order:', price: total, isBold: true),
           SizedBox(height: getSpacing(context)),
           const Row(
             children: [
@@ -231,7 +263,8 @@ class SecurityPrivacySection extends StatelessWidget {
 }
 
 class TrackOrderButton extends StatelessWidget {
-  const TrackOrderButton({super.key});
+  String orderId;
+  TrackOrderButton({super.key, required this.orderId});
 
   @override
   Widget build(BuildContext context) {

@@ -40,5 +40,46 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         emit(AddToCartError(e.toString()));
       }
     });
+
+    on<LoadRcommendedProducts>((event, emit) async {
+      emit(RecommendedProductsLoading());
+      try {
+        final allProducts =
+            await productRepository.fetchRecommendedProducts(event.productId);
+        emit(RecommendedProductsLoaded(allProducts));
+      } catch (e) {
+        emit(RecommendedProductsError(e.toString()));
+      }
+    });
+
+    on<LoadMostPopularProducts>((event, emit) async {
+      emit(MostPopularProductsLoading());
+      try {
+        final allProducts = await productRepository.fetchMostPopularProducts();
+        emit(MostPopularProductsLoaded(allProducts));
+      } catch (e) {
+        emit(MostPopularProductsError(e.toString()));
+      }
+    });
+
+    on<LoadBestSellingProducts>((event, emit) async {
+      emit(BestSellingProductsLoading());
+      try {
+        final allProducts = await productRepository.fetchBestSellingProducts();
+        emit(BestSellingProductsLoaded(allProducts));
+      } catch (e) {
+        emit(BestSellingProductsError(e.toString()));
+      }
+    });
+
+    on<LoadTopRatedProducts>((event, emit) async {
+      emit(TopRatedProductsLoading());
+      try {
+        final allProducts = await productRepository.fetchTopRatedProducts();
+        emit(TopRatedProductsLoaded(allProducts));
+      } catch (e) {
+        emit(TopRatedProductsError(e.toString()));
+      }
+    });
   }
 }

@@ -1,9 +1,15 @@
+import 'package:app/API/Bloc/Address/Address_Bloc.dart';
+import 'package:app/API/Bloc/Address/Address_Event.dart';
+import 'package:app/API/Bloc/Address/Address_State.dart';
 import 'package:app/API/Bloc/Order/Order_Bloc.dart';
 import 'package:app/API/Bloc/Order/Order_Event.dart';
 import 'package:app/API/Bloc/Order/Order_State.dart';
+import 'package:app/API/Repository/Address_Repo.dart';
+import 'package:app/Models/Address/Address.dart';
 import 'package:app/Models/Cart/CartItem.dart';
 import 'package:app/Screens/Checkout/Order_Placed.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Utils/app_constants.dart';
 
@@ -17,6 +23,29 @@ class OrderConfirmationScreen extends StatefulWidget {
 }
 
 class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
+  late double subtotal;
+  late double discount;
+  late double deliveryFee;
+  late double total;
+  late Address address;
+
+  @override
+  void initState() {
+    super.initState();
+    _calculateTotals();
+  }
+
+  void _calculateTotals() {
+    subtotal = widget.cartItem
+        .map((e) => e.price * e.quantity)
+        .reduce((value, element) => value + element);
+    discount = widget.cartItem
+        .map((e) => e.discount * e.quantity)
+        .reduce((value, element) => value + element);
+    deliveryFee = 150;
+    total = subtotal - discount + deliveryFee;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,17 +70,17 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                       fontSize: getBigFontSize(context), color: Colors.red)),
               const Divider(color: Colors.blue),
               SizedBox(height: getSpacing(context)),
-              deliveryInformationSection(context),
+              deliveryInformationSection(),
               SizedBox(height: getSpacing(context)),
               shippingMethodSection(context),
               SizedBox(height: getSpacing(context)),
               const PaymentMethodSection(),
               SizedBox(height: getSpacing(context)),
-              const OptionsSection(),
-              SizedBox(height: getSpacing(context)),
+              // const OptionsSection(),
+              // SizedBox(height: getSpacing(context)),
               orderDetailsSection(context),
               SizedBox(height: getSpacing(context)),
-              const TotalPriceSection(),
+              totalPriceSection(),
               SizedBox(height: getSpacing(context)),
               const PaymentSecuritySection(),
               SizedBox(height: getSpacing(context)),
@@ -65,7 +94,61 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
     );
   }
 
-  Widget deliveryInformationSection(BuildContext context) {
+  Widget totalPriceSection() {
+    return Container(
+      padding: EdgeInsets.all(getPadding(context)),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          PriceItem(
+              label: 'Subtotal:', price: 'Rs. ${subtotal.toStringAsFixed(2)}'),
+          PriceItem(
+              label: 'Discount:',
+              price: '- Rs. ${discount.toStringAsFixed(2)}'),
+          PriceItem(
+              label: 'Delivery Fee:',
+              price: 'Rs. ${deliveryFee.toStringAsFixed(2)}'),
+
+          PriceItem(
+              label: 'Total Order:',
+              price: 'Rs. ${total.toStringAsFixed(2)}',
+              isBold: true),
+          const Divider(),
+          // Text('Total: Rs. ${total.toStringAsFixed(2)}',
+          //     style: interBold.copyWith(
+          //         fontSize: getBigFontSize(context), color: Colors.red)),
+        ],
+      ),
+    );
+  }
+
+  Widget deliveryInformationSection() {
+    return BlocProvider(
+      create: (_) => AddressBloc(addressRepository: AddressRepository())
+        ..add(LoadAddressList()),
+      child: BlocBuilder<AddressBloc, AddressState>(
+        builder: (context, state) {
+          if (state is AddressListLoading) {
+            return const SizedBox();
+          } else if (state is AddressListLoaded) {
+            address = state.addressList.addresses.first;
+            return buildDeliveryInformationSection(
+                context, state.addressList.addresses);
+          } else if (state is AddressListError) {
+            return const Text('Failed to load all products');
+          }
+          return const Center(child: Text('Press a button to load categories'));
+        },
+      ),
+    );
+  }
+
+  Widget buildDeliveryInformationSection(
+      BuildContext context, List<Address> addresses) {
+    Address firstAddress = addresses.first;
     return Container(
       padding: EdgeInsets.all(getPadding(context)),
       decoration: BoxDecoration(
@@ -77,18 +160,18 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
           Text('Delivery Information',
               style: outfitBold.copyWith(fontSize: getFontSize(context))),
           SizedBox(height: getSpacing(context)),
-          Text('Talha Ahmed',
+          Text(firstAddress.contactPersonName,
               style: interBold.copyWith(fontSize: getFontSize(context))),
-          Text('03041978736',
+          Text(firstAddress.phone,
               style: interRegular.copyWith(fontSize: getFontSize(context))),
-          Text('Street No 05, Sector 19',
+          Text(firstAddress.address,
               style: interRegular.copyWith(fontSize: getFontSize(context))),
-          Text('Karachi - Clifton, Sindh, Pakistan',
+          Text(firstAddress.addressType,
               style: interRegular.copyWith(fontSize: getFontSize(context))),
-          const Align(
-            alignment: Alignment.topRight,
-            child: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-          ),
+          // const Align(
+          //   alignment: Alignment.topRight,
+          //   child: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+          // ),
         ],
       ),
     );
@@ -115,16 +198,16 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
               const Spacer(),
               Text('Rs. 150',
                   style: interRegular.copyWith(fontSize: getFontSize(context))),
-              const Align(
-                alignment: Alignment.topRight,
-                child:
-                    Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-              ),
+              // const Align(
+              //   alignment: Alignment.topRight,
+              //   child:
+              //       Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+              // ),
             ],
           ),
           SizedBox(height: getSpacing(context)),
-          Text('Estimated time Jun 19 - Jun 24',
-              style: interRegular.copyWith(fontSize: getFontSize(context))),
+          // Text('Estimated time Jun 19 - Jun 24',
+          //     style: interRegular.copyWith(fontSize: getFontSize(context))),
         ],
       ),
     );
@@ -165,8 +248,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                     imageUrl: widget.cartItem[index].thumbnail,
                     price: widget.cartItem[index].price.toString(),
                   ),
-                  const SizedBox(
-                      width: 20), // Example spacing, adjust as needed
+                  const SizedBox(width: 20),
                 ],
               );
             },
@@ -187,25 +269,20 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
       child: BlocListener<OrderBloc, OrderState>(
         listener: (context, state) {
           if (state is PlaceOrderLoaded) {
-            state.response != 0
-                ? ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Order Placed Successfully'),
-                    ),
-                  )
-                : ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Failed to place order'),
-                    ),
-                  );
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Order Placed Successfully'),
+              ),
+            );
             Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => OrderPlacedScreen(
-                        price: widget.cartItem
-                            .map((e) => e.price)
-                            .reduce((value, element) => value + element)
-                            .toString(),
+                        subTotal: subtotal.toString(),
+                        deliveryFee: deliveryFee.toString(),
+                        total: total.toString(),
+                        address: address,
+                        orderId: state.response.toString(),
                       )),
             );
           } else if (state is PlaceOrderLoading) {
@@ -261,18 +338,12 @@ class PaymentMethodSection extends StatelessWidget {
           SizedBox(height: getSpacing(context)),
           Row(
             children: [
-              // Replace with actual payment method icons
-              const Icon(Icons.credit_card, color: Colors.purple),
+              const Icon(Icons.money, color: Colors.green),
               SizedBox(width: getSpacing(context)),
-              const Icon(Icons.payment, color: Colors.purple),
-              SizedBox(width: getSpacing(context)),
-              // Add more icons as needed
+              Text('Cash on Delivery',
+                  style: interRegular.copyWith(fontSize: getFontSize(context))),
               const Spacer(),
-              const Align(
-                alignment: Alignment.topRight,
-                child:
-                    Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-              ),
+              // const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
             ],
           ),
         ],
@@ -375,29 +446,29 @@ class OrderItem extends StatelessWidget {
   }
 }
 
-class TotalPriceSection extends StatelessWidget {
-  const TotalPriceSection({super.key});
+// class TotalPriceSection extends StatelessWidget {
+//   const TotalPriceSection({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(getPadding(context)),
-      decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
-      ),
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          PriceItem(label: 'Subtotal:', price: 'Rs. 1,495'),
-          PriceItem(label: 'Coupon Code: FIRSTORDER1', price: '- Rs. 180'),
-          PriceItem(label: 'Delivery Fee:', price: 'FREE'),
-          Divider(),
-          PriceItem(label: 'Total Order:', price: 'Rs. 1,445', isBold: true),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: EdgeInsets.all(getPadding(context)),
+//       decoration: BoxDecoration(
+//         border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
+//       ),
+//       child: const Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           PriceItem(label: 'Subtotal:', price: 'Rs. 1,495'),
+//           PriceItem(label: 'Coupon Code: FIRSTORDER1', price: '- Rs. 180'),
+//           PriceItem(label: 'Delivery Fee:', price: '150'),
+//           Divider(),
+//           PriceItem(label: 'Total Order:', price: 'Rs. 1,445', isBold: true),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class PriceItem extends StatelessWidget {
   final String label;

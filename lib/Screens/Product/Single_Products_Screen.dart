@@ -7,12 +7,14 @@ import 'package:app/API/Bloc/Product/Product_State.dart';
 import 'package:app/API/Repository/Homepage_Repo.dart';
 import 'package:app/API/Repository/Product_Repository.dart';
 import 'package:app/Models/Home/Featured_Product.dart';
+import 'package:app/Models/Products/Product_Card.dart';
 import 'package:app/Models/Products/Single_Product.dart';
 import 'package:app/Screens/Home/Homepage.dart';
 import 'package:app/Widgets/CP_Bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../Utils/app_constants.dart';
 
 import '../../Widgets/App_Bar.dart';
@@ -51,7 +53,23 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
     return BlocProvider<ProductBloc>(
       create: (context) => _productBloc,
       child: Scaffold(
-        appBar: const CustomAppBar(state: 3),
+        appBar: AppBar(
+          leading: IconButton(
+            icon: SvgPicture.asset('assets/images/Back-Button.svg'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          // title: const Text('Product Details'),
+          actions: [
+            IconButton(
+              icon: SvgPicture.asset('assets/images/notification.svg'),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: SvgPicture.asset('assets/images/favorites.svg'),
+              onPressed: () {},
+            ),
+          ],
+        ),
         body: BlocListener<ProductBloc, ProductState>(
           listener: (context, state) {
             if (state is AddToCartLoaded) {
@@ -326,7 +344,6 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
     );
   }
 
-  //Images
   Widget productImages(List<String> imageUrls) {
     int currentIndex = 0;
 
@@ -381,7 +398,6 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
     );
   }
 
-//Header
   Widget header(String price, String discountAmount, String name) {
     double discount = double.tryParse(discountAmount) ?? 0.0;
     double originalPrice = double.tryParse(price) ?? 0.0;
@@ -456,7 +472,6 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
     );
   }
 
-//Colors
   Widget colors(
       List<SingleProductColorImage> colors, SingleProductChoiceOption sizes) {
     double circleRadius = MediaQuery.of(context).size.width * 0.03;
@@ -744,6 +759,216 @@ class _SingleProductScreenState extends State<SingleProductScreen> {
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: height / 4),
     );
   }
+
+  Widget productsTab(BuildContext context) {
+    return DefaultTabController(
+      length: 4,
+      child: Column(
+        children: [
+          const TabBar(
+            labelColor: Colors.black,
+            unselectedLabelColor: Colors.grey,
+            indicatorColor: Colors.purple,
+            tabs: [
+              Tab(
+                text: 'Recommended',
+              ),
+              Tab(text: 'Most  Popular'),
+              Tab(text: 'Best Selling '),
+              Tab(text: 'Top rated'),
+            ],
+          ),
+          SizedBox(
+            height: 500,
+            child: TabBarView(
+              children: [
+                recommendedProducts(context),
+                mostPopularProducts(context),
+                bestSellingProducts(context),
+                topRatedProducts(context),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget recommendedProducts(BuildContext context) {
+    return BlocProvider(
+      create: (_) => ProductBloc(productRepository: ProductRepository())
+        ..add(LoadRcommendedProducts(productId: widget.productId)),
+      child: BlocBuilder<ProductBloc, ProductState>(
+        builder: (context, state) {
+          if (state is RecommendedProductsLoading) {
+            return const Center(
+              child: BouncingSvgLoader(
+                svgAssetPath: 'assets/logo/progress_logo.svg',
+                size: 100.0,
+              ),
+            );
+          } else if (state is RecommendedProductsLoaded) {
+            return buildRecommendedProducts(
+                context, state.recommendedProducts.products);
+          } else if (state is FeaturedProductError) {
+            return const Center(child: Text('Failed to load products'));
+          }
+          return const Center(child: Text('Press a button to load products'));
+        },
+      ),
+    );
+  }
+
+  Widget buildRecommendedProducts(
+      BuildContext context, List<ProductCard> products) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.5, // Set a fixed height
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: getSpacing(context),
+          mainAxisSpacing: getSpacing(context),
+          childAspectRatio: 0.7,
+        ),
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          return buildProductTile(context, products[index]);
+        },
+      ),
+    );
+  }
+
+  Widget mostPopularProducts(BuildContext context) {
+    return BlocProvider(
+      create: (_) => ProductBloc(productRepository: ProductRepository())
+        ..add(LoadMostPopularProducts()),
+      child: BlocBuilder<ProductBloc, ProductState>(
+        builder: (context, state) {
+          if (state is MostPopularProductsLoading) {
+            return const Center(
+              child: BouncingSvgLoader(
+                svgAssetPath: 'assets/logo/progress_logo.svg',
+                size: 100.0,
+              ),
+            );
+          } else if (state is MostPopularProductsLoaded) {
+            return buildMostPopularProducts(
+                context, state.mostPopularProducts.products);
+          } else if (state is MostPopularProductsError) {
+            return const Center(child: Text('Failed to load products'));
+          }
+          return const Center(child: Text('Press a button to load products'));
+        },
+      ),
+    );
+  }
+
+  Widget buildMostPopularProducts(
+      BuildContext context, List<ProductCard> products) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.5, // Set a fixed height
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: getSpacing(context),
+          mainAxisSpacing: getSpacing(context),
+          childAspectRatio: 0.7,
+        ),
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          return buildProductTile(context, products[index]);
+        },
+      ),
+    );
+  }
+
+  Widget bestSellingProducts(BuildContext context) {
+    return BlocProvider(
+      create: (_) => ProductBloc(productRepository: ProductRepository())
+        ..add(LoadBestSellingProducts()),
+      child: BlocBuilder<ProductBloc, ProductState>(
+        builder: (context, state) {
+          if (state is BestSellingProductsLoading) {
+            return const Center(
+              child: BouncingSvgLoader(
+                svgAssetPath: 'assets/logo/progress_logo.svg',
+                size: 100.0,
+              ),
+            );
+          } else if (state is BestSellingProductsLoaded) {
+            return buildBestSellingProducts(
+                context, state.bestSellingProducts.products);
+          } else if (state is BestSellingProductsError) {
+            return const Center(child: Text('Failed to load products'));
+          }
+          return const Center(child: Text('Press a button to load products'));
+        },
+      ),
+    );
+  }
+
+  Widget buildBestSellingProducts(
+      BuildContext context, List<ProductCard> products) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.5, // Set a fixed height
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: getSpacing(context),
+          mainAxisSpacing: getSpacing(context),
+          childAspectRatio: 0.7,
+        ),
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          return buildProductTile(context, products[index]);
+        },
+      ),
+    );
+  }
+
+  Widget topRatedProducts(BuildContext context) {
+    return BlocProvider(
+      create: (_) => ProductBloc(productRepository: ProductRepository())
+        ..add(LoadTopRatedProducts()),
+      child: BlocBuilder<ProductBloc, ProductState>(
+        builder: (context, state) {
+          if (state is TopRatedProductsLoading) {
+            return const Center(
+              child: BouncingSvgLoader(
+                svgAssetPath: 'assets/logo/progress_logo.svg',
+                size: 100.0,
+              ),
+            );
+          } else if (state is TopRatedProductsLoaded) {
+            return buildTopRatedProducts(
+                context, state.topRatedProducts.products);
+          } else if (state is TopRatedProductsError) {
+            return const Center(child: Text('Failed to load products'));
+          }
+          return const Center(child: Text('Press a button to load products'));
+        },
+      ),
+    );
+  }
+
+  Widget buildTopRatedProducts(
+      BuildContext context, List<ProductCard> products) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.5, // Set a fixed height
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: getSpacing(context),
+          mainAxisSpacing: getSpacing(context),
+          childAspectRatio: 0.7,
+        ),
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          return buildProductTile(context, products[index]);
+        },
+      ),
+    );
+  }
 }
 
 Widget reviews(BuildContext context, List<SingleProductReview> reviews) {
@@ -847,84 +1072,7 @@ Widget reviewTile(BuildContext context, SingleProductReview review) {
   );
 }
 
-Widget productsTab(BuildContext context) {
-  return DefaultTabController(
-    length: 4,
-    child: Column(
-      children: [
-        const TabBar(
-          labelColor: Colors.black,
-          unselectedLabelColor: Colors.grey,
-          indicatorColor: Colors.purple,
-          tabs: [
-            Tab(
-              text: 'Recommended',
-            ),
-            Tab(text: 'Most  Popular'),
-            Tab(text: 'Best Selling '),
-            Tab(text: 'Top rated'),
-          ],
-        ),
-        SizedBox(
-          height: 500,
-          child: TabBarView(
-            children: [
-              featuredProducts(context),
-              featuredProducts(context),
-              featuredProducts(context),
-              featuredProducts(context),
-            ],
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-Widget featuredProducts(BuildContext context) {
-  return BlocProvider(
-    create: (_) =>
-        HomeBloc(homeRepository: HomeRepository())..add(LoadFeaturedProducts()),
-    child: BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        if (state is FeaturedProductLoading) {
-          return const Center(
-            child: BouncingSvgLoader(
-              svgAssetPath: 'assets/logo/progress_logo.svg',
-              size: 100.0,
-            ),
-          );
-        } else if (state is FeaturedProductLoaded) {
-          return buildFeaturedProducts(context, state.featuredProduct.products);
-        } else if (state is FeaturedProductError) {
-          return const Center(child: Text('Failed to load products'));
-        }
-        return const Center(child: Text('Press a button to load products'));
-      },
-    ),
-  );
-}
-
-Widget buildFeaturedProducts(
-    BuildContext context, List<FeaturedProduct> products) {
-  return SizedBox(
-    height: MediaQuery.of(context).size.height * 0.5, // Set a fixed height
-    child: GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: getSpacing(context),
-        mainAxisSpacing: getSpacing(context),
-        childAspectRatio: 0.7,
-      ),
-      itemCount: products.length,
-      itemBuilder: (context, index) {
-        return buildFeaturedProductTile(context, products[index]);
-      },
-    ),
-  );
-}
-
-Widget buildFeaturedProductTile(BuildContext context, FeaturedProduct product) {
+Widget buildProductTile(BuildContext context, ProductCard product) {
   Color textColor = const Color.fromRGBO(191, 143, 57, 1);
   Color color = const Color.fromRGBO(255, 244, 223, 1);
   Color borderColor = const Color.fromRGBO(255, 198, 95, 1);
@@ -952,12 +1100,12 @@ Widget buildFeaturedProductTile(BuildContext context, FeaturedProduct product) {
                 decoration: BoxDecoration(
                   borderRadius:
                       const BorderRadius.vertical(top: Radius.circular(10)),
-                  // image: DecorationImage(
-                  //   image: NetworkImage(product.thumbnail),
-                  //   fit: BoxFit.cover,
-                  //   onError: (error, stackTrace) =>
-                  //       const Center(child: Text('Image not available')),
-                  // ),
+                  image: DecorationImage(
+                    image: NetworkImage(product.thumbnail),
+                    fit: BoxFit.cover,
+                    onError: (error, stackTrace) =>
+                        const Center(child: Text('Image not available')),
+                  ),
                 ),
               ),
             ),
@@ -1015,12 +1163,12 @@ Widget buildFeaturedProductTile(BuildContext context, FeaturedProduct product) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Rs.${product.variations[0].price.toStringAsFixed(2)}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                // Text(
+                //   "Rs.${product.[0].price.toStringAsFixed(2)}",
+                //   style: const TextStyle(
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                // ),
               ],
             ),
           ),
