@@ -49,6 +49,13 @@ class MyApp extends StatelessWidget {
         BlocProvider<OrderBloc>(
           create: (context) => OrderBloc(orderRepository: OrderRepository()),
         ),
+        BlocProvider(
+        create: (context) => ArticleCategoryBloc(
+          repository: ArticleCategoryRepository(),
+        ),),
+         BlocProvider(
+            create: (context) => ArticleByCategoryBloc(
+              repository: ArticleByCategoryRepository(),)),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

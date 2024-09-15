@@ -14,3 +14,22 @@ abstract class LatestArticleEvent extends Equatable {
 }
 
 class FetchLatestArticles extends LatestArticleEvent {}
+abstract class ArticleCategoryEvent extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class FetchArticleCategories extends ArticleCategoryEvent {}
+abstract class ArticleByCategoryEvent extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
+
+class FetchArticlesByCategory extends ArticleByCategoryEvent {
+  final int categoryId;
+
+  FetchArticlesByCategory({required this.categoryId});
+
+  @override
+  List<Object?> get props => [categoryId];
+}
