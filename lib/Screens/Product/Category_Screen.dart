@@ -332,7 +332,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         Padding(
           padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
           child: const Text(
-            'Categiry Products',
+            'Category Products',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,

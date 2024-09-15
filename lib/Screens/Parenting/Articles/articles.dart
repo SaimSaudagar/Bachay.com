@@ -23,7 +23,6 @@ class _ArticlesScreenState extends State<ArticlesScreen>
   @override
   void initState() {
     super.initState();
-    // Fetch categories when the screen initializes
     BlocProvider.of<ArticleCategoryBloc>(context).add(FetchArticleCategories());
   }
 
@@ -41,11 +40,12 @@ class _ArticlesScreenState extends State<ArticlesScreen>
           if (state is ArticleCategoryLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is ArticleCategoryLoaded) {
-            // Initialize the TabController with the number of categories
             _appBarTabController = TabController(
               length: state.categories.length,
               vsync: this,
             );
+            BlocProvider.of<ArticleByCategoryBloc>(context).add(
+                FetchArticlesByCategory(categoryId: state.categories[0].id));
 
             return Column(
               children: [
@@ -59,8 +59,8 @@ class _ArticlesScreenState extends State<ArticlesScreen>
                   onTap: (index) {
                     // Fetch articles for the selected category
                     final categoryId = state.categories[index].id;
-                    BlocProvider.of<ArticleByCategoryBloc>(context).add(
-                        FetchArticlesByCategory(categoryId: categoryId));
+                    BlocProvider.of<ArticleByCategoryBloc>(context)
+                        .add(FetchArticlesByCategory(categoryId: categoryId));
                   },
                   tabs: state.categories.map((category) {
                     return _buildAppBarTab(category.name, context);
@@ -70,17 +70,21 @@ class _ArticlesScreenState extends State<ArticlesScreen>
                 Expanded(
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: getPadding(context)),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: getPadding(context)),
                       child: Column(
                         children: [
-                          BlocBuilder<ArticleByCategoryBloc, ArticleByCategoryState>(
+                          BlocBuilder<ArticleByCategoryBloc,
+                              ArticleByCategoryState>(
                             builder: (context, articleState) {
                               if (articleState is ArticleByCategoryLoading) {
                                 return const Center(
                                     child: CircularProgressIndicator());
-                              } else if (articleState is ArticleByCategoryLoaded) {
+                              } else if (articleState
+                                  is ArticleByCategoryLoaded) {
                                 if (articleState.articles.isEmpty) {
-                                  return const Center(child: Text('No articles found'));
+                                  return const Center(
+                                      child: Text('No articles found'));
                                 }
                                 final firstArticle = articleState.articles[0];
 
@@ -92,22 +96,27 @@ class _ArticlesScreenState extends State<ArticlesScreen>
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => ArticleDetailScreen(
+                                            builder: (context) =>
+                                                ArticleDetailScreen(
                                               title: firstArticle.title,
                                               content: firstArticle.text,
                                               imageUrl: firstArticle.thumbnail,
-                                              sourceName: firstArticle.sourceName,
-                                              date: _formatDate(firstArticle.date), // Format the date here
+                                              sourceName:
+                                                  firstArticle.sourceName,
+                                              date: _formatDate(firstArticle
+                                                  .date), // Format the date here
                                             ),
                                           ),
                                         );
                                       },
                                       child: ArticleCardLarge(
                                         imageUrl: firstArticle.thumbnail,
-                                        sourceImageUrl: firstArticle.sourceImageUrl,
+                                        sourceImageUrl:
+                                            firstArticle.sourceImageUrl,
                                         sourceName: firstArticle.sourceName,
                                         title: firstArticle.title,
-                                        date: _formatDate(firstArticle.date), // Format the date here
+                                        date: _formatDate(firstArticle
+                                            .date), // Format the date here
                                       ),
                                     ),
                                     // Display the rest in ArticleCardSmall
@@ -118,46 +127,55 @@ class _ArticlesScreenState extends State<ArticlesScreen>
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) => ArticleDetailScreen(
+                                                builder: (context) =>
+                                                    ArticleDetailScreen(
                                                   title: article.title,
                                                   content: article.text,
                                                   imageUrl: article.thumbnail,
-                                                  sourceName: article.sourceName,
-                                                  date: _formatDate(article.date), // Format the date here
+                                                  sourceName:
+                                                      article.sourceName,
+                                                  date: _formatDate(article
+                                                      .date), // Format the date here
                                                 ),
                                               ),
                                             );
                                           },
                                           child: ArticleCardSmall(
                                             imageUrl: article.thumbnail,
-                                            sourceImageUrl: article.sourceImageUrl,
+                                            sourceImageUrl:
+                                                article.sourceImageUrl,
                                             sourceName: article.sourceName,
                                             title: article.title,
                                             description: article.text,
-                                            date: _formatDate(article.date), // Format the date here
+                                            date: _formatDate(article
+                                                .date), // Format the date here
                                           ),
                                         );
                                       },
                                     ).toList(),
                                   ],
                                 );
-                              } else if (articleState is ArticleByCategoryError) {
-                                return Center(child: Text('Error: ${articleState.message}'));
+                              } else if (articleState
+                                  is ArticleByCategoryError) {
+                                return Center(
+                                    child:
+                                        Text('Error: ${articleState.message}'));
                               }
-                              return const Center(child: Text('Select a category to view articles'));
+                              return const Center();
                             },
                           ),
                           // Trending Articles Section
                           const SizedBox(height: 16),
                           Padding(
-                            padding: EdgeInsets.symmetric(vertical: getPadding(context)),
+                            padding: EdgeInsets.symmetric(
+                                vertical: getPadding(context)),
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 'Trending',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: getBigFontSize(context)*1.5,
+                                  fontSize: getBigFontSize(context) * 1.5,
                                   color: Colors.pinkAccent,
                                 ),
                               ),
@@ -167,14 +185,15 @@ class _ArticlesScreenState extends State<ArticlesScreen>
                           // Latest Articles Section
                           const Divider(),
                           Padding(
-                            padding: EdgeInsets.symmetric(vertical: getPadding(context)),
+                            padding: EdgeInsets.symmetric(
+                                vertical: getPadding(context)),
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 'Latest',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: getBigFontSize(context)*1.5,
+                                  fontSize: getBigFontSize(context) * 1.5,
                                   color: Colors.pinkAccent,
                                 ),
                               ),
@@ -208,7 +227,8 @@ class _ArticlesScreenState extends State<ArticlesScreen>
   Widget _buildAppBarTab(String text, BuildContext context) {
     return Tab(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: getPadding(context), vertical: getPadding(context)),
+        padding: EdgeInsets.symmetric(
+            horizontal: getPadding(context), vertical: getPadding(context)),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius),
           border: Border.all(color: Colors.pinkAccent, width: 1),
