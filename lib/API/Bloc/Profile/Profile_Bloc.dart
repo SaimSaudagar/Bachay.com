@@ -16,5 +16,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         emit(ProfileError(e.toString()));
       }
     });
+
+    on<UpdateProfile>((event, emit) async {
+      emit(ProfileUpdating());
+      try {
+        await profileRepository.updateProfile(event.name, event.phone);
+        emit(ProfileUpdated());
+      } catch (e) {
+        emit(ProfileUpdateError(e.toString()));
+      }
+    });
   }
 }

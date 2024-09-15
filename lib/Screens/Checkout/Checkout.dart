@@ -64,7 +64,7 @@ class _CartScreenState extends State<CartScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SignInSection(),
+                      if (getToken() == '') SignInSection(),
                       SizedBox(height: getSpacing(context)),
                       VoucherInputSection(),
                       SizedBox(height: getSpacing(context)),
@@ -123,23 +123,29 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Widget cart() {
-    return BlocBuilder<CartBloc, CartState>(
-      builder: (context, state) {
-        if (state is CartListLoading || state is UpdateCartLoading) {
-          return const Center(
-            child: BouncingSvgLoader(
-              svgAssetPath: 'assets/logo/progress_logo.svg',
-              size: 100.0,
-            ),
-          );
-        } else if (state is CartListLoaded) {
+    return BlocListener<CartBloc, CartState>(
+      listener: (context, state) {
+        if (state is CartListLoaded) {
           _cartItems = state.cartList.cartItems;
           _calculateCartTotals(_cartItems);
-          return cartSection("Your Cart", state.cartList.cartItems, context);
-        } else {
-          return const Center(child: Text('Cart is empty'));
         }
       },
+      child: BlocBuilder<CartBloc, CartState>(
+        builder: (context, state) {
+          if (state is CartListLoading) {
+            return const Center(
+              child: BouncingSvgLoader(
+                svgAssetPath: 'assets/logo/progress_logo.svg',
+                size: 150.0,
+              ),
+            );
+          } else if (state is CartListLoaded) {
+            return cartSection("Your Cart", state.cartList.cartItems, context);
+          } else {
+            return const Center(child: Text('Cart is empty'));
+          }
+        },
+      ),
     );
   }
 

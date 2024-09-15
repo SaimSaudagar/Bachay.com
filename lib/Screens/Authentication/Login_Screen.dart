@@ -1,51 +1,60 @@
+import 'package:app/API/Bloc/Login/Login_Event.dart';
+import 'package:app/API/Bloc/Login/Login_State.dart';
+import 'package:app/API/Bloc/Login/Login_Bloc.dart';
+import 'package:app/API/Repository/Login_Repo.dart';
+import 'package:app/Screens/Authentication/Verify_OTP_Screen.dart';
 import 'package:app/Utils/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../Widgets/Social_Button.dart';
-import 'Password_Screen.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+  final TextEditingController control = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     double containerSize = MediaQuery.of(context).size.width * 0.2;
     double spacingMultiplier = 2;
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(getPadding(context)),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _logoSection(containerSize),
-                SizedBox(height: getSpacing(context)),
-                _welcomeTextSection(context),
-                SizedBox(height: getSpacing(context) * spacingMultiplier),
-                _authTextSection(context),
-                SizedBox(
-                    height: getSpacing(context) *
-                        spacingMultiplier *
-                        spacingMultiplier),
-                _emailInputSection(context, spacingMultiplier),
-                SizedBox(height: getSpacing(context) * spacingMultiplier),
-                _continueButtonSection(context),
-                SizedBox(height: getSpacing(context) * spacingMultiplier),
-                _dividerWithTextSection(),
-                SizedBox(height: getSpacing(context) * spacingMultiplier),
-                _socialButtonSection(
-                    "Continue as Apple", FontAwesomeIcons.apple, Colors.white),
-                SizedBox(height: getSpacing(context) * spacingMultiplier),
-                _socialButtonSection("Continue as Google",
-                    FontAwesomeIcons.google, Colors.white),
-                SizedBox(height: getSpacing(context) * spacingMultiplier),
-                _socialButtonSection("Continue as Facebook",
-                    FontAwesomeIcons.facebook, Colors.white),
-                SizedBox(height: getSpacing(context) * spacingMultiplier),
-                _termsTextSection(),
-              ],
+    return BlocProvider(
+      create: (context) => LoginBloc(loginRepository: LoginRepository()),
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(getPadding(context)),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _logoSection(containerSize),
+                  SizedBox(height: getSpacing(context)),
+                  _welcomeTextSection(context),
+                  SizedBox(height: getSpacing(context) * spacingMultiplier),
+                  _authTextSection(context),
+                  SizedBox(
+                      height: getSpacing(context) *
+                          spacingMultiplier *
+                          spacingMultiplier),
+                  _emailInputSection(context, spacingMultiplier),
+                  SizedBox(height: getSpacing(context) * spacingMultiplier),
+                  _continueButtonSection(context),
+                  SizedBox(height: getSpacing(context) * spacingMultiplier),
+                  _dividerWithTextSection(),
+                  SizedBox(height: getSpacing(context) * spacingMultiplier),
+                  _socialButtonSection("Continue as Apple",
+                      FontAwesomeIcons.apple, Colors.white),
+                  SizedBox(height: getSpacing(context) * spacingMultiplier),
+                  _socialButtonSection("Continue as Google",
+                      FontAwesomeIcons.google, Colors.white),
+                  SizedBox(height: getSpacing(context) * spacingMultiplier),
+                  _socialButtonSection("Continue as Facebook",
+                      FontAwesomeIcons.facebook, Colors.white),
+                  SizedBox(height: getSpacing(context) * spacingMultiplier),
+                  _termsTextSection(),
+                ],
+              ),
             ),
           ),
         ),
@@ -84,6 +93,7 @@ class LoginScreen extends StatelessWidget {
             style: outfitBold.copyWith(fontSize: getFontSize(context))),
         SizedBox(height: getSpacing(context) * spacingMultiplier),
         TextField(
+          controller: control,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
@@ -103,21 +113,57 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget _continueButtonSection(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const PasswordScreen()));
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: buttonColorPurple,
-          padding: const EdgeInsets.symmetric(vertical: 15),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        ),
-        child: Text("Continue", style: buttonTextStyle(context)),
-      ),
+    return BlocConsumer<LoginBloc, LoginState>(
+      listener: (context, state) {
+        if (state is LoginSuccess) {
+          // Navigate to PasswordScreen if login is successful
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OtpVerificationScreen(
+                userId: control.text,
+              ),
+            ),
+          );
+        } else if (state is LoginFailure) {
+          // Show a SnackBar with the error message if login fails
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.error),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
+      builder: (context, state) {
+        return SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: state is! LoginLoading
+                ? () {
+                    // Dispatch the LoginSubmitted event when the button is pressed
+                    BlocProvider.of<LoginBloc>(context)
+                        .add(LoginRequested(control.text));
+                  }
+                : null, // Disable the button when loading
+            style: ElevatedButton.styleFrom(
+              backgroundColor: buttonColorPurple,
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
+            child: state is LoginLoading
+                ? CircularProgressIndicator(
+                    color: Colors.white,
+                  )
+                : Text(
+                    "Continue",
+                    style: buttonTextStyle(context),
+                  ),
+          ),
+        );
+      },
     );
   }
 

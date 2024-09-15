@@ -9,7 +9,7 @@ class OrderRepository {
     try {
       final response =
           await http.get(Uri.parse('${baseUrl}customer/order/place'), headers: {
-        'Authorization': jwtToken,
+        'Authorization': await getToken(),
       });
 
       if (response.statusCode == 200) {
@@ -27,9 +27,9 @@ class OrderRepository {
     try {
       final response =
           await http.get(Uri.parse('${baseUrl}customer/order/list'), headers: {
-        'Authorization': jwtToken,
+        'Authorization': await getToken(),
       });
-     
+
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         return OrderList.fromJson(data);

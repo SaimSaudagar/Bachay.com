@@ -1,83 +1,83 @@
-import 'package:app/Screens/Profile/Edit%20Profile/Edit_Profile.dart';
+import 'package:app/API/Bloc/Profile/Profile_Event.dart';
+import 'package:app/API/Bloc/Profile/Profile_State.dart';
+import 'package:app/API/Bloc/Profile/Profile_Bloc.dart';
+import 'package:app/API/Repository/Profile_Repo.dart';
+import 'package:app/Widgets/App_Bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../Utils/app_constants.dart';
 
 class PersonalInformationScreen extends StatelessWidget {
-  const PersonalInformationScreen({super.key});
+  final String username;
+  final String phone;
+
+  const PersonalInformationScreen(
+      {super.key, required this.username, required this.phone});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'Personal Information',
-        subtitle: 'Enter your personal details.',
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(getPadding(context)),
-        child: ListView(
-          children: [
-            const UserProfileSection(),
-            SizedBox(height: getSpacing(context) * 4),
-            const FullNameInput(),
-            SizedBox(height: getSpacing(context) * 2),
-            const ParentStatusChips(),
-            SizedBox(height: getSpacing(context) * 4),
-            const ActionButtons(),
-          ],
+    return BlocProvider(
+      create: (context) => ProfileBloc(profileRepository: ProfileRepository()),
+      child: Scaffold(
+        appBar: const CustomAppBar(
+          state: 1,
+        ),
+        body: Padding(
+          padding: EdgeInsets.all(getPadding(context)),
+          child: BlocListener<ProfileBloc, ProfileState>(
+            listener: (context, state) {
+              if (state is ProfileUpdated) {
+                // Show a success message when profile is updated
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Profile updated successfully!')),
+                );
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              } else if (state is ProfileUpdateError) {
+                // Show an error message if the profile update failed
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content:
+                          Text('Failed to update profile: ${state.message}')),
+                );
+              }
+            },
+            child: buildProfileForm(
+                context, username), // Use the provided username
+          ),
         ),
       ),
     );
   }
-}
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
-  final String subtitle;
+  Widget buildProfileForm(BuildContext context, String username) {
+    // Create a TextEditingController to pass to the ActionButtons
+    final TextEditingController fullNameController =
+        TextEditingController(text: username);
 
-  const CustomAppBar({super.key, required this.title, required this.subtitle});
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.white,
-      elevation: 0,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.black),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const EditProfileScreen()),
-          );
-        },
-      ),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: interBold.copyWith(
-              color: Colors.black,
-              fontSize: getBigFontSize(context),
-            ),
-          ),
-          Text(
-            subtitle,
-            style: interRegular.copyWith(
-              color: Colors.grey,
-              fontSize: getFontSize(context),
-            ),
-          ),
-        ],
-      ),
+    return ListView(
+      children: [
+        UserProfileSection(username: username),
+        SizedBox(height: getSpacing(context) * 4),
+        FullNameInput(
+            controller:
+                fullNameController), // Pass the controller to FullNameInput
+        SizedBox(height: getSpacing(context) * 2),
+        const ParentStatusChips(),
+        SizedBox(height: getSpacing(context) * 4),
+        ActionButtons(
+          controller: fullNameController,
+          phone: phone,
+        ), // Pass the same controller to ActionButtons
+      ],
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class UserProfileSection extends StatelessWidget {
-  const UserProfileSection({super.key});
+  final String username;
+
+  const UserProfileSection({super.key, required this.username});
 
   @override
   Widget build(BuildContext context) {
@@ -85,19 +85,20 @@ class UserProfileSection extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: getFontSize(context) * 4,
-          backgroundImage: const AssetImage('assets/images/Celebrate.png'), // Adjust the asset path
+          backgroundImage: const AssetImage('assets/images/Celebrate.png'),
         ),
         SizedBox(width: getPadding(context)),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Samira Khan',
+              username,
               style: interBold.copyWith(fontSize: getBigFontSize(context)),
             ),
             Text(
               'Mother of 03',
-              style: interRegular.copyWith(color: Colors.grey, fontSize: getFontSize(context)),
+              style: interRegular.copyWith(
+                  color: Colors.grey, fontSize: getFontSize(context)),
             ),
           ],
         ),
@@ -114,8 +115,11 @@ class UserProfileSection extends StatelessWidget {
   }
 }
 
+// Updated FullNameInput to accept a TextEditingController
 class FullNameInput extends StatelessWidget {
-  const FullNameInput({super.key});
+  final TextEditingController controller;
+
+  const FullNameInput({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +132,7 @@ class FullNameInput extends StatelessWidget {
         ),
         SizedBox(height: getSpacing(context)),
         TextField(
+          controller: controller, // Use the passed controller
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30.0),
@@ -195,8 +200,13 @@ class _ParentStatusChipsState extends State<ParentStatusChips> {
   }
 }
 
+// Pass the controller to the ActionButtons
 class ActionButtons extends StatelessWidget {
-  const ActionButtons({super.key});
+  final TextEditingController controller;
+  final String phone;
+
+  const ActionButtons(
+      {super.key, required this.controller, required this.phone});
 
   @override
   Widget build(BuildContext context) {
@@ -204,7 +214,9 @@ class ActionButtons extends StatelessWidget {
       children: [
         Expanded(
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.grey.shade300,
               padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -224,7 +236,13 @@ class ActionButtons extends StatelessWidget {
         SizedBox(width: getPadding(context)),
         Expanded(
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              // Use the passed controller to get the full name and update the profile
+              final fullName = controller.text;
+              context
+                  .read<ProfileBloc>()
+                  .add(UpdateProfile(name: fullName, phone: phone));
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: buttonColorPurple,
               padding: const EdgeInsets.symmetric(vertical: 16.0),

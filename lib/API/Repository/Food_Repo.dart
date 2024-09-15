@@ -8,7 +8,7 @@ class FoodRepository {
     try {
       final response =
           await http.get(Uri.parse('${baseUrl}food-details/${id}'), headers: {
-        'Authorization': jwtToken,
+        'Authorization': await getToken(),
       });
 
       if (response.statusCode == 200) {

@@ -116,11 +116,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
               SizedBox(height: getSpacing(context)),
               TextButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const OtpVerificationScreen()),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => const OtpVerificationScreen()),
+                  // );
                 },
                 child: const Text(
                   'Sign in Without Password',

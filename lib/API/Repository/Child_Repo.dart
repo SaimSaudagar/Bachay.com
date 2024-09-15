@@ -9,16 +9,12 @@ class ChildRepository {
     try {
       final response =
           await http.get(Uri.parse('${baseUrl}childerens'), headers: {
-        'Authorization': jwtToken,
+        'Authorization': await getToken(),
       });
 
-      if (response.body.split(",")[1] != "401]") {
-        final data = jsonDecode(response.body);
-        // print(data);
-        return ChildrenList.fromJson(data);
-      } else {
-        throw Exception('Failed to load cart list');
-      }
+      final data = jsonDecode(response.body);
+      // print(data);
+      return ChildrenList.fromJson(data);
     } catch (e) {
       throw Exception('Failed to fetch cart list: ${e.toString()}');
     }

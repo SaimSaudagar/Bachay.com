@@ -1,3 +1,4 @@
+import 'package:app/Screens/Profile/Edit%20Profile/Address_Book.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../Utils/app_constants.dart';
@@ -7,7 +8,11 @@ import 'Contact_Details.dart';
 import 'Personal_Information.dart';
 
 class EditProfileScreen extends StatelessWidget {
-  const EditProfileScreen({super.key});
+  final String username;
+  final String phone;
+
+  EditProfileScreen({Key? key, required this.username, required this.phone})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +23,7 @@ class EditProfileScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.grey),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const ProfileScreen()),
-            );
+            Navigator.pop(context);
           },
         ),
         title: Align(
@@ -48,20 +50,20 @@ class EditProfileScreen extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: getFontSize(context) * 4,
-                  backgroundImage: const AssetImage(
-                      'assets/images/Celebrate.png'), // Adjust the asset path
+                  backgroundImage:
+                      const AssetImage('assets/images/Celebrate.png'),
                 ),
                 SizedBox(width: getPadding(context)),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Talha Ahmed',
+                      username,
                       style:
                           interBold.copyWith(fontSize: getBigFontSize(context)),
                     ),
                     Text(
-                      'Father of 01',
+                      'Fath of 01',
                       style: interRegular.copyWith(
                           color: Colors.grey, fontSize: getFontSize(context)),
                     ),
@@ -87,8 +89,10 @@ class EditProfileScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            const PersonalInformationScreen()),
+                        builder: (context) => PersonalInformationScreen(
+                              username: username,
+                              phone: phone,
+                            )),
                   );
                 }),
                 _buildListTile(context, 'Contact Details', Icons.contact_mail,
@@ -109,7 +113,11 @@ class EditProfileScreen extends StatelessWidget {
                 }),
                 _buildListTile(context, 'Address Book', Icons.home_outlined,
                     () {
-                  // Add your onPressed functionality here
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AddressBookScreen()),
+                  );
                 }),
                 _buildListTile(context, 'Change Password', Icons.lock_outline,
                     () {

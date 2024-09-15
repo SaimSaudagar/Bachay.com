@@ -15,3 +15,17 @@ class LoginFailure extends LoginState {
 
   LoginFailure(this.error);
 }
+
+class OtpLoading extends LoginState {}
+
+class OtpSuccess extends LoginState {
+  final String message;
+
+  OtpSuccess(this.message);
+}
+
+class OtpFailure extends LoginState {
+  final String error;
+
+  OtpFailure(this.error);
+}

@@ -10,7 +10,7 @@ class CartRepository {
   //       'id': id,
   //       'quantity': quantity,
   //     }, headers: {
-  //       'Authorization': jwtToken,
+  //       'Authorization': await getToken(),
   //     });
 
   //     var jsonResponse = jsonDecode(response.body);
@@ -28,7 +28,7 @@ class CartRepository {
   Future<CartItemList> fetchCartList() async {
     try {
       final response = await http.get(Uri.parse('${baseUrl}cart'), headers: {
-        'Authorization': jwtToken,
+        'Authorization': await getToken(),
       });
 
       if (response.body.split(",")[1] != "401]") {
@@ -50,7 +50,7 @@ class CartRepository {
         'key': key.toString(),
         'quantity': quantity.toString(),
       }, headers: {
-        'Authorization': jwtToken,
+        'Authorization': await getToken(),
       });
 
       var jsonResponse = jsonDecode(response.body);
@@ -71,7 +71,7 @@ class CartRepository {
           await http.post(Uri.parse('${baseUrl}cart/remove'), body: {
         'key': key.toString(),
       }, headers: {
-        'Authorization': jwtToken,
+        'Authorization': await getToken(),
       });
 
       if (response.statusCode == 200) {
@@ -88,7 +88,7 @@ class CartRepository {
     try {
       final response =
           await http.post(Uri.parse('${baseUrl}cart/remove-all'), headers: {
-        'Authorization': jwtToken,
+        'Authorization': await getToken(),
       });
 
       if (response.statusCode == 200) {

@@ -8,3 +8,8 @@ class LoadProfile extends ProfileEvent {}
 //   LoadSingleProduct({required this.productId});
 // }
 
+class UpdateProfile extends ProfileEvent {
+  final String name;
+  final String phone;
+  UpdateProfile({required this.name, required this.phone});
+}

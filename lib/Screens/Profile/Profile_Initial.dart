@@ -56,9 +56,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           if (state is ProfileLoading) {
             return const Center(
               child: BouncingSvgLoader(
-            svgAssetPath: 'assets/logo/progress_logo.svg',
-            size: 100.0,
-          ),
+                svgAssetPath: 'assets/logo/progress_logo.svg',
+                size: 100.0,
+              ),
             );
           } else if (state is ProfileLoaded) {
             return _buildProfileScreen(context, state.profile);
@@ -95,7 +95,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const EditProfileScreen()),
+                    builder: (context) => EditProfileScreen(
+                          username: "${user.fName!} ${user.lName!}",
+                          phone: user.phone!,
+                        )),
               );
             },
             child: Text("Update Profile",

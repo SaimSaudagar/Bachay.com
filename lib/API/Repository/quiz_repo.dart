@@ -12,7 +12,8 @@ class QuizBannerRepository {
       Uri.parse(apiUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': jwtToken, // Use the imported jwtToken here
+        'Authorization':
+            await getToken(), // Use the imported await getToken() here
       },
     );
     print("API Response Code: ${response.statusCode}"); // Log the status code
@@ -35,7 +36,8 @@ class CategoryRepository {
       Uri.parse(apiUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': jwtToken, // Use the imported jwtToken here
+        'Authorization':
+            await getToken(), // Use the imported await getToken() here
       },
     );
     print("API Response Code: ${response.statusCode}"); // Log the status code
@@ -57,7 +59,8 @@ class QuizCategoryRepository {
       Uri.parse(apiUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': jwtToken, // Use the imported jwtToken here
+        'Authorization':
+            await getToken(), // Use the imported await getToken() here
       },
     );
 
@@ -78,7 +81,7 @@ class PopularQuizRepository {
       Uri.parse(apiUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': jwtToken,
+        'Authorization': await getToken(),
       },
     );
 
@@ -99,7 +102,7 @@ class MostRecentQuizRepository {
       Uri.parse(apiUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': jwtToken,
+        'Authorization': await getToken(),
       },
     );
 
@@ -120,7 +123,7 @@ class SingleQuizRepository {
       Uri.parse('$apiUrl/$id'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': jwtToken,
+        'Authorization': await getToken(),
       },
     );
 

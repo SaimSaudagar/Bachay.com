@@ -47,7 +47,7 @@ class ProductRepository {
     try {
       final response = await http.post(Uri.parse('${baseUrl}cart/add'),
           body: {'id': productId.toString(), 'quantity': quantity.toString()},
-          headers: {'Authorization': jwtToken});
+          headers: {'Authorization': await getToken()});
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         return data['message'];

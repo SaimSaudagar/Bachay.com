@@ -16,3 +16,13 @@ class ProfileError extends ProfileState {
   final String message;
   ProfileError(this.message);
 }
+
+// Update Profile
+class ProfileUpdating extends ProfileState {}
+
+class ProfileUpdated extends ProfileState {}
+
+class ProfileUpdateError extends ProfileState {
+  final String message;
+  ProfileUpdateError(this.message);
+}
