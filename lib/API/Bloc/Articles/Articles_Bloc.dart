@@ -40,3 +40,33 @@ class LatestArticleBloc extends Bloc<LatestArticleEvent, LatestArticleState> {
     }
   }
 }
+class ArticleCategoryBloc extends Bloc<ArticleCategoryEvent, ArticleCategoryState> {
+  final ArticleCategoryRepository repository;
+
+  ArticleCategoryBloc({required this.repository}) : super(ArticleCategoryInitial()) {
+    on<FetchArticleCategories>((event, emit) async {
+      try {
+        emit(ArticleCategoryLoading());
+        final categories = await repository.fetchCategories();
+        emit(ArticleCategoryLoaded(categories: categories));
+      } catch (e) {
+        emit(ArticleCategoryError(message: e.toString()));
+      }
+    });
+  }
+}
+class ArticleByCategoryBloc extends Bloc<ArticleByCategoryEvent, ArticleByCategoryState> {
+  final ArticleByCategoryRepository repository;
+
+  ArticleByCategoryBloc({required this.repository}) : super(ArticleByCategoryInitial()) {
+    on<FetchArticlesByCategory>((event, emit) async {
+      try {
+        emit(ArticleByCategoryLoading());
+        final articles = await repository.fetchArticlesByCategory(event.categoryId);
+        emit(ArticleByCategoryLoaded(articles: articles));
+      } catch (e) {
+        emit(ArticleByCategoryError(message: e.toString()));
+      }
+    });
+  }
+}

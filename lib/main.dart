@@ -58,6 +58,15 @@ class MyApp extends StatelessWidget {
         BlocProvider<LoginBloc>(
           create: (context) => LoginBloc(loginRepository: LoginRepository()),
         ),
+        BlocProvider(
+          create: (context) => ArticleCategoryBloc(
+            repository: ArticleCategoryRepository(),
+          ),
+        ),
+        BlocProvider(
+            create: (context) => ArticleByCategoryBloc(
+                  repository: ArticleByCategoryRepository(),
+                )),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

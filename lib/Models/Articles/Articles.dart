@@ -62,3 +62,56 @@ class LatestArticle {
     );
   }
 }
+class ArticleCategory {
+  final int id;
+  final String name;
+  final String tagLine;
+  final String image;
+
+  ArticleCategory({
+    required this.id,
+    required this.name,
+    required this.tagLine,
+    required this.image,
+  });
+
+  factory ArticleCategory.fromJson(Map<String, dynamic> json) {
+    return ArticleCategory(
+      id: json['id'],
+      name: json['name'],
+      tagLine: json['tag_line'],
+      image: json['image'],
+    );
+  }
+}
+class ArticleByCategory {
+  final int id;
+  final String title;
+  final String thumbnail;
+  final String text;
+  final String date;
+  final String sourceImageUrl;
+  final String sourceName;
+
+  ArticleByCategory({
+    required this.id,
+    required this.title,
+    required this.thumbnail,
+    required this.text,
+    required this.date,
+    required this.sourceImageUrl,
+    required this.sourceName,
+  });
+
+  factory ArticleByCategory.fromJson(Map<String, dynamic> json) {
+    return ArticleByCategory(
+      id: json['id'],
+      title: json['title'],
+      thumbnail: json['thumbnail'],
+      text: json['text'],
+      date: json['created_at'],
+      sourceImageUrl: json['articlecategory']['image'],
+      sourceName: json['articlecategory']['name'],
+    );
+  }
+}
