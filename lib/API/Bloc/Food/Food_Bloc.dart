@@ -34,3 +34,21 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
     });
   }
 }
+class AllFoodBloc extends Bloc<AllFoodEvent, AllFoodState> {
+  final AllFoodRepository allFoodRepository;
+
+  AllFoodBloc({required this.allFoodRepository}) : super(AllFoodInitial()) {
+    on<LoadAllFoods>(_onLoadAllFoods);
+  }
+
+  Future<void> _onLoadAllFoods(
+      LoadAllFoods event, Emitter<AllFoodState> emit) async {
+    emit(AllFoodLoading());
+    try {
+      final foods = await allFoodRepository.fetchAllFoods();
+      emit(AllFoodsLoaded(foods));
+    } catch (e) {
+      emit(AllFoodError(e.toString()));
+    }
+  }
+}

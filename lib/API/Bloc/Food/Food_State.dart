@@ -1,4 +1,5 @@
 import 'package:app/API/Bloc/Food/Food_Bloc.dart';
+import 'package:equatable/equatable.dart';
 
 import '../../../Models/Food/Food.dart';
 
@@ -37,4 +38,32 @@ class FoodError extends FoodState {
   final String error;
 
   FoodError({required this.error});
+}
+abstract class AllFoodState extends Equatable {
+  const AllFoodState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class AllFoodInitial extends AllFoodState {}
+
+class AllFoodLoading extends AllFoodState {}
+
+class AllFoodsLoaded extends AllFoodState {
+  final List<Food> foods;
+
+  const AllFoodsLoaded(this.foods);
+
+  @override
+  List<Object> get props => [foods];
+}
+
+class AllFoodError extends AllFoodState {
+  final String message;
+
+  const AllFoodError(this.message);
+
+  @override
+  List<Object> get props => [message];
 }

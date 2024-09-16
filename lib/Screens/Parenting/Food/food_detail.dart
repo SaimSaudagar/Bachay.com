@@ -1,6 +1,8 @@
 // food_detail.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../Models/Food/Food.dart';
+import '../../../Utils/app_constants.dart';
 
 class FoodDetail extends StatelessWidget {
   final Food food; // Accept the Food object directly
@@ -14,61 +16,83 @@ class FoodDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // AppBar with back button and actions
-      appBar: AppBar(
+        appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        title: Text(
-          'Food Details',
-          style: TextStyle(color: Colors.black),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.share, color: Colors.black),
+        leading: Padding(
+          padding: EdgeInsets.only(left: getPadding(context) * 0.5),
+          child: IconButton(
+            icon: SvgPicture.asset('assets/images/Back-Button.svg'),
             onPressed: () {
-              // Handle share action
-              // You can use the 'share' package to implement this
+              Navigator.of(context).pop();
             },
           ),
-          Stack(
-            children: [
-              IconButton(
-                icon: Icon(Icons.notifications, color: Colors.black),
-                onPressed: () {
-                  // Handle notification action
-                },
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SvgPicture.asset(
+              'assets/logo/Parenting.svg',
+              height: getFontSize(context) * 3,
+            ),
+          ],
+        ),
+        centerTitle: false,
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: getPadding(context) * 0.5),
+            child: IconButton(
+              icon: SvgPicture.asset(
+                'assets/images/share.svg',
+                color: Colors.black,
+                width: getFontSize(context) * 2,
+                height: getFontSize(context) * 2,
               ),
-              Positioned(
-                right: 11,
-                top: 11,
-                child: Container(
-                  padding: EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.circular(6),
+              onPressed: () {
+                // Handle share action
+              },
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: getPadding(context) * 0.5),
+            child: IconButton(
+              icon: Stack(
+                children: [
+                  SvgPicture.asset(
+                    'assets/images/notification.svg',
+                    color: Colors.black,
+                    width: getFontSize(context) * 2,
+                    height: getFontSize(context) * 2,
                   ),
-                  constraints: BoxConstraints(
-                    minWidth: 14,
-                    minHeight: 14,
-                  ),
-                  child: Text(
-                    '02',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 8,
-                      fontWeight: FontWeight.bold,
+                  Positioned(
+                    right: 0,
+                    child: Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.orange,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      constraints: const BoxConstraints(
+                        minWidth: 14,
+                        minHeight: 14,
+                      ),
+                      child: Text(
+                        '02',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: getFontSize(context) * 0.8,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                ),
-              )
-            ],
+                ],
+              ),
+              onPressed: () {
+                // Handle notification action
+              },
+            ),
           ),
         ],
       ),
@@ -76,95 +100,89 @@ class FoodDetail extends StatelessWidget {
       // Body with food details
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(getPadding(context)), // Responsive padding
           child: Column(
             children: [
               // Food Image
               ClipRRect(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(borderRadius), // Using predefined border radius
                 child: Image.network(
                   food.image,
                   width: double.infinity,
-                  height: 200,
+                  height: MediaQuery.of(context).size.height * 0.25, // Responsive height
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
                       color: Colors.grey[200],
-                      height: 200,
+                      height: MediaQuery.of(context).size.height * 0.25, // Responsive height
                       child: Icon(Icons.error, color: Colors.red, size: 50),
                     );
                   },
                 ),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: getSpacing(context)), // Responsive spacing
 
-              // Food Name
-              Text(
-                food.name,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  food.name,
+                  style: interBold.copyWith(
+                    fontSize: getBigFontSize(context), // Responsive font size
+                  ),
                 ),
               ),
-              SizedBox(height: 16),
+              Divider(),
+
+              SizedBox(height: getSpacing(context)), // Responsive spacing
 
               // Nutrients
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Nutrients: ${food.nutrients}",
-                  style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-                ),
-              ),
-              SizedBox(height: 16),
-              Divider(),
-
-              // Additional Information
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Additional Information",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                  style: interRegular.copyWith(
+                    fontSize: getFontSize(context), // Responsive font size
+                    color: Colors.grey[700],
                   ),
                 ),
               ),
-              SizedBox(height: 8),
+              SizedBox(height: getSpacing(context)), // Responsive spacing
 
               // List of Additional Info
               Column(
                 children: food.additionalInfo.map((info) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    padding: EdgeInsets.symmetric(vertical: getSpacing(context)), // Responsive padding
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Icon based on info type
                         Image.network(
                           info.icon,
-                          width: 24,
-                          height: 24,
+                          width: MediaQuery.of(context).size.width * 0.06, // Responsive icon size
+                          height: MediaQuery.of(context).size.width * 0.06, // Responsive icon size
                           errorBuilder: (context, error, stackTrace) {
                             return Icon(Icons.info, color: Colors.grey);
                           },
                         ),
-                        SizedBox(width: 12),
+                        SizedBox(width: getSpacing(context)), // Responsive spacing
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 info.title,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                                style: interBold.copyWith(
+                                  fontSize: getFontSize(context), // Responsive font size
                                 ),
                               ),
-                              SizedBox(height: 4),
+                              SizedBox(height: getSpacing(context)), // Responsive spacing
                               Text(
                                 info.description,
-                                style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                                style: interRegular.copyWith(
+                                  fontSize: getFontSize(context), // Responsive font size
+                                  color: Colors.grey[700],
+                                ),
                               ),
                             ],
                           ),

@@ -37,3 +37,20 @@ class FoodRepository {
     }
   }
 }
+class AllFoodRepository {
+  final String allFoodEndpoint = 'https://bachay.com/api/v1/food-details';
+
+  Future<List<Food>> fetchAllFoods() async {
+    final response = await http.get(Uri.parse(allFoodEndpoint));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      List<Food> foods = (data['foods'] as List)
+          .map((foodJson) => Food.fromJson(foodJson))
+          .toList();
+      return foods;
+    } else {
+      throw Exception('Failed to load all foods');
+    }
+  }
+}

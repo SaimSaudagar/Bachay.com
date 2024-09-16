@@ -1,3 +1,5 @@
+import 'package:equatable/equatable.dart';
+
 abstract class FoodCategoryEvent {}
 
 class LoadFoodCategories extends FoodCategoryEvent {}
@@ -9,3 +11,11 @@ class LoadFoodsByCategory extends FoodEvent {
 
   LoadFoodsByCategory({required this.categoryId});
 }
+abstract class AllFoodEvent extends Equatable {
+  const AllFoodEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+class LoadAllFoods extends AllFoodEvent {}
