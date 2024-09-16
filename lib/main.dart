@@ -19,6 +19,7 @@ import 'API/Bloc/Articles/Articles_Event.dart';
 import 'API/Bloc/Quiz/Quiz_Bloc.dart';
 import 'API/Repository/Articles_Repo.dart';
 import 'API/Repository/Quiz_Repo.dart';
+import 'Screens/Authentication/SignUp-Flow/AddAddress_Screen.dart';
 import 'Screens/Parenting/Feed/Feed.dart';
 import 'Screens/Parenting/Parenting.dart';
 import 'Screens/Quiz/Quiz_Home.dart';
@@ -78,7 +79,7 @@ class MyApp extends StatelessWidget {
         //   svgAssetPath: 'assets/logo/progress_logo.svg',
         //   size: 10.0,
         // ),
-        home: mainPage(),
+        home: AddAddressScreen(),
       ),
     );
   }

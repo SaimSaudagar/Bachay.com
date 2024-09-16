@@ -5,6 +5,8 @@ import 'package:latlong2/latlong.dart';
 import '../../../Utils/app_constants.dart';
 import 'package:app/Screens/Home/Homepage.dart';
 
+import 'AddAddress_BottomSheet.dart';
+
 class AddAddressScreen extends StatefulWidget {
   const AddAddressScreen({super.key});
 
@@ -80,7 +82,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             SizedBox(height: getSpacing(context) * 2),
             Center(
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+    showAddAddressBottomSheet(context);
+                },
                 style: TextButton.styleFrom(
                   foregroundColor: buttonColorPurple,
                   textStyle: TextStyle(
