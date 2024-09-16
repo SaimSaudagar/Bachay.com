@@ -3,23 +3,37 @@ import 'package:app/Utils/app_constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class FoodRepository {
-  Future<FoodDetail> fetchFoodById(int id) async {
-    try {
-      final response =
-          await http.get(Uri.parse('${baseUrl}food-details/${id}'), headers: {
-        'Authorization': await getToken(),
-      });
+import '../Bloc/Food/Food_Bloc.dart';
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        print(data);
-        return FoodDetail.fromJson(data);
-      } else {
-        throw Exception('Failed to load cart list');
-      }
-    } catch (e) {
-      throw Exception('Failed to fetch cart list: ${e.toString()}');
+class FoodCategoryRepository {
+  final String baseUrl = 'https://bachay.com/api/v1/food-categories';
+
+  Future<List<FoodCategory>> fetchFoodCategories() async {
+    final response = await http.get(Uri.parse(baseUrl));
+
+    if (response.statusCode == 200) {
+      List<dynamic> categoriesJson = json.decode(response.body)['categories'];
+      return categoriesJson
+          .map((categoryJson) => FoodCategory.fromJson(categoryJson))
+          .toList();
+    } else {
+      throw Exception('Failed to load food categories');
+    }
+  }
+}
+class FoodRepository {
+  final String baseUrl = 'https://bachay.com/api/v1/food-categories';
+
+  Future<List<Food>> fetchFoodsByCategory(int categoryId) async {
+    // Assuming '0' is used to fetch all foods
+    final url = categoryId == 0 ? '$baseUrl/all' : '$baseUrl/$categoryId';
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      List<dynamic> foodsJson = json.decode(response.body)['foods'];
+      return foodsJson.map((foodJson) => Food.fromJson(foodJson)).toList();
+    } else {
+      throw Exception('Failed to load foods for category $categoryId');
     }
   }
 }

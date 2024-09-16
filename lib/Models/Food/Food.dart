@@ -1,21 +1,19 @@
-class FoodDetail {
-  final Food food;
+// food_category_model.dart
+class FoodCategory {
+  final int id;
+  final String name;
 
-  FoodDetail({required this.food});
+  FoodCategory({required this.id, required this.name});
 
-  factory FoodDetail.fromJson(Map<String, dynamic> json) {
-    return FoodDetail(
-      food: Food.fromJson(json['food']),
+  factory FoodCategory.fromJson(Map<String, dynamic> json) {
+    return FoodCategory(
+      id: json['id'],
+      name: json['name'],
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'food': food.toJson(),
-    };
   }
 }
 
+// food_model.dart
 class Food {
   final int id;
   final String name;
@@ -32,25 +30,17 @@ class Food {
   });
 
   factory Food.fromJson(Map<String, dynamic> json) {
+    var additionalInfoList = (json['additional_info'] as List)
+        .map((info) => AdditionalInfo.fromJson(info))
+        .toList();
+
     return Food(
       id: json['id'],
       name: json['name'],
       nutrients: json['nutrients'],
       image: json['image'],
-      additionalInfo: List<AdditionalInfo>.from(
-        json['additional_info'].map((info) => AdditionalInfo.fromJson(info)),
-      ),
+      additionalInfo: additionalInfoList,
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'nutrients': nutrients,
-      'image': image,
-      'additional_info': additionalInfo.map((info) => info.toJson()).toList(),
-    };
   }
 }
 
@@ -71,13 +61,5 @@ class AdditionalInfo {
       icon: json['icon'],
       description: json['description'],
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'title': title,
-      'icon': icon,
-      'description': description,
-    };
   }
 }

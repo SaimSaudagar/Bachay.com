@@ -3,18 +3,33 @@ import 'package:app/API/Bloc/Food/Food_State.dart';
 import 'package:app/API/Repository/Food_Repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+class FoodCategoryBloc
+    extends Bloc<FoodCategoryEvent, FoodCategoryState> {
+  final FoodCategoryRepository repository;
+
+  FoodCategoryBloc(this.repository) : super(FoodCategoryInitial()) {
+    on<LoadFoodCategories>((event, emit) async {
+      emit(FoodCategoryLoading());
+      try {
+        final categories = await repository.fetchFoodCategories();
+        emit(FoodCategoryLoaded(categories));
+      } catch (e) {
+        emit(FoodCategoryError(e.toString()));
+      }
+    });
+  }
+}
 class FoodBloc extends Bloc<FoodEvent, FoodState> {
   final FoodRepository foodRepository;
 
   FoodBloc({required this.foodRepository}) : super(FoodInitial()) {
-    on<LoadFoodDetail>((event, emit) async {
-      emit(FoodDetailsLoading());
+    on<LoadFoodsByCategory>((event, emit) async {
+      emit(FoodLoading());
       try {
-        final foodDetail = await foodRepository.fetchFoodById(1);
-        emit(FoodDetailsLoaded(foodDetail));
+        final foods = await foodRepository.fetchFoodsByCategory(event.categoryId);
+        emit(FoodsLoaded(foods: foods));
       } catch (e) {
-        print(e.toString());
-        emit(FoodDetailsError(e.toString()));
+        emit(FoodError(error: e.toString()));
       }
     });
   }

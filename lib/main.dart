@@ -1,5 +1,6 @@
 import 'package:app/API/Bloc/Articles/Articles_Bloc.dart';
 import 'package:app/API/Bloc/Cart/Cart_Bloc.dart';
+import 'package:app/API/Bloc/Food/Food_Bloc.dart';
 import 'package:app/API/Bloc/Login/Login_Bloc.dart';
 import 'package:app/API/Bloc/Order/Order_Bloc.dart';
 import 'package:app/API/Bloc/Product/Product_Bloc.dart';

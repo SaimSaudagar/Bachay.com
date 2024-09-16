@@ -1,13 +1,12 @@
+// food_card.dart
 import 'package:flutter/material.dart';
-import '../../../../Utils/app_constants.dart';
-import '../Food_Detail.dart';
 
 class FoodCard extends StatelessWidget {
   final String imageUrl; // Image URL from backend
   final String foodName; // Food name from backend
   final List<String> nutrients; // List of nutrients from backend
-  final Map<String, bool>
-      tags; // Tags with true (check) or false (remove) from backend
+  final Map<String, bool> tags; // Tags with true (check) or false (remove)
+  final VoidCallback onTap; // Callback when the card is tapped
 
   const FoodCard({
     Key? key,
@@ -15,108 +14,86 @@ class FoodCard extends StatelessWidget {
     required this.foodName,
     required this.nutrients,
     required this.tags,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // Navigate to FoodDetail screen on card press
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => FoodDetail(
-              foodId: 1,
-            ),
-          ),
-        );
-      },
+      onTap: onTap, // Navigate to detail on tap
       child: Padding(
-        padding: EdgeInsets.all(getPadding(context)),
+        padding: const EdgeInsets.all(8.0),
         child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(borderRadius),
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Image inside a rounded rectangular box and Food Name
+              // Food image and name
               Stack(
                 alignment: Alignment.center,
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(
-                        borderRadius), // Rounded rectangle for image
+                    borderRadius:
+                        BorderRadius.circular(10), // Rounded corners for image
                     child: Image.network(
-                      imageUrl, // Dynamic image URL from backend
+                      imageUrl,
                       width: double.infinity,
-                      height: 150, // Responsive height
+                      height: 150,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
-                        return Icon(Icons.error,
-                            color:
-                                Colors.red); // Fallback if image fails to load
+                        return Container(
+                          color: Colors.grey[200],
+                          child: Icon(Icons.error, color: Colors.red),
+                        );
                       },
                     ),
                   ),
-                  Text(
-                    foodName, // Dynamic food name from backend
-                    style: outfitBold.copyWith(
-                      fontSize: getBigFontSize(context),
-                      color: Colors.white,
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                    color: Colors.black54,
+                    child: Text(
+                      foodName,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ],
               ),
+
+              // Nutrients and Tags
               Padding(
-                padding: EdgeInsets.all(getPadding(context)),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Nutrient Icon and Text
-                    Row(
-                      children: [
-                        Image.asset(
-                          'assets/images/food.png', // Replace with actual path
-                          width: 24,
-                          height: 24,
-                        ),
-                        SizedBox(width: getSpacing(context)),
-                        Text(
-                          'Nutrients',
-                          style: interBold.copyWith(
-                            fontSize: getFontSize(context),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: getSpacing(context)),
-                    // Nutrients list from backend
                     Text(
-                      nutrients.join(
-                          ', '), // Display nutrients in a comma-separated format
-                      style: interRegular.copyWith(
-                        fontSize: getFontSize(context),
-                      ),
+                      'Nutrients: ${nutrients.join(', ')}',
+                      style: TextStyle(fontSize: 14, color: Colors.grey[700]),
                     ),
-                    SizedBox(height: getSpacing(context)),
-                    // Divider
-                    Divider(color: Colors.grey),
-                    // Tags with Icons, dynamically generated from backend
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    SizedBox(height: 8),
+                    Wrap(
+                      spacing: 8.0,
                       children: tags.entries.map((entry) {
-                        return _buildTag(
-                          context,
-                          entry.key, // Tag name (e.g., Baby, Postpartum)
-                          entry.value
-                              ? Icons.check_circle
-                              : Icons
-                                  .remove_circle, // Check or remove icon based on boolean value
-                          entry.value
-                              ? Colors.green
-                              : Colors
-                                  .yellow, // Green for true, yellow for false
+                        return Chip(
+                          avatar: Icon(
+                            entry.value
+                                ? Icons.check_circle
+                                : Icons.cancel,
+                            color: entry.value ? Colors.green : Colors.red,
+                            size: 16,
+                          ),
+                          label: Text(entry.key),
+                          backgroundColor:
+                              entry.value ? Colors.green[50] : Colors.red[50],
+                          labelStyle: TextStyle(
+                            color:
+                                entry.value ? Colors.green[800] : Colors.red[800],
+                          ),
                         );
                       }).toList(),
                     ),
@@ -127,23 +104,6 @@ class FoodCard extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  // Helper widget for tag display
-  Widget _buildTag(
-      BuildContext context, String label, IconData icon, Color color) {
-    return Row(
-      children: [
-        Icon(icon, color: color, size: getFontSize(context) * 1.5),
-        SizedBox(width: getSpacing(context)),
-        Text(
-          label,
-          style: interRegular.copyWith(
-            fontSize: getFontSize(context),
-          ),
-        ),
-      ],
     );
   }
 }

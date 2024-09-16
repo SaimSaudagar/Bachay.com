@@ -1,19 +1,11 @@
+abstract class FoodCategoryEvent {}
+
+class LoadFoodCategories extends FoodCategoryEvent {}
+// food_event.dart
 abstract class FoodEvent {}
 
-class LoadFood extends FoodEvent {
+class LoadFoodsByCategory extends FoodEvent {
   final int categoryId;
 
-  LoadFood({required this.categoryId});
-}
-
-class LoadFoodDetail extends FoodEvent {
-  final int foodId;
-
-  LoadFoodDetail({required this.foodId});
-}
-
-class AddToCart extends FoodEvent {
-  final int foodId;
-
-  AddToCart({required this.foodId});
+  LoadFoodsByCategory({required this.categoryId});
 }
