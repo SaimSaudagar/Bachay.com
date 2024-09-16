@@ -125,15 +125,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 );
               },
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 4.0),
-                padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+                margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
                 decoration: BoxDecoration(
                   color: isSelected ? Colors.purple[50] : Colors.white,
                   border: Border.all(
                     color: isSelected ? Colors.purple : Colors.grey[300]!,
                     width: isSelected ? 2.0 : 1.0,
                   ),
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: Text(
                   category,
@@ -182,10 +182,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
         return Builder(
           builder: (BuildContext context) {
             return Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.symmetric(horizontal: 5.0),
+              // width: MediaQuery.of(context).size.width,
+              // margin: const EdgeInsets.symmetric(horizontal: 5.0),
               child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                // borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                 child: Image.network(
                   banner.mobilePhoto!,
                   fit: BoxFit.fill,
@@ -226,37 +226,37 @@ class _CategoryScreenState extends State<CategoryScreen> {
     );
   }
 
-  Widget buildSubCategory(List<SubCategory> categories) {
-    return Drawer(
-      width: MediaQuery.of(context).size.width * 0.3,
-      child: ListView.builder(
-        itemCount: categories.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(
-              categories[index].name,
-              style: TextStyle(
-                fontSize: getFontSize(context),
-                color: _selectedCategoryId == categories[index].id
-                    ? Colors.blue
-                    : Colors.black,
-                fontWeight: _selectedCategoryId == categories[index].id
-                    ? FontWeight.bold
-                    : FontWeight.normal,
-              ),
+Widget buildSubCategory(List<SubCategory> categories) {
+  return Drawer(
+    width: MediaQuery.of(context).size.width * 0.3,
+    child: ListView.builder(
+      itemCount: categories.length,
+      itemBuilder: (context, index) {
+        bool isSelected = _selectedCategoryId == categories[index].id;
+        return ListTile(
+          title: Text(
+            categories[index].name,
+            style: TextStyle(
+              fontSize: getFontSize(context),
+              color: isSelected ? Colors.white : Colors.black, // White text for better contrast when selected
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
             ),
-            selected: _selectedCategoryId == categories[index].id,
-            onTap: () {
-              setState(() {
-                _selectedIndex = index;
-                subSubCategory = categories[index].childes!;
-              });
-            },
-          );
-        },
-      ),
-    );
-  }
+          ),
+          selected: isSelected,
+          selectedTileColor: Colors.black, // Set background to black when selected
+          onTap: () {
+            setState(() {
+              _selectedIndex = index;
+              subSubCategory = categories[index].childes!;
+              _selectedCategoryId = categories[index].id; // Update selected category ID
+            });
+          },
+        );
+      },
+    ),
+  );
+}
+
 
   Widget buildSubSubCategory(List<SubCategory> categories) {
     return Expanded(

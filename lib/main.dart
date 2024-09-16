@@ -22,6 +22,7 @@ import 'API/Repository/Quiz_Repo.dart';
 import 'Screens/Authentication/SignUp-Flow/AddAddress_Screen.dart';
 import 'Screens/Parenting/Feed/Feed.dart';
 import 'Screens/Parenting/Parenting.dart';
+import 'Screens/Profile/Profile_Initial.dart';
 import 'Screens/Quiz/Quiz_Home.dart';
 import 'package:app/API/Repository/Login_Repo.dart';
 
@@ -79,7 +80,7 @@ class MyApp extends StatelessWidget {
         //   svgAssetPath: 'assets/logo/progress_logo.svg',
         //   size: 10.0,
         // ),
-        home: AddAddressScreen(),
+        home: ParentingApp(),
       ),
     );
   }
