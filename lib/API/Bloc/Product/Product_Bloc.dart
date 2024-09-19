@@ -1,24 +1,63 @@
 import 'package:app/API/Bloc/Product/Product_Event.dart';
 import 'package:app/API/Bloc/Product/Product_State.dart';
 import 'package:app/API/Repository/Product_Repository.dart';
+import 'package:app/Models/Products/Products.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final ProductRepository productRepository;
+  List<Product> _allProducts = []; // Maintain a list of all loaded products
+  String? _nextPageUrl;
 
   ProductBloc({required this.productRepository}) : super(ProductInitial()) {
     on<LoadAllProducts>((event, emit) async {
-      emit(AllProductsLoading());
       try {
-        final allProducts =
-            await productRepository.fetchAllProducts(event.colors, event.ages);
-        emit(AllProductsLoaded(allProducts));
+        if (event.nextPageUrl == null) {
+          emit(AllProductsLoading());
+        } else {
+          emit(AllProductsLoadingMore());
+        }
+
+        final response = await productRepository.fetchAllProducts(
+          event.colors,
+          event.ages,
+          nextPageUrl: event.nextPageUrl,
+        );
+
+        if (event.nextPageUrl == null) {
+          _allProducts = response.allProducts?.data ?? [];
+        } else {
+          _allProducts.addAll(response.allProducts?.data ?? []);
+        }
+
+        _nextPageUrl = response.allProducts?.nextPageUrl;
+
+        emit(AllProductsLoaded(
+          AllProduct(
+            allProducts: AllProducts(
+              data: _allProducts,
+              currentPage: response.allProducts!.currentPage,
+              firstPageUrl: response.allProducts!.firstPageUrl,
+              from: response.allProducts!.from,
+              lastPage: response.allProducts!.lastPage,
+              lastPageUrl: response.allProducts!.lastPageUrl,
+              links: response.allProducts!.links,
+              nextPageUrl: response.allProducts!.nextPageUrl,
+              path: response.allProducts!.path,
+              perPage: response.allProducts!.perPage,
+              prevPageUrl: response.allProducts!.prevPageUrl,
+              to: response.allProducts!.to,
+              total: response.allProducts!.total,
+            ),
+            filter: response.filter,
+          ),
+        ));
       } catch (e) {
-        print(e.toString());
         emit(AllProductsError(e.toString()));
       }
     });
 
+    // Load a single product
     on<LoadSingleProduct>((event, emit) async {
       emit(SingleProductLoading());
       try {
@@ -30,6 +69,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       }
     });
 
+    // Add to cart
     on<AddToCart>((event, emit) async {
       emit(AddToCartLoading());
       try {
@@ -41,6 +81,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       }
     });
 
+    // Load recommended products
     on<LoadRcommendedProducts>((event, emit) async {
       emit(RecommendedProductsLoading());
       try {
@@ -52,6 +93,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       }
     });
 
+    // Load most popular products
     on<LoadMostPopularProducts>((event, emit) async {
       emit(MostPopularProductsLoading());
       try {
@@ -62,6 +104,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       }
     });
 
+    // Load best selling products
     on<LoadBestSellingProducts>((event, emit) async {
       emit(BestSellingProductsLoading());
       try {
@@ -72,6 +115,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       }
     });
 
+    // Load top rated products
     on<LoadTopRatedProducts>((event, emit) async {
       emit(TopRatedProductsLoading());
       try {

@@ -1,12 +1,18 @@
 abstract class ProductEvent {}
 
+// Product_Event.dart
 class LoadAllProducts extends ProductEvent {
-  List<String> colors;
-  List<String> ages;
-  final String? gender;
+  final List<String> colors;
+  final List<String> ages;
+  final String gender;
+  final String? nextPageUrl; 
 
-  LoadAllProducts(
-      {required this.colors, required this.ages, required this.gender});
+  LoadAllProducts({
+    required this.colors,
+    required this.ages,
+    required this.gender,
+    this.nextPageUrl,
+  });
 }
 
 class LoadSingleProduct extends ProductEvent {

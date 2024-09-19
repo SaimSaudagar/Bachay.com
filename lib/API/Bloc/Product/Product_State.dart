@@ -19,6 +19,8 @@ class AllProductsError extends ProductState {
   AllProductsError(this.message);
 }
 
+class AllProductsLoadingMore extends ProductState {}
+
 //Single Product
 class SingleProductLoading extends ProductState {}
 

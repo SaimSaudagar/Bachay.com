@@ -25,6 +25,7 @@ class AllProductsScreen extends StatelessWidget {
   List<String> _selectedColors = [];
   List<String> _selectedAges = [];
   String _selectedGender = '';
+  List<Product> _products = [];
 
   void _onSizeSelected(String size) {
     if (_selectedSize != size) {
@@ -65,54 +66,97 @@ class AllProductsScreen extends StatelessWidget {
   }
 
   // All Products
+// In the allProducts() widget
   Widget allProducts() {
     return BlocBuilder<ProductBloc, ProductState>(
       builder: (context, state) {
-        print('State: $state');
         if (state is AllProductsLoading) {
           return const Center(
-            child: BouncingSvgLoader(
-              svgAssetPath: 'assets/logo/progress_logo.svg',
-              size: 100.0,
-            ),
+            child: CircularProgressIndicator(),
           );
         } else if (state is AllProductsLoaded) {
           _filter = state.allProducts.filter!;
-          return buildAllProducts(context, state.allProducts.allProducts!.data);
+          return buildAllProducts(context, state.allProducts.allProducts!.data,
+              state.allProducts.allProducts!.nextPageUrl);
         } else if (state is AllProductsError) {
-          return const Text('Failed to load all products');
+          return const Center(child: Text('Failed to load products'));
         }
-        return const Center(child: Text('No products available'));
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }
 
-  Widget buildAllProducts(BuildContext context, List<Product> products) {
-    return Column(
-      children: [
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: products.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.75,
-          ),
-          itemBuilder: (context, index) {
-            return GestureDetector(
-                onTap: () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SingleProductScreen(
-                                  productId: products[index].id,
-                                )),
+  Widget buildAllProducts(
+      BuildContext context, List<Product> products, String? nextUrl) {
+    // Define the scroll controller outside the function to keep it persistent
+    ScrollController _scrollController =
+        ScrollController(); // Persistent scroll controller
+
+    // Attach the scroll listener only once
+    if (!_scrollController.hasListeners) {
+      _scrollController.addListener(() {
+        if (_scrollController.position.pixels ==
+            _scrollController.position.maxScrollExtent) {
+          // Trigger loading more products when the user scrolls to the bottom
+          final productBloc = BlocProvider.of<ProductBloc>(context);
+          if (nextUrl != null) {
+            productBloc.add(LoadAllProducts(
+              colors: _selectedColors,
+              ages: _selectedAges,
+              gender: _selectedGender,
+              nextPageUrl: nextUrl, // Load the next page using nextUrl
+            ));
+          }
+        }
+      });
+    }
+
+    // Return the layout with proper height constraints using SizedBox
+    return SizedBox(
+      height:
+          MediaQuery.of(context).size.height, // Constrain height to the screen
+      child: Column(
+        children: [
+          Expanded(
+            // Expanded ensures the GridView takes up the remaining space
+            child: GridView.builder(
+              controller: _scrollController, // Attach the scroll controller
+              shrinkWrap:
+                  false, // Prevent the grid from calculating its size, it can expand
+              physics: const ClampingScrollPhysics(), // Enable smooth scrolling
+              itemCount: products.length, // Set the number of items
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, // Set number of columns
+                childAspectRatio: 0.75, // Aspect ratio for grid items
+              ),
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SingleProductScreen(
+                          productId: products[index].id,
+                        ),
                       ),
-                    },
-                child: buildAllProductTile(context, products[index]));
-          },
-        ),
-      ],
+                    );
+                  },
+                  child: buildAllProductTile(
+                      context, products[index]), // Build product tiles
+                );
+              },
+            ),
+          ),
+          // Show a loading indicator at the bottom when more products are being loaded
+          if (BlocProvider.of<ProductBloc>(context).state
+              is AllProductsLoadingMore)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child:
+                  CircularProgressIndicator(), // Loading indicator for pagination
+            ),
+        ],
+      ),
     );
   }
 

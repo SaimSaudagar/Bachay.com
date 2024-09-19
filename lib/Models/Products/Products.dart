@@ -9,8 +9,6 @@ class AllProduct {
 
   factory AllProduct.fromJson(Map<String, dynamic> json) {
     try {
-      print("Parsing All Products");
-
       return AllProduct(
         allProducts: json['all_products'] != null
             ? AllProducts.fromJson(json['all_products'])
@@ -20,7 +18,6 @@ class AllProduct {
             : throw Exception("filter is null"),
       );
     } catch (e) {
-      print("Error parsing AllProduct: $e");
       rethrow;
     }
   }
@@ -244,7 +241,6 @@ class Product {
 
   factory Product.fromJson(Map<String, dynamic> json) {
     try {
-      print("Parsing Product with ID: ${json['id']}");
       return Product(
         id: json['id'] ?? 0,
         addedBy: json['added_by'],
@@ -327,7 +323,6 @@ class Product {
             : [],
       );
     } catch (e) {
-      print("Error parsing Product: $e");
       rethrow;
     }
   }
@@ -434,7 +429,6 @@ class ProductCategory {
 
   factory ProductCategory.fromJson(Map<String, dynamic> json) {
     try {
-      print("Parsing Product Category with ID: ${json['id']}");
       return ProductCategory(
         id: json['id'] ?? 0,
         name: json['name'],
@@ -453,7 +447,6 @@ class ProductCategory {
             : [],
       );
     } catch (e) {
-      print("Error parsing ProductCategory: $e");
       rethrow;
     }
   }
@@ -714,7 +707,6 @@ class Filter {
 
   factory Filter.fromJson(Map<String, dynamic> json) {
     try {
-      print("Parsing Filter");
       return Filter(
         choice1: json['choice_1'] != null
             ? Choice1.fromJson(json['choice_1'])
@@ -724,7 +716,6 @@ class Filter {
             : throw Exception("choice_0 is null"),
       );
     } catch (e) {
-      print("Error parsing Filter: $e");
       rethrow;
     }
   }

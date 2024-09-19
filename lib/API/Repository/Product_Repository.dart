@@ -7,25 +7,25 @@ import 'dart:convert';
 import '../../Models/Products/Products.dart';
 
 class ProductRepository {
-  Future<AllProduct> fetchAllProducts(
-      List<String> colors, List<String> ages) async {
+  Future<AllProduct> fetchAllProducts(List<String> colors, List<String> ages,
+      {String? nextPageUrl}) async {
     try {
-      print("LoadAllProducts");
       String agesQuery =
           ages.isNotEmpty ? ages.map((age) => "'$age'").join(', ') : '';
-      String url = '${baseUrl}all_products?&sizes=[$agesQuery]';
-      print("LoadAllProducts with URL: $url");
+      String url = nextPageUrl ??
+          '${baseUrl}all_products?&sizes=[$agesQuery]'; // Use nextPageUrl if provided
 
+      print("Loading products with URL: $url");
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print("LoadAllProducts with data: $data");
         return AllProduct.fromJson(data);
       } else {
-        throw Exception('Failed to all products');
+        throw Exception('Failed to load products');
       }
     } catch (e) {
-      throw Exception('Failed to fetch all products: ${e.toString()}');
+      print(e.toString());
+      throw Exception('Failed to fetch products: ${e.toString()}');
     }
   }
 
