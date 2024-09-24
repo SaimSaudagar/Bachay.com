@@ -71,4 +71,20 @@ class MostRecentQuizError extends MostRecentQuizState {
 
   MostRecentQuizError(this.message);
 }
+abstract class QuizDetailState {}
 
+class QuizDetailInitial extends QuizDetailState {}
+
+class QuizDetailLoading extends QuizDetailState {}
+
+class QuizDetailLoaded extends QuizDetailState {
+  final QuizDetail quizDetail;
+
+  QuizDetailLoaded(this.quizDetail);
+}
+
+class QuizDetailError extends QuizDetailState {
+  final String message;
+
+  QuizDetailError(this.message);
+}

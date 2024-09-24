@@ -55,6 +55,7 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               ProductBloc(productRepository: ProductRepository()),
         ),
+        BlocProvider<QuizDetailBloc>(create: (context) => QuizDetailBloc(QuizDetailRepository())),
         BlocProvider<OrderBloc>(
           create: (context) => OrderBloc(orderRepository: OrderRepository()),
         ),

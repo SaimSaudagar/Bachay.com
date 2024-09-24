@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../API/Bloc/Quiz/quiz_bloc.dart';
 import '../../API/Bloc/Quiz/quiz_event.dart';
+import '../../API/Bloc/Quiz/quiz_state.dart';
 import '../../API/Repository/quiz_repo.dart';
 import '../../Models/Quiz/quiz.dart';
 import 'Widgets/How_It_Works.dart';
@@ -10,6 +11,7 @@ import 'Widgets/Quiz_Description_Widget.dart';
 import 'Widgets/Quiz_Image_Display.dart';
 import 'Widgets/Quiz_Info_Card.dart';
 import 'Widgets/Quiz_Top_Scores.dart';
+import 'quiz_play.dart';
 
 class QuizDescription extends StatelessWidget {
   final int quizId;
@@ -19,7 +21,8 @@ class QuizDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => QuizDetailBloc(QuizDetailRepository())..add(FetchQuizDetail(quizId)),
+      create: (context) =>
+          QuizDetailBloc(QuizDetailRepository())..add(FetchQuizDetail(quizId)),
       child: Scaffold(
         appBar: QuizAppBar(),
         body: BlocBuilder<QuizDetailBloc, QuizDetailState>(
@@ -35,6 +38,7 @@ class QuizDescription extends StatelessWidget {
             }
           },
         ),
+        bottomNavigationBar: _buildBottomNavBar(context),
       ),
     );
   }
@@ -54,7 +58,6 @@ class QuizDescription extends StatelessWidget {
                 imageUrl: quizDetail.image,
               ),
             ),
-
             // Info Card with spacing between
             SizedBox(height: 20), // Add spacing between widgets
             QuizInfoCard(
@@ -63,31 +66,60 @@ class QuizDescription extends StatelessWidget {
               favorites: quizDetail.favorite, // Number of favorites
               points: quizDetail.points, // Points earned
               title: quizDetail.name, // Dynamic title
-  subtitle: quizDetail.categoryName, // Dynamic subtitle
+              subtitle: quizDetail.categoryName, // Dynamic subtitle
             ),
-
             // Description widget
             SizedBox(height: 20), // Add spacing before the description
             DescriptionWidget(
               title: 'Description',
               description: quizDetail.description ?? 'No description available.',
             ),
-
             // Top Scores widget
             SizedBox(height: 20), // Add spacing before the top scores
             TopScoresWidget(
               topScores: quizDetail.topScore,
             ),
-
             SizedBox(height: 20),
             HowItWorksWidget(),
-            ElevatedButton(
-              onPressed: () {
-                // Implement quiz start functionality here
-              },
-              child: Text('Play Quiz'),
-            ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBottomNavBar(BuildContext context) {
+    return BottomAppBar(
+      elevation: 0,
+      color: Colors.transparent,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+        child: ElevatedButton(
+          onPressed: () {
+             Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => QuizQuestionScreen(quizId:quizId)), // Replace with your next screen
+    );
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color(0xFFFEC85C), // Button background color
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0), // Rounded corners
+              side: BorderSide(
+                color: Colors.black, // Black border
+                width: 2.0, // Border width
+              ),
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 16.0), // Button height
+            shadowColor: Colors.black, // Shadow color
+            elevation: 8.0, // Shadow elevation
+          ),
+          child: Text(
+            'Play Quiz',
+            style: TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.black, // Black text color for contrast
+            ),
+          ),
         ),
       ),
     );

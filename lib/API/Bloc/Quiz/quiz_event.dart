@@ -22,20 +22,3 @@ class FetchQuizDetail extends QuizDetailEvent {
 
   FetchQuizDetail(this.quizId);
 }
-abstract class QuizDetailState {}
-
-class QuizDetailInitial extends QuizDetailState {}
-
-class QuizDetailLoading extends QuizDetailState {}
-
-class QuizDetailLoaded extends QuizDetailState {
-  final QuizDetail quizDetail;
-
-  QuizDetailLoaded(this.quizDetail);
-}
-
-class QuizDetailError extends QuizDetailState {
-  final String message;
-
-  QuizDetailError(this.message);
-}
