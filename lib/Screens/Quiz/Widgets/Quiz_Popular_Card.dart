@@ -9,6 +9,7 @@ import '../../../Models/Quiz/Quiz.dart';
 import '../quiz_description.dart';
 
 class QuizCard extends StatelessWidget {
+  final int quizId; // Add quizId
   final String title;
   final String imagePath;
   final int numQuestions;
@@ -17,6 +18,7 @@ class QuizCard extends StatelessWidget {
   final VoidCallback onPressed;
 
   QuizCard({
+    required this.quizId, // Initialize quizId
     required this.title,
     required this.imagePath,
     required this.numQuestions,
@@ -30,7 +32,14 @@ class QuizCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: GestureDetector(
-        onTap: onPressed,
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => QuizDescription(quizId: quizId),
+            ),
+          );
+        },
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -113,19 +122,17 @@ class QuizCard extends StatelessWidget {
     );
   }
 }
-
 class PopularQuizSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PopularQuizBloc(PopularQuizRepository())
-        ..add(FetchPopularQuizzes()),
+      create: (context) => PopularQuizBloc(PopularQuizRepository())..add(FetchPopularQuizzes()),
       child: BlocBuilder<PopularQuizBloc, PopularQuizState>(
         builder: (context, state) {
           if (state is PopularQuizLoading) {
             return _buildShimmerEffect();
           } else if (state is PopularQuizLoaded) {
-            return _buildQuizList(state.popularQuizzes);
+            return _buildQuizList(context, state.popularQuizzes);
           } else if (state is PopularQuizError) {
             return Center(child: Text('Error: ${state.message}'));
           } else {
@@ -160,7 +167,7 @@ class PopularQuizSection extends StatelessWidget {
     );
   }
 
-  Widget _buildQuizList(List<PopularQuiz> quizzes) {
+  Widget _buildQuizList(BuildContext context, List<PopularQuiz> quizzes) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -195,25 +202,18 @@ class PopularQuizSection extends StatelessWidget {
             itemBuilder: (context, index) {
               final quiz = quizzes[index];
               return QuizCard(
+                quizId: quiz.id, // Pass the quiz ID
                 title: quiz.name,
                 imagePath: quiz.image,
-                numQuestions: 15, // You can hardcode if not provided by API
-                quizType: 'General', // Hardcode if not provided by API
-                numPlays: 1, // You can hardcode if not provided by API
+                numQuestions: quiz.question, // Update as per your model
+                quizType: quiz.categoryName, // Assuming category name is the type
+                numPlays: quiz.played, // Update as per your model
                 onPressed: () {
-                  // Handle quiz card tap here
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => QuizDescription(),
-                    ),
-                  );
+                  // This onPressed is now handled inside QuizCard
                 },
               );
             },
-            
           ),
-          
         ],
       ),
     );

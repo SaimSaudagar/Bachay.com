@@ -114,53 +114,25 @@ class MostRecentQuizRepository {
     }
   }
 }
-
-class SingleQuizRepository {
-  final String apiUrl = "${baseUrl}quiz/view";
-
-  Future<QuizList> fetchQuiz(int id) async {
+class QuizDetailRepository {
+  Future<QuizDetail> fetchQuizDetail(int id) async {
+    final String apiUrl = "${baseUrl}quiz/view/$id";
     final response = await http.get(
-      Uri.parse('$apiUrl/$id'),
+      Uri.parse(apiUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': await getToken(),
+        'Authorization': await getToken(), // Ensure getToken() is defined
       },
     );
 
+    print("API Response Code: ${response.statusCode}");
+    print("API Response Body: ${response.body}");
+
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      print(data);
-      return QuizList.fromJson(data);
+      return QuizDetail.fromJson(data);
     } else {
-      throw Exception("Failed to load quiz");
+      throw Exception("Failed to load quiz details");
     }
   }
-
-  // Future<void> submitAnswers(List<String>) async {
-  //   try {
-  //     final response = await http.post(
-  //       Uri.parse('${baseUrl}quiz/submission'),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': 'Bearer your_token',
-  //       },
-  //       body: json.encode(requestData),
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       // Success, navigate to the result screen
-  //       Navigator.pushReplacement(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => QuizResultScreen()),
-  //       );
-  //     } else {
-  //       // Handle failure response
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(content: Text('Failed to submit the quiz.')),
-  //       );
-  //     }
-  //   } catch (e) {
-  //     // Handle errors
-  //   }
-  // }
 }

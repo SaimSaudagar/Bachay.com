@@ -1,3 +1,5 @@
+import '../../../Models/Quiz/quiz.dart';
+
 abstract class QuizBannerEvent {}
 
 class FetchQuizBanners extends QuizBannerEvent {}
@@ -13,10 +15,27 @@ class FetchPopularQuizzes extends PopularQuizEvent {}
 abstract class MostRecentQuizEvent {}
 
 class FetchMostRecentQuizzes extends MostRecentQuizEvent {}
+abstract class QuizDetailEvent {}
 
-abstract class SingleQuizEvent {}
+class FetchQuizDetail extends QuizDetailEvent {
+  final int quizId;
 
-class FetchSingleQuiz extends SingleQuizEvent {
-  final int id;
-  FetchSingleQuiz(this.id);
+  FetchQuizDetail(this.quizId);
+}
+abstract class QuizDetailState {}
+
+class QuizDetailInitial extends QuizDetailState {}
+
+class QuizDetailLoading extends QuizDetailState {}
+
+class QuizDetailLoaded extends QuizDetailState {
+  final QuizDetail quizDetail;
+
+  QuizDetailLoaded(this.quizDetail);
+}
+
+class QuizDetailError extends QuizDetailState {
+  final String message;
+
+  QuizDetailError(this.message);
 }

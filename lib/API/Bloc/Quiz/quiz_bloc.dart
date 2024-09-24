@@ -70,19 +70,17 @@ class MostRecentQuizBloc
     });
   }
 }
+class QuizDetailBloc extends Bloc<QuizDetailEvent, QuizDetailState> {
+  final QuizDetailRepository quizDetailRepository;
 
-class SingleQuizBloc extends Bloc<SingleQuizEvent, SingleQuizState> {
-  final SingleQuizRepository singleQuizRepository;
-
-  SingleQuizBloc(this.singleQuizRepository) : super(SingleQuizInitial()) {
-    on<FetchSingleQuiz>((event, emit) async {
-      emit(SingleQuizLoading());
+  QuizDetailBloc(this.quizDetailRepository) : super(QuizDetailInitial()) {
+    on<FetchQuizDetail>((event, emit) async {
+      emit(QuizDetailLoading());
       try {
-        final quiz = await singleQuizRepository.fetchQuiz(event.id);
-        emit(SingleQuizLoaded(quiz));
+        final quizDetail = await quizDetailRepository.fetchQuizDetail(event.quizId);
+        emit(QuizDetailLoaded(quizDetail));
       } catch (e) {
-        print(e.toString());
-        emit(SingleQuizError(e.toString()));
+        emit(QuizDetailError(e.toString()));
       }
     });
   }
