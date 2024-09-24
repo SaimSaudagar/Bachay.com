@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart'; // Import the shimmer package
-import '../../../API/Bloc/Quiz/Quiz_Bloc.dart';
+import '../../../API/Bloc/Quiz/quiz_bloc.dart';
 import '../../../API/Bloc/Quiz/quiz_event.dart';
 import '../../../API/Bloc/Quiz/quiz_state.dart';
-import '../../../API/Repository/Quiz_Repo.dart';
-import '../../../Models/Quiz/Quiz.dart';  // Ensure consistent model import
+import '../../../API/Repository/quiz_repo.dart';
+import '../../../Models/Quiz/quiz.dart';  // Ensure consistent model import
 
 class ScrollableQuizCategoryCard extends StatelessWidget {
   final String title;

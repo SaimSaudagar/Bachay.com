@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart'; // Import shimmer package
-import '../../../API/Bloc/Quiz/Quiz_Bloc.dart';
+import '../../../API/Bloc/Quiz/quiz_bloc.dart';
 import '../../../API/Bloc/Quiz/quiz_event.dart';
 import '../../../API/Bloc/Quiz/quiz_state.dart';
-import '../../../API/Repository/Quiz_Repo.dart';
-import '../../../Models/Quiz/Quiz.dart';
+import '../../../API/Repository/quiz_repo.dart';
+import '../../../Models/Quiz/quiz.dart';
+import '../quiz_description.dart';
 
 class MostRecentQuizCard extends StatelessWidget {
+  final int quizId; // Add quizId
   final String title;
   final String imagePath;
   final int numQuestions;
@@ -15,6 +17,7 @@ class MostRecentQuizCard extends StatelessWidget {
   final int numPlays;
 
   MostRecentQuizCard({
+    required this.quizId, // Initialize quizId
     required this.title,
     required this.imagePath,
     required this.numQuestions,
@@ -26,79 +29,93 @@ class MostRecentQuizCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(
-            color: Colors.black.withOpacity(0.8),
-            width: 1.5,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 3,
-              offset: const Offset(0, 2),
+      child: GestureDetector(
+        onTap: () {
+          // Navigate to QuizDescription with the quizId
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => QuizDescription(quizId: quizId),
             ),
-          ],
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              height: 90,
-              width: 90,
-              margin: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.black.withOpacity(0.8), width: 1.5),
+          );
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(
+              color: Colors.black.withOpacity(0.8),
+              width: 1.5,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                spreadRadius: 1,
+                blurRadius: 3,
+                offset: const Offset(0, 2),
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                  imagePath,
-                  fit: BoxFit.cover,
+            ],
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                height: 90,
+                width: 90,
+                margin: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.black.withOpacity(0.8), width: 1.5),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(
+                    imagePath,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Center(child: Icon(Icons.broken_image, size: 40, color: Colors.grey));
+                    },
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            title,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              title,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                          size: 24,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '$numQuestions Questions • $quizType • ${numPlays}k Plays',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.black54,
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                            size: 24,
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 4),
+                      Text(
+                        '$numQuestions Questions • $quizType • ${numPlays}k Plays',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -156,6 +173,7 @@ class MostRecentSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Header Row
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -169,6 +187,7 @@ class MostRecentSection extends StatelessWidget {
               TextButton(
                 onPressed: () {
                   // Handle "See All" navigation here
+                  // Example: Navigate to a screen that lists all recent quizzes
                 },
                 child: Text(
                   'See All',
@@ -181,6 +200,7 @@ class MostRecentSection extends StatelessWidget {
               ),
             ],
           ),
+          // List of Most Recent Quizzes
           ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
@@ -188,11 +208,12 @@ class MostRecentSection extends StatelessWidget {
             itemBuilder: (context, index) {
               final quiz = quizzes[index];
               return MostRecentQuizCard(
+                quizId: quiz.id, // Pass the quiz ID
                 title: quiz.name,
                 imagePath: quiz.image,
-                numQuestions: 15, // You can hardcode this if not provided by the API
-                quizType: 'General', // Hardcode if not provided
-                numPlays: 1, // Hardcode if not provided
+                numQuestions: quiz.id, // Assuming 'question' represents number of questions
+                quizType: quiz.name, // Assuming 'categoryName' represents type
+                numPlays: quiz.quizCategoryId, // Assuming 'played' represents number of plays
               );
             },
           ),

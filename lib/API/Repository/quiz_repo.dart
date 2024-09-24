@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:app/Utils/app_constants.dart';
-import '../../../Models/Quiz/Quiz.dart'; // Import the app_constants.dart
+import '../../../Models/Quiz/quiz.dart'; // Import the app_constants.dart
 
 class QuizBannerRepository {
   final String apiUrl =
@@ -13,7 +13,7 @@ class QuizBannerRepository {
       headers: {
         'Content-Type': 'application/json',
         'Authorization':
-            await getToken(), // Use the imported await getToken() here
+            jwtToken, // Use the imported jwtToken here
       },
     );
     print("API Response Code: ${response.statusCode}"); // Log the status code
@@ -37,7 +37,7 @@ class CategoryRepository {
       headers: {
         'Content-Type': 'application/json',
         'Authorization':
-            await getToken(), // Use the imported await getToken() here
+            jwtToken, // Use the imported jwtToken here
       },
     );
     print("API Response Code: ${response.statusCode}"); // Log the status code
@@ -60,7 +60,7 @@ class QuizCategoryRepository {
       headers: {
         'Content-Type': 'application/json',
         'Authorization':
-            await getToken(), // Use the imported await getToken() here
+            jwtToken, // Use the imported jwtToken here
       },
     );
 
@@ -81,7 +81,7 @@ class PopularQuizRepository {
       Uri.parse(apiUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': await getToken(),
+        'Authorization': jwtToken,
       },
     );
 
@@ -102,7 +102,7 @@ class MostRecentQuizRepository {
       Uri.parse(apiUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': await getToken(),
+        'Authorization': jwtToken,
       },
     );
 
@@ -121,7 +121,7 @@ class QuizDetailRepository {
       Uri.parse(apiUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': await getToken(), // Ensure getToken() is defined
+        'Authorization': jwtToken, // Ensure getToken() is defined
       },
     );
 

@@ -17,9 +17,9 @@ import 'package:app/Widgets/CP_Bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'API/Bloc/Articles/Articles_Event.dart';
-import 'API/Bloc/Quiz/Quiz_Bloc.dart';
+import 'API/Bloc/Quiz/quiz_bloc.dart';
 import 'API/Repository/Articles_Repo.dart';
-import 'API/Repository/Quiz_Repo.dart';
+import 'API/Repository/quiz_repo.dart';
 import 'Screens/Authentication/SignUp-Flow/AddAddress_Screen.dart';
 import 'Screens/Parenting/Feed/Feed.dart';
 import 'Screens/Parenting/Parenting.dart';
@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
         //   svgAssetPath: 'assets/logo/progress_logo.svg',
         //   size: 10.0,
         // ),
-        home: ParentingApp(),
+        home: QuizHome(),
       ),
     );
   }

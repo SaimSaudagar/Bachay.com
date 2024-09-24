@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shimmer/shimmer.dart';  // Import the shimmer package
-import '../../../API/Bloc/Quiz/Quiz_Bloc.dart';
+import 'package:shimmer/shimmer.dart'; // Import the shimmer package
+import '../../../API/Bloc/Quiz/quiz_bloc.dart';
 import '../../../API/Bloc/Quiz/quiz_event.dart';
 import '../../../API/Bloc/Quiz/quiz_state.dart';
+import '../quiz_description.dart'; // Import QuizDescription screen
 
 class QuizImageContainer extends StatefulWidget {
   @override
@@ -26,10 +27,12 @@ class _QuizImageContainerState extends State<QuizImageContainer> {
     return BlocBuilder<QuizBannerBloc, QuizBannerState>(
       builder: (context, state) {
         if (state is QuizBannerLoading) {
-          return _buildShimmerEffect();  // Show shimmer effect when loading
+          return _buildShimmerEffect(); // Show shimmer effect when loading
         } else if (state is QuizBannerLoaded) {
+          // Get both images and ids
           final images = state.quizBanners.map((banner) => banner.image).toList();
-          return _buildImageCarousel(images);
+          final ids = state.quizBanners.map((banner) => banner.id).toList();
+          return _buildImageCarousel(images, ids);
         } else if (state is QuizBannerError) {
           return Center(child: Text('Error loading banners'));
         } else {
@@ -58,7 +61,7 @@ class _QuizImageContainerState extends State<QuizImageContainer> {
   }
 
   // Build Image Carousel
-  Widget _buildImageCarousel(List<String> images) {
+  Widget _buildImageCarousel(List<String> images, List<int> ids) {
     return Padding(
       padding: const EdgeInsets.all(16.0), // Padding around the container
       child: Container(
@@ -86,9 +89,21 @@ class _QuizImageContainerState extends State<QuizImageContainer> {
                 },
                 itemCount: images.length,
                 itemBuilder: (context, index) {
-                  return Image.network(
-                    images[index],
-                    fit: BoxFit.cover,
+                  // Wrap the image in GestureDetector to handle tap event
+                  return GestureDetector(
+                    onTap: () {
+                      // Navigate to QuizDescription screen with the selected quiz ID
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => QuizDescription(quizId: ids[index]),
+                        ),
+                      );
+                    },
+                    child: Image.network(
+                      images[index],
+                      fit: BoxFit.cover,
+                    ),
                   );
                 },
               ),

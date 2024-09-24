@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart'; // Import shimmer package
-import '../../../API/Bloc/Quiz/Quiz_Bloc.dart';
+import '../../../API/Bloc/Quiz/quiz_bloc.dart';
 import '../../../API/Bloc/Quiz/quiz_event.dart';
 import '../../../API/Bloc/Quiz/quiz_state.dart';
-import '../../../API/Repository/Quiz_Repo.dart';
-import '../../../Models/Quiz/Quiz.dart';
+import '../../../API/Repository/quiz_repo.dart';
+import '../../../Models/Quiz/quiz.dart';
 import '../quiz_description.dart';
 
 class QuizCard extends StatelessWidget {
@@ -136,7 +136,7 @@ class PopularQuizSection extends StatelessWidget {
           } else if (state is PopularQuizError) {
             return Center(child: Text('Error: ${state.message}'));
           } else {
-            return Center(child: Text('No popular quizzes available'));
+            return const Center(child: Text('No popular quizzes available'));
           }
         },
       ),
@@ -176,7 +176,7 @@ class PopularQuizSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Popular Quiz',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
@@ -184,7 +184,7 @@ class PopularQuizSection extends StatelessWidget {
                 onPressed: () {
                   // Handle "See All" navigation here
                 },
-                child: Text(
+                child: const Text(
                   'See All',
                   style: TextStyle(
                     color: Colors.blueAccent,
@@ -197,7 +197,7 @@ class PopularQuizSection extends StatelessWidget {
           ),
           ListView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: quizzes.length,
             itemBuilder: (context, index) {
               final quiz = quizzes[index];
@@ -205,9 +205,9 @@ class PopularQuizSection extends StatelessWidget {
                 quizId: quiz.id, // Pass the quiz ID
                 title: quiz.name,
                 imagePath: quiz.image,
-                numQuestions: quiz.question, // Update as per your model
-                quizType: quiz.categoryName, // Assuming category name is the type
-                numPlays: quiz.played, // Update as per your model
+                numQuestions: quiz.quizCategoryId, // Update as per your model
+                quizType: quiz.name, // Assuming category name is the type
+                numPlays: quiz.quizCategoryId, // Update as per your model
                 onPressed: () {
                   // This onPressed is now handled inside QuizCard
                 },

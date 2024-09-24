@@ -8,12 +8,16 @@ class QuizInfoCard extends StatelessWidget {
   final String played;
   final int favorites;
   final int points;
+  final String title; // New parameter for the title
+  final String subtitle; // New parameter for the subtitle
 
   QuizInfoCard({
     required this.questions,
     required this.played,
     required this.favorites,
     required this.points,
+    required this.title, // Initialize title
+    required this.subtitle, // Initialize subtitle
   });
 
   @override
@@ -29,8 +33,9 @@ class QuizInfoCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Use dynamic title and subtitle
           Text(
-            'Educational – Food',
+            subtitle,
             style: outfitRegular.copyWith(
               fontSize: fontSize * 1.5,
               color: Color.fromRGBO(191, 143, 57, 1),
@@ -38,7 +43,7 @@ class QuizInfoCard extends StatelessWidget {
           ),
           SizedBox(height: spacing),
           Text(
-            'Name the Dish Quiz',
+            title,
             style: outfitBold.copyWith(
               fontSize: bigFontSize * 1.5,
               color: Colors.black,
@@ -54,7 +59,7 @@ class QuizInfoCard extends StatelessWidget {
                 questions.toString(),
                 cardWidth,
                 cardHeight,
-                backgroundColor: Color.fromRGBO(243, 239, 249, 1)
+                backgroundColor: Color.fromRGBO(243, 239, 249, 1),
               ),
               _buildStatCard(
                 context,
@@ -62,7 +67,7 @@ class QuizInfoCard extends StatelessWidget {
                 played,
                 cardWidth,
                 cardHeight,
-                backgroundColor:  Color.fromRGBO(188, 217, 255, 1)
+                backgroundColor: Color.fromRGBO(188, 217, 255, 1),
               ),
               _buildStatCard(
                 context,
@@ -70,7 +75,7 @@ class QuizInfoCard extends StatelessWidget {
                 favorites.toString(),
                 cardWidth,
                 cardHeight,
-                backgroundColor:  Color.fromRGBO(246, 223, 238, 1)
+                backgroundColor: Color.fromRGBO(246, 223, 238, 1),
               ),
               _buildStatCard(
                 context,
@@ -78,7 +83,7 @@ class QuizInfoCard extends StatelessWidget {
                 points.toString(),
                 cardWidth,
                 cardHeight,
-                backgroundColor:  Color.fromRGBO(255, 244, 223, 1)
+                backgroundColor: Color.fromRGBO(255, 244, 223, 1),
               ),
             ],
           ),
@@ -124,8 +129,7 @@ class QuizInfoCard extends StatelessWidget {
             label,
             style: outfitRegular.copyWith(
               fontSize: getFontSize(context),
-              color: Colors.black
-              ,
+              color: Colors.black,
             ),
           ),
         ],

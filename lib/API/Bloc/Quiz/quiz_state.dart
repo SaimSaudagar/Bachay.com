@@ -1,4 +1,4 @@
-import '../../../Models/Quiz/Quiz.dart';
+import '../../../Models/Quiz/quiz.dart';
 
 abstract class QuizBannerState {}
 
