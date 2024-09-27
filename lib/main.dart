@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<CartBloc>(
           create: (context) => CartBloc(cartRepository: CartRepository()),
         ),
+        BlocProvider<QuizSubmissionBloc>(create: (context)=>QuizSubmissionBloc(repository: QuizDetailRepository())),
         BlocProvider<QuizCategoryBloc>(
             create: (context) => QuizCategoryBloc(QuizCategoryRepository())),
         BlocProvider<QuizBannerBloc>(
@@ -82,7 +83,7 @@ class MyApp extends StatelessWidget {
         //   svgAssetPath: 'assets/logo/progress_logo.svg',
         //   size: 10.0,
         // ),
-        home: QuizHome(),
+        home: HomePage(),
       ),
     );
   }

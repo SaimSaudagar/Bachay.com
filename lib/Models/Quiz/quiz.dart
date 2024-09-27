@@ -266,3 +266,19 @@ class CorrectAnswer {
     );
   }
 }
+class AnswerSubmission {
+  final int quizQuestionId;
+  final int quizAnswerId;
+
+  AnswerSubmission({
+    required this.quizQuestionId,
+    required this.quizAnswerId,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'quiz_question_id': quizQuestionId,
+      'quiz_answer_id': quizAnswerId,
+    };
+  }
+}

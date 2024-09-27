@@ -85,3 +85,25 @@ class QuizDetailBloc extends Bloc<QuizDetailEvent, QuizDetailState> {
     });
   }
 }
+class QuizSubmissionBloc extends Bloc<QuizSubmissionEvent, QuizSubmissionState> {
+  final QuizDetailRepository repository;
+
+  QuizSubmissionBloc({required this.repository}) : super(QuizSubmissionInitial()) {
+    on<SubmitQuizEvent>(_onSubmitQuiz);
+  }
+
+  Future<void> _onSubmitQuiz(
+      SubmitQuizEvent event, Emitter<QuizSubmissionState> emit) async {
+    emit(QuizSubmissionLoading());
+    try {
+      await repository.submitQuizAnswers(
+        childId: event.childId,
+        quizId: event.quizId,
+        answers: event.answers,
+      );
+      emit(QuizSubmissionSuccess());
+    } catch (e) {
+      emit(QuizSubmissionFailure(e.toString()));
+    }
+  }
+}

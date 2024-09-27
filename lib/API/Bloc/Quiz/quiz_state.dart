@@ -1,3 +1,5 @@
+import 'package:equatable/equatable.dart';
+
 import '../../../Models/Quiz/quiz.dart';
 
 abstract class QuizBannerState {}
@@ -87,4 +89,25 @@ class QuizDetailError extends QuizDetailState {
   final String message;
 
   QuizDetailError(this.message);
+}
+abstract class QuizSubmissionState extends Equatable {
+  const QuizSubmissionState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class QuizSubmissionInitial extends QuizSubmissionState {}
+
+class QuizSubmissionLoading extends QuizSubmissionState {}
+
+class QuizSubmissionSuccess extends QuizSubmissionState {}
+
+class QuizSubmissionFailure extends QuizSubmissionState {
+  final String error;
+
+  const QuizSubmissionFailure(this.error);
+
+  @override
+  List<Object> get props => [error];
 }

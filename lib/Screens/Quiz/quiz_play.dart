@@ -1,22 +1,30 @@
+// lib/Screens/Quiz/quiz_play.dart
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../API/Bloc/Quiz/quiz_bloc.dart';
 import '../../API/Bloc/Quiz/quiz_event.dart';
 import '../../API/Bloc/Quiz/quiz_state.dart';
+
 import '../../API/Repository/quiz_repo.dart';
 import '../../Models/Quiz/quiz.dart';
 
-class QuizQuestionScreen extends StatefulWidget {
+class QuizPlayScreen extends StatefulWidget {
   final int quizId;
+  final int childId; // Assuming you have the child ID available
 
-  const QuizQuestionScreen({required this.quizId, Key? key}) : super(key: key);
+  const QuizPlayScreen({
+    required this.quizId,
+    required this.childId,
+    Key? key,
+  }) : super(key: key);
 
   @override
-  _QuizQuestionScreenState createState() => _QuizQuestionScreenState();
+  _QuizPlayScreenState createState() => _QuizPlayScreenState();
 }
 
-class _QuizQuestionScreenState extends State<QuizQuestionScreen> {
+class _QuizPlayScreenState extends State<QuizPlayScreen> {
   int currentQuestionIndex = 0;
   int selectedAnswerId = -1; // To track selected answer
   bool isCorrectAnswer = false;
@@ -25,20 +33,31 @@ class _QuizQuestionScreenState extends State<QuizQuestionScreen> {
   int _elapsedTime = 0; // Total elapsed time in seconds
 
   late QuizDetailBloc _quizDetailBloc;
+  late QuizSubmissionBloc _quizSubmissionBloc;
+
+  // List to collect all answers
+  List<AnswerSubmission> submittedAnswers = [];
 
   @override
   void initState() {
     super.initState();
-    // Initialize the Bloc once in initState
-    _quizDetailBloc = QuizDetailBloc(QuizDetailRepository())
-      ..add(FetchQuizDetail(widget.quizId));
+    // Initialize the Blocs with the repository
+    _quizDetailBloc = QuizDetailBloc(
+      QuizDetailRepository(),
+    )..add(FetchQuizDetail(widget.quizId));
+
+    _quizSubmissionBloc = QuizSubmissionBloc(
+      repository: QuizDetailRepository(),
+    );
+
     _startTimer(); // Start the timer when the screen is loaded
   }
 
   @override
   void dispose() {
     _timer?.cancel(); // Cancel the timer when leaving the screen
-    _quizDetailBloc.close(); // Close the Bloc to free resources
+    _quizDetailBloc.close(); // Close the Blocs to free resources
+    _quizSubmissionBloc.close();
     super.dispose();
   }
 
@@ -49,8 +68,6 @@ class _QuizQuestionScreenState extends State<QuizQuestionScreen> {
       });
     });
   }
-
-  // Removed _resetTimer as we don't want to reset the timer after each question
 
   void _pauseTimer() {
     _timer?.cancel();
@@ -64,34 +81,93 @@ class _QuizQuestionScreenState extends State<QuizQuestionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _quizDetailBloc, // Provide the existing Bloc instance
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(
+          value: _quizDetailBloc, // Provide the existing QuizDetailBloc instance
+        ),
+        BlocProvider.value(
+          value: _quizSubmissionBloc, // Provide the existing QuizSubmissionBloc instance
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Quiz"),
         ),
-        body: BlocBuilder<QuizDetailBloc, QuizDetailState>(
-          builder: (context, state) {
-            if (state is QuizDetailLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is QuizDetailLoaded) {
-              return _buildQuizContent(context, state.quizDetail);
-            } else if (state is QuizDetailError) {
-              return Center(child: Text('Error: ${state.message}'));
-            } else {
-              return const Center(child: Text('No data available'));
+        body: BlocListener<QuizSubmissionBloc, QuizSubmissionState>(
+          listener: (context, state) {
+            if (state is QuizSubmissionLoading) {
+              // Show a loading indicator
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            } else if (state is QuizSubmissionSuccess) {
+              // Dismiss the loading indicator
+              Navigator.of(context).pop();
+
+              // Show success message
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Quiz submitted successfully!')),
+              );
+
+              // Navigate to the results screen
+              final quizDetailState = _quizDetailBloc.state;
+              if (quizDetailState is QuizDetailLoaded) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => QuizResultsScreen(
+                      quizDetail: quizDetailState.quizDetail,
+                      totalTime: _elapsedTime,
+                    ),
+                  ),
+                );
+              }
+            } else if (state is QuizSubmissionFailure) {
+              // Dismiss the loading indicator
+              Navigator.of(context).pop();
+
+              // Show error message
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Submission failed: ${state.error}')),
+              );
+
+              // Optionally, allow the user to retry
+              setState(() {
+                answerSubmitted = false;
+                selectedAnswerId = -1;
+              });
             }
           },
+          child: BlocBuilder<QuizDetailBloc, QuizDetailState>(
+            builder: (context, state) {
+              if (state is QuizDetailLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is QuizDetailLoaded) {
+                return _buildQuizContent(context, state.quizDetail);
+              } else if (state is QuizDetailError) {
+                return Center(child: Text('Error: ${state.message}'));
+              } else {
+                return const Center(child: Text('No data available'));
+              }
+            },
+          ),
         ),
       ),
     );
   }
 
   Widget _buildQuizContent(BuildContext context, QuizDetail quizDetail) {
-    // When the quiz is completed, show the quiz completion screen
+    // When the quiz is completed, trigger the submission
     if (currentQuestionIndex >= quizDetail.quizQuestion.length) {
       _pauseTimer(); // Stop the timer when quiz is completed
-      return _buildQuizCompletionScreen(quizDetail);
+      _handleFinalSubmission();
+      // Return a placeholder as the submission is being handled
+      return const Center(child: Text('Submitting your quiz...'));
     }
 
     final currentQuestion = quizDetail.quizQuestion[currentQuestionIndex];
@@ -160,7 +236,8 @@ class _QuizQuestionScreenState extends State<QuizQuestionScreen> {
             const SizedBox(height: 16),
             // Answers
             ...currentQuestion.answer
-                .map((answer) => _buildAnswerTile(currentQuestion, answer))
+                .map((answer) => _buildAnswerTile(
+                    context, currentQuestion, answer, quizDetail))
                 .toList(),
             const SizedBox(height: 16),
             // Feedback
@@ -168,9 +245,7 @@ class _QuizQuestionScreenState extends State<QuizQuestionScreen> {
               Row(
                 children: [
                   Icon(
-                    isCorrectAnswer
-                        ? Icons.check_circle
-                        : Icons.cancel,
+                    isCorrectAnswer ? Icons.check_circle : Icons.cancel,
                     color: isCorrectAnswer ? Colors.green : Colors.red,
                     size: 24,
                   ),
@@ -192,7 +267,8 @@ class _QuizQuestionScreenState extends State<QuizQuestionScreen> {
     );
   }
 
-  Widget _buildAnswerTile(QuizQuestion currentQuestion, Answer answer) {
+  Widget _buildAnswerTile(BuildContext context, QuizQuestion currentQuestion,
+      Answer answer, QuizDetail quizDetail) {
     return GestureDetector(
       onTap: answerSubmitted
           ? null // Disable tapping if answer is already submitted
@@ -202,8 +278,23 @@ class _QuizQuestionScreenState extends State<QuizQuestionScreen> {
                 answerSubmitted = true;
                 isCorrectAnswer =
                     answer.id == currentQuestion.correctAnswer.id;
+
+                // Collect the selected answer
+                submittedAnswers.add(
+                  AnswerSubmission(
+                    quizQuestionId: currentQuestion.id,
+                    quizAnswerId: answer.id,
+                  ),
+                );
               });
-              _handleAnswerSubmission();
+
+              if (currentQuestionIndex + 1 < quizDetail.quizQuestion.length) {
+                // Not the last question
+                _handleAnswerSubmission();
+              } else {
+                // Last question, submit all answers
+                _handleFinalSubmission();
+              }
             },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8.0),
@@ -256,74 +347,24 @@ class _QuizQuestionScreenState extends State<QuizQuestionScreen> {
     // Show feedback, then move to the next question after a short delay
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
-        final quizDetailState = _quizDetailBloc.state;
-        if (quizDetailState is QuizDetailLoaded) {
-          final quizDetail = quizDetailState.quizDetail;
-
-          if (currentQuestionIndex + 1 < quizDetail.quizQuestion.length) {
-            setState(() {
-              currentQuestionIndex++;
-              selectedAnswerId = -1;
-              answerSubmitted = false;
-              isCorrectAnswer = false;
-              // Removed _resetTimer() to keep the timer running
-            });
-          } else {
-            setState(() {
-              currentQuestionIndex++;
-            });
-          }
-        }
+        setState(() {
+          currentQuestionIndex++;
+          selectedAnswerId = -1;
+          answerSubmitted = false;
+          isCorrectAnswer = false;
+          // Timer continues running; no need to reset
+        });
       }
     });
   }
 
-  Widget _buildQuizCompletionScreen(QuizDetail quizDetail) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.emoji_events, size: 100, color: Colors.amber),
-            const SizedBox(height: 16),
-            const Text(
-              "Quiz Completed!",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              "You answered ${quizDetail.quizQuestion.length} questions in ${_formatTime(_elapsedTime)}.",
-              style: const TextStyle(fontSize: 16),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Navigate to the results screen
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => QuizResultsScreen(
-                      quizDetail: quizDetail,
-                      totalTime: _elapsedTime,
-                    ),
-                  ),
-                );
-              },
-              icon: const Icon(Icons.bar_chart),
-              label: const Text("View Results"),
-            ),
-            const SizedBox(height: 8),
-            TextButton(
-              onPressed: () {
-                // Optionally, navigate back or restart the quiz
-                Navigator.pop(context);
-              },
-              child: const Text("Return to Home"),
-            ),
-          ],
-        ),
+  void _handleFinalSubmission() {
+    // Dispatch the submission event
+    _quizSubmissionBloc.add(
+      SubmitQuizEvent(
+        childId: widget.childId,
+        quizId: widget.quizId,
+        answers: submittedAnswers,
       ),
     );
   }

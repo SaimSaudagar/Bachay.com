@@ -96,7 +96,7 @@ class QuizDescription extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () {
              Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => QuizQuestionScreen(quizId:quizId)), // Replace with your next screen
+      MaterialPageRoute(builder: (context) => QuizPlayScreen(quizId:quizId, childId: 11)), // Replace with your next screen
     );
           },
           style: ElevatedButton.styleFrom(

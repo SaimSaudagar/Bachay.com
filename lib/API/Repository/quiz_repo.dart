@@ -114,6 +114,7 @@ class MostRecentQuizRepository {
     }
   }
 }
+
 class QuizDetailRepository {
   Future<QuizDetail> fetchQuizDetail(int id) async {
     final String apiUrl = "${baseUrl}quiz/view/$id";
@@ -121,7 +122,7 @@ class QuizDetailRepository {
       Uri.parse(apiUrl),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': jwtToken, // Ensure getToken() is defined
+        'Authorization': jwtToken, // Ensure jwtToken is defined
       },
     );
 
@@ -135,4 +136,47 @@ class QuizDetailRepository {
       throw Exception("Failed to load quiz details");
     }
   }
+
+  /// Submits all quiz answers at once
+  Future<void> submitQuizAnswers({
+  required int childId,
+  required int quizId,
+  required List<AnswerSubmission> answers,
+}) async {
+  final String apiUrl = "${baseUrl}quiz/submission";
+  final Map<String, dynamic> payload = {
+    'child_id': childId,
+    'quiz_id': quizId,
+    'answers': answers.map((answer) => answer.toJson()).toList(),
+  };
+
+  print("Submission Payload: ${jsonEncode(payload)}"); // Log the payload
+
+  final response = await http.post(
+    Uri.parse(apiUrl),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': jwtToken, // Corrected Authorization header
+    },
+    body: jsonEncode(payload), // Use the defined payload
+  );
+
+  print("Submission API Response Code: ${response.statusCode}");
+  print("Submission API Response Body: ${response.body}");
+
+  if (response.statusCode == 200) {
+    // Successful submission
+    return;
+  } else if (response.statusCode == 400) {
+    // Bad Request
+    final errorData = json.decode(response.body);
+    throw Exception(errorData['errors'] ?? 'Bad Request');
+  } else if (response.statusCode == 403) {
+    // Forbidden
+    throw Exception('Access denied. Please check your credentials.');
+  } else {
+    // Other errors
+    throw Exception('Failed to submit quiz answers. Status Code: ${response.statusCode}');
+  }
+}
 }
