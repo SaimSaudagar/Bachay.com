@@ -6,6 +6,7 @@ import 'Articles/Articles.dart';
 import 'Feed/feed.dart';
 import 'Food/food.dart';
 import 'Q&A/q&a.dart';
+import 'Vaccine/vaccine.dart';
 import 'parenting_appbar.dart';
 
 class ParentingApp extends StatefulWidget {
@@ -39,7 +40,7 @@ class _ParentingAppState extends State<ParentingApp> with SingleTickerProviderSt
           FeedsScreen(),  // Feeds Screen
           ArticlesScreen(),               // Articles Screen
           QAscreen(),     // Q/A Screen
-          Center(child: Text('Vaccine')), // Vaccine Screen
+          VaccineScreen(), // Vaccine Screen
           FoodScreen(),    // Food Screen
         ],
       ),
